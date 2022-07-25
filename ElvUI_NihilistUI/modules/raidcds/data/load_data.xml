@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui">
+    <Script file="aoeCC.lua"/>
+    <Script file="externals.lua"/>
+    <Script file="raidCDs.lua"/>
+    <Script file="utilityCDs.lua"/>
+    <Script file="immunities.lua"/>
+    <Script file="interrupts.lua"/>
+    <Script file="battleRes.lua"/>
+</Ui>
