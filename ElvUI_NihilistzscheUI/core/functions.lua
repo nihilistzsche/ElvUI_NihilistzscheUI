@@ -99,8 +99,8 @@ function NUI.InvertTable(t)
 end
 
 local nihilistzscheui_chat_icon =
-    [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_text_logo:12:12|t]]
-function NUI:GetChatIcon(sender)
+    [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzsche_chat_logo:12:12|t]]
+function NUI.GetChatIcon(sender)
     local senderName, senderRealm
     if sender then
         senderName, senderRealm = strsplit("-", sender)
@@ -110,7 +110,7 @@ function NUI:GetChatIcon(sender)
     senderRealm = senderRealm or E.myrealm
     senderRealm = gsub(senderRealm, " ", "")
 
-    if self.SpecialChatIcons[senderRealm] and self.SpecialChatIcons[senderRealm][senderName] then
+    if NUI.SpecialChatIcons[senderRealm] and NUI.SpecialChatIcons[senderRealm][senderName] then
         return nihilistzscheui_chat_icon
     end
 

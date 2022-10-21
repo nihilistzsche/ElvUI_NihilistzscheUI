@@ -125,6 +125,7 @@ function NUI:InitializeModules()
     for _, moduleName in pairs(NUI.RegisteredModules) do
         local module = self:GetModule(moduleName)
         if module.Initialize then
+            print("Initializing " .. module:GetName())
             module:Initialize()
         end
     end
@@ -139,9 +140,7 @@ function NUI:Initialize()
     self.currentQuestXP = 0
 
     DB:RegisterCustomQuestXPWatcher("ElvUI_NihilistzscheUI", NUI.CustomQuestXPWatcher)
-    CH.GetPluginIcon = function(_, sender)
-        return self:GetChatIcon(sender)
-    end
+    CH:AddPluginIcons(self.GetChatIcon)
 
     self:AddMoverCategories()
     self:InitializeModules()
