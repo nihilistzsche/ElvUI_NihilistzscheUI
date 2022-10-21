@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="LibPeriodicTable-3.1\LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua"/>
+  <Include file="LibPeriodicTable-3.1\modules.xml"/>
+  <Include file="LibCandyBar-3.0\lib.xml"/>
+  <Script file="LibNihilistzscheUITags-1.0\LibNihilistzscheUITags-1.0.lua"/>
+  <Script file="LibGroupInSpecT-1.1\LibGroupInSpecT-1.1.lua"/>
+  <Script file="LibFishing-1.0\LibFishing-1.0.lua"/>
+</Ui>

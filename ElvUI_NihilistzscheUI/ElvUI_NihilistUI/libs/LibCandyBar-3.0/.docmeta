@@ -1,0 +1,4 @@
+type: luadoc
+input-file: LibCandyBar-3.0/LibCandyBar-3.0.lua
+output-page: "API"
+

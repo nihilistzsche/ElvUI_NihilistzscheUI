@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui">
+	<Script file="players.lua"/>
+	<Script file="modifiers.lua"/>
+	<Script file="categories.lua"/>
+	<Script file="frames.lua"/>
+</Ui>

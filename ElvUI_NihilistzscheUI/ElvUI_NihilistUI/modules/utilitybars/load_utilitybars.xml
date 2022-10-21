@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="utilitybars.lua"/>
+	<Include file="bars\load_bars.xml"/>
+</Ui>

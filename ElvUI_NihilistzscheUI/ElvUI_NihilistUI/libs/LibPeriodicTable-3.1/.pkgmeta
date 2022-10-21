@@ -1,0 +1,7 @@
+package-as: LibPeriodicTable-3.1
+
+ignore:
+    - compresssplit.lua
+    - data.lua
+    - dataminer.lua
+    - json.lua

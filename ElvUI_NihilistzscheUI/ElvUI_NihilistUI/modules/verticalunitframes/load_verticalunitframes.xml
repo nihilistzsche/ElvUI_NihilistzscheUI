@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui">
+	<Script file="vuf.lua"/>
+	<Include file="utility\load_utility.xml"/>
+	<Include file="units\load_units.xml"/>
+	<Include file="elements\load_elements.xml"/>
+</Ui>
