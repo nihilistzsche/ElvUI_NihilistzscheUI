@@ -35,287 +35,287 @@ local C_QuestLog_IsComplete = _G.C_QuestLog.IsComplete
 local GetNumQuestLeaderBoards = _G.GetNumQuestLeaderBoards
 
 function NUI:SetupProfileCallbacks()
-  E.data.RegisterCallback(self, "OnProfileChanged", "UpdateAll")
-  E.data.RegisterCallback(self, "OnProfileCopied", "UpdateAll")
-  E.data.RegisterCallback(self, "OnProfileReset", "UpdateAll")
+    E.data.RegisterCallback(self, "OnProfileChanged", "UpdateAll")
+    E.data.RegisterCallback(self, "OnProfileCopied", "UpdateAll")
+    E.data.RegisterCallback(self, "OnProfileReset", "UpdateAll")
 end
 
 function NUI:AddMoverCategories()
-  tinsert(E.ConfigModeLayouts, #(E.ConfigModeLayouts) + 1, "NIHILISTUI")
-  E.ConfigModeLocalizedStrings.NIHILISTUI = L[self.Title]
+    tinsert(E.ConfigModeLayouts, #(E.ConfigModeLayouts) + 1, "NIHILISTUI")
+    E.ConfigModeLocalizedStrings.NIHILISTUI = L[self.Title]
 end
 
 NUI.SpecialChatIcons = {
-  WyrmrestAccord = {
-    Dirishia = true,
-    Xanikani = true,
-    Rikanza = true,
-    Onaguda = true,
-    Cerishia = true,
-    Vellilara = true,
-    Sayalia = true,
-    Alledarisa = true,
-    Orlyrala = true,
-    Scerila = true,
-    Ralaniki = true,
-    Moyanza = true,
-    Erasaya = true,
-    Linabla = true,
-    Dirikoa = true,
-    Elaedarel = true,
-    Alydrer = true,
-    Issia = true,
-    Leitara = true,
-    Cherlyth = true,
-    Tokashami = true,
-    Millop = true,
-    Aeondalew = true
-  }
+    WyrmrestAccord = {
+        Dirishia = true,
+        Xanikani = true,
+        Rikanza = true,
+        Onaguda = true,
+        Cerishia = true,
+        Vellilara = true,
+        Sayalia = true,
+        Alledarisa = true,
+        Orlyrala = true,
+        Scerila = true,
+        Ralaniki = true,
+        Moyanza = true,
+        Erasaya = true,
+        Linabla = true,
+        Dirikoa = true,
+        Elaedarel = true,
+        Alydrer = true,
+        Issia = true,
+        Leitara = true,
+        Cherlyth = true,
+        Tokashami = true,
+        Millop = true,
+        Aeondalew = true
+    }
 }
 
 function NUI.PairsByKeys(startChar, f)
-  local a, i = {}, 0
-  for n in pairs(startChar) do
-    tinsert(a, n)
-  end
-  sort(a, f)
-  local iter = function()
-    i = i + 1
-    if a[i] == nil then
-      return nil
-    else
-      return a[i], startChar[a[i]]
+    local a, i = {}, 0
+    for n in pairs(startChar) do
+        tinsert(a, n)
     end
-  end
-  return iter
+    sort(a, f)
+    local iter = function()
+        i = i + 1
+        if a[i] == nil then
+            return nil
+        else
+            return a[i], startChar[a[i]]
+        end
+    end
+    return iter
 end
 
 function NUI.InvertTable(t)
-  local u = {}
-  for k, v in pairs(t) do
-    u[v] = k
-  end
-  return u
+    local u = {}
+    for k, v in pairs(t) do
+        u[v] = k
+    end
+    return u
 end
 
 local nihilistzscheui_chat_icon =
-  [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_text_logo:12:12|t]]
+    [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_text_logo:12:12|t]]
 function NUI:GetChatIcon(sender)
-  local senderName, senderRealm
-  if sender then
-    senderName, senderRealm = strsplit("-", sender)
-  else
-    senderName = E.myname
-  end
-  senderRealm = senderRealm or E.myrealm
-  senderRealm = gsub(senderRealm, " ", "")
+    local senderName, senderRealm
+    if sender then
+        senderName, senderRealm = strsplit("-", sender)
+    else
+        senderName = E.myname
+    end
+    senderRealm = senderRealm or E.myrealm
+    senderRealm = gsub(senderRealm, " ", "")
 
-  if self.SpecialChatIcons[senderRealm] and self.SpecialChatIcons[senderRealm][senderName] then
-    return nihilistzscheui_chat_icon
-  end
+    if self.SpecialChatIcons[senderRealm] and self.SpecialChatIcons[senderRealm][senderName] then
+        return nihilistzscheui_chat_icon
+    end
 
-  return nil
+    return nil
 end
 
 local ACD
 function NUI.ClickGameMenu()
-  if InCombatLockdown() then
-    return
-  end
-  ACD = ACD or E.Libs.AceConfigDialog
-  if (not ACD) then
-    if (not IsAddOnLoaded("ElvUI_OptionsUI")) then
-      LoadAddOn("ElvUI_OptionsUI")
+    if InCombatLockdown() then
+        return
     end
-    ACD = E.Libs.AceConfigDialog
-  end
-  E:ToggleOptionsUI()
-  ACD:SelectGroup("ElvUI", "NihilistzschetUI")
-  HideUIPanel(_G.GameMenuFrame)
+    ACD = ACD or E.Libs.AceConfigDialog
+    if (not ACD) then
+        if (not IsAddOnLoaded("ElvUI_OptionsUI")) then
+            LoadAddOn("ElvUI_OptionsUI")
+        end
+        ACD = E.Libs.AceConfigDialog
+    end
+    E:ToggleOptionsUI()
+    ACD:SelectGroup("ElvUI", "NihilistzschetUI")
+    HideUIPanel(_G.GameMenuFrame)
 end
 
 if (SLE) then
-  NUI.SLEBuildGameMenu = SLE.BuildGameMenu
-  SLE.BuildGameMenu = function()
-  end
+    NUI.SLEBuildGameMenu = SLE.BuildGameMenu
+    SLE.BuildGameMenu = function()
+    end
 end
 
 function NUI:BuildGameMenu()
-  local button = {
-    name = "GameMenu_NihilistzschetUIConfig",
-    text = NUI.Title,
-    func = function()
-      self.ClickGameMenu()
+    local button = {
+        name = "GameMenu_NihilistzschetUIConfig",
+        text = NUI.Title,
+        func = function()
+            self.ClickGameMenu()
+        end
+    }
+    lib:AddMenuButton(button)
+
+    lib:UpdateHolder()
+
+    if (SLE) then
+        NUI.SLEBuildGameMenu(SLE)
     end
-  }
-  lib:AddMenuButton(button)
-
-  lib:UpdateHolder()
-
-  if (SLE) then
-    NUI.SLEBuildGameMenu(SLE)
-  end
 end
 
 function NUI.FixPetJournal()
-  C_PetJournal_SetFilterChecked(LE_PET_JOURNAL_FILTER_COLLECTED, true)
-  C_PetJournal_SetFilterChecked(LE_PET_JOURNAL_FILTER_NOT_COLLECTED, true)
-  C_PetJournal_SetAllPetTypesChecked(true)
-  C_PetJournal_SetAllPetSourcesChecked(true)
+    C_PetJournal_SetFilterChecked(LE_PET_JOURNAL_FILTER_COLLECTED, true)
+    C_PetJournal_SetFilterChecked(LE_PET_JOURNAL_FILTER_NOT_COLLECTED, true)
+    C_PetJournal_SetAllPetTypesChecked(true)
+    C_PetJournal_SetAllPetSourcesChecked(true)
 end
 
 function NUI:RegenWait(func, ...)
-  if (not InCombatLockdown() and not UnitAffectingCombat("player") and not UnitAffectingCombat("pet")) then
-    func(...)
-    return
-  end
-
-  if (not NUI.waitFuncs) then
-    NUI.waitFuncs = {}
-  end
-
-  local newArgs = {...}
-  local found = false
-  for _, info in ipairs(NUI.waitFuncs) do
-    if (info.func == func) then
-      local argsEqual = true
-      if (#newArgs ~= #info.args) then
-        argsEqual = false
-      else
-        for i, arg in ipairs(info.args) do
-          if (newArgs[i] ~= arg) then
-            argsEqual = false
-            break
-          end
-        end
-      end
-      if (argsEqual) then
-        found = true
-        break
-      end
+    if (not InCombatLockdown() and not UnitAffectingCombat("player") and not UnitAffectingCombat("pet")) then
+        func(...)
+        return
     end
-  end
 
-  if (not found) then
-    tinsert(NUI.waitFuncs, {func = func, args = {...}})
-  end
-  self:RegisterEvent("PLAYER_REGEN_ENABLED")
+    if (not NUI.waitFuncs) then
+        NUI.waitFuncs = {}
+    end
+
+    local newArgs = {...}
+    local found = false
+    for _, info in ipairs(NUI.waitFuncs) do
+        if (info.func == func) then
+            local argsEqual = true
+            if (#newArgs ~= #info.args) then
+                argsEqual = false
+            else
+                for i, arg in ipairs(info.args) do
+                    if (newArgs[i] ~= arg) then
+                        argsEqual = false
+                        break
+                    end
+                end
+            end
+            if (argsEqual) then
+                found = true
+                break
+            end
+        end
+    end
+
+    if (not found) then
+        tinsert(NUI.waitFuncs, {func = func, args = {...}})
+    end
+    self:RegisterEvent("PLAYER_REGEN_ENABLED")
 end
 
 function NUI:PLAYER_REGEN_ENABLED()
-  if (not NUI.waitFuncs or #NUI.waitFuncs == 0) then
+    if (not NUI.waitFuncs or #NUI.waitFuncs == 0) then
+        self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+
+    for _, funcInfo in ipairs(NUI.waitFuncs) do
+        funcInfo.func(unpack(funcInfo.args))
+    end
+
+    wipe(NUI.waitFuncs)
+
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-    return
-  end
-
-  for _, funcInfo in ipairs(NUI.waitFuncs) do
-    funcInfo.func(unpack(funcInfo.args))
-  end
-
-  wipe(NUI.waitFuncs)
-
-  self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 end
 
 function NUI:UpdateRegisteredDBs()
-  if (not NUI.RegisteredDBs) then
-    return
-  end
+    if (not NUI.RegisteredDBs) then
+        return
+    end
 
-  local dbs = NUI.RegisteredDBs
+    local dbs = NUI.RegisteredDBs
 
-  for tbl, path in pairs(dbs) do
-    self:UpdateRegisteredDB(tbl, path)
-  end
+    for tbl, path in pairs(dbs) do
+        self:UpdateRegisteredDB(tbl, path)
+    end
 end
 
 function NUI:UpdateAll()
-  self:UpdateRegisteredDBs()
-  for _, module in ipairs(self:GetRegisteredModules()) do
-    local mod = NUI:GetModule(module)
-    if (mod and mod.ForUpdateAll) then
-      mod:ForUpdateAll()
+    self:UpdateRegisteredDBs()
+    for _, module in ipairs(self:GetRegisteredModules()) do
+        local mod = NUI:GetModule(module)
+        if (mod and mod.ForUpdateAll) then
+            mod:ForUpdateAll()
+        end
     end
-  end
 end
 
 function NUI.UpdateRegisteredDB(tbl, path)
-  if type(path) ~= "string" then
-    return
-  end
-  local path_parts = {strsplit(".", path)}
-  local _db = E.db.nihilistzscheui
-  for _, path_part in ipairs(path_parts) do
-    _db = _db[path_part]
-  end
-  tbl.db = _db
+    if type(path) ~= "string" then
+        return
+    end
+    local path_parts = {strsplit(".", path)}
+    local _db = E.db.nihilistzscheui
+    for _, path_part in ipairs(path_parts) do
+        _db = _db[path_part]
+    end
+    tbl.db = _db
 end
 
 function NUI:RegisterDB(tbl, path)
-  if (not NUI.RegisteredDBs) then
-    NUI.RegisteredDBs = {}
-  end
-  self.UpdateRegisteredDB(tbl, path)
-  NUI.RegisteredDBs[tbl] = path
+    if (not NUI.RegisteredDBs) then
+        NUI.RegisteredDBs = {}
+    end
+    self.UpdateRegisteredDB(tbl, path)
+    NUI.RegisteredDBs[tbl] = path
 end
 
 function NUI:GetCurrentQuestXP()
-  return NUI.currentQuestXP
+    return NUI.currentQuestXP
 end
 
 function NUI.CustomQuestXPWatcher(questXP)
-  NUI.currentQuestXP = questXP
+    NUI.currentQuestXP = questXP
 end
 
 function NUI.CPW(func)
-  return function()
-    return func("player")
-  end
+    return function()
+        return func("player")
+    end
 end
 
 local function _GetAzeriteXP()
-  local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
-  if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-    return 0, 0, 0
-  end
+    local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+        return 0, 0, 0
+    end
 
-  local x, m = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
-  local l = C_AzeriteItem_GetPowerLevel(azeriteItemLocation)
+    local x, m = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+    local l = C_AzeriteItem_GetPowerLevel(azeriteItemLocation)
 
-  return x, m, l
+    return x, m, l
 end
 
 function NUI.UnitAzeriteXP()
-  return (_GetAzeriteXP())
+    return (_GetAzeriteXP())
 end
 
 function NUI.UnitAzeriteXPMax()
-  return (select(2, _GetAzeriteXP()))
+    return (select(2, _GetAzeriteXP()))
 end
 
 function NUI.UnitAzeriteLevel()
-  return (select(3, _GetAzeriteXP()))
+    return (select(3, _GetAzeriteXP()))
 end
 
 -- Code from LibCandyBar-3.0
 function NUI.ResetCandyBarLabelDurationAnchors(bar)
-  bar.candyBarDuration:ClearAllPoints()
-  bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2, 0)
-  bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2, 0)
+    bar.candyBarDuration:ClearAllPoints()
+    bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2, 0)
+    bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2, 0)
 
-  bar.candyBarLabel:ClearAllPoints()
-  bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2, 0)
-  bar.candyBarLabel:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2, 0)
+    bar.candyBarLabel:ClearAllPoints()
+    bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2, 0)
+    bar.candyBarLabel:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2, 0)
 end
 
 function NUI.ForEach(tbl, func)
-  for _, v in pairs(tbl) do
-    func(v)
-  end
+    for _, v in pairs(tbl) do
+        func(v)
+    end
 end
 
 function NUI.ExecIf(condition, func)
-  if condition then
-    func()
-  end
+    if condition then
+        func()
+    end
 end

@@ -7,23 +7,23 @@ local BOOKTYPE_PET = _G.BOOKTYPE_PET
 local GetSpellBookItemInfo = _G.GetSpellBookItemInfo
 
 function CB:ClearCache()
-	wipe(self.cache)
+    wipe(self.cache)
 end
 
 function CB:UpdateCache()
-	self:ClearCache()
+    self:ClearCache()
 
-	self:CacheSpells(BOOKTYPE_SPELL)
-	self:CacheSpells(BOOKTYPE_PET)
+    self:CacheSpells(BOOKTYPE_SPELL)
+    self:CacheSpells(BOOKTYPE_PET)
 
-	self:UpdateSpells()
+    self:UpdateSpells()
 end
 
 function CB:CacheSpells(book)
-	for i = 1, 1000 do
-		local skillType, _, _, _, _, _, id = GetSpellBookItemInfo(i, book)
-		if skillType and id and id > 0 then
-			self.cache[id] = true
-		end
-	end
+    for i = 1, 1000 do
+        local skillType, _, _, _, _, _, id = GetSpellBookItemInfo(i, book)
+        if skillType and id and id > 0 then
+            self.cache[id] = true
+        end
+    end
 end

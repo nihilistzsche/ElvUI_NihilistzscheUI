@@ -10,7 +10,7 @@ local format = _G.format
 local XP = ADB:NewDataBar(NUI.CPW(UnitXP), NUI.CPW(UnitXPMax), NUI.CPW(UnitLevel))
 
 function XP:Initialize()
-	self:GetParent():CreateAnimatedBar(self, "Experience")
+    self:GetParent():CreateAnimatedBar(self, "Experience")
 end
 
 ADB:RegisterDataBar(XP)

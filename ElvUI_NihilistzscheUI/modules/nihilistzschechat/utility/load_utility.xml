@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui">
-	<Script file="eventmanager.lua"/>
-	<Script file="frames.lua"/>
-	<Script file="hooks.lua"/>
-	<Script file="utility.lua"/>
+    <Script file="eventmanager.lua"/>
+    <Script file="frames.lua"/>
+    <Script file="hooks.lua"/>
+    <Script file="utility.lua"/>
 </Ui>

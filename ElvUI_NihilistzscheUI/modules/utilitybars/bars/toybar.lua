@@ -11,62 +11,67 @@ local tinsert = _G.tinsert
 local CreateFrame = _G.CreateFrame
 
 function TOYB.CreateBar()
-  -- luacheck: no max line length
-  local bar =
-    NUB:CreateBar("NihilistzscheUI_ToyBar", "toybar", {"BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 45}, "Toy Bar")
+    -- luacheck: no max line length
+    local bar =
+        NUB:CreateBar(
+        "NihilistzscheUI_ToyBar",
+        "toybar",
+        {"BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 45},
+        "Toy Bar"
+    )
 
-  bar.doNotHideInCombat = true
+    bar.doNotHideInCombat = true
 
-  return bar
+    return bar
 end
 
 function TOYB.GetToys()
-  local toys = {}
+    local toys = {}
 
-  if (not C_ToyBox_HasFavorites()) then
-    return toys
-  end
-
-  for i = 1, C_ToyBox_GetNumToys() do
-    local itemID = C_ToyBox_GetToyFromIndex(i)
-
-    if (C_ToyBox_GetIsFavorite(itemID)) then
-      tinsert(toys, itemID)
+    if (not C_ToyBox_HasFavorites()) then
+        return toys
     end
-  end
 
-  return toys
+    for i = 1, C_ToyBox_GetNumToys() do
+        local itemID = C_ToyBox_GetToyFromIndex(i)
+
+        if (C_ToyBox_GetIsFavorite(itemID)) then
+            tinsert(toys, itemID)
+        end
+    end
+
+    return toys
 end
 
 function TOYB:UpdateBar(bar)
-  local toys = self.GetToys()
+    local toys = self.GetToys()
 
-  NUB.CreateButtons(bar, #toys)
+    NUB.CreateButtons(bar, #toys)
 
-  NUB.WipeButtons(bar)
+    NUB.WipeButtons(bar)
 
-  for i, toy in ipairs(toys) do
-    local button = bar.buttons[i]
-    NUB.UpdateButtonAsToy(bar, button, toy)
-  end
+    for i, toy in ipairs(toys) do
+        local button = bar.buttons[i]
+        NUB.UpdateButtonAsToy(bar, button, toy)
+    end
 
-  NUB.UpdateBar(self, bar, "ELVUIBAR30BINDBUTTON")
+    NUB.UpdateBar(self, bar, "ELVUIBAR30BINDBUTTON")
 end
 
 function TOYB:Initialize()
-  local frame = CreateFrame("Frame", "NihilistzscheUI_ToyBarController")
-  frame:RegisterEvent("TOYS_UPDATED")
-  NUB:RegisterEventHandler(self, frame)
+    local frame = CreateFrame("Frame", "NihilistzscheUI_ToyBarController")
+    frame:RegisterEvent("TOYS_UPDATED")
+    NUB:RegisterEventHandler(self, frame)
 
-  NUB:InjectScripts(self)
+    NUB:InjectScripts(self)
 
-  local bar = self.CreateBar()
-  self.bar = bar
-  self.ignoreCombatLockdown = true
+    local bar = self.CreateBar()
+    self.bar = bar
+    self.ignoreCombatLockdown = true
 
-  self.hooks = {}
+    self.hooks = {}
 
-  self:UpdateBar(bar)
+    self:UpdateBar(bar)
 end
 
 NUB:RegisterUtilityBar(TOYB)

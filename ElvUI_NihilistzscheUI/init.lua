@@ -15,11 +15,11 @@ local hooksecurefunc = _G.hooksecurefunc
 local ElvUI_SLE = _G.ElvUI_SLE
 
 NUI.Libs = {
-  NT = LibStub("LibNihilistzscheUITags-1.0"),
-  GI = LibStub("LibGroupInSpecT-1.1"),
-  CandyBar = LibStub("LibCandyBar-3.0"),
-  PT = LibStub("LibPeriodicTable-3.1"),
-  FL = LibStub("LibFishing-1.0-NUI")
+    NT = LibStub("LibNihilistzscheUITags-1.0"),
+    GI = LibStub("LibGroupInSpecT-1.1"),
+    CandyBar = LibStub("LibCandyBar-3.0"),
+    PT = LibStub("LibPeriodicTable-3.1"),
+    FL = LibStub("LibFishing-1.0-NUI")
 }
 
 engine[1] = NUI
@@ -70,7 +70,7 @@ NUI.UtilityBars = NUI:NewModule("UtilityBars", "AceEvent-3.0")
 NUI.UtilityBars.BaitBar = NUI:NewModule("BaitBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.EngineerToyBar = NUI:NewModule("EngineerToyBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.EquipmentManagerBar =
-  NUI:NewModule("EquipmentManagerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+    NUI:NewModule("EquipmentManagerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.FarmBar = NUI:NewModule("FarmBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.ToolsOfTheTradeBar = NUI:NewModule("ToolsOfTheTradeBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.ToyBar = NUI:NewModule("ToyBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
@@ -90,67 +90,67 @@ _G.BINDING_HEADER_NIHILISTUI = "|cffff2020NihilistzscheUI|r"
 
 NUI.RegisteredModules = {}
 function NUI:RegisterModule(name)
-  if self.initialized then
-    local module = self:GetModule(name)
-    if (module and module.Initialize) then
-      module:Initialize()
-      if (ElvUIDev) then
-        ElvUIDev:RegisterPluginModule("ElvUI_NihilistzschetUI", name, module)
-      end
+    if self.initialized then
+        local module = self:GetModule(name)
+        if (module and module.Initialize) then
+            module:Initialize()
+            if (ElvUIDev) then
+                ElvUIDev:RegisterPluginModule("ElvUI_NihilistzschetUI", name, module)
+            end
+        end
     end
-  end
-  self.RegisteredModules[#self.RegisteredModules + 1] = name
+    self.RegisteredModules[#self.RegisteredModules + 1] = name
 end
 
 function NUI:GetRegisteredModules()
-  return self.RegisteredModules
+    return self.RegisteredModules
 end
 
 function NUI:ADDON_LOADED(addonName)
-  if addonName == "ElvUIDev" then
-    ElvUIDev:RegisterPlugin(addon)
-    for _, moduleName in pairs(self.RegisteredModules) do
-      ElvUIDev:RegisterPluginModule(addon, moduleName, NUI:GetModule(moduleName))
+    if addonName == "ElvUIDev" then
+        ElvUIDev:RegisterPlugin(addon)
+        for _, moduleName in pairs(self.RegisteredModules) do
+            ElvUIDev:RegisterPluginModule(addon, moduleName, NUI:GetModule(moduleName))
+        end
     end
-  end
 end
 
 function NUI:DebugPrint(...)
-  if self.Debug then
-    print(...)
-  end
+    if self.Debug then
+        print(...)
+    end
 end
 
 function NUI:InitializeModules()
-  for _, moduleName in pairs(NUI.RegisteredModules) do
-    local module = self:GetModule(moduleName)
-    if module.Initialize then
-      module:Initialize()
+    for _, moduleName in pairs(NUI.RegisteredModules) do
+        local module = self:GetModule(moduleName)
+        if module.Initialize then
+            module:Initialize()
+        end
     end
-  end
 end
 
 function NUI:Initialize()
-  self.initialized = true
+    self.initialized = true
 
-  self:BuildGameMenu()
-  self.FixPetJournal()
+    self:BuildGameMenu()
+    self.FixPetJournal()
 
-  self.currentQuestXP = 0
+    self.currentQuestXP = 0
 
-  DB:RegisterCustomQuestXPWatcher("ElvUI_NihilistzscheUI", NUI.CustomQuestXPWatcher)
-  CH.GetPluginIcon = function(_, sender)
-    return self:GetChatIcon(sender)
-  end
+    DB:RegisterCustomQuestXPWatcher("ElvUI_NihilistzscheUI", NUI.CustomQuestXPWatcher)
+    CH.GetPluginIcon = function(_, sender)
+        return self:GetChatIcon(sender)
+    end
 
-  self:AddMoverCategories()
-  self:InitializeModules()
+    self:AddMoverCategories()
+    self:InitializeModules()
 
-  if self.Compatibility.DEV then
-    self:RegisterEvent("ADDON_LOADED")
-  end
+    if self.Compatibility.DEV then
+        self:RegisterEvent("ADDON_LOADED")
+    end
 
-  self:SetupProfileCallbacks()
+    self:SetupProfileCallbacks()
 end
 
 E.Libs.EP:HookInitialize(NUI, NUI.Initialize)

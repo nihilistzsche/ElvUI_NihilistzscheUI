@@ -5,16 +5,16 @@ local GetAddOnEnableState = _G.GetAddOnEnableState
 local hooksecurefunc = _G.hooksecurefunc
 
 local function Disable(tbl, key)
-  key = key or "enable"
-  if (tbl[key]) then
-    tbl[key] = false
-    return true
-  end
-  return false
+    key = key or "enable"
+    if (tbl[key]) then
+        tbl[key] = false
+        return true
+    end
+    return false
 end
 
 function COMP.IsAddOnEnabled(addon) -- Credit: Azilroka
-  return GetAddOnEnableState(E.myname, addon) == 2
+    return GetAddOnEnableState(E.myname, addon) == 2
 end
 
 COMP.BUI = COMP.IsAddOnEnabled("ElvUI_BenikUI")
@@ -42,70 +42,73 @@ COMP.FCT = COMP.IsAddOnEnabled("ElvUI_FCT")
 COMP.CT = COMP.IsAddOnEnabled("ElvUI_CustomTags")
 
 function COMP.Print(addon, feature)
-  if (E.private.nihilistzscheui.comp and E.private.nihilistzscheui.comp[addon] and E.private.nihilistzscheui.comp[addon][feature]) then
-    return
-  end
-  print(NUI.Title .. " has |cffff2020disabled|r " .. feature .. " from " .. addon .. " due to incompatiblities.")
-  E.private.nihilistzscheui.comp = E.private.nihilistzscheui.comp or {}
-  E.private.nihilistzscheui.comp[addon] = E.private.nihilistzscheui.comp[addon] or {}
-  E.private.nihilistzscheui.comp[addon][feature] = true
+    if
+        (E.private.nihilistzscheui.comp and E.private.nihilistzscheui.comp[addon] and
+            E.private.nihilistzscheui.comp[addon][feature])
+     then
+        return
+    end
+    print(NUI.Title .. " has |cffff2020disabled|r " .. feature .. " from " .. addon .. " due to incompatiblities.")
+    E.private.nihilistzscheui.comp = E.private.nihilistzscheui.comp or {}
+    E.private.nihilistzscheui.comp[addon] = E.private.nihilistzscheui.comp[addon] or {}
+    E.private.nihilistzscheui.comp[addon][feature] = true
 end
 
 function COMP:SLECompatibility()
-  local SLE = _G.ElvUI_SLE[1]
-  if (Disable(E.private.sle.module.shadows)) then
-    self.Print(SLE.Title, "shadows")
-  end
+    local SLE = _G.ElvUI_SLE[1]
+    if (Disable(E.private.sle.module.shadows)) then
+        self.Print(SLE.Title, "shadows")
+    end
 end
 
 function COMP:BenikUICompatibility()
-  local BUI = _G.ElvUI_BenikUI[1]
+    local BUI = _G.ElvUI_BenikUI[1]
 
-  local changedDatabar = false
-  if (Disable(E.db.benikui.databars.experience)) then
-    changedDatabar = true
-  end
-  if (Disable(E.db.benikui.databars.reputation)) then
-    changedDatabar = true
-  end
-  if (Disable(E.db.benikui.databars.azerite)) then
-    changedDatabar = true
-  end
-  if (Disable(E.db.benikui.databars.honor)) then
-    changedDatabar = true
-  end
-  if (changedDatabar) then
-    self.Print(BUI.Title, "Databars")
-  end
+    local changedDatabar = false
+    if (Disable(E.db.benikui.databars.experience)) then
+        changedDatabar = true
+    end
+    if (Disable(E.db.benikui.databars.reputation)) then
+        changedDatabar = true
+    end
+    if (Disable(E.db.benikui.databars.azerite)) then
+        changedDatabar = true
+    end
+    if (Disable(E.db.benikui.databars.honor)) then
+        changedDatabar = true
+    end
+    if (changedDatabar) then
+        self.Print(BUI.Title, "Databars")
+    end
 end
 
 function COMP:MerathilisUICompatibility()
-  local MER = _G.ElvUI_MerathilisUI[1]
+    local MER = _G.ElvUI_MerathilisUI[1]
 
-  if (Disable(E.db.mui.actionbars.specBar)) then
-    self.Print(MER.Title, "SpecBar")
-  end
+    if (Disable(E.db.mui.actionbars.specBar)) then
+        self.Print(MER.Title, "SpecBar")
+    end
 
-  if (Disable(E.db.mui.actionbars.equipBar)) then
-    self.Print(MER.Title, "EquipBar")
-  end
+    if (Disable(E.db.mui.actionbars.equipBar)) then
+        self.Print(MER.Title, "EquipBar")
+    end
 
-  if (E.db.mui.cooldowns and Disable(E.db.mui.cooldowns.raid)) then
-    self.Print(MER.Title, "RaidCDs")
-  end
+    if (E.db.mui.cooldowns and Disable(E.db.mui.cooldowns.raid)) then
+        self.Print(MER.Title, "RaidCDs")
+    end
 
-  --[[if (Disable(E.db.mui['NameplateAuras'])) then
+    --[[if (Disable(E.db.mui['NameplateAuras'])) then
 		self.Print(MER.Title, "Nameplate Auras");
 	end]]
-  if (E.db.mui.talents and Disable(E.db.mui.talents.talentManager)) then
-    self.Print(MER.Title, "TalentManager")
-  end
+    if (E.db.mui.talents and Disable(E.db.mui.talents.talentManager)) then
+        self.Print(MER.Title, "TalentManager")
+    end
 end
 
 COMP.CompatibilityFunctions = {}
 
 function COMP:RegisterCompatibilityFunction(addonName, compatFunc)
-  self.CompatibilityFunctions[addonName] = compatFunc
+    self.CompatibilityFunctions[addonName] = compatFunc
 end
 
 COMP:RegisterCompatibilityFunction("SLE", "SLECompatibility")
@@ -113,19 +116,19 @@ COMP:RegisterCompatibilityFunction("BUI", "BenikUICompatibility")
 COMP:RegisterCompatibilityFunction("MERS", "MerathilisUICompatibility")
 
 function COMP:RunCompatibilityFunctions()
-  for key, compatFunc in pairs(COMP.CompatibilityFunctions) do
-    if (COMP[key]) then
-      self[compatFunc](self)
+    for key, compatFunc in pairs(COMP.CompatibilityFunctions) do
+        if (COMP[key]) then
+            self[compatFunc](self)
+        end
     end
-  end
 end
 
 hooksecurefunc(
-  E,
-  "CheckIncompatible",
-  function()
-    COMP:RunCompatibilityFunctions()
-  end
+    E,
+    "CheckIncompatible",
+    function()
+        COMP:RunCompatibilityFunctions()
+    end
 )
 
 function COMP.Initialize()

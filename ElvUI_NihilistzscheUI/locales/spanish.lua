@@ -1,7 +1,7 @@
 local AceLocale = _G.ElvUI[1].Libs.ACL
 local L = AceLocale:NewLocale("ElvUI", "esES") or AceLocale:NewLocale("ElvUI", "esMX")
 if not L then
-  return
+    return
 end
 
 L["NIHILISTUI_AUTHOR_INFO"] = "|cffff2020NihilistzscheUI|r by Nihilistzsche"
@@ -24,8 +24,8 @@ L["Enable the button style."] = true
 L["WatchBarNotifier"] = true
 L["NihilistzscheUI WatchBarNotifier by Nihilistzsche"] = true
 L[
-    "NihilistzscheUI WatchBarNotifier prints out messages to a given chat frame when you gain experience, reputation, artifact xp, or honor.\n"
-  ] = true
+        "NihilistzscheUI WatchBarNotifier prints out messages to a given chat frame when you gain experience, reputation, artifact xp, or honor.\n"
+    ] = true
 L["Enable the watcher."] = true
 L["WatchBarNotifier Options"] = true
 L["Chat Frame to output XP messages to.  1-10.  Enter 0 to disable xp watcher."] = true
@@ -150,8 +150,8 @@ L["Alpha of the bar"] = true
 L["Add Group"] = true
 L["Attempted to show a reminder icon that does not have any spells. You must add a spell first."] = true
 L[
-    "Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."
-  ] = true
+        "Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."
+    ] = true
 L["Combat"] = true
 L["Disable Sound"] = true
 L["Don't play the warning sound."] = true
@@ -187,8 +187,8 @@ L["Sound that will play when you have a warning icon displayed."] = true
 L["Strict Filter"] = true
 L["Talent Tree"] = true
 L[
-    "This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."
-  ] = true
+        "This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."
+    ] = true
 L["Don't play the warning sound."] = true
 L["Tree Exception"] = true
 L["Weapon"] = true
@@ -238,16 +238,16 @@ L["Override"] = true
 L["Override the texture for this element"] = true
 L["NihilistzscheUI VerticalUnitFrames by Nihilistzsche"] = true
 L[
-    "NihilistzscheUI VerticalUnitFrames provides a configurable centered, vertical unit frame option for use with ElvUI.\n"
-  ] = true
+        "NihilistzscheUI VerticalUnitFrames provides a configurable centered, vertical unit frame option for use with ElvUI.\n"
+    ] = true
 L["Reset the settings of this addon to their defaults."] = true
 L["Hide the ElvUI Unitframes when the Vertical Unit Frame is enabled"] = true
 L["Hide the Vertical Unit Frame when out of Combat"] = true
 L["Hide Out of Combat"] = true
 L["Enable Mouse"] = true
 L[
-    "Enable the mouse to interface with the vertical unit frame (this option has no effect if ElvUI Unitframes are hidden)"
-  ] = true
+        "Enable the mouse to interface with the vertical unit frame (this option has no effect if ElvUI Unitframes are hidden)"
+    ] = true
 L["Set the Alpha of the Vertical Unit Frame when in combat"] = true
 L["The texture that will be used for statusbars on this element."] = true
 L["Override the font for this element"] = true
@@ -259,7 +259,7 @@ L["Tick Color"] = true
 L["Value"] = true
 L["Default"] = true
 L["NihilistzscheUI_VerticalUnitFrames_CREDITS"] =
-  [[Many thanks to the following people:
+    [[Many thanks to the following people:
 
 Tukz whose unitframe code was the basis for the Vertical Unit Frame
 Elv for his amazing UI which was the inspiration for version 3
@@ -275,8 +275,8 @@ The Tukui community for being supportive
 
 L["Thank you for using NihilistzscheUI VerticalUnitFrames!"] = true
 L[
-    "Here you can choose between the simple layout (only player health and power) or the default layout for the Vertical Unit Frame"
-  ] = true
+        "Here you can choose between the simple layout (only player health and power) or the default layout for the Vertical Unit Frame"
+    ] = true
 L["Simple Layout"] = true
 L["Default Layout"] = true
 L["Simple Layout Set"] = true
@@ -309,7 +309,7 @@ L["NihilistzscheUI CooldownBar provides a logarithmic cooldown display similar t
 L["Enable the cooldown bar."] = true
 L["Autohide"] = true
 L["Hide the cooldown bar when the mouse is not over it, you are not in combat, and there is nothing tracked on cooldown"] =
-  true
+    true
 L["Switch Time"] = true
 L["Reset Blacklist"] = true
 L["Reset the blacklist."] = true
@@ -347,7 +347,7 @@ L["<Ctrl + Alt + Click> a pet to set as favorite 3"] = true
 
 L["Combat State Options"] = true
 L["OOC_DESC"] =
-  [[This options allow you to set different visibility and mouseover setting when entering or leaving combat.
+    [[This options allow you to set different visibility and mouseover setting when entering or leaving combat.
 Please note: if you enable state change for a bar here the presented options will disapper from the regular options for the said bar.]]
 L["In Combat"] = true
 L["Conditions below will take effet when entering combat."] = true
@@ -361,7 +361,7 @@ L["Enable the minimap points"] = true
 L["Artifact Power Button"] = true
 L["NihilistzscheUI ArtifactPowerButton by Nihilistzsche"] = true
 L["NihilistzscheUI ArtifactPowerButton provides a button for you to consume your artifact power items in your bags."] =
-  true
+    true
 L["Enable the artifact power button"] = true
 L["Only show the artifact power button when you mouseover it"] = true
 
@@ -405,8 +405,8 @@ L["Threshold (in seconds) before text is shown in the MM:SS format. Set to -1 to
 
 L["Above Icons"] = true
 L[
-    "Additional spacing between icon and statusbar. If a negative value is chosen then the statusbar is shown inside the icon. Changing this requires you to reload UI."
-  ] = true
+        "Additional spacing between icon and statusbar. If a negative value is chosen then the statusbar is shown inside the icon. Changing this requires you to reload UI."
+    ] = true
 L["Allows you to choose which texture to use for statusbar backdrops. If disabled, no texture will be used."] = true
 L["Allows you to choose which texture to use for statusbars. If disabled, no texture will be used."] = true
 L["Always Show Text"] = true
@@ -415,11 +415,11 @@ L["Buffs Threshold"] = true
 L["Buffs"] = true
 L["Changes the statusbar to use a static color instead of going from green to red the lower duration it has."] = true
 L[
-    "Choose where you want the statusbar to be positioned. If you position it on the left or right side of the icon I advice you to increase Horizontal Spacing for Buffs and Debuffs. Changing this requires you to reload UI."
-  ] = true
+        "Choose where you want the statusbar to be positioned. If you position it on the left or right side of the icon I advice you to increase Horizontal Spacing for Buffs and Debuffs. Changing this requires you to reload UI."
+    ] = true
 L[
-    "Choose which color you want the statusbar backdrops to use. Tip: use light colors for dark statusbar colors and vice versa."
-  ] = true
+        "Choose which color you want the statusbar backdrops to use. Tip: use light colors for dark statusbar colors and vice versa."
+    ] = true
 L["Choose which color you want your statusbars to use."] = true
 L["Color when the text is in the HH:MM format (provided by the ExactAuras addon)."] = true
 L["Debuffs Threshold"] = true
@@ -432,7 +432,7 @@ L["Hour/Minutes"] = true
 L["If enabled, the timers on your buffs will switch to text when duration goes below set threshold."] = true
 L["If enabled, the timers on your debuffs will switch to text when duration goes below set threshold."] = true
 L["If enabled, the timers on your temporary enchant(s) will switch to text when duration goes below set threshold."] =
-  true
+    true
 L["Indicator (s, m, h, d)"] = true
 L["Left Side of Icons"] = true
 L["No Duration"] = true
@@ -441,8 +441,8 @@ L["Position and Size"] = true
 L["Right Side of Icons"] = true
 L["Show bars for auras without a duration."] = true
 L[
-    "Show text in addition to statusbars. (You might need to move the text by changing the offset in the Buffs and Debuffs section)"
-  ] = true
+        "Show text in addition to statusbars. (You might need to move the text by changing the offset in the Buffs and Debuffs section)"
+    ] = true
 L["Show timers as bars instead of text."] = true
 L["Static Statusbar Color"] = true
 L["Statusbar Backdrop Color"] = true
@@ -469,8 +469,8 @@ L["Announce Freed"] = true
 L["Announce how much memory was freed by the garbage collection."] = true
 L["Bandwidth"] = true
 L[
-    "Display world or home latency on the datatext.  Home latency refers to your realm server.  World latency refers to the current world server."
-  ] = true
+        "Display world or home latency on the datatext.  Home latency refers to your realm server.  World latency refers to the current world server."
+    ] = true
 L["Download"] = true
 L["FPS"] = true
 L["Garbage Collect"] = true
@@ -627,27 +627,27 @@ L["Show/Hide the coord frames"] = true
 L["Add Group"] = "Añadir Grupo"
 L["Any"] = "Cualquiera"
 L["Attempted to show a reminder icon that does not have any spells. You must add a spell first."] =
-  "Se ha intentado añadir un icono recordatorio sin ningún hechizo. Añade un hechizo primero."
+    "Se ha intentado añadir un icono recordatorio sin ningún hechizo. Añade un hechizo primero."
 L["Caster"] = "Lanzador"
 L["CD Fade"] = "Ocultar Enfriamiento"
 L["Cooldown"] = "Enfriamiento"
 L[
-    "Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."
-  ] =
-  "Cambia esto si quieres que el módulo recordatorio compruebe encantamientos de arma, esto hará que se ignoren hechizos listados."
+        "Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."
+    ] =
+    "Cambia esto si quieres que el módulo recordatorio compruebe encantamientos de arma, esto hará que se ignoren hechizos listados."
 L["Combat"] = "Combate"
 L["Disable Sound"] = "Desactivar Sonido"
 L["Don't play the warning sound."] = "No reproducir el sonido de aviso."
 L["Group already exists!"] = "!El grupo ya existe!"
 L["If any spell found inside this list is found the icon will hide as well"] =
-  "Si se detecta cualquier hechizo dentro de esta lista, se ocultará el icono."
+    "Si se detecta cualquier hechizo dentro de esta lista, se ocultará el icono."
 L["Inside BG/Arena"] = "Dentro de BG/Arena"
 L["Inside Raid/Party"] = "Dentro de Grupo/Banda"
 L["Instead of hiding the frame when you have the buff, show the frame when you have the buff."] =
-  "En vez de ocultar el marco cuando tienes el beneficio, se mostrará cuando lo tengas."
+    "En vez de ocultar el marco cuando tienes el beneficio, se mostrará cuando lo tengas."
 L["Level Requirement"] = "Nivel requerido"
 L["Level requirement for the icon to be able to display. 0 for disabled."] =
-  "Nivel requerido para que se muestre el icono. Ajustar a 0 para desactivar."
+    "Nivel requerido para que se muestre el icono. Ajustar a 0 para desactivar."
 L["Negate Spells"] = "Negar Hechizos"
 L["New ID"] = "Añadir ID"
 L["New ID (Negate)"] = "Añadir ID (Negar)"
@@ -658,7 +658,7 @@ L["Only run checks during combat."] = "Solo comprobar en combate."
 L["Only run checks inside BG/Arena instances."] = "Solo comprobar dentro de una BG/Arena"
 L["Only run checks inside raid/party instances."] = "Solo comprobar dentro de un Grupo o Banda"
 L["REMINDER_DESC"] =
-  "Este módulo mostrará iconos de aviso en tu pantalla cuando te falten beneficios o tengas alguno que no deberías."
+    "Este módulo mostrará iconos de aviso en tu pantalla cuando te falten beneficios o tengas alguno que no deberías."
 L["Reminders"] = "Recordatorios"
 L["Remove Group"] = "Borrar Grupo"
 L["Remove ID"] = "Borrar ID"
@@ -667,23 +667,23 @@ L["Reverse Check"] = "Invertir comprobación"
 L["Role"] = "Rol"
 L["Select Group"] = "Seleccionar Grupo"
 L["Set a talent tree to not follow the reverse check."] =
-  "Ajustar un árbol de talentos para que no se ajuste a la comprobación invertida."
+    "Ajustar un árbol de talentos para que no se ajuste a la comprobación invertida."
 L["Sound"] = "Sonido"
 L["Sound that will play when you have a warning icon displayed."] =
-  "El sonido que se reproducirá cuando se muestre un icono de aviso."
+    "El sonido que se reproducirá cuando se muestre un icono de aviso."
 L["Spell"] = "Hechizo"
 L["Spells"] = "Hechizos"
 L["Strict Filter"] = "Filtro Estricto"
 L["Talent Tree"] = "Árbol de Talentos"
 L[
-    "This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."
-  ] =
-  "Esta opción se asegura que solo veas hechizos que hayas aprendido. Puede que quieras desactivar esta opción si estás intentando monitorizar un hechizo que no sea usable desde tu libro de hechizos."
+        "This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."
+    ] =
+    "Esta opción se asegura que solo veas hechizos que hayas aprendido. Puede que quieras desactivar esta opción si estás intentando monitorizar un hechizo que no sea usable desde tu libro de hechizos."
 L["Tree Exception"] = "Árbol Excluido"
 L["Weapon"] = "Arma"
 L["You can't remove a default group from the list, disabling the group."] =
-  "No puedes borrar un grupo predeterminado de la lista. El grupo se ha desactivado."
+    "No puedes borrar un grupo predeterminado de la lista. El grupo se ha desactivado."
 L["You must be a certain role for the icon to appear."] =
-  "Debes pertenecer a un rol específico para que se muestre el icono."
+    "Debes pertenecer a un rol específico para que se muestre el icono."
 L["You must be using a certain talent tree for the icon to show."] =
-  "Debes estar usando un árbol de talentos específico para que se muestre el icono."
+    "Debes estar usando un árbol de talentos específico para que se muestre el icono."

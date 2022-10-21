@@ -8,141 +8,141 @@ local C_AzeriteItem_GetPowerLevel = _G.C_AzeriteItem.GetPowerLevel
 local Item = _G.Item
 
 function CDB.RegisterAzeriteTags()
-	NT:RegisterTag(
-		"azerite:name",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:name",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local azeriteItem = Item:CreateFromItemLocation(azeriteItemLocation)
+            local azeriteItem = Item:CreateFromItemLocation(azeriteItemLocation)
 
-			return azeriteItem:GetItemName()
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            return azeriteItem:GetItemName()
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 
-	NT:RegisterTag(
-		"azerite:current",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:current",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+            local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
 
-			return CDB:GetFormattedText("CURRENT", xp, xpForNextPoint)
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            return CDB:GetFormattedText("CURRENT", xp, xpForNextPoint)
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 
-	NT:RegisterTag(
-		"azerite:max",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:max",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local _, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
-			return CDB:GetFormattedText("CURRENT", xpForNextPoint, xpForNextPoint)
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            local _, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+            return CDB:GetFormattedText("CURRENT", xpForNextPoint, xpForNextPoint)
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 
-	NT:RegisterTag(
-		"azerite:percent",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:percent",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
-			return CDB:GetFormattedText("PERCENT", xp, xpForNextPoint)
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+            return CDB:GetFormattedText("PERCENT", xp, xpForNextPoint)
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 
-	NT:RegisterTag(
-		"azerite:tonext",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:tonext",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
-			return CDB:GetFormattedText("TONEXT", xp, xpForNextPoint)
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+            return CDB:GetFormattedText("TONEXT", xp, xpForNextPoint)
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 
-	NT:RegisterTag(
-		"azerite:current-percent",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:current-percent",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
-			return CDB:GetFormattedText("CURRENT_PERCENT", xp, xpForNextPoint)
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+            return CDB:GetFormattedText("CURRENT_PERCENT", xp, xpForNextPoint)
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 
-	NT:RegisterTag(
-		"azerite:current-max",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:current-max",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
-			return CDB:GetFormattedText("CURRENT_MAX", xp, xpForNextPoint)
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+            return CDB:GetFormattedText("CURRENT_MAX", xp, xpForNextPoint)
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 
-	NT:RegisterTag(
-		"azerite:current-max-percent",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:current-max-percent",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
-			return CDB:GetFormattedText("CURRENT_MAX_PERCENT", xp, xpForNextPoint)
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            local xp, xpForNextPoint = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+            return CDB:GetFormattedText("CURRENT_MAX_PERCENT", xp, xpForNextPoint)
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 
-	NT:RegisterTag(
-		"azerite:level",
-		function()
-			local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+    NT:RegisterTag(
+        "azerite:level",
+        function()
+            local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
 
-			if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-				return
-			end
+            if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
+                return
+            end
 
-			local currentLevel = C_AzeriteItem_GetPowerLevel(azeriteItemLocation)
+            local currentLevel = C_AzeriteItem_GetPowerLevel(azeriteItemLocation)
 
-			return CDB:GetFormattedText("CURRENT", currentLevel)
-		end,
-		"AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
-	)
+            return CDB:GetFormattedText("CURRENT", currentLevel)
+        end,
+        "AZERITE_ITEM_EXPERIENCE_CHANGED UNIT_INVENTORY_CHANGED"
+    )
 end

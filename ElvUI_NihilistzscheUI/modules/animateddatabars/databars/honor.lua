@@ -8,7 +8,7 @@ local UnitHonorLevel = _G.UnitHonorLevel
 local HN = ADB:NewDataBar(NUI.CPW(UnitHonor), NUI.CPW(UnitHonorMax), NUI.CPW(UnitHonorLevel))
 
 function HN:Initialize()
-	self:GetParent():CreateAnimatedBar(self, "Honor")
+    self:GetParent():CreateAnimatedBar(self, "Honor")
 end
 
 ADB:RegisterDataBar(HN)

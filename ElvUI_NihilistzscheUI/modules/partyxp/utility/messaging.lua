@@ -14,48 +14,52 @@ local GetMaxLevelForPlayerExpansion = _G.GetMaxLevelForPlayerExpansion
 local LE_PARTY_CATEGORY_INSTANCE = _G.LE_PARTY_CATEGORY_INSTANCE
 
 function PXP.InitMessaging()
-	C_ChatInfo_RegisterAddonMessagePrefix("PXP")
-	C_ChatInfo_RegisterAddonMessagePrefix("PXPQXP")
-	C_ChatInfo_RegisterAddonMessagePrefix("PXPREQ")
+    C_ChatInfo_RegisterAddonMessagePrefix("PXP")
+    C_ChatInfo_RegisterAddonMessagePrefix("PXPQXP")
+    C_ChatInfo_RegisterAddonMessagePrefix("PXPREQ")
 end
 
 function PXP.Message(sender)
-	local current, max = UnitXP("player"), UnitXPMax("player")
-	local rested = GetXPExhaustion()
-	local level = UnitLevel("player")
+    local current, max = UnitXP("player"), UnitXPMax("player")
+    local rested = GetXPExhaustion()
+    local level = UnitLevel("player")
 
-	if level == GetMaxLevelForPlayerExpansion() then
-		return
-	end
+    if level == GetMaxLevelForPlayerExpansion() then
+        return
+    end
 
-	local message
-	if IsXPUserDisabled() then
-		message = ("[DISABLED]")
-	else
-		message = ("[l:%dc:%dm:%dr:%d]"):format(level, current, max, rested)
-	end
+    local message
+    if IsXPUserDisabled() then
+        message = ("[DISABLED]")
+    else
+        message = ("[l:%dc:%dm:%dr:%d]"):format(level, current, max, rested)
+    end
 
-	if (sender) then
-		C_ChatInfo_SendAddonMessage("PXP", message, "WHISPER", sender)
-	else
-		C_ChatInfo_SendAddonMessage("PXP", message, IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or "PARTY")
-	end
+    if (sender) then
+        C_ChatInfo_SendAddonMessage("PXP", message, "WHISPER", sender)
+    else
+        C_ChatInfo_SendAddonMessage(
+            "PXP",
+            message,
+            IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or "PARTY"
+        )
+    end
 end
 
 function PXP.QXPMessage(val)
-	local level = UnitLevel("player")
+    local level = UnitLevel("player")
 
-	if level == GetMaxLevelForPlayerExpansion() or IsXPUserDisabled() then
-		return
-	end
+    if level == GetMaxLevelForPlayerExpansion() or IsXPUserDisabled() then
+        return
+    end
 
-	local message = ("[qxp:%d]"):format(val)
+    local message = ("[qxp:%d]"):format(val)
 
-	C_ChatInfo_SendAddonMessage("PXPQXP", message, IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or "PARTY")
+    C_ChatInfo_SendAddonMessage("PXPQXP", message, IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or "PARTY")
 end
 
 function PXP.REQMessage(target)
-	local message = "[req]"
+    local message = "[req]"
 
-	C_ChatInfo_SendAddonMessage("PXPREQ", message, "WHSIPER", target)
+    C_ChatInfo_SendAddonMessage("PXPREQ", message, "WHSIPER", target)
 end
