@@ -1,8 +1,0 @@
-<Bindings>
-	<Binding name="Summon Favorite Mount" category="BINDING_HEADER_NIHILISTUI">
-        SummonFavoriteMount();
-	</Binding>
-	<Binding name="Summon Sky Golem" category="BINDING_HEADER_NIHILISTUI">
-        SummonSkyGolem();
-	</Binding>
-</Bindings>

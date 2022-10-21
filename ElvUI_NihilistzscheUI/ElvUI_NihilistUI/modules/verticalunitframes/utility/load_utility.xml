@@ -1,5 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui">
-	<Script file="update_utility.lua"/>
-	<Script file="utility.lua"/>
-	<Script file="events.lua"/>
-</Ui>

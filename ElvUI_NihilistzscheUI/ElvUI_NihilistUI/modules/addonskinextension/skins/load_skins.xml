@@ -1,5 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui">
-	<Script file="barrelsofeasy.lua"/>
-	<Script file="bloodshieldtracker.lua"/>
-	<Script file="kalielstracker.lua"/>
-</Ui>

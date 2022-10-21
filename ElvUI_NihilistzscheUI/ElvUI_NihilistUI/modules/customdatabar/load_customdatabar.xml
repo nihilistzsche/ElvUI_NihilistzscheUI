@@ -1,4 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui">
-	<Include file="core\load_core.xml"/>
-	<Include file="tags\load_tags.xml"/>
-</Ui>

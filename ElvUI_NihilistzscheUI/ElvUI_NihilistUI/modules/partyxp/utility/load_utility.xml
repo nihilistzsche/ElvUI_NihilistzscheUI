@@ -1,6 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui">
-	<Script file="messaging.lua"/>
-	<Script file="events.lua"/>
-	<Script file="data.lua"/>
-	<Script file="tags.lua"/>
-</Ui>

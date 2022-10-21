@@ -1,8 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui">
-	<Script file="events.lua"/>
-	<Script file="frames.lua"/>
-	<Script file="overlap.lua"/>
-	<Script file="update.lua"/>
-	<Script file="cooldowns.lua"/>
-	<Script file="data.lua"/>
-</Ui>
