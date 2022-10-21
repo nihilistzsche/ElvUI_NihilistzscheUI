@@ -1,0 +1,8 @@
+package-as: ElvUI_NihilistzscheUI
+manual-changelog:
+    filename: CHANGELOG.txt
+    markup-type: bbcode
+move-folders:
+    ElvUI_NihilistzscheUI/ElvUI_NihilistzscheUI: ElvUI_NihilistzscheUI
+    ElvUI_NihilistzscheUI/ElvUI_NihilistzscheUI_Installer: ElvUI_NihilistzscheUI_Installer
+    ElvUI_NihilistzscheUI/ElvUI_NihilsitzscheUI_OptionsUI: ElvUI_NihilsitzscheUI_OptionsUI
