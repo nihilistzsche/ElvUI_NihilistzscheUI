@@ -1,15 +1,15 @@
 ## Interface: 90207
 ## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r
 ## Author: Nihilistzsche
-## Version: 12.01
+## Version: 12.02
 ## Notes: An external edit for ElvUI and ElvUI Shadow & Light
 ## RequiredDeps: ElvUI
 ## OptionalDeps: ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI
-## OptionalDeps: AddOnSkins_NihilistzschezschePrivate, ElvUIDev, zPets, Executive_Assistant, TotalRP3
+## OptionalDeps: AddOnSkins_NihilistzschezschePrivate, ElvUI_CPU, zPets, Executive_Assistant, TotalRP3
 ## X-oUF: ElvUF
-
+## X-Curse-Project-ID: 690477
 ## X-Tukui-ProjectID: 4
-## X-Tukui-ProjectFolders: ElvUI_NihilistzscheUI_OptionsUI, ElvUI_NihilistzscheUI
+## X-Tukui-ProjectFolders: ElvUI_NihilistzscheUI_Installer, ElvUI_NihilistzscheUI_OptionsUI, ElvUI_NihilistzscheUI
 
 settings\load_settings.xml
 locales\load_locales.xml

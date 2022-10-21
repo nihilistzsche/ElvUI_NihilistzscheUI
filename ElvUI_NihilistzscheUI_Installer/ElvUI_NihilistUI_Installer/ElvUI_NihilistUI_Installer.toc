@@ -5,7 +5,7 @@
 ## Notes: The installer files for ElvUI_NihilistUI.
 ## SavedVariables: NUIIDB
 ## RequiredDeps: ElvUI_NihilistUI
-## OptionalDeps: ElvUI_NihilistUI_Private, ElvUI_NihilistUI_Lulupeep. ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI, AddOnSkins_NihilistPrivate, ElvUIDev, zPets, TotalRP3, OldGodWhispers
+## OptionalDeps: ElvUI_NihilistUI_Private, ElvUI_NihilistUI_Lulupeep. ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI, AddOnSkins_NihilistPrivate, ElvUI_CPU, zPets, TotalRP3, OldGodWhispers
 
 core\load_core.xml
 installers\load_installers.xml

@@ -1,7 +1,7 @@
 ## Interface: 90207
 ## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r |cff1784d1OptionsUI|r
 ## Author: Nihilistzsche
-## Version: 12.01
+## Version: 12.02
 ## Notes: Configuration for ElvUI_NihilistzscheUI
 ## RequiredDeps: ElvUI_NihilistzscheUI, ElvUI_OptionsUI, ElvUI_NihilistzscheUI_Installer
 ## LoadOnDemand: 1

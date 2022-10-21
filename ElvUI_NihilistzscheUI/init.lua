@@ -10,7 +10,7 @@ local NUI = E.Libs.AceAddon:NewAddon(addon, "AceEvent-3.0", "AceHook-3.0")
 
 local LibStub = _G.LibStub
 local GetAddOnMetadata = _G.GetAddOnMetadata
-local ElvUIDev = _G.ElvUIDev
+local ElvUI_CPU = _G.ElvUI_CPU
 local hooksecurefunc = _G.hooksecurefunc
 local ElvUI_SLE = _G.ElvUI_SLE
 
@@ -94,8 +94,8 @@ function NUI:RegisterModule(name)
         local module = self:GetModule(name)
         if (module and module.Initialize) then
             module:Initialize()
-            if (ElvUIDev) then
-                ElvUIDev:RegisterPluginModule("ElvUI_NihilistzschetUI", name, module)
+            if (ElvUI_CPU) then
+                ElvUI_CPU:RegisterPluginModule("ElvUI_NihilistzschetUI", name, module)
             end
         end
     end
@@ -107,10 +107,10 @@ function NUI:GetRegisteredModules()
 end
 
 function NUI:ADDON_LOADED(addonName)
-    if addonName == "ElvUIDev" then
-        ElvUIDev:RegisterPlugin(addon)
+    if addonName == "ElvUI_CPU" then
+        ElvUI_CPU:RegisterPlugin(addon)
         for _, moduleName in pairs(self.RegisteredModules) do
-            ElvUIDev:RegisterPluginModule(addon, moduleName, NUI:GetModule(moduleName))
+            ElvUI_CPU:RegisterPluginModule(addon, moduleName, NUI:GetModule(moduleName))
         end
     end
 end

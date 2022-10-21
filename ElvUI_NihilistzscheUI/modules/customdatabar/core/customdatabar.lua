@@ -85,7 +85,7 @@ function CDB:GetFormattedText(style, min, max, rested)
 end
 
 function CDB:RegisterDataBar(key, frame)
-    E.db.databar[key].text = "NONE"
+    E.db.databars[key].text = "NONE"
     NT:RegisterFontString(key, frame.text)
 end
 
@@ -94,7 +94,7 @@ function CDB:UpdateTag(frameKey)
 end
 
 function CDB:Initialize()
-    CDB.currQexperience = NUI:GetCurrentQuestexperience()
+    CDB.currQexperience = NUI:GetCurrentQuestXP()
 
     NT:RegisterTag(
         "name",
@@ -103,12 +103,12 @@ function CDB:Initialize()
         end
     )
 
-    self.RegisterexperienceTags()
+    self.RegisterExperienceTags()
     self.RegisterRepTags()
     self.RegisterAzeriteTags()
     self.RegisterHonorTags()
 
-    self:RegisterDataBar("experience", DB.StatusBars.Experiencee)
+    self:RegisterDataBar("experience", DB.StatusBars.Experience)
     self:RegisterDataBar("reputation", DB.StatusBars.Reputation)
     self:RegisterDataBar("azerite", DB.StatusBars.Azerite)
     self:RegisterDataBar("honor", DB.StatusBars.Honor)

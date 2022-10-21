@@ -9,7 +9,7 @@ local GetXPExhaustion = _G.GetXPExhaustion
 
 -- luacheck: no max line length
 
-function CDB.RegisterXPTags()
+function CDB.RegisterExperienceTags()
     NT:RegisterTag(
         "xp:current",
         function()

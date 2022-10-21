@@ -118,7 +118,9 @@ function VUF.UpdateElvUFSetting()
     end
     for _, unit in pairs(elv_units) do
         E.db.unitframe.units[unit].enable = value
-        UF:CreateAndUpdateUF(unit)
+        if not value and UF.units[unit] then
+            UF.units[unit]:Kill()
+        end
     end
 end
 
