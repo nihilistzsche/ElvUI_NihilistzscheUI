@@ -1,0 +1,504 @@
+12.03:
+- 9.2.7 update and synced to the latest ElvUI version.
+- This will be the last Shadowlands version, with an update for the prepatch coming around Thursday next week.
+
+12.01:
+While rewriting a portion of the NihilistUI installer to work globally it was no longer installing nameplate filters for all classes, that's been fixed. The ElvUI nameplate filter install step has also been brought out to a "global" function that is run once instead of the same values being set 12 times.
+
+12.00:
+This one gets a major version release change because I made a change to the code style I write the addon in that affected over 5000 lines of it, so seemed like a worthwhile change to bump the number.
+ElvUI_mMediaTag support has been added to the installer, enabling class colored nameplate borders and the mythic keystone \!key\[s\] command.
+The default size of the player and target aurabars and horizontal castbar have been reduced.
+The default size of the pet aurabars has been reduced and they are now enabled by default.
+
+11.12:
+The installer will no longer set nameplate names to invalid tags when CustomTags is not available.
+A new font size option has been added to the main NihilistUI options page, changing this changes the value the chat is set to at login.
+The portal bar now also blacklists its items from the MerathilisUI Auto Buttons, but both it and the raid prep bar have been rewritten to only query the server if an item has not already been blacklisted significantly reducing the load this addon generates on all but the first login.
+
+11.11:
+A skilet installer was added, though it is a very work in progress I'm still working on how I want to use it.
+The UIScale should now no longer be so aggressively changed.
+
+11.10:
+The installer has been reworked and should hopefully no longer error for those of you having issues with it.
+The cutaway textures on the vertical unit frames are now rotated so if you use a noticeable texture like I do they match the statusbars they are anchored to.
+I have noticed an issue with the VUF Player Frame sometimes fading even when casting, and I have changed how the cast system works a little to hopefully eliminate this.
+
+11.09: (this release was not publically released)
+Minor updates mostly to the backend of how the addon works, though one notable fix is the fix on the shadow on the Experience Bar. Pet Battle Nameplates has a fix for the nameplates sometimes showing empty.
+
+11.08:
+** New**
+Added a new Engineer Toy Bar to the Utility Bars. You no longer need to clutter your favorite toys (and your toy bar) with toys that only some of your characters will use. The engineer toy bar will automatically fill with engineering toys that are pre-defined. You can disable specific items from the options window; and if you notice a toy is missing that you think should be there; please let me know.
+
+**Fixed**
+Warlock Demons: Rewrote how the spawn/despawn of demons is handled to prevent a situation where the non-nameplate sorting of the bars would inevitably suffer a lua error. Nether Portal all day long now and no issues should occur.
+Installer: The installer was wrongly trying to apply all of the "ElvUI modifiers" during spec profile setup even if the associated addon was not enabled, this has been changed so the installer should no longer be attempting to setup missing addons. Various changes to the installer, as always it is my personal setup but the main changes were moving the tracker bar, location plus panel, portal bar, and minimap down lower so they dont overlap the datatext panels.
+
+11.07: Health prediction for the VUF are now handled by ElvUI, options have been mirrored to respective unit options in VUF. When ProjectAzilroka is installed, the PetBattleNameplates will not set hardcoded text, instead the installer sets up a new style filter to apply PBUF tags from ProjectAzilroka to the nameplates instead. Fixed Shadowlands food on the raid prep bar and added Shadowlands bait to the bait bar.
+11.06: Added support for ElvUI's pet "colorPetByUnitClass" option to the Vertical Unit Frames. Reworked how the installer initializes to try to eliminate a race condition that appears to be causing lua errors to occur in places they shouldn't.
+Installer changes:
+* Added colorPetByUnitClass to both raid pets and pets.
+* Adjusted the ProjectAzilroka Torghast Buffs moving it slightly lower so it no longer collides with the FarmBar.
+11.05: Some lua error fixes, FarmBar updates, installer updates.
+I'm aware of an issue where using the installer and logging into or reloading the ui after install on a class that uses spec profiles (all but the pure-DPS classes) will receive lua errors and VUF will be broken. Reloading the UI once fixes the issue and it doesnt not appear again unless the installer is run again.
+Also I should note unlike previous versions; skipping the installer is now recorded as permanent. You can remove the skipped flag and receive new installer updates by running the installer again manually through the ElvUI Options window.
+11.04: First public release of the Shadowlands version.
+I'd also like to announce that I will be developing a version of NihilistUI for Classic soon as well, finally.
+
+10.05-10.06:
+Nothing materially changed here. Just had to fix my release script so had to keep bumping the number.
+
+I would like to personally apologize to each and every one of you for the sorry state of affairs that was the 10.02 and 10.03 releases. I will try to take more care in the future to prevent anything like this from happening again.
+
+10.04:
+- Updates to some things to match ElvUI 11.21.
+- Fixed ButtonStyle when MerathilisUI is not present.
+
+10.03:
+- Moved back to the original ElvUI_NihilistUI/ElvUI_NihilistUI_OptionsUI setup. The other way is too much work to maintain. A future version will include plans laid out for stopping disabled modules from using memory but this release was too important to get out now.
+- The RaidCD default anchors have been moved.
+- WarlockDemons uses a new method to detect when it can attach to nameplates making it more reliable.
+- Readded latency to the VUF castbars.
+- VUF frame width and height were stored in the profile, but options were never added. Frame width and height is now dynamically calculated based on health width and height, and the width of the power bar if the power bar is attached to the health bar.
+- The way VUF frames are setup has been changed to EnhancedShadows work properly around them.
+- VUF now properly supports all of the ElvUI UF color options (found in its normal place). Please report if you notice something that doesn't.
+- Have a reworked oUF_GCD that works properly, and I was able to remove all of the dumb hacks around GCD.
+- The Conch of Warmondi has been added to the portal bar as well.
+- VUF CustomTexts should work again.
+
+10.02:
+- Special Note: BenikUI compatibility in this version is based on current dev version of BenikUI. It will break if using the current (as of July 29th 2019) released version of BenikUI. Please either disable BenikUI or refrain from updating NihilistUI until BenikUI has also updated.
+- Updated Cutaway code in VUF to match the new version of Cutaway in ElvUI 11.20
+- Added the G.E.A.R Tracking Beacon from the Gnome Heritage Armor questline to the portal bar.
+- Fixed a lua error with the specswitch bar.
+
+10.01:
+- VUF unitframes now use the same color setting coe the regular UF unitframes use so that they look identical to the original unitframes ElvUI has.
+- Cutaway health is enabled for all unitframes in the installer.
+
+10.00:
+- The various modules ElvUI_NihilistUI provides are now loaded by individual addons. While the runtime enable/disable state still exists for all of them, you can now prevent them from loading entirely by disabling them in your addons window. Please report any issues arising from disable modules to my git.
+- Ran luacheck on NihilistUI and fixed over 1000 issues reported by it. Things may have been broken by this, I think I caught most of it, but again, if you run into any issues please report them.
+- VerticalUnitFrames has had healing prediction fixed, cutaway health is working finally, and the portrait has been reworked to more closely resemble the portrait on default ElvUI frames. The default camDistanceScale on the portraits has been changed from 1 to 1.3.
+- ButtonStyle has been neutered and now exists only to provide shadows. I received an Icon pack from someone (who will announce it when they are ready) that has removed the need for the overlay portion of it.
+- Masque support has been completely removed.
+- EnhancedShadows has been added to the BenikUI Taxi Button ("Request stop") and the Pet Battle Action Bar, as well as nameplate auras when using EnhancedNameplateAuras.
+
+9.23:
+- Added a nameplate custom style filter "Demon About To Expire" for warlocks that is a condition that triggers when a wild imp has less than 3 energy remaining or a demon has less than 5 seconds remaining. This requires ElvUI versions higher than the released 11.18 (at time of this release the development version on git).
+- Lots of bug fixes to various modules.
+- Installer rework and updates.
+- Fixed the Zygor installer.
+
+9.22:
+- There is a bug with the Warlock Demons timer bars attaching to nameplates that can only be fixed by a new method that is available in ElvUI versions higher than 11.14 (at the time of this update only the development version). This option will be ignored when the needed method does not exist.
+- Fixed a bug with the InFlight misc hook when enhanced shadows is disabled.
+
+9.21:
+- Warlock Demons can now attach the timer bars to friendly npc nameplates when those are available. It will fall back to the original mode inside instances where friendly nameplates are not available, or if friendly minion nameplates are not enabled.
+- Fixed bugs that prevented the cooldown bar and hidden artifact tracker from properly disabling.
+
+9.20:
+- Added options to the Raid CDs to disable tracking cooldowns you dont want to see.
+- Added 4 more datatext panels when using dtbars2 because I needed more.
+- Performanced some minor optimization to try to alleviate performance but major improvements won't be able to come before the 10.0 reorg.
+- Fixed an error that can occur when used with MerathilisUI.
+
+9.192:
+- ...
+
+9.191:
+- Fix some more errors with LibNihilistTags.
+
+9.19:
+- Updated for WoW 8.2.
+- RaidPrepBar updated with 8.1 main stat food and new food and flasks from 8.2
+- Fixed a bug that prevented mouseover with the custom databar tags from working.
+
+9.181, 9.182, 9.183:
+- Fixed the Zandalari Troll crest that appears to have been corrupted.
+- Updated some installer settings. As more users are using the UI, I would like to take the time to remind you that unlike other plugin installers that allow you to pick and choose which part of the UI you wish to install, the NihilistUI installer is a one-button install meant for my own personal use and offers no configuration to it.
+- Had some various issues with git which is why the version jump to 9.183.
+
+9.18:
+- Warlock demons has been changed so that it will now create multiple columns instead of continuining to grow. Its default position has been moved to the top center of the screen with this change.
+- Added an outline setting to the hidden artifact tracker.
+
+9.17:
+- Removed the "vertstatusbar" texture setting from UnitFrames, the Vertical Unit Frames will now just use the normal UnitFrame status bar setting.
+- Fixed a bug with how the race crest is displayed in NihilistChat.
+- The QuestXP bar will now use the current War Mode Bonus percent when calculating quest xp when War Mode is enabled.
+- Added EnhancedShadows to ClassicQuestLog and LightHeaded when they are installed and enabled.
+- The NihilistUI installer will now set friendly npc and player nameplates to name only.
+- Hopefully fix "You are not in a party." messages caused by PartyXP.
+
+9.16:
+- When talking with another WoW player using NihilistChat, the race crest for that player's race will now show in the background of NihilistChat.
+- Fixed the power bars in the Vertical Unit Frames not having the proper texture.
+- Added an installer for Zygor, but please note that this installer simply turns off *all* of the enhancements. If you run the NihilistUI and wish to use these enhancements please turn them back on in your Zygor settings.
+
+9.15:
+- Fixed a lua error with the XP and Honor databar notifiers.
+
+9.14:
+- Cleaned up the databar notifiers even further to reduce code bloat.
+
+9.13:
+- Added missing blood elf and worgen race crests, should prevent green squares on the chat panels if the installer is run when you are one of those races.
+
+9.12:
+- Dummy release due to repository corruption that I had to fix.
+
+9.11:
+- Added Kul Tiran and Zandalari Troll race crests so the chat textures will work for them.
+- Added a new Azerite Powers datatext that will show all selected azerite powers on equipped azerite armor pieces.
+- The databar notifier should no longer tell you that you have a reward coffer when you first reach paragon status with a faction.
+- The reputation bar should once again work with Paragon Reputation for setting the color of the status bar.
+
+9.10:
+- Optimized the RaidCD update function some.
+- Added overflow protection for xp, honor, and azerite databar notifiers just in case any of them get out of hand (honor appears to at very high honor levels).
+
+- Fixed some issues with the Warlock Demons.
+
+9.083:
+- Fixed bugs related to the CC Debuff Caster options added in 9.082.
+
+9.082:
+- Fixed a possible nil error in WarlockDemons regarding Wild Imp energy, and added support for 0 energy to the color table.
+- Added options for the CC Debuff Caster names added in 9.08
+
+9.081:
+- Missed some addon installers when updating the installer in 9.08, causing the
+installer to malfunction, fixed these.
+- Added support for Touhin to the installer
+
+9.08:
+- WarlockDemons will now show how many firebolts a Wild Imp has left to shoot before it despawns in the form Wild Imp (#) on the duration bar.
+- Added the name of the caster of CCDebuffs to nameplate auras, thanks to Merathilis for the idea and initial implementation.
+- Removed the ObjectiveTrackerHider, please use the one provided with ElvUI_NutsAndBolts instead.
+- The NihilistChat frame will now remaing visible while taking a flight path when BenikUI's flight mode is enabled.
+
+9.07:
+- Reworked the power prediction, let me know if you see any issues with it.
+- Added portaits to the other vertical unit frames (notably pet, pet target, target target, target target target, focus, and focus target) that are enabled by default. To get back to the previous settings go to the frame in the options, disable the portrait and set the health width back to 12.
+- Added an option to change the color of the overlay gloss created by ButtonStyle.
+
+9.06:
+- Fixed a long-standing bug that prevented the raid target indicator from working on the VUF, in addition, added size options to the raid target indicator.
+- Reworked the warlock demons module so that it no longer has gaps between bars or the shadow mismatching the height of the bars.
+- Added a hack to work around the bars in the RaidCDs and warlock demons modules sometimes having their label and duration font strings in the wrong position.
+- Removed the cooldown flash from the cooldown bar module, please use the one provided with MerathilisUI instead if you want this functionality.
+- WIth MerathilisUI 4.21 or higher, the raid manager frame will be shadowed.
+9.05:
+- Fixed the issue that caused the player vertical unit frame health bar to cover the entire screen for some reason.
+- Fixed integration with ParagonReputation.
+
+9.04:
+- Bumped the TOC Interface version so WoW won't complain that its out-of-date at the addon list screen.
+- Fixed the Vertical Unit Frame options.
+- Fixed some typos in the version datatext.
+- The GCD element on the vertical unit frame should work again.
+
+9.03:
+- When you send a whisper using nihilistchat, an @ before the recipients name shows up. This was hardcoded to red but is now class colored to match the rest of the UI.
+- Fixed an issue that caused a library to not be included in the zip.
+
+9.02:
+- Fixed the red screen overlay that appeared when you first targetted something and some other various VUF fixes.
+- Fixed a typo that was in the colored NihilistUI text in various places.
+
+9.01:
+- Rebranded (again) from ChaoticUI to NihilistUI. Hopefully this one sticks.
+- Some more changes to how the VUF are created and updated to hopefully fix remaining issues there.
+
+8.03:
+
+- Updates to make it match changes made to ElvUI in my absence.
+- Enhanced Nameplate Auras return for the new oUF nameplates.
+- Changed how aurabars are created in VUF as there were lots of errors surrounding them. There still seem to be some edge cases I am trying to track down but have no immediate solution for, notably around the "permanent corruption" talent on Affliction warlocks and reloading the UI.
+
+8.01:
+- Rewrote a bunch of things to bring them up to my more modern coding standards. Please report if you see anything broken or not working.
+- PartyXP now supports tags. The full list can be viewed in ElvUI_ChaoticUI/modules/partyxp/utility/tags.lua. They are used the same way oUF tags are used, just like CustomWatchBar tags.
+
+7.13:
+- Added a Discord button and Step Titles to the installer, thanks Merathilis.
+- Fixed lua errors caused by switching profiles.
+- Fixed player vertical unit frames for Priest, Shamans, and Druids again.
+- Updated the AFK screen when ChaoticUI is used in conjunction with BenikUI.
+- Fixed a bug with warlock demons that would have been apparent if I ever touched my configuration.
+- Removed the reminder module, I never tested it, its old, and MerathilisUI has an awesome reminder already.
+
+7.12:
+- FIxed a bug that broke everything for Druids, Priests, and Shamans. I need to log into my alts more.
+- If you change the installer texture and font, it gets saved now, and will pop up the installer again for alts if you changed it from the last time you installed (or had never run the installer with the new changes. This only applies if you change the texture and font, if you dont change them, and skip the installer, it should not show up again unless I bump the installer version.
+- Ticks on databars and castbars are now only half-height and start at the top of the bar (or left of the bar for vertical castbars) to give the bars a more modern look.
+
+7.11:
+- Fixed EnhancedNameplateAuras which have been broken since 6.11. Apologies.
+- The following features from BenikUI and MerathilisUI that had been previously automatically disabled are no longer done so as they are not directly incompatible with ChaoticUI:
+- BenikUI Styling.
+- BenikUI Datatexts.
+- MerathilisUI Datatexts.
+
+7.10:
+- Fixed an issue that would cause the installer to continually show if you skipped it.
+
+7.09:
+- Some buttonstyle updates so it looks better.
+- Reworked how the enhanced shadows work because I was noticing auras werent getting them.
+- Added shadows to the other BenikUI dashboards if you use them.
+
+7.08:
+- Hopefully fix a couple of lua errors with my addon skin extensions. I dont run into them though so Im throwing darts at a chalkboard here.
+- Another change to reduce memory/cpu footprint of ChaoticUI.
+- Fixed a typo introduced in 7.07 that caused a lua error in ChaoticChat.
+- Fixed a bug in ChaoticChat that prevented some frames from being able to be closed.
+
+7.07:
+- Not a lot of changes here.
+- Bumped the TOC version of ChaoticUI_Config so it will load without needing to check Load Out of Date addons.
+- Some code cleanup to reduce memory footprint.
+- Compability changes.
+
+7.06:
+- Fixed a lua error with the core config preventing you from opening it.
+- More compatibility updates.
+- Added more MerathilisUI styling to ChaoticUI elements when MerathilisUI is installed.
+
+7.05:
+- More bug fixes and shadows (ish).
+- Fixed a typo in the incompatibility print.
+- Removed some more unnecessary compatibility code.
+- FIxed a bug that prevented you from moving the ChaoticChat frame if only one chat was active.
+- Added more MerathilisUI styling because it is just the best thx Mera.
+- Some more backend changes that should have no effect on anything.
+
+7.04:
+- TL; DR: Bug fixes and shadows.
+
+- Changed the way the player vertical unit frame is constructed to try to reduce copy/paste code. Please let me know if you run into any issues.
+- MerathilisUI has added incompatiblity checks to his UI in recent development versions, therefore I have removed some checks from my UI. This may cause some incompatibilities to surface while he prepares his 3.37 release.
+- Changed inverted shadows so they can co-exist alongside normal shadows and welp now theres double shadows on all of the buttons and auras cause this UI can not ever have enough shadows. Disabling inverted shadows in buttonstyle can remove the inner shadow, and disabling enhanced shadows can remove the outer shadow.
+- Enhanced Shadows will now surround RaidCD categories and the Warlock Demons bars, as well as a more visible shadow on the minimap.
+- Fixed bugs in Warlock Demons that were causing the bars to just be off. They went back to school and got their GED.
+- Fixed a bug with the sizing of multi-row bars like the portal bar that only have one bar that was making it so the spacing around the buttons was not correct.
+- Added BenikUI and MerathilisUI to the header in the config if they are loaded alongside ChaoticUI.
+- Added a one-time per character print for features in BenikUI and MerathilisUI that are disabled because they conflict with ChaoticUI.
+
+7.03:
+- Fixed a bug in the compatibility code caused by a recent MerathilisUI update.
+- FIxed a bug that caused the buttonstyle config to fail.
+- Made the raid cd and warlock demons bars smaller by default.
+
+7.02:
+- RaidCDs updates.
+- Added Call Felhunter and Call Fel Lord to warlock data under interrupts and aoe CC's respectively.
+- Other minor fixes and reorganization.
+
+7.01:
+- A brand new look to reflect its chaotic nature better within the WoW universe.
+- ElvUI Shadow & Light is no longer a required dependency, though remains highly recommended.
+- For MerathilisUI: The raid markers had previously been marked incompatible, but they are not and should not have been, this has been corrected. In addition, the microBar is no longer automatically disabled when ElvUI_LocPlus is installed, but you will want to move it as its default position overlaps the location bar.
+- DynamicCam support has been added to the installer, again reflecting my personal preferences.
+- Fixed a bug where gaining a level from gaining azerite XP would not properly update the message from the databarnotifier.
+- Backend changes as always.
+
+6.15:
+- ChaoticUI is now compatible* with both MerathilisUI and BenikUI.
+- When MerathilisUI is installed, ChaoticUI will also use MerathilisUI style.
+* Because of the nature of ChaoticUI, MerathilisUI and BenikUI, some features from
+each are automatically disabled when they are used in conjunction with ChaoticUI.
+For BenikUI:
+BenikUI style is disabled.
+The BenikUI databars are disabled.
+The BenikUI datatexts are disabled.
+The BenikUI style for actionbars is disabled.
+For MerathilisUI:
+MerathilisUI Nameplate Auras are disabled.
+MerathilisUI datatexts are disabled.
+MerathilisUI specBar and equipBar are disabled.
+When ElvUI_LocPlus is installed, the MerathilisUI locPanel and microBar are disabled.
+When ProjectAzilroka is installed, the MerathilisUI efl is disabled.
+
+6.14:
+- The return of ButtonStyle due to poor performance associated with Masque.
+- This version of ButtonStyle can actually be seen! In addition, it now also styles Auras and the Kaliel's Tracker Active Button if that is installed.
+- The Inverted Shadows used by ButtonStyle also return, now supported by EnhancedShadows for that added color goodness.
+- Added ls: Toasts support to the installer.
+- Some things were transparent, some were not, now all the things are transparent. Thank Merathilis.
+- Fixed a lua error related to disabling the cooldown bar when there had not been any cooldowns.
+- Some backend optimization to make development easier.
+
+6.13:
+- Added a ChaoticUI mover category.
+- Removed fishing from the professions datatext config and fixed a lua error in it.
+- Fixed lua errors in RaidCDs.
+
+6.12:
+- Bug fixes.
+
+6.11:
+- Various bug fixes.
+
+6.10:
+- Okay enough freaking updates today.
+- Fix the masque skin selection in the options.
+- Other minor installer updates.
+
+6.09:
+- Fixed the migration module that was screwing up the installer.
+- The masque skin used by the installer now defaults to Masque: Sleek, but is user selectable globally if Masque is installed.
+
+6.08:
+- Selecting the texture or font for the installer in the config is now stored globally so the same texture and font will be used for all of your characters. If you had previously selected a custom texture/font it will be automatically migrated to the global system for you.
+
+6.07:
+- Various high level module changes:
+- Vertical Unit Frames reorganized
+- CustomWatchBar renamed CustomDataBar
+- WatchBarNotifier renamed DataBarNotifier
+All of these changes should be transparent to users.
+
+- Resting indicator fixed in VUF.
+- Added the new Tome of the Quiet Mind and Codex of the Quiet Mind as auras that allow you to change talents in talentloadouts.
+
+6.06:
+- Removed ButtonStyle and InvertedShadows from ChaoticUI, they were never really working properly, I never really put much effort to them, and I added Masque support to ChaoticUI a long time ago. Just use Masque to skin your buttons.
+- Masque is now included in the installer, the skin used by the installer is Masque: Darion, if you do not have that installed it will not properly install.
+- Added Battle for Azeroth buff food, flasks, and augment rune to the raidprepbar.
+- Added the PvP Talent Fel Lord and Observer to warlockdemons.
+
+6.05:
+- Added a new [xp:quest-percent] tag to custom watchbar, which will show what % of a level the completed quests in the current zone are worth.
+- Fixed a bug that would cause the account ilvl datatext to not update its display when your item level changed.
+- ChaoticChat now knows how to handle whispers from players playing Call of Duty 4.
+- The tracker bar uses a new sorting mechanism that should push newer items to the front (left) of the bar for both items and currencies.
+- Changed the way azerite xp is handled in the watchbarnotifier.
+- Various changes to raid cds to try to fix some issues with group member cds not showing sometimes.
+- Various bug fixes and tweaks.
+
+6.04:
+- Raid CD needs to play nice with other CandyBar addons.
+
+6.03:
+- Raid CD updates.
+
+6.02:
+- Fixed Raid CD bars not disappearing properly when a group member is removed.
+- Bug fixes.
+
+6.01:
+- Better PvP talent detection for Raid CDs that doesn't require modification to LibGroupInSpecT.
+
+6.00:
+- A brand new module: Raid Cooldowns! Inspired by the old BloodLegion cooldowns and BLTRCDs, this new system is written in such a way it should be much simpler to keep updated.
+- Mage spells for Legion and BfA added to the portal bar.
+- Random tweaks and bug fixes.
+
+5.13b:
+- Bug fixes.
+
+5.13:
+
+- ChaoticChat now groups multiple chats into one window separated by tabs, I do not plan to support the multiple floating windows again.
+- Talent Loadouts have been updated to support the new PvP talents system when War Mode is enabled.
+- Added the Phase Indicator to the target vertical unit frame.
+- Quest XP calculations now take into account scaling quests and war mode bonuses, and only consider quests in your local zone.
+- Warlock Demons has returned, please install zPets to use.
+- Bug fixes and code cleanup.
+
+5.12:
+
+- Bug fixes for some Vertical Unit Frames anchoring issues
+- Fixed a lua error with the bait bar
+- Bait bar now uses the new MapInfo in ElvUI provided by Simpy. <3
+- Fixed errors related to missing files being referenced by the TOC files.
+
+5.11:
+
+- Added a new Account Item Level datatext inspired by Simpy.
+- The Challenge Mode Portals on the portal bar are now optional and disabled by default.
+- Fixed an issue where the hidden artifact tracker would not disable properly.
+- The cooldown bar will now show cooldowns much sooner and supports the ability to show pet abilities.
+- Various other bug fixes and improvements.
+
+5.1:
+- Compatibility with Battle for Azeroth.
+- Rebranded from NenaUI to ChaoticUI.
+- Removed the artifact power button (obviously).
+- Removed warlock demons, not needed anymore.
+- Removed enhanced petbattle ui, you will need to install it separately.
+- Please ensure you remove ElvUI_NenaUI and ElvUI_NenaUI_Config from your addon folders.
+
+4.12b:
+* Very very very minor update to update the artifact power item list.
+
+4.12:
+* Mostly bug fixes and a few tweaks. Notably tracker bar and farm bar should now work properly.
+
+4.11:
+* AnimatedStatusBars now respect their parent bar's orientation.
+* Removed the built-in DragonOverlay.
+* Added support for ProjectAzilroka to the installer.
+* Installer updates.
+
+4.10:
+* Fixed a bug with the Paladin class power bar in VUF.
+* Reworked the installer, added support for iFilger and OzCooldowns, removed BLTRaidCooldowns and ConsLegion support.
+* Removed the built-in OzCooldowns. Please download the separate version instead.
+* Other minor bug fixes.
+
+4.04:
+
+* Added a PowerPrediction element to the player vertical unit frames.
+* Fixed the strings in the Enhanced Pet Battle UI config so that the bar options properly reflect that they affect the revive bar.
+* Filter BigWigs out of nenachat.
+* Bug fixes
+
+4.03:
+
+Spec profiles should now work without issues. I did still receive some lua errors but I could not figure out where they came from and they didn't appear to break anything.
+The ticks on the animated databars can now be configured.
+
+4.02:
+
+Paragon Reputation is now a supported addon by the installer. It will set the paragon rep bar color to gold.
+FIxed the installer so it will not break Kaliel's Tracker if you do not have World Quest Tracker or the custom KT WQT version. If you do use the WQT version after this update, and use the installer, add WQT to the version in your KalielsTracker.toc file, i.e. 2.1.6WQT
+Added "ticks" to the various info bars to show them with bubbles. These are not configurable at the moment, they will be in 4.03.
+AddOnSkins is no longer a mandatory dependency.
+Potions will no longer show on the raid prep bar.
+
+Bug fixes.
+
+4.01 Notes:
+
+This is a major update, PLEASE READ THESE CHANGES.
+
+The following modules have been removed, please install the individual plugins if you would still like this functionality:
+
+* CastBarOverlay -> ElvUI_CastBarOverlay
+* CombatState -> ElvUI_ActionbarCombatState
+* EverySecondCounts -> ElvUI_EverySecondCounts
+* ExtraActionBars -> ElvUI_ExtraActionBars
+* LocPlus -> ElvUI_LocationPlus or ElvUI_LocationLite
+* VisualAuraTimers -> ElvUI_VisualAuraTimers
+
+DragonOverlay, EnhancedPetBattleUI and OzCooldowns remain integrated with NenaUI.
+
+I did this to remove the bloat from NenaUI and allow you to customize your ElvUI more freely.
+
+All of the various utility bars have been moved under one Utility Bars module, and their respective configuration pages can now be found in the Utility Bars module page in the NenaUI config.
+
+There is now an option, disabled by default, to hide the utility bars in combat.
+
+There is now an option, enabled by default, to enable/disable the Enhanced Shadows.
+
+Added a new module BetterReputationColors that allows you to customize your faction colors.
+
+The default position of the trackerbar, farmbar, and raidprepbar has moved to the top left under the data panel.
+
+Bug fixes.
