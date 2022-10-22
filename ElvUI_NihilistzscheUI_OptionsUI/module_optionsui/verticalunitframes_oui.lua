@@ -885,38 +885,19 @@ function VUF:GenerateOptionTables(options)
 end
 
 function VUF:GenerateOptions()
-    E.Options.args.unitframe.args.generalOptionsGroup.args.allColorsGroup.order = 7
-    E.Options.args.unitframe.args.generalOptionsGroup.args.generalGroup.args.barGroup.args.statusbar.set = function(
-        info,
-        value)
+    E.Options.args.unitframe.args.allColorsGroup.order = 7
+    E.Options.args.unitframe.args.statusbar.set = function(info, value)
         E.db.unitframe[info[#info]] = value
         UF:Update_StatusBars()
         self:UpdateAllFrames()
     end
     -- luacheck: push no max line length
-    E.Options.args.unitframe.args.generalOptionsGroup.args.generalGroup.args.fontGroup.args.font.set = function(
-        info,
-        value)
+    E.Options.args.unitframe.args.generalOptionsGroup.args.fontGroup.set = function(info, value)
         E.db.unitframe[info[#info]] = value
         UF:Update_FontStrings()
         self:UpdateAllFrames()
     end
     -- luacheck: pop
-    E.Options.args.unitframe.args.generalOptionsGroup.args.generalGroup.args.fontGroup.args.fontSize.set = function(
-        info,
-        value)
-        E.db.unitframe[info[#info]] = value
-        UF:Update_FontStrings()
-        self:UpdateAllFrames()
-    end
-    E.Options.args.unitframe.args.generalOptionsGroup.args.generalGroup.args.fontGroup.args.fontOutline.set = function(
-        info,
-        value)
-        E.db.unitframe[info[#info]] = value
-        UF:Update_FontStrings()
-        self:UpdateAllFrames()
-    end
-
     local options = {
         order = 2150,
         type = "group",
