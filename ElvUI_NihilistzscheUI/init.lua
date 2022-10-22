@@ -125,7 +125,6 @@ function NUI:InitializeModules()
     for _, moduleName in pairs(NUI.RegisteredModules) do
         local module = self:GetModule(moduleName)
         if module.Initialize then
-            print("Initializing " .. module:GetName())
             module:Initialize()
         end
     end

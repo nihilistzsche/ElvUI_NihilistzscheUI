@@ -120,7 +120,6 @@ function PXP.GetPartyMemberGUIDFromName(name)
     end
     for i = 1, GetNumGroupMembers() do
         local _n, _r = UnitName("party" .. i)
-        print(_n, n, _r, r)
         if n == _n and r == _r then
             return UnitGUID("party" .. i)
         end
