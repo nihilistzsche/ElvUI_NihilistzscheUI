@@ -40,6 +40,7 @@ COMP.BAGGINS = COMP.IsAddOnEnabled("Baggins")
 COMP.WP = COMP.IsAddOnEnabled("WoWPro")
 COMP.FCT = COMP.IsAddOnEnabled("ElvUI_FCT")
 COMP.CT = COMP.IsAddOnEnabled("ElvUI_CustomTags")
+COMP.DSI = COMP.IsAddOnEnabled("ElvUI_DynamicStatusIcons")
 
 function COMP.Print(addon, feature)
     if

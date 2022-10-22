@@ -251,7 +251,13 @@ function VUF:Initialize()
             self:UpdateAllFrames()
         end
     )
-
+    hooksecurefunc(
+        UF,
+        "CreateAndUpdateUF",
+        function(_, unit)
+            self:UpdateFrame(unit)
+        end
+    )
     CastingBarFrame:Hide()
     CastingBarFrame.Show = function()
     end

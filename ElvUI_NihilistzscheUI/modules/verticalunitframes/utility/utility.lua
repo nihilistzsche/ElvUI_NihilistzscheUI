@@ -322,6 +322,11 @@ function VUF:UpdateFrame(unit)
         if E.myclass == "DEATHKNIGHT" and unit == "player" then
             frame.Runes.sortOrder = (frame.db.classbar.sortDirection ~= "NONE") and frame.db.classbar.sortDirection
         end
+
+        if COMP.DSI and (unit == "player" or unit == "target") then
+            local DSI = ElvUI_DynamicStatusIcons[1]
+            DSI:Update_PlayerFrame(frame)
+        end
     else
         if frame:IsVisible() then
             frame:Hide()
