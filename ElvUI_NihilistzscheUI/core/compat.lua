@@ -39,7 +39,7 @@ COMP.EA = COMP.IsAddOnEnabled("Executive_Assistant")
 COMP.BAGGINS = COMP.IsAddOnEnabled("Baggins")
 COMP.WP = COMP.IsAddOnEnabled("WoWPro")
 COMP.FCT = COMP.IsAddOnEnabled("ElvUI_FCT")
-COMP.CT = COMP.IsAddOnEnabled("ElvUI_CustomTags")
+COMP.TT = COMP.IsAddOnEnabled("ElvUI_TinkerToolbox")
 COMP.DSI = COMP.IsAddOnEnabled("ElvUI_DynamicStatusIcons")
 
 function COMP.Print(addon, feature)
