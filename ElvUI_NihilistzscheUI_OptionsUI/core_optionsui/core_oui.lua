@@ -1,14 +1,14 @@
 local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
 
 local NI = NUI.Installer
-local CCFG = NUI:NewModule("NihilistzscheUIConfig")
+local NCFG = NUI:NewModule("NihilistzscheUIConfig")
 local EP = E.Libs.EP
 local COMP = NUI.Compatibility
 
 local format = _G.format
 local tinsert = _G.tinsert
 
-function CCFG.GenerateModuleList()
+function NCFG.GenerateModuleList()
     local list = ""
     for _, m in pairs(NUI:GetRegisteredModules()) do
         list = list .. m .. "\n"
@@ -16,7 +16,7 @@ function CCFG.GenerateModuleList()
     return list
 end
 
-function CCFG.GenerateInstalledAddOnList()
+function NCFG.GenerateInstalledAddOnList()
     local list = ""
     local addons = {}
     if (not NUIIDB.installInfo or not NUIIDB.installInfo.installedAddons) then
@@ -37,7 +37,7 @@ function CCFG.GenerateInstalledAddOnList()
     return list
 end
 
-function CCFG.GenerateOptions()
+function NCFG.GenerateOptions()
     local name =
         NUI.Title ..
         (": |cff99ff33%s|r"):format(NUI.Version) .. " (|cfffe7b2cElvUI|r" .. format(": |cff99ff33%s|r", E.version)
@@ -183,7 +183,7 @@ function CCFG.GenerateOptions()
                     description = {
                         order = 2,
                         type = "description",
-                        name = CCFG:GenerateInstalledAddOnList()
+                        name = NCFG:GenerateInstalledAddOnList()
                     }
                 }
             }
@@ -194,7 +194,7 @@ function CCFG.GenerateOptions()
 
     for _, m in pairs(NUI:GetRegisteredModules()) do
         local mod = NUI:GetModule(m)
-        if (mod ~= CCFG and mod.GenerateOptions) then
+        if (mod ~= NCFG and mod.GenerateOptions) then
             mods[mod:GetName()] = mod
         end
     end
@@ -212,8 +212,8 @@ function CCFG.GenerateOptions()
     end
 end
 
-function CCFG:Initialize()
+function NCFG:Initialize()
     EP:RegisterPlugin("ElvUI_NihilistzscheUI", self.GenerateOptions)
 end
 
-NUI:RegisterModule(CCFG:GetName())
+NUI:RegisterModule(NCFG:GetName())
