@@ -22,7 +22,7 @@ function VUF:ConstructTargetTargetTargetFrame(frame, unit)
         VUF:HookSetAlpha(frame)
     end
 
-    frame:Point("BOTTOMLEFT", _G.NihilistzscheUF_TargetTarget, "BOTTOMRIGHT", 110, 0)
+    frame:Point("TOP", _G.NihilistzscheUF_TargetTarget, "BOTTOM", 0, -50)
     E:CreateMover(
         frame,
         frame:GetName() .. "Mover",

@@ -36,7 +36,7 @@ end
 local SLEiconPath, iconPath, buildFactionIconString, buildClassIconString
 
 if (COMP.SLE) then
-    SLEiconPath = [[Interface\AddOns\ElvUI_SLE\media\textures\]]
+    SLEiconPath = [[Interface\AddOns\ElvUI_SLE\media\textures\afk\factionlogo\]]
 
     buildFactionIconString = function(entry)
         return "|T" .. SLEiconPath .. entry.faction .. ".blp:15:15:0:0:64:64:4:56:4:56|t"

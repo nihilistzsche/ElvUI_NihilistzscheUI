@@ -22,7 +22,7 @@ function VUF:ConstructPetTargetFrame(frame, unit)
         VUF:HookSetAlpha(frame)
     end
 
-    frame:Point("BOTTOMRIGHT", _G.NihilistzscheUF_Pet, "BOTTOMLEFT", -110, 0)
+    frame:Point("BOTTOMRIGHT", _G.NihilistzscheUF_Pet, "BOTTOMLEFT", -150, 0)
     E:CreateMover(
         frame,
         frame:GetName() .. "Mover",

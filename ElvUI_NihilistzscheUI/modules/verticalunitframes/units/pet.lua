@@ -31,7 +31,7 @@ function VUF:ConstructPetFrame(frame, unit)
         VUF:HookSetAlpha(frame)
     end
 
-    frame:Point("BOTTOMRIGHT", _G.NihilistzscheUF_Player, "BOTTOMLEFT", -110, 0)
+    frame:Point("BOTTOMRIGHT", _G.NihilistzscheUF_Player, "BOTTOMLEFT", -150, 0)
     E:CreateMover(frame, frame:GetName() .. "Mover", "Pet Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTUI")
 end
 
