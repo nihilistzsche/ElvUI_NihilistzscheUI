@@ -502,7 +502,10 @@ function PBN.TickerFrameOnUpdate(self, elapsed)
 end
 
 function PBN:CheckActions(frame, actions)
-    if actions.show then
+    if
+        actions.show and
+            (not InCombatLockdown() and not UnitAffectingCombat("player") and not UnitAffectingCombat("pet"))
+     then
         frame:Show()
     end
 end
