@@ -64,6 +64,7 @@ function NI:MerathilisUISetup(isSpec)
         EternalPalace = false
       }
     }
+<<<<<<< Updated upstream
   }
   self:EDB().mui.misc = {
     nameHover = false,
@@ -107,6 +108,100 @@ function NI:MerathilisUISetup(isSpec)
   self.SaveMoverPosition("AutoButtonBar1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -398, 334)
   self.SaveMoverPosition("AutoButtonBar2Mover", "TOP", "AutoButtonBar1Mover", "BOTTOM", 0, -4)
   self.SaveMoverPosition("AutoButtonBar3Mover", "TOP", "AutoButtonBar2Mover", "BOTTOM", 0, -4)
+=======
+    self:EDB().mui.bags = {
+        Enable = false
+    }
+    self:EDB().mui.autoButtons.bar2 = {
+        include = "POTIONSL,FLASKSL,UTILITY,CUSTOM"
+    }
+    self:EDB().mui.autoButtons.bar3 = {
+        include = "MAGEFOOD,FOODVENDOR,FOODSL"
+    }
+    self:EDB().mui.panels = {
+        bottomPanel = false,
+        topPanel = false,
+        panelSize = 800,
+        stylePanels = {
+            topLeftExtraPanel = false,
+            topRightExtraPanel = false,
+            bottomLeftExtraPanel = false,
+            bottomRightExtraPanel = false
+        }
+    }
+    self:EDB().mui.microBar = {
+        visibility = "show"
+    }
+    self:EDB().mui.chat = {
+        panelHeight = 180
+    }
+    self:EDB().mui.datatexts = {
+        [2] = {enable = false},
+        rightChatTabDatatextPanel = {enable = false}
+    }
+    self:EDB().mui.tooltip = {
+        modelIcon = true,
+        progressInfo = {
+            raid = {
+                Nyalotha = false,
+                EternalPalace = false
+            }
+        }
+    }
+    self:EDB().mui.misc = {
+        nameHover = false,
+        mawThreatBar = {
+            font = {
+                name = self.db.font
+            }
+        },
+        lfgInfo = {
+            line = {
+                tex = self.db.texture
+            }
+        }
+    }
+    self:EDB().mui.raidmarkers = {
+        enable = true,
+        backdrop = true
+    }
+    self:EDB().mui.raidBuffs = {
+        enable = true,
+        class = true
+    }
+    self:EDB().mui.blizzard = {
+        objectiveTracker = {
+            info = {
+                name = self.db.font
+            }
+        }
+    }
+    if not isSpec then
+        self:EPRV().muiSkins = {
+            blizzard = {
+                merchant = false
+            }
+        }
+        self:EPRV().mui = self:EPRV().mui or {}
+        self:EPRV().mui.skins = {
+            embed = {
+                enable = false
+            }
+        }
+    end
+    self.SaveMoverPosition("MER_RaidBuffReminderMover", "TOPLEFT", E.UIParent, "TOPLEFT", 238, -141)
+    self.SaveMoverPosition("MER_RaidManager", "TOPRIGHT", E.UIParent, "TOPRIGHT", -179, -190)
+    self.SaveMoverPosition("Notification Mover", "TOP", E.UIParent, "TOP", 0, -120)
+    if NUI.Private then
+        self.SaveMoverPosition("mUI_RaidMarkerBarAnchor", "TOPRIGHT", E.UIParent, "TOPRIGHT", -179, -166)
+    else
+        self.SaveMoverPosition("mUI_RaidMarkerBarAnchor", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -4, 313)
+    end
+    self.SaveMoverPosition("AutoButtonBar1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -398, 334)
+    self.SaveMoverPosition("AutoButtonBar2Mover", "TOP", "AutoButtonBar1Mover", "BOTTOM", 0, -4)
+    self.SaveMoverPosition("AutoButtonBar3Mover", "TOP", "AutoButtonBar2Mover", "BOTTOM", 0, -4)
+    self.SaveMoverPosition("SpellFeedback", "BOTTOM", UIParent, "BOTTOM", 0, 320)
+>>>>>>> Stashed changes
 
   if (COMP.LCP) then
     self:EDB().mui.locPanel = {

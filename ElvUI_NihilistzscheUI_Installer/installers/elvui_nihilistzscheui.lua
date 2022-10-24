@@ -34,6 +34,7 @@ NI.ClassMountFavorites = {
 }
 
 function NI:GlobalNameplateSetup()
+<<<<<<< Updated upstream
   local classes = {}
   _G.FillLocalizedClassList(classes, false)
   E.global.nameplates.filters.Active_BattlePet_PBN = {
@@ -62,6 +63,39 @@ function NI:GlobalNameplateSetup()
       isBattlePetPBN = true,
       isNotActiveBattlePetPBN = true,
       priority = 91
+=======
+    local classes = {}
+    _G.FillLocalizedClassList(classes, false)
+    E.global.nameplates.filters.Active_BattlePet_PBN = {
+        actions = {
+            scale = 1.1,
+            alpha = 100,
+            show = true
+        },
+        triggers = {
+            instanceType = {
+                petBattle = true
+            },
+            isActiveBattlePetPBN = true,
+            priority = 90,
+            isBattlePetPBN = true
+        }
+    }
+    E.global.nameplates.filters.Inactive_BattlePet_PBN = {
+        actions = {
+            scale = 0.8,
+            alpha = 50,
+            show = true
+        },
+        triggers = {
+            instanceType = {
+                petBattle = true
+            },
+            isBattlePetPBN = true,
+            isNotActiveBattlePetPBN = true,
+            priority = 91
+        }
+>>>>>>> Stashed changes
     }
   }
   for c, filterClassName in pairs(classes) do
@@ -200,12 +234,29 @@ function NI:NihilistzscheUISetup(isSpec)
     triggers = {
       enable = true
     }
+<<<<<<< Updated upstream
   }
   if COMP.PA then
     self:EDB().nameplates.filters.BattlePet_PBN_PA = {
       triggers = {
         enable = true
       }
+=======
+    if COMP.PA then
+        self:EDB().nameplates.filters.BattlePet_PBN_PA = {
+            triggers = {
+                enable = true
+            }
+        }
+    end
+    self:EDB().nihilistui = nil
+    if not isSpec then
+        self:EPRV().nihilistui = nil
+    end
+    self:EDB().nihilistzscheui = {}
+    self:EDB().nihilistzscheui.autolog = {
+        enabled = true
+>>>>>>> Stashed changes
     }
   end
   self:EDB().nihilistzscheui = {}
