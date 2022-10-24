@@ -60,6 +60,17 @@ function PBN:AddStyleFilterOptions()
                 type = "toggle",
                 order = 20
             }
+            E.Options.args.nameplates.args.stylefilters.args.actions.args.show = {
+                name = "Show Frame",
+                type = "toggle",
+                order = 1
+            }
+            E.Options.args.nameplates.args.stylefilters.args.actions.args.hide.order = 2
+            E.Options.args.nameplates.args.stylefilters.args.actions.args.usePortrait.order = 3
+            E.Options.args.nameplates.args.stylefilters.args.actions.args.nameOnly.order = 4
+            E.Options.args.nameplates.args.stylefilters.args.actions.args.spacer1.order = 5
+            E.Options.args.nameplates.args.stylefilters.args.actions.args.scale.order = 6
+            E.Options.args.nameplates.args.styleFilters.args.actions.args.alpha.order = 7
         end
     end
     -- luacheck: pop

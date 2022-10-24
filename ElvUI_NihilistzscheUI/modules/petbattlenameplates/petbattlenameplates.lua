@@ -27,7 +27,7 @@ function PBN:CheckFriendlyNPCNameVisibility(event)
             self.oldNameplateOccludedAlphaMult = nil
         end
         if self.oldFriendlyNPCVisibility then
-            SetCVar("nameplateShowFriendlyNPCs", self.oldFriendlyNPCVisibility)
+            SetCVar("nameplateshowFriendlyNPCs", self.oldFriendlyNPCVisibility)
             self.oldFriendlyNPCVisibility = nil
         end
     elseif
@@ -35,8 +35,8 @@ function PBN:CheckFriendlyNPCNameVisibility(event)
             event == "PET_BATTLE_OPENING_START"
      then
         if not self.oldFriendlyNPCVisibility then
-            self.oldFriendlyNPCVisibility = GetCVar("nameplatesShowFriendlyNPCs")
-            SetCVar("nameplateShowFriendlyNPCs", self.db.enable and 1 or 0)
+            self.oldFriendlyNPCVisibility = GetCVar("nameplatesshowFriendlyNPCs")
+            SetCVar("nameplateshowFriendlyNPCs", self.db.enable and 1 or 0)
         end
         if not self.oldNameplateOccludedAlphaMult then
             self.oldNameplateOccludedAlphaMult = GetCVar("nameplateOccludedAlphaMult")
@@ -397,6 +397,7 @@ function PBN:InitNameplate(np)
     if not np.Health.Override then
         np.Health.Override = self.NameplateHealthOverride
     end
+
     np.__nui_pbn_init = true
 end
 
@@ -500,6 +501,12 @@ function PBN.TickerFrameOnUpdate(self, elapsed)
     end
 end
 
+function PBN:CheckActions(frame, actions)
+    if actions.show then
+        frame:Show()
+    end
+end
+
 function PBN:InitializeNPHooks()
     self:AddNPStyleFilterTriggerDefaults()
     E.StyleFilterDefaults.triggers.instanceType.petBattle = false
@@ -510,9 +517,11 @@ function PBN:InitializeNPHooks()
             NP.StyleFilterTriggerEvents.FAKE_PBNForceUpdate = 0
         end
     )
+    E.StyleFilterDefaults.actions.show = false
     NP:StyleFilterConfigure()
     NP:StyleFilterAddCustomCheck("PBNStyleFilter", self.StyleFilterCustomCheck)
     hooksecurefunc(UF, "PostUpdateAura", self.PostUpdateAura)
+    hooksecurefunc(NP, "StyleFilterSetChanges", self.CheckActions)
     PBN.TickerFrame = CreateFrame("Frame")
 end
 
