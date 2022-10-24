@@ -190,22 +190,23 @@ function WD:GenerateOptions()
             if
                 not E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.demonologyWarlockDemonAboutToExpireNUI
              then
+                local nlogo = [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo:12:12|t]]
                 E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.isDemonologyWarlockDemonNUI = {
-                    name = "Unit Is Demonology Warlock Demon",
+                    name = nlogo .. "Unit Is Demonology Warlock Demon",
                     desc = "If enabled then the filter will only activate for units that are demonology warlock demons.  This filter is provided by NihilistzscheUI.",
                     type = "toggle",
                     order = 50,
                     disabled = E.myclass ~= "WARLOCK"
                 }
                 E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.isNotDemonologyWarlockDemonNUI = {
-                    name = "Unit Is Not Demonology Warlock Demon",
+                    name = nlogo .. "Unit Is Not Demonology Warlock Demon",
                     desc = "If enabled then the filter will only activate for units that are not demonology warlock demons.  This filter is provided by NihilistzscheUI.",
                     type = "toggle",
                     order = 51,
                     disabled = E.myclass ~= "WARLOCK"
                 }
                 E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.demonologyWarlockDemonAboutToExpireNUI = {
-                    name = "Demonology Warlock Demon About to Expire",
+                    name = nlogo .. "Demonology Warlock Demon About to Expire",
                     desc = "If enabled then the filter will only activate when the nameplate belongs to a wild imp with less than 3 energy or another demonlogy warlock demon with less than 5 seconds remaining.  This filter is provided by NihilistzscheUI.",
                     type = "toggle",
                     order = 52,

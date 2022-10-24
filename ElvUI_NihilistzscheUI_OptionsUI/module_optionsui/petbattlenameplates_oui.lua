@@ -42,6 +42,7 @@ function PBN:AddStyleFilterOptions()
     local oldFunc = E.Options.args.nameplates.args.stylefilters.args.selectFilter.set
     E.Options.args.nameplates.args.stylefilters.args.selectFilter.set = function(info, value)
         oldFunc(info, value)
+        local nlogo = [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo:12:12|t]]
         local tbl = E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args
         if not tbl.isBattlePetPBN then
             local order = 53
@@ -49,19 +50,19 @@ function PBN:AddStyleFilterOptions()
             local IF_ENABLED = "If enabled then the filter will only activate when the nameplate "
             for i, v in ipairs(npTriggerOptions) do
                 tbl[v[1] .. "PBN"] = {
-                    name = v[2],
+                    name = nlogo .. v[2],
                     desc = IF_ENABLED .. v[3] .. PROVIDED_BY_NUI,
                     type = "toggle",
                     order = order + (i - 1)
                 }
             end
             E.Options.args.nameplates.args.stylefilters.args.triggers.args.instanceType.args.petBattle = {
-                name = "Pet Battle",
+                name = nlogo .. "Pet Battle",
                 type = "toggle",
                 order = 20
             }
             E.Options.args.nameplates.args.stylefilters.args.actions.args.show = {
-                name = "Show Frame",
+                name = nlogo .. "Show Frame",
                 type = "toggle",
                 order = 1
             }
