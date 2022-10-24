@@ -27,7 +27,7 @@ function PBN:CheckFriendlyNPCNameVisibility(event)
             self.oldNameplateOccludedAlphaMult = nil
         end
         if self.oldFriendlyNPCVisibility then
-            SetCVar("nameplateshowFriendlyNPCs", self.oldFriendlyNPCVisibility)
+            SetCVar("nameplateShowFriendlyNPCs", self.oldFriendlyNPCVisibility)
             self.oldFriendlyNPCVisibility = nil
         end
     elseif
@@ -35,8 +35,8 @@ function PBN:CheckFriendlyNPCNameVisibility(event)
             event == "PET_BATTLE_OPENING_START"
      then
         if not self.oldFriendlyNPCVisibility then
-            self.oldFriendlyNPCVisibility = GetCVar("nameplatesshowFriendlyNPCs")
-            SetCVar("nameplateshowFriendlyNPCs", self.db.enable and 1 or 0)
+            self.oldFriendlyNPCVisibility = GetCVar("nameplatesShowFriendlyNPCs")
+            SetCVar("nameplateShowFriendlyNPCs", self.db.enable and 1 or 0)
         end
         if not self.oldNameplateOccludedAlphaMult then
             self.oldNameplateOccludedAlphaMult = GetCVar("nameplateOccludedAlphaMult")
