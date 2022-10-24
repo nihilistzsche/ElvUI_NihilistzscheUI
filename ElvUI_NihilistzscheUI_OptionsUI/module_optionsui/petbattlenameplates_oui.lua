@@ -71,7 +71,7 @@ function PBN:AddStyleFilterOptions()
             E.Options.args.nameplates.args.stylefilters.args.actions.args.nameOnly.order = 4
             E.Options.args.nameplates.args.stylefilters.args.actions.args.spacer1.order = 5
             E.Options.args.nameplates.args.stylefilters.args.actions.args.scale.order = 6
-            E.Options.args.nameplates.args.styleFilters.args.actions.args.alpha.order = 7
+            E.Options.args.nameplates.args.stylefilters.args.actions.args.alpha.order = 7
         end
     end
     -- luacheck: pop
