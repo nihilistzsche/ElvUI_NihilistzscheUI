@@ -38,6 +38,8 @@ function RCD:CreateBar(spell_id, guid)
 
     local class = self.cached_players[guid].unitInfo.class
     local classColor = class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[class]
+    if not classColor then return end
+
     bar:SetColor(classColor.r, classColor.g, classColor.b)
     bar.candyBarDuration:FontTemplate(LSM:Fetch("font", self.db.font), self.db.fontSize, "THINOUTLINE")
     bar.candyBarLabel:FontTemplate(LSM:Fetch("font", self.db.font), self.db.fontSize, "THINOUTLINE")
