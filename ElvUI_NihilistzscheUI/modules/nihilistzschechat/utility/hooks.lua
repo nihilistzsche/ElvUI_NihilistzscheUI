@@ -185,6 +185,10 @@ function NC:SetUpHooks()
     )
 
     local function CloseChatClosure()
+        if InCombatLockdown() or UnitAffectingCombat("player") or UnitAffectingCombat("pet") then
+            NUI:RegenWait(CloseChatClosure)
+            return
+        end
         if CURRENT_CHATFRAME then
             FCF_Close(CURRENT_CHATFRAME)
             CURRENT_CHATFRAME = nil
