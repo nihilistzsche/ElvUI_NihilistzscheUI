@@ -12,10 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: JohnnyMorganz/stylua-action@v1
+      - uses: JohnnyMorganz/stylua-action@v1.1.2
         with:
           token: ${{ secrets.STYLUA_GITHUB_TOKEN }}
-          version: V1.1.2  # NOTE: we recommend pinning to a specific version in case of formatting changes
   release:
     runs-on: ubuntu-latest
     env:
