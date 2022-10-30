@@ -11,6 +11,9 @@ function VUF:PostUpdateBar_AuraBars(unit, statusBar, index, position, duration, 
     if not unit or unit == "vehicle" then
         dbUnit = "player"
     end
+    if not VUF.db.units[dbUnit] or not VUF.db.units[dbUnit].aurabars then
+        return
+    end
     self.db = VUF.db.units[dbUnit].aurabars
     UF.PostUpdateBar_AuraBars(self, unit, statusBar, index, position, duration, expiration, debuffType, isStealable)
 

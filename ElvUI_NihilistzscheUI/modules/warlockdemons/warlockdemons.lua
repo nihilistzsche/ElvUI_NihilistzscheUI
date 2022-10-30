@@ -76,7 +76,7 @@ function WD.AttachBarToNamePlate(bar, guid)
     assert(np)
     bar:SetParent(np)
     local yOffset = -4
-    if _G.zPets.GetPetName(guid) == "Wild Imp" then
+    if _G.zPets.GetPetName(guid) == "Wild Imp"  or _G.zpets.GetPetName(guid) == "Imp Gang Boss" then
         yOffset = -8
     end
     bar:SetPoint("TOPLEFT", np.Castbar, "BOTTOMLEFT", 0, yOffset)
@@ -400,13 +400,13 @@ function WD:CreateWildImpUpdateClosure(bar, petGUID)
         if WILD_IMP_ENERGY_COLORS[petEnergy] then
             bar:SetLabel(
                 ("%s (%s%s|r)"):format(
-                    self:ShouldAttachToNamePlate() and "Remaining" or "Wild Imp",
+                    self:ShouldAttachToNamePlate() and "Remaining" or _G.zPets.GetPetName(petGUID),
                     E:RGBToHex(unpack(WILD_IMP_ENERGY_COLORS[petEnergy])),
                     petEnergy
                 )
             )
         else
-            bar:SetLabel(self:ShouldAttachToNamePlate() and "Remaining (?)" or "Wild Imp (?)")
+            bar:SetLabel(self:ShouldAttachToNamePlate() and "Remaining (?)" or _G.zPets.GetPetName(petGUID) .. " (?)")
         end
     end
 end
@@ -452,7 +452,7 @@ function WD:OnSpawn(petGUID)
     local bar = self:CreateBar(demon_info.icon, select(2, _G.zPets.GetPetDurationInfo(petGUID)), petGUID)
 
     local label = self:ShouldAttachToNamePlate() and "Remaining" or petName
-    if (petName == "Wild Imp") then
+    if (petName == "Wild Imp" or petName == "Imp Gang Boss") then
         local petEnergy = _G.zPets.GetPetEnergy(petGUID)
         label =
             ("%s (%s%s|r)"):format(
@@ -522,7 +522,7 @@ function WD.StyleFilterCustomCheck(frame, _, trigger)
             if not barIndex then
                 return false
             end
-            if (petName == "Wild Imp" and (_G.zPets.GetPetEnergy(guid) < 3)) or WD.activeBars[barIndex].remaining < 5 then
+            if ((petName == "Wild Imp" or petName == "Imp Gang Boss") and (_G.zPets.GetPetEnergy(guid) < 3)) or WD.activeBars[barIndex].remaining < 5 then
                 passed = true
             else
                 return false
@@ -565,7 +565,9 @@ function WD:Initialize()
         Darkhound = {icon = GetSpellTexture(267996), priority = 16, optionOrder = 22},
         ["Ur'zul"] = {icon = GetSpellTexture(268001), priority = 17, optionOrder = 23},
         ["Fel Lord"] = {icon = GetSpellTexture(212459), priority = 18, optionOrder = 24},
-        Observer = {icon = GetSpellTexture(201996), priority = 19, optionOrder = 25}
+        Observer = {icon = GetSpellTexture(201996), priority = 19, optionOrder = 25},
+        ["Imp Gang Boss"] = {icon = GetSpellTexture(387445), priority = 3, optionsOrder = 26},
+        ["Soulkeeper"] = {icon = GetSpellTexture(386244), prioty = 2, optionsOrder = 27 },
     }
 
     self.header = self:CreateHeader()

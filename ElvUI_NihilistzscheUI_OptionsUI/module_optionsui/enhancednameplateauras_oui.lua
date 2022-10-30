@@ -415,7 +415,7 @@ function ENA.GenerateOptions()
             order = 5,
             name = L["Font Flag"],
             desc = L["Flag to apply to the font"],
-            values = {NONE = "NONE", OUTLINE = "OUTLINE", THICKOUTLINE = "THICKOUTLINE"}
+            values = {NONE = "", OUTLINE = "OUTLINE", THICKOUTLINE = "THICKOUTLINE"}
           }
         }
       }

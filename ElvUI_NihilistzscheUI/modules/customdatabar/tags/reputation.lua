@@ -5,7 +5,7 @@ local NT = NUI.Libs.NT
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
 local GetWatchedFactionInfo = _G.GetWatchedFactionInfo
-local GetFriendshipReputation = _G.GetFriendshipReputation
+local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
 
 function CDB.RegisterRepTags()
     local function GetParagonInfo(factionID)
@@ -20,6 +20,15 @@ function CDB.RegisterRepTags()
         end
 
         return false
+    end
+
+    local function GetFriendshipInfo(factionID)
+        local data = C_GossipInfo_GetFriendshipReputation(factionID)
+        if data.friendshipFactionID == 0 then
+            return false
+        else
+            return true, data.text
+        end
     end
 
     NT:RegisterTag(
@@ -40,16 +49,16 @@ function CDB.RegisterRepTags()
         "rep:standing",
         function()
             local name, reaction, _, _, _, factionID = GetWatchedFactionInfo()
-            local friendID, _, _, _, _, _, friendTextLevel = GetFriendshipReputation(factionID)
+            local isFriend, friendTextLevel = GetFriendshipInfo(factionID)
             if not name then
                 return ""
             end
 
-            if (not friendID and GetParagonInfo(factionID)) then
+            if (not isFriend and GetParagonInfo(factionID)) then
                 return "Paragon"
             end
 
-            return friendID and friendTextLevel or _G["FACTION_STANDING_LABEL" .. reaction]
+            return isFriend and friendTextLevel or _G["FACTION_STANDING_LABEL" .. reaction]
         end,
         "UPDATE_FACTION"
     )

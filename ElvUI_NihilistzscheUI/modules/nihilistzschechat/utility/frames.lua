@@ -474,7 +474,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     chat.Bottom = bottom
 
     local name = chat.Top:CreateFontString(nil, "OVERLAY")
-    name:SetFont(LSM:Fetch("font", self.db.windows.font), 12)
+    name:SetFont(LSM:Fetch("font", self.db.windows.font), 12, "")
     name:SetShadowColor(0, 0, 0)
     name:SetShadowOffset(1.25, -1.25)
     name:SetPoint("LEFT", top, E:Scale(6), E:Scale(1))
@@ -484,7 +484,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     chat.Name = name
 
     local dockedName = UIParent:CreateFontString(nil, "OVERLAY")
-    dockedName:SetFont(LSM:Fetch("font", self.db.windows.font), 12)
+    dockedName:SetFont(LSM:Fetch("font", self.db.windows.font), 12, "")
     dockedName:SetShadowColor(0, 0, 0)
     dockedName:SetShadowOffset(1.25, -1.25)
     dockedName:SetPoint("TOPLEFT", chat)
@@ -506,7 +506,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     chat.InvisibleMaximizeButton = invisibleMaximizeButton
 
     local text = CreateFrame("ScrollingMessageFrame", nil, chat)
-    text:SetFont(LSM:Fetch("font", self.db.windows.font), self.db.windows.fontsize)
+    text:SetFont(LSM:Fetch("font", self.db.windows.font), self.db.windows.fontsize, "")
     text:SetShadowColor(0, 0, 0)
     text:SetShadowOffset(1.25, -1.25)
     text:SetPoint("TOPLEFT", E:Scale(3), E:Scale(-25))
@@ -560,7 +560,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     )
 
     local editBox = CreateFrame("EditBox", nil, chat.Bottom)
-    editBox:SetFont(LSM:Fetch("font", self.db.windows.font), 12)
+    editBox:SetFont(LSM:Fetch("font", self.db.windows.font), 12, "")
     editBox:SetPoint("TOPLEFT", E:Scale(4), E:Scale(-2))
     editBox:SetPoint("BOTTOMRIGHT", E:Scale(-4), E:Scale(2))
     editBox:SetShadowColor(0, 0, 0)
@@ -643,7 +643,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     chat.EditBox.Backdrop = editBackdrop
 
     local lastMessage = chat.Bottom:CreateFontString(nil, "OVERLAY")
-    lastMessage:SetFont(LSM:Fetch("font", self.db.windows.font), 12)
+    lastMessage:SetFont(LSM:Fetch("font", self.db.windows.font), 12, "")
     lastMessage:SetShadowColor(0, 0, 0)
     lastMessage:SetShadowOffset(1.25, -1.25)
     lastMessage:SetPoint("Left", E:Scale(6), E:Scale(1))

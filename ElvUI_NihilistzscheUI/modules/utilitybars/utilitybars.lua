@@ -106,7 +106,7 @@ function NUB:PLAYER_REGEN_ENABLED()
 end
 
 function NUB:CreateBar(name, db, point, moverName)
-    local bar = CreateFrame("Frame", name, E.UIParent, "SecureHandlerStateTemplate,BackdropTemplate")
+    local bar = CreateFrame("Frame", name, E.UIParent, "SecureHandlerStateTemplate")
 
     if (type(db) == "string") then
         NUI:RegisterDB(bar, "utilitybars." .. db)
@@ -121,7 +121,7 @@ function NUB:CreateBar(name, db, point, moverName)
 
     local ES = NUI.EnhancedShadows
     bar:SetFrameLevel(1)
-    bar:SetTemplate("Transparent")
+    bar:CreateBackdrop("Transparent", nil, nil, nil, nil, nil, nil, nil, 0)
     if (COMP.MERS) then
         bar:Styling()
     end

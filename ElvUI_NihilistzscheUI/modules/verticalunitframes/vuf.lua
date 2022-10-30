@@ -258,10 +258,12 @@ function VUF:Initialize()
             self:UpdateFrame(unit)
         end
     )
-    CastingBarFrame:Hide()
-    CastingBarFrame.Show = function()
-    end
-    CastingBarFrame.SetShown = function()
+    if CastingBarFrame then
+        CastingBarFrame:Hide()
+        CastingBarFrame.Show = function()
+        end
+        CastingBarFrame.SetShown = function()
+        end
     end
 
     self:UpdateAll()

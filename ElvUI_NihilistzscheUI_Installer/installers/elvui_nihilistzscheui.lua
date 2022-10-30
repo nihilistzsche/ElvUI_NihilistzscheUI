@@ -2,6 +2,8 @@ local NUI, E, _, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
 local COMP = NUI.Compatibility
 
+local tFilter = _G.tFilter
+
 NI.ClassMountFavorites = {
     PRIEST = {
         [256] = {
@@ -66,6 +68,7 @@ function NI:GlobalNameplateSetup()
             priority = 91
         }
     }
+    classes = tFilter(classes, function(k,_) return k ~= "Adventurer" end)
     for c, filterClassName in pairs(classes) do
         self.classColor = E:ClassColor(c, true)
         E.global.nameplates.filters["Ally_BattlePet_PBN_" .. filterClassName] = {

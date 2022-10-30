@@ -241,7 +241,7 @@ function PXP:CreateBar()
 
     bar.questbar = questbar
 
-    bar.text = bar:CreateFontString(nil, "THINOUTLINE")
+    bar.text = bar:CreateFontString()
     bar.text:FontTemplate(LSM:Fetch("font", self.db.font), self.db.fontsize, "THINOUTLINE")
     bar.text:SetPoint("CENTER", bar, "CENTER", 0, 0)
     bar.text:SetJustifyH("CENTER")

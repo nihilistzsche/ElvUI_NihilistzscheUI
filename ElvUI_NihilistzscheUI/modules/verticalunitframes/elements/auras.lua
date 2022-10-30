@@ -101,7 +101,7 @@ end
 function VUF:PostCreateAura(button)
     button:SetTemplate("Transparent")
 
-    button.remaining = button:CreateFontString(nil, "THINOUTLINE")
+    button.remaining = button:CreateFontString()
     -- Dummy font
     button.remaining:FontTemplate(LSM:Fetch("font", E.db.general.font), 12, "THINOUTLINE")
     button.remaining:Point("CENTER", 1, 0)

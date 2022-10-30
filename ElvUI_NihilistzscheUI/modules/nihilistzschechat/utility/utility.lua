@@ -593,7 +593,7 @@ function NC:UpdateAll()
         v.Bottom.backdrop:SetBackdropColor(bcolor.r, bcolor.g, bcolor.b, self.db.general.alpha)
         v.Bottom.backdrop:SetBackdropBorderColor(rcolor.r, rcolor.g, rcolor.b, self.db.general.alpha)
         v.EditBox:SetWidth(v:GetWidth())
-        v.Text:SetFont(E.Libs.LSM:Fetch("font", self.db.windows.font), fontsize)
+        v.Text:SetFont(E.Libs.LSM:Fetch("font", self.db.windows.font), fontsize, "")
         if self.db.windows.showtitle then
             v.Name:SetAlpha(1)
         else

@@ -5,6 +5,7 @@ local COMP = NUI.Compatibility
 local tContains = _G.tContains
 local SetCVar = _G.SetCVar
 local wipe = _G.wipe
+local tFilter = _G.tFilter
 
 function NI:ElvUINonHealerSetup()
     self:EDB().unitframe.units.raid40 = {
@@ -476,6 +477,7 @@ function NI:GlobalNameplateSetup()
     wipe(E.global.nameplates.filters or {})
     local classes = {}
     _G.FillLocalizedClassList(classes, false)
+     classes = tFilter(classes, function(k,_) return k ~= "Adventurer" end)
     for c, filterClassName in pairs(classes) do
         local needsPetFilter = tContains(needsPetFilterClasses, c)
         self.classColor = E:ClassColor(c, true)
@@ -693,11 +695,6 @@ function NI:ElvUISetup(role, isSpec)
         },
         valuecolor = self:Color(true),
         vendorGrays = true,
-        nameplateLargeFont = self.db.font,
-        nameFont = self.db.font,
-        chatBubbleFont = self.db.font,
-        nameplateFont = self.db.font,
-        dmgfont = self.db.font,
         minimap = {
             icons = {
                 classHall = {
@@ -1086,8 +1083,10 @@ function NI:ElvUISetup(role, isSpec)
             normTex = self.db.texture,
             dmgFont = self.db.font,
             nameFont = self.db.font,
-            chatBubbleFont = self.db.font
-        }
+            chatBubbleFont = self.db.font,
+            nameplateLargeFont = self.db.font,
+            nameplateFont = self.db.font,
+         }
 
         self:EPRV().skins = self:EPRV().skins or {}
         self:EPRV().skins.parchmentRemoverEnable = true
@@ -1477,7 +1476,7 @@ function NI:ElvUILuluSetup()
                 }
             }
         },
-        fontOutline = "NONE",
+        fontOutline = "",
         font = self.db.font,
         statusbar = self.db.texture,
         hud = {
@@ -1501,7 +1500,7 @@ function NI:ElvUILuluSetup()
             enabled = false
         },
         font = self.db.font,
-        fontOutline = "NONE",
+        fontOutline = "",
         ["bar4"] = {
             enabled = false
         },
@@ -1519,7 +1518,7 @@ function NI:ElvUILuluSetup()
         countFontSize = 12,
         countFont = self.db.font,
         itemLevelFont = self.db.font,
-        itemLevelFontOutline = "NONE",
+        itemLevelFontOutline = "",
         itemLevelFontSize = 12,
         ignoreItems = "",
         strata = "DIALOG"

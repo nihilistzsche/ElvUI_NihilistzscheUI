@@ -19,6 +19,9 @@ local function CCDebuffTextNeedsUpdate(button, db)
 end
 
 local function SetAndSaveCCDebuffFontInfo(button, db)
+   if db.fontOutline == "NONE" then
+        db.fontOutline = ""
+   end
     button.cc_name:FontTemplate(E.Libs.LSM:Fetch("font", db.font), db.fontSize, db.fontOutline)
     button.cc_name.lastFontInfo = {db.font, db.fontSize, db.fontOutline}
 end
