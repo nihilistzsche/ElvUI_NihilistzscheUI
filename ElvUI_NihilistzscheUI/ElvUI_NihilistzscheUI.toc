@@ -1,7 +1,7 @@
 ## Interface: 10000
 ## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r
 ## Author: Nihilistzsche
-## Version: 12.031
+## Version: 12.04
 ## Notes: An external edit for ElvUI and ElvUI Shadow & Light
 ## RequiredDeps: ElvUI
 ## OptionalDeps: ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI
