@@ -15,7 +15,6 @@ jobs:
       - uses: JohnnyMorganz/stylua-action@v1.1.2
         with:
           token: ${{ secrets.STYLUA_GITHUB_TOKEN }}
-          version: 1.1.2
           args: --glob '**/*.lua' .
   release:
     runs-on: ubuntu-latest
