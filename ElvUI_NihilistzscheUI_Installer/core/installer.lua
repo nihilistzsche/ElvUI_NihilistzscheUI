@@ -7,12 +7,7 @@ NUI.Installer = NI
 local _G = _G
 
 local RAID_CLASS_COLORS, pairs, unpack, format, ReloadUI, print =
-    _G.RAID_CLASS_COLORS,
-    _G.pairs,
-    _G.unpack,
-    _G.format,
-    _G.ReloadUI,
-    _G.print
+    _G.RAID_CLASS_COLORS, _G.pairs, _G.unpack, _G.format, _G.ReloadUI, _G.print
 local tinsert = _G.tinsert
 local C_Timer_After = _G.C_Timer.After
 
@@ -22,7 +17,7 @@ NI.DiscordURL = "https://discord.gg/cUcr3Dt"
 function NI:CacheMovers(new)
     self.db = self.db or {}
     self.db.movers = self.db.movers or {}
-    if (not new) then
+    if not new then
         self.db.movers.old = E:CopyTable(E.db.movers)
     else
         self.db.movers.new = E:CopyTable(E.db.movers)
@@ -33,13 +28,9 @@ end
 NI.ProfileKeysToSet = {}
 NI.AddOnDBs = {}
 
-function NI:AddAddOnDB(db)
-    self.AddOnDBs[db] = true
-end
+function NI:AddAddOnDB(db) self.AddOnDBs[db] = true end
 
-function NI:AddProfileKey(db, key, val)
-    tinsert(self.ProfileKeysToSet, {db, key, val})
-end
+function NI:AddProfileKey(db, key, val) tinsert(self.ProfileKeysToSet, { db, key, val }) end
 
 function NI:SetProfileKeys()
     for _, kp in ipairs(self.ProfileKeysToSet) do
@@ -49,9 +40,8 @@ function NI:SetProfileKeys()
 end
 
 function NI:InstallForClass(class)
-    local role =
-        type(self.ClassSpecProfiles[class]) == "table" and self.ClassSpecProfiles[class][1] or
-        self.ClassSpecProfiles[class]
+    local role = type(self.ClassSpecProfiles[class]) == "table" and self.ClassSpecProfiles[class][1]
+        or self.ClassSpecProfiles[class]
     self.currentRole = role
     if NUI.Lulupeep then
         self:ElvUILuluSetup()
@@ -78,9 +68,7 @@ function NI:SetupForCharacters()
                 self:AddProfileKey(db, self.baseProfile, self.profileKey)
             end
             self:RunCharacterSpecificAddOnInstallers()
-            if not NUI.Lulupeep then
-                self:SetupSpecProfiles()
-            end
+            if not NUI.Lulupeep then self:SetupSpecProfiles() end
         end
     end
 end
@@ -98,7 +86,7 @@ end
 
 function NI:PrintMoverDiscrepancies()
     for k, v in pairs(self.db.movers.old) do
-        if (not self.db.movers.new[k]) then
+        if not self.db.movers.new[k] then
             print("The following mover was not found that existed previously: ", k)
             local p, par, rp, x, y = _G.unpack(v)
             print("With the following anchor: ", p, par:GetName(), rp, x, y)
@@ -107,9 +95,7 @@ function NI:PrintMoverDiscrepancies()
 end
 
 _G.SLASH_NUIMOVERDISC1 = "/nuimd"
-_G.SlashCmdList.NUIMOVERDISC = function()
-    NI:PrintMoverDiscrepancies()
-end
+_G.SlashCmdList.NUIMOVERDISC = function() NI:PrintMoverDiscrepancies() end
 
 NI.installTable = {
     Name = NUI.Title,
@@ -121,20 +107,15 @@ NI.installTable = {
             -- luacheck: no max line length
             PluginInstallFrame.SubTitle:SetText(format(L["Welcome to %s version %s!"], NUI.Title, NUI.Version))
             PluginInstallFrame.Desc1:SetText(
-                L[
-                    "This will take you through a quick install process to setup NihilistzscheUI.\nIf you choose to not setup any options through this config, click Skip to finsh the installation."
-                ]
+                L["This will take you through a quick install process to setup NihilistzscheUI.\nIf you choose to not setup any options through this config, click Skip to finsh the installation."]
             )
             PluginInstallFrame.Desc2:SetText("")
 
             PluginInstallFrame.Option1:Show()
-            PluginInstallFrame.Option1:SetScript(
-                "OnClick",
-                function()
-                    NI:SaveInstallerVersion(true)
-                    ReloadUI()
-                end
-            )
+            PluginInstallFrame.Option1:SetScript("OnClick", function()
+                NI:SaveInstallerVersion(true)
+                ReloadUI()
+            end)
             PluginInstallFrame.Option1:SetText("Skip")
         end,
         [2] = function()
@@ -149,42 +130,34 @@ NI.installTable = {
             E:CheckRole()
             PluginInstallFrame.Option1:Show()
             PluginInstallFrame.Option1:SetText(E.myLocalizedClass)
-            PluginInstallFrame.Option1:SetScript(
-                "OnClick",
-                function()
-                    NI:Run()
-                    ReloadUI()
-                end
-            )
+            PluginInstallFrame.Option1:SetScript("OnClick", function()
+                NI:Run()
+                ReloadUI()
+            end)
 
             PluginInstallFrame.Option2:Show()
             PluginInstallFrame.Option2:SetText("Finish")
-            PluginInstallFrame.Option2:SetScript(
-                "OnClick",
-                function()
-                    NI:SaveInstallerVersion(true)
-                    ReloadUI()
-                end
-            )
+            PluginInstallFrame.Option2:SetScript("OnClick", function()
+                NI:SaveInstallerVersion(true)
+                ReloadUI()
+            end)
 
             PluginInstallFrame.Option3:Show()
             PluginInstallFrame.Option3:SetText("Discord")
             PluginInstallFrame.Option3:SetScript(
                 "OnClick",
-                function()
-                    E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, NI.DiscordURL)
-                end
+                function() E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, NI.DiscordURL) end
             )
-        end
+        end,
     },
     StepTitles = {
         [1] = _G.START,
-        [2] = "Use Authors Defaults"
+        [2] = "Use Authors Defaults",
     },
     StepTitlesColorSelected = E.myclass == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[E.myclass],
     StepTitleWidth = 200,
     StepTitleButtonWidth = 200,
-    StepTitleTextJustification = "CENTER"
+    StepTitleTextJustification = "CENTER",
 }
 local tryInstall
 tryInstall = function()
@@ -192,40 +165,28 @@ tryInstall = function()
         C_Timer_After(1, tryInstall)
         return
     end
-    if _G.ElvUIInstallFrame then
-        _G.ElvUIInstallFrame:Hide()
-    end
+    if _G.ElvUIInstallFrame then _G.ElvUIInstallFrame:Hide() end
     E.private.install_complete = E.version
     local PI = E.PluginInstaller
     PI:Queue(NI.installTable)
     PI:RunInstall()
 end
 
-function NI.Install()
-    tryInstall()
-end
+function NI.Install() tryInstall() end
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
-f:SetScript(
-    "OnEvent",
-    function()
-        C_Timer_After(
-            5,
-            function()
-                NI:BaseElvUISetup()
-            end
-        )
-        f:UnregisterEvent("PLAYER_ENTERING_WORLD")
-    end
-)
+f:SetScript("OnEvent", function()
+    C_Timer_After(5, function() NI:BaseElvUISetup() end)
+    f:UnregisterEvent("PLAYER_ENTERING_WORLD")
+end)
 
 function NI:Initialize()
     self.initialized = true
     self.db = E.global.nihilistzscheui.installer
 
     self:InitBaseProfile()
-    if (self:ShouldInstall()) then
+    if self:ShouldInstall() then
         self.Install()
     else
         self:RestoreSavedInstallers()

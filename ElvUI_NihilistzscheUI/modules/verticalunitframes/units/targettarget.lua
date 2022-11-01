@@ -30,7 +30,7 @@ function VUF:ConstructTargetTargetFrame(frame, unit)
         nil,
         nil,
         nil,
-        "ALL,SOLO,NIHILISTUI"
+        "ALL,SOLO,NIHILISTZSCHEUI"
     )
 end
 

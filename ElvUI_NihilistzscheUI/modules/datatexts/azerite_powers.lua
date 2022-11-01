@@ -24,7 +24,7 @@ local HEAD = 1
 local SHOULDER = 3
 local CHEST = 5
 
-local slots = {HEAD, SHOULDER, CHEST}
+local slots = { HEAD, SHOULDER, CHEST }
 
 local function addItemString(slot)
     local item = Item:CreateFromEquipmentSlot(slot)
@@ -32,9 +32,7 @@ local function addItemString(slot)
     local name = item:GetItemName()
     local qual = item:GetItemQuality()
     local qualColor = BAG_ITEM_QUALITY_COLORS[qual]
-    if (not qualColor) then
-        return
-    end
+    if not qualColor then return end
     local qualColorCode = E:RGBToHex(qualColor.r, qualColor.g, qualColor.b)
 
     local iconStr = "|T" .. icon .. ":15:15:0:0:64:64:4:56:4:56|t"
@@ -47,7 +45,7 @@ __scanningTooltip:SetOwner(UIParent, "ANCHOR_NONE")
 
 local function addPowerSpellString(item, tierLevel, powerID)
     local powerInfo = C_AzeriteEmpoweredItem_GetPowerInfo(powerID)
-    if (powerID) then
+    if powerID then
         local spellID = powerInfo.spellID
         local name, _, icon = GetSpellInfo(spellID)
         local itemID = item:GetItemID()
@@ -56,7 +54,7 @@ local function addPowerSpellString(item, tierLevel, powerID)
         __scanningTooltip:SetAzeritePower(itemID, itemLevel, powerID, itemLink)
         __scanningTooltip:Show()
         local desc = _G[__scanningTooltip:GetName() .. "TextLeft3"]:GetText()
-        if (name and icon and desc) then
+        if name and icon and desc then
             local iconStr = "|T" .. icon .. ":15:15:0:0:64:64:4:56:4:56|t"
 
             DT.tooltip:AddLine(
@@ -82,19 +80,15 @@ local function addAzeriteArmorPowers(slot)
     if azeriteLocation and azeriteLocation:IsEquipmentSlot() then
         level = C_AzeriteItem_GetPowerLevel(azeriteLocation)
     end
-    if level == 0 then
-        return
-    end
+    if level == 0 then return end
     local itemLocation = item:GetItemLocation()
     if C_AzeriteEmpoweredItem_IsAzeriteEmpoweredItem(itemLocation) then
         addItemString(slot)
         local allTierInfo = C_AzeriteEmpoweredItem_GetAllTierInfo(itemLocation)
         for i = 1, 5 do
             local tierInfo = allTierInfo[i]
-            if (not tierInfo) then
-                break
-            end
-            if (level < tierInfo.unlockLevel) then
+            if not tierInfo then break end
+            if level < tierInfo.unlockLevel then
                 DT.tooltip:AddLine(("%sLevel %d|r"):format(DISABLED_FONT_COLOR_CODE, tierInfo.unlockLevel))
             else
                 for _, powerID in ipairs(tierInfo.azeritePowerIDs) do
@@ -125,7 +119,7 @@ local function OnEnter(self)
     self:GetParent().anchor = "ANCHOR_BOTTOM"
     DT:SetupTooltip(self)
     local azeriteLocation = C_AzeriteItem_FindActiveAzeriteItem()
-    if (not azeriteLocation) then
+    if not azeriteLocation then
         DT.tooltip:AddLine("No equipped azerite item")
         DT.tooltip:Show()
         return
@@ -138,9 +132,7 @@ local function OnEnter(self)
     DT.tooltip:Show()
 end
 
-local function UpdateDisplay(self)
-    self.text:SetText(displayString)
-end
+local function UpdateDisplay(self) self.text:SetText(displayString) end
 
 local function OnEvent(self)
     if UnitLevel("player") < 40 then
@@ -161,7 +153,7 @@ E.valueColorUpdateFuncs[ValueColorUpdate] = true
 DT:RegisterDatatext(
     "NihilistzscheUI Azerite Powers",
     "NihilistzscheUI",
-    {"PLAYER_ENTERING_WORLD", "PLAYER_EQUIPMENT_CHANGED"},
+    { "PLAYER_ENTERING_WORLD", "PLAYER_EQUIPMENT_CHANGED" },
     UpdateDisplay,
     OnEvent,
     nil,

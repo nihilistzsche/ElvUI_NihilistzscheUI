@@ -23,8 +23,8 @@ local function IsDefaultHelper(tbl1, tbl2)
     --
     for k, v in pairs(tbl2) do
         --
-        if (tbl1[k] ~= v) then
-            if ((type(tbl1[k]) ~= "table") or (type(v) ~= "table")) then
+        if tbl1[k] ~= v then
+            if (type(tbl1[k]) ~= "table") or (type(v) ~= "table") then
                 --
                 return false -- some entry didn't exist or was different!
             end
@@ -32,9 +32,7 @@ local function IsDefaultHelper(tbl1, tbl2)
             -- Subtables need to be dived into (different refs doesn't mean
             -- different contents).
             --
-            if (not IsDefaultHelper(tbl1[k], v)) then
-                return false
-            end
+            if not IsDefaultHelper(tbl1[k], v) then return false end
         end
     end
 
@@ -42,7 +40,7 @@ local function IsDefaultHelper(tbl1, tbl2)
 end
 
 function VUF:IsDefault(settingstring)
-    local settings = {strsplit(".", settingstring)}
+    local settings = { strsplit(".", settingstring) }
     local options, profile = self.db, P.nihilistzscheui.vuf
     for _, setting in pairs(settings) do
         options = options[setting]
@@ -57,9 +55,7 @@ end
 
 function VUF.GetUnitFrame(unit)
     local stringTitle = E:StringTitle(unit)
-    if stringTitle:find("target") then
-        stringTitle = gsub(stringTitle, "target", "Target")
-    end
+    if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
     return "NihilistzscheUF_" .. stringTitle
 end
 
@@ -84,7 +80,7 @@ local __elements = {
     classbars = "ClassBar",
     additionalpower = "AdditionalPower",
     phaseindicator = "PhaseIndicator",
-    cutaway = "Cutaway"
+    cutaway = "Cutaway",
 }
 
 VUF.Elements = __elements
@@ -100,13 +96,9 @@ end
 function VUF:AddCustomText(unit, name, optionsTbl)
     local real_name = string.format("customtext_%s", name)
     local frame = self.units[unit]
-    if frame[real_name] then
-        return
-    end
+    if frame[real_name] then return end
     self:AddElement(frame, name)
-    if not self.Elements[name] then
-        self.Elements[name] = real_name
-    end
+    if not self.Elements[name] then self.Elements[name] = real_name end
     frame[real_name] = self:ConstructFontString(frame, name)
     if not E.db.nihilistzscheui.vuf.units[unit][name] then
         E.db.nihilistzscheui.vuf.units[unit][name] = {}
@@ -118,8 +110,7 @@ function VUF:AddCustomText(unit, name, optionsTbl)
     end
     optionsTbl = optionsTbl or E.Options.args.NihilistzscheUI.args.modules.args.VerticalUnitFrames
     if optionsTbl.args[unit] then
-        optionsTbl.args[unit].args[name] =
-            self:GenerateElementOptionsTable(
+        optionsTbl.args[unit].args[name] = self:GenerateElementOptionsTable(
             unit,
             name,
             4000,
@@ -142,7 +133,7 @@ function VUF:AddCustomText(unit, name, optionsTbl)
                 frame:Tag(frame[real_name], "")
                 frame[real_name]:Hide()
                 frame[real_name] = nil
-            end
+            end,
         }
     end
     frame[real_name]:Show()
@@ -150,9 +141,7 @@ end
 
 function VUF:SetUpCustomTexts(frame, optionsTbl)
     local unit = frame.unit
-    if not E.db.nihilistzscheui.vuf.units[unit] then
-        return
-    end
+    if not E.db.nihilistzscheui.vuf.units[unit] then return end
     if E.db.nihilistzscheui.vuf.units[unit].customTexts then
         for textName, _ in pairs(E.db.nihilistzscheui.vuf.units[unit].customTexts) do
             self:AddCustomText(unit, textName, optionsTbl)
@@ -183,9 +172,7 @@ function VUF:GetAnchor(frame, anchor)
 end
 
 function VUF:CheckHealthValue(frame, eclipse)
-    if not frame or not frame.Health then
-        return
-    end
+    if not frame or not frame.Health then return end
     local config = self.db.units.player.health.value
     if config.enabled then
         if VUF:IsDefault("units.player.health.value.anchor") then
@@ -199,46 +186,39 @@ function VUF:CheckHealthValue(frame, eclipse)
 end
 
 function VUF:ConstructVerticalUnitFrame(frame, unit)
-    if not self.db.units then
-        return
-    end
+    if not self.db.units then return end
     self.units[unit] = frame
     self.units[unit].elements = {}
     frame:RegisterForClicks("AnyUp")
-    frame:SetScript(
-        "OnEnter",
-        function(_self)
-            UnitFrame_OnEnter(_self)
-            if
-                E.db.nihilistzscheui.vuf.hideOOC and not UnitAffectingCombat("player") and
-                    not UnitAffectingCombat("pet") and
-                    _self.unit ~= "target"
-             then
-                VUF:UpdateHiddenStatus(frame)
-            end
+    frame:SetScript("OnEnter", function(_self)
+        UnitFrame_OnEnter(_self)
+        if
+            E.db.nihilistzscheui.vuf.hideOOC
+            and not UnitAffectingCombat("player")
+            and not UnitAffectingCombat("pet")
+            and _self.unit ~= "target"
+        then
+            VUF:UpdateHiddenStatus(frame)
         end
-    )
-    frame:SetScript(
-        "OnLeave",
-        function(_self)
-            UnitFrame_OnLeave(_self)
-            if
-                E.db.nihilistzscheui.vuf.hideOOC and not UnitAffectingCombat("player") and
-                    not UnitAffectingCombat("pet") and
-                    self.unit ~= "target"
-             then
-                VUF:UpdateHiddenStatus(frame)
-            end
+    end)
+    frame:SetScript("OnLeave", function(_self)
+        UnitFrame_OnLeave(_self)
+        if
+            E.db.nihilistzscheui.vuf.hideOOC
+            and not UnitAffectingCombat("player")
+            and not UnitAffectingCombat("pet")
+            and self.unit ~= "target"
+        then
+            VUF:UpdateHiddenStatus(frame)
         end
-    )
+    end)
 
+    frame.__nui__needsVUFPortraitFix = true
     frame.menu = UF.SpawnMenu
     frame.db = UF.db.units[unit]
     frame.unitframeType = unit
     local stringTitle = E:StringTitle(unit)
-    if stringTitle:find("target") then
-        stringTitle = gsub(stringTitle, "target", "Target")
-    end
+    if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
     self["Construct" .. stringTitle .. "Frame"](self, frame, unit)
 
     frame.RaisedElementParent = CreateFrame("Frame", nil, frame)
@@ -248,41 +228,34 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
     frame:CreateBackdrop("Transparent")
     frame:SetParent(_G.ElvUF_Parent)
 
-    if (ES) then
+    if ES then
         frame:CreateShadow()
         ES:RegisterFrameShadows(frame)
     end
-    if (COMP.BUI) then
-        frame:BuiStyle("Outside")
-    end
+    if COMP.BUI then frame:BuiStyle("Outside") end
 
     return frame
 end
 
 function VUF:UpdateFrame(unit)
-    if (UnitAffectingCombat("player") or UnitAffectingCombat("pet")) then
+    if UnitAffectingCombat("player") or UnitAffectingCombat("pet") then
         NUI:RegenWait(self.UpdateFrame, self, unit)
         return
     end
     local frame = self.units[unit]
-    if not self.db.units[unit] then
-        return
-    end
+    if not self.db.units[unit] then return end
     local spacer = 2
     local health = self.db.units[unit].health
-    if not health then
-        return
-    end
+    if not health then return end
     local size = health.size
-    if not size then
-        return
-    end
+    if not size then return end
     local width = size.width + spacer
     local height = size.height + spacer
     if
-        (self.db.units[unit].power and self.db.units[unit].power.enabled and
-            self.db.units[unit].power.anchor.attachTo == "health")
-     then
+        self.db.units[unit].power
+        and self.db.units[unit].power.enabled
+        and self.db.units[unit].power.anchor.attachTo == "health"
+    then
         width = width + self.db.units[unit].power.size.width
     end
     frame:SetSize(width, height)
@@ -308,9 +281,7 @@ function VUF:UpdateFrame(unit)
         else
             event = "PLAYER_REGEN_ENABLED"
         end
-        if self.db.hideOOC then
-            VUF:UpdateHiddenStatus(frame, event)
-        end
+        if self.db.hideOOC then VUF:UpdateHiddenStatus(frame, event) end
         self:UpdateAllElements(frame)
         self:UpdateAllElementAnchors(frame)
 
@@ -328,9 +299,7 @@ function VUF:UpdateFrame(unit)
             DSI:Update_PlayerFrame(frame)
         end
     else
-        if frame:IsVisible() then
-            frame:Hide()
-        end
+        if frame:IsVisible() then frame:Hide() end
         frame:SetAlpha(0)
         frame:Disable()
         VUF:ScheduleTimer("DisableThisShit", 1)
@@ -338,15 +307,11 @@ function VUF:UpdateFrame(unit)
 end
 
 function VUF:HookSetAlpha(frame)
-    if (frame._NihilistzscheUI_SetAlpha) then
-        return
-    end
+    if frame._NihilistzscheUI_SetAlpha then return end
     frame._NihilistzscheUI_SetAlpha = frame.SetAlpha
     frame.SetAlpha = function(_self, alpha)
-        if not alpha then
-            return
-        end
-        if (InCombatLockdown()) then
+        if not alpha then return end
+        if InCombatLockdown() then
             _self:_NihilistzscheUI_SetAlpha(self.db.alpha)
         else
             _self:_NihilistzscheUI_SetAlpha(alpha)
@@ -355,7 +320,7 @@ function VUF:HookSetAlpha(frame)
 end
 
 function VUF:DisableThisShit()
-    if (not VUF.db or not VUF.db.units) then
+    if not VUF.db or not VUF.db.units then
         VUF:ScheduleTimer("DisableThisShit", 1)
         return
     end
@@ -365,36 +330,28 @@ function VUF:DisableThisShit()
     end
     for _, f in pairs(VUF.units) do
         local unit = f.unit
-        if (unit == "vehicle") then
-            unit = "player"
-        end
-        if (not VUF.db.units[unit].enabled) then
-            f:Disable()
-        end
+        if unit == "vehicle" then unit = "player" end
+        if not VUF.db.units[unit].enabled then f:Disable() end
     end
 end
 
 function VUF:UpdateAllFrames()
-    if not self.db then
-        return
-    end
+    if not self.db then return end
     for unit, frame in pairs(self.units) do
         self:UpdateFrame(unit)
-        if (frame.OnFirstUpdateFinish) then
+        if frame.OnFirstUpdateFinish then
             frame.OnFirstUpdateFinish()
             frame.OnFirstUpdateFinish = nil
         end
     end
 end
 
-local needsManualUpdate = {"health", "power", "additionalpower", "classbars", "buffs"}
+local needsManualUpdate = { "health", "power", "additionalpower", "classbars", "buffs" }
 
 function VUF:UpdateAllElements(frame)
     local elements = self.units[frame.unit].elements
     for _, element in ipairs(needsManualUpdate) do
-        if (elements[element]) then
-            self:UpdateElement(frame, element)
-        end
+        if elements[element] then self:UpdateElement(frame, element) end
     end
     for element, _ in pairs(elements) do
         if not tContains(needsManualUpdate, element) and self:GetElement(element) then
@@ -404,16 +361,12 @@ function VUF:UpdateAllElements(frame)
 end
 
 function VUF:UpdateAllElementAnchors(frame)
-    if not frame then
-        return
-    end
+    if not frame then return end
     local elements = self.units[frame.unit].elements
     local seenClassbars = false
 
     for _, element in ipairs(needsManualUpdate) do
-        if (elements[element]) then
-            self:UpdateElementAnchor(frame, element)
-        end
+        if elements[element] then self:UpdateElementAnchor(frame, element) end
     end
     for element, _ in pairs(elements) do
         if not tContains(needsManualUpdate, element) and self:GetElement(element) then
@@ -430,27 +383,19 @@ function VUF:UpdateAllElementAnchors(frame)
 end
 
 function VUF:AddElement(frame, element)
-    if not self.units[frame.unit].elements[element] then
-        self.units[frame.unit].elements[element] = {}
-    end
+    if not self.units[frame.unit].elements[element] then self.units[frame.unit].elements[element] = {} end
 end
 
 function VUF:ConstructStatusBar(frame, element, parent, name, t, noBG)
-    if parent == nil then
-        parent = frame
-    end
-    if name == nil then
-        name = "statusbar"
-    end
+    if parent == nil then parent = frame end
+    if name == nil then name = "statusbar" end
     local sbname = frame.unit .. "_vuf_" .. element .. "_" .. name
 
     -- Create the status bar
     local sb = CreateFrame("StatusBar", sbname, parent, "BackdropTemplate")
     if not t then
         sb:SetTemplate("Transparent")
-        if (COMP.MERS) then
-            sb:Styling()
-        end
+        if COMP.MERS then sb:Styling() end
     end
 
     -- Dummy texture so we can set colors
@@ -468,10 +413,8 @@ function VUF:ConstructStatusBar(frame, element, parent, name, t, noBG)
         local bg = sb:CreateTexture(nil, "BORDER")
         bg:SetInside(sb)
         bg:SetTexture(E.media.blankTex)
-        if element == "gcd" then
-            bg:SetTexture(.1, .1, .1)
-        end
-        bg:SetAlpha(.2)
+        if element == "gcd" then bg:SetTexture(0.1, 0.1, 0.1) end
+        bg:SetAlpha(0.2)
         bg.multiplier = 0.25
         sb.bg = bg
 
@@ -492,12 +435,8 @@ function VUF:ConstructStatusBar(frame, element, parent, name, t, noBG)
 end
 
 function VUF:ConstructFontString(frame, element, parent, name)
-    if parent == nil then
-        parent = frame
-    end
-    if name == nil then
-        name = "value"
-    end
+    if parent == nil then parent = frame end
+    if name == nil then name = "value" end
     local fsname = frame.unit .. "_vuf_" .. element .. "_" .. name
 
     if not self.units[frame.unit].elements[element].fontstrings then
@@ -513,12 +452,8 @@ function VUF:ConstructFontString(frame, element, parent, name)
 end
 
 function VUF:ConfigureTexture(frame, element, parent, name)
-    if parent == nil then
-        parent = frame
-    end
-    if name == nil then
-        name = "texture"
-    end
+    if parent == nil then parent = frame end
+    if name == nil then name = "texture" end
     local texname = frame.unit .. "_vuf_" .. element .. "_" .. name
     if not self.units[frame.unit].elements[element].textures then
         self.units[frame.unit].elements[element].textures = {}
@@ -532,9 +467,7 @@ function VUF:ConfigureTexture(frame, element, parent, name)
 end
 
 function VUF:CreateFrame(frame, element, parent)
-    if parent == nil then
-        parent = frame
-    end
+    if parent == nil then parent = frame end
     local name = frame.unit .. "_vuf_" .. element
     local f = CreateFrame("Frame", name, parent, "BackdropTemplate")
     self.units[frame.unit].elements[element].frame = f
@@ -543,9 +476,7 @@ end
 
 function VUF:ResetUnitSettings(unit)
     local frame = self.units[unit]
-    if not frame then
-        return
-    end
+    if not frame then return end
     E:CopyTable(self.db.units[unit], P.nihilistzscheui.vuf.units[unit])
     self:UpdateAllFrames()
 end
@@ -565,9 +496,7 @@ function VUF:SimpleLayout()
     self.db.units.pet.enabled = false
     self.db.units.pettarget.enabled = false
     for element, _ in pairs(self.db.units.player) do
-        if self:GetElement(element) then
-            self.db.units.player[element].enabled = false
-        end
+        if self:GetElement(element) then self.db.units.player[element].enabled = false end
     end
     self.db.units.player.width = 39
     self.db.units.player.health.enabled = true
@@ -590,19 +519,13 @@ function VUF:ComboLayout()
     self.db.units.target.enabled = true
     self.db.units.pet.enabled = true
     for element, _ in pairs(self.db.units.player) do
-        if self:GetElement(element) then
-            self.db.units.player[element].enabled = false
-        end
+        if self:GetElement(element) then self.db.units.player[element].enabled = false end
     end
     for element, _ in pairs(self.db.units.target) do
-        if self:GetElement(element) then
-            self.db.units.target[element].enabled = false
-        end
+        if self:GetElement(element) then self.db.units.target[element].enabled = false end
     end
     for element, _ in pairs(self.db.units.pet) do
-        if self:GetElement(element) then
-            self.db.units.pet[element].enabled = false
-        end
+        if self:GetElement(element) then self.db.units.pet[element].enabled = false end
     end
     self.db.units.player.health.enabled = true
     self.db.units.player.castbar.enabled = true

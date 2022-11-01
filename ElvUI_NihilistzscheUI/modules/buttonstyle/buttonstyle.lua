@@ -11,9 +11,7 @@ local hooksecurefunc = _G.hooksecurefunc
 
 -- luacheck: no self
 function BS:StyleButton(button, _, useMasque)
-    if (useMasque) then
-        return
-    end
+    if useMasque then return end
 
     if BS.db.enabled then
         local changed = false
@@ -34,12 +32,10 @@ end
 
 function BS:StyleAura(button)
     local db = E.private.auras.masque.debuffs
-    if (button.auraType == "buffs") then
-        db = E.private.auras.masque.buffs
-    end
+    if button.auraType == "buffs" then db = E.private.auras.masque.buffs end
 
     if Masque and db then
-        if (not button.shadow) then
+        if not button.shadow then
             button:CreateShadow()
             ES:RegisterFrameShadows(button)
         end
@@ -70,42 +66,31 @@ end
 BS.styledButtons = {}
 function BS:Initialize()
     NUI:RegisterDB(self, "buttonStyle")
-    local ForUpdateAll = function(_self)
-        _self:UpdateButtons()
-    end
+    local ForUpdateAll = function(_self) _self:UpdateButtons() end
     self.ForUpdateAll = ForUpdateAll
     hooksecurefunc(AB, "StyleButton", BS.StyleButton)
     hooksecurefunc(A, "UpdateAura", BS.StyleAura)
 
-    hooksecurefunc(
-        "PetBattleFrame_UpdateActionBarLayout",
-        function()
-            local bf = _G.PetBattleFrame.BottomFrame
-            if not bf.TurnTimer.SkipButton.shadow then
-                bf.TurnTimer.SkipButton:CreateShadow()
-                ES:RegisterFrameShadows(bf.TurnTimer.SkipButton)
-            end
-            bf.TurnTimer.SkipButton:SetFrameLevel(bf.SwitchPetButton:GetFrameLevel() + 1)
-            for i = 1, _G.NUM_BATTLE_PET_ABILITIES do
-                self:StyleButton(bf.abilityButtons[i])
-            end
-            self:StyleButton(bf.SwitchPetButton)
-            self:StyleButton(bf.CatchButton)
-            self:StyleButton(bf.ForfeitButton)
+    hooksecurefunc("PetBattleFrame_UpdateActionBarLayout", function()
+        local bf = _G.PetBattleFrame.BottomFrame
+        if not bf.TurnTimer.SkipButton.shadow then
+            bf.TurnTimer.SkipButton:CreateShadow()
+            ES:RegisterFrameShadows(bf.TurnTimer.SkipButton)
         end
-    )
+        bf.TurnTimer.SkipButton:SetFrameLevel(bf.SwitchPetButton:GetFrameLevel() + 1)
+        for i = 1, _G.NUM_BATTLE_PET_ABILITIES do
+            self:StyleButton(bf.abilityButtons[i])
+        end
+        self:StyleButton(bf.SwitchPetButton)
+        self:StyleButton(bf.CatchButton)
+        self:StyleButton(bf.ForfeitButton)
+    end)
 
     if COMP.MERS then
         if _G.ElvUI_MerathilisUI[1].initialized then
             self:StyleMERAutoButtons()
         else
-            hooksecurefunc(
-                _G.ElvUI_MerathilisUI[1],
-                "Initialize",
-                function()
-                    self:StyleMERAutoButtons()
-                end
-            )
+            hooksecurefunc(_G.ElvUI_MerathilisUI[1], "Initialize", function() self:StyleMERAutoButtons() end)
         end
     end
     AB:UpdateButtonSettings()

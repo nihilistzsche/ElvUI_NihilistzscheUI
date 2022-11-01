@@ -56,23 +56,15 @@ end
 local warningTextShown = false
 function VUF:PostUpdateHealth(unit, min, max)
     -- luacheck: no max line length
-    if unit == "vehicle" then
-        unit = "player"
-    end
-    if not E.db.nihilistzscheui.vuf.units[unit] then
-        return
-    end
+    if unit == "vehicle" then unit = "player" end
+    if not E.db.nihilistzscheui.vuf.units[unit] then return end
     local parent = self:GetParent()
 
-    if parent.ResurrectIndicator then
-        parent.ResurrectIndicator:SetAlpha(min == 0 and 1 or 0)
-    end
+    if parent.ResurrectIndicator then parent.ResurrectIndicator:SetAlpha(min == 0 and 1 or 0) end
 
     -- Flash health below threshold %
-    if max == 0 then
-        return
-    end
-    if (min / max * 100) < (E.db.nihilistzscheui.vuf.lowThreshold) then
+    if max == 0 then return end
+    if (min / max * 100) < E.db.nihilistzscheui.vuf.lowThreshold then
         E:Flash(parent, 0.6)
         if (not warningTextShown and unit == "player") and E.db.nihilistzscheui.vuf.warningText then
             _G.ElvUIVerticalUnitFramesWarning:AddMessage("|cffff0000LOW HEALTH")

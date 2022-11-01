@@ -9,13 +9,11 @@ function CDB:GenerateOptions()
         name = L["Text Format"],
         desc = L.TEXT_FORMAT_DESC,
         order = 4,
-        get = function()
-            return E.db.databars.experience.tag
-        end,
+        get = function() return E.db.databars.experience.tag end,
         set = function(_, value)
             E.db.databars.experience.tag = value
             self:UpdateTag("experience")
-        end
+        end,
     }
 
     E.Options.args.databars.args.reputation.args.textFormat = nil
@@ -25,13 +23,11 @@ function CDB:GenerateOptions()
         name = L["Text Format"],
         desc = L.TEXT_FORMAT_DESC,
         order = 4,
-        get = function()
-            return E.db.databars.reputation.tag
-        end,
+        get = function() return E.db.databars.reputation.tag end,
         set = function(_, value)
             E.db.databars.reputation.tag = value
             self:UpdateTag("reputation")
-        end
+        end,
     }
 
     E.Options.args.databars.args.azerite.args.textFormat = nil
@@ -41,13 +37,11 @@ function CDB:GenerateOptions()
         name = L["Text Format"],
         desc = L.TEXT_FORMAT_DESC,
         order = 4,
-        get = function()
-            return E.db.databars.azerite.tag
-        end,
+        get = function() return E.db.databars.azerite.tag end,
         set = function(_, value)
             E.db.databars.azerite.tag = value
             self:UpdateTag("azerite")
-        end
+        end,
     }
 
     E.Options.args.databars.args.honor.args.textFormat = nil
@@ -57,12 +51,10 @@ function CDB:GenerateOptions()
         name = L["Text Format"],
         desc = L.TEXT_FORMAT_DESC,
         order = 6,
-        get = function()
-            return E.db.databars.honor.tag
-        end,
+        get = function() return E.db.databars.honor.tag end,
         set = function(_, value)
             E.db.databars.honor.tag = value
             self:UpdateTag("honor")
-        end
+        end,
     }
 end

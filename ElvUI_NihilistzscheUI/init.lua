@@ -12,7 +12,6 @@ local LibStub = _G.LibStub
 local GetAddOnMetadata = _G.GetAddOnMetadata
 local ElvUI_CPU = _G.ElvUI_CPU
 local hooksecurefunc = _G.hooksecurefunc
-local ElvUI_SLE = _G.ElvUI_SLE
 
 NUI.Libs = {
     NT = LibStub("LibNihilistzscheUITags-1.0"),
@@ -38,6 +37,7 @@ NUI.ShortTitle = "|cffff2020NihiUI|r"
 
 NUI.AnimatedDataBars = NUI:NewModule("AnimatedDataBars")
 NUI.AutoLog = NUI:NewModule("AutoLog", "AceEvent-3.0")
+NUI.BagEquipmentSetIcon = NUI:NewModule("BagEquipmentSetIcon")
 NUI.ButtonStyle = NUI:NewModule("ButtonStyle")
 NUI.Compatibility = NUI:NewModule("Compatibility")
 NUI.CooldownBar = NUI:NewModule("CooldownBar", "AceTimer-3.0", "AceEvent-3.0")
@@ -47,6 +47,7 @@ NUI.EnhancedNameplateAuras = NUI:NewModule("EnhancedNameplateAuras", "AceEvent-3
 NUI.EnhancedShadows = NUI:NewModule("EnhancedShadows", "AceEvent-3.0")
 NUI.HiddenArtifactTracker = NUI:NewModule("HiddenArtifactTracker", "AceEvent-3.0")
 NUI.InvertedShadows = NUI:NewModule("InvertedShadows")
+NUI.KalielsTrackerMover = NUI:NewModule("KalielsTrackerMover")
 NUI.Migration = NUI:NewModule("Migration")
 NUI.Misc = NUI:NewModule("Misc")
 NUI.Misc.BetterReputationColors = NUI:NewModule("BetterReputationColors")

@@ -21,33 +21,20 @@ local GetContainerItemID = _G.GetContainerItemID
 local ClearCursor = _G.ClearCursor
 local ClearCursorItem = _G.ClearCursorItem
 local REAGENTBANK_CONTAINER = _G.REAGENTBANK_CONTAINER
-local TokenFrameContainer = _G.TokenFrameContainer
 local HybridScrollFrame_GetOffset = _G.HybridScrollFrame_GetOffset
 local C_CurrencyInfo_GetCurrencyListInfo = _G.C_CurrencyInfo.GetCurrencyListInfo
 local C_CurrencyInfo_GetCurrencyListLink = _G.C_CurrencyInfo.GetCurrencyListLink
-local TokenFramePopup = _G.TokenFramePopup
 local hooksecurefunc = _G.hooksecurefunc
 
 function TB:CreateBar()
-    local bar =
-        NUB:CreateBar(
+    local bar = NUB:CreateBar(
         "NihilistzscheUI_TrackerBar",
         "trackerbar",
-        {"TOPLEFT", E.UIParent, "TOPLEFT", 0, -20},
+        { "TOPLEFT", E.UIParent, "TOPLEFT", 0, -20 },
         "Tracker Bar"
     )
-    NUB.RegisterCreateButtonHook(
-        bar,
-        function(button)
-            self:CreateButtonHook(bar, button)
-        end
-    )
-    NUB.RegisterUpdateButtonHook(
-        bar,
-        function(button, ...)
-            self:UpdateButtonHook(button, ...)
-        end
-    )
+    NUB.RegisterCreateButtonHook(bar, function(button) self:CreateButtonHook(bar, button) end)
+    NUB.RegisterUpdateButtonHook(bar, function(button, ...) self:UpdateButtonHook(button, ...) end)
 
     return bar
 end
@@ -62,16 +49,13 @@ function TB:CreateButtonHook(bar, button)
     button.farmed:Show()
 
     button:RegisterForClicks("AnyDown")
-    button:SetScript(
-        "OnClick",
-        function(_self, mouseButton)
-            if (mouseButton == "RightButton") then
-                tremove(_G.ElvDB.trackerbar[TB.myname][button.table], button.index)
-                self:UpdateBar(bar)
-            end
-            _self:SetChecked(false)
+    button:SetScript("OnClick", function(_self, mouseButton)
+        if mouseButton == "RightButton" then
+            tremove(_G.ElvDB.trackerbar[TB.myname][button.table], button.index)
+            self:UpdateBar(bar)
         end
-    )
+        _self:SetChecked(false)
+    end)
 end
 
 local boaStr = _G.ITEM_BNETACCOUNTBOUND
@@ -85,17 +69,13 @@ function TB:GetItemCount(itemID)
     local boa = false
     for i = 2, bindTypeLines do
         local line = _G[E.ScanTooltip:GetName() .. ("TextLeft%d"):format(i)]:GetText()
-        if not line or line == "" then
-            break
-        end
+        if not line or line == "" then break end
         if line == boaStr then
             boa = true
             break
         end
     end
-    if not DataStore then
-        DataStore = _G.DataStore
-    end
+    if not DataStore then DataStore = _G.DataStore end
     if boa and DataStore then
         local total = 0
         for _, character in pairs(DataStore:GetCharacters()) do
@@ -111,9 +91,7 @@ end
 function TB:SetItemTooltip(itemID)
     local ret = GameTooltip:SetItemByID(itemID)
 
-    if (not self.sessionDB.items[itemID]) then
-        return ret
-    end
+    if not self.sessionDB.items[itemID] then return ret end
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(L["Session:"])
     local gained = self.sessionDB.items[itemID].gained
@@ -122,9 +100,9 @@ function TB:SetItemTooltip(itemID)
 
     GameTooltip:AddDoubleLine(L["Earned:"], gained, 1, 1, 1, 1, 1, 1)
     GameTooltip:AddDoubleLine(L["Spent:"], lost, 1, 1, 1, 1, 1, 1)
-    if (change < 0) then
+    if change < 0 then
         GameTooltip:AddDoubleLine(L["Deficit:"], -change, 1, 0, 0, 1, 1, 1)
-    elseif (change > 0) then
+    elseif change > 0 then
         GameTooltip:AddDoubleLine(L["Profit:"], change, 0, 1, 0, 1, 1, 1)
     end
     local count = self:GetItemCount(itemID)
@@ -140,9 +118,7 @@ function TB:SetCurrencyTooltip(currencyID)
 
     NUB.AddAltoholicCurrencyInfo(currencyID)
 
-    if (not self.sessionDB.currency[currencyID]) then
-        return ret
-    end
+    if not self.sessionDB.currency[currencyID] then return ret end
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(L["Session:"])
     local gained = self.sessionDB.currency[currencyID].gained
@@ -151,9 +127,9 @@ function TB:SetCurrencyTooltip(currencyID)
 
     GameTooltip:AddDoubleLine(L["Earned:"], gained, 1, 1, 1, 1, 1, 1)
     GameTooltip:AddDoubleLine(L["Spent:"], lost, 1, 1, 1, 1, 1, 1)
-    if (change < 0) then
+    if change < 0 then
         GameTooltip:AddDoubleLine(L["Deficit:"], -change, 1, 0, 0, 1, 1, 1)
-    elseif (change > 0) then
+    elseif change > 0 then
         GameTooltip:AddDoubleLine(L["Profit:"], change, 0, 1, 0, 1, 1, 1)
     end
     local count = _G.ElvDB.trackerbar[TB.myname].count.currency[currencyID]
@@ -167,9 +143,7 @@ end
 
 function TB:UpdateItemButton(button)
     local v = button.data
-    if (not self.sessionDB.items[v]) then
-        self:AddWatchStartValue(true, v)
-    end
+    if not self.sessionDB.items[v] then self:AddWatchStartValue(true, v) end
 
     local count = GetItemCount(v, true)
     TB:UpdateAndNotify(true, v, count)
@@ -178,30 +152,24 @@ function TB:UpdateItemButton(button)
     button.texture:SetDesaturated(count == 0)
     button.table = "items"
 
-    button.SetTooltip = function()
-        return self:SetItemTooltip(v)
-    end
+    button.SetTooltip = function() return self:SetItemTooltip(v) end
 end
 
 function TB:UpdateCurrencyButton(button)
     local v = button.data
-    if (not self.sessionDB.currency[v]) then
-        self:AddWatchStartValue(false, v)
-    end
+    if not self.sessionDB.currency[v] then self:AddWatchStartValue(false, v) end
     local info = C_CurrencyInfo_GetCurrencyInfo(v)
     TB:UpdateAndNotify(false, v, info.quantity)
     button.farmed:SetText(info.quantity)
     button.table = "currency"
 
-    button.SetTooltip = function()
-        return self:SetCurrencyTooltip(v)
-    end
+    button.SetTooltip = function() return self:SetCurrencyTooltip(v) end
 end
 
 function TB:UpdateButtonHook(button, type, index)
     button.index = index
     button.count:Hide()
-    if (type == "item") then
+    if type == "item" then
         self:UpdateItemButton(button)
     else
         self:UpdateCurrencyButton(button)
@@ -219,18 +187,11 @@ function TB:UpdateBar(bar)
 
     local function f(key, id)
         for i, v in ipairs(ElvDB.trackerbar[TB.myname][key]) do
-            if (v == id) then
-                return i
-            end
+            if v == id then return i end
         end
     end
 
-    table.sort(
-        items,
-        function(a, b)
-            return a > b
-        end
-    )
+    table.sort(items, function(a, b) return a > b end)
     for i = 1, #items do
         local button = bar.buttons[i]
 
@@ -240,21 +201,14 @@ function TB:UpdateBar(bar)
     -- Holy crap why are there strings for the currency ids??
     local fixMePls = {}
     for i, v in pairs(ElvDB.trackerbar[TB.myname].currency) do
-        if type(v) ~= "number" then
-            tinsert(fixMePls, i)
-        end
+        if type(v) ~= "number" then tinsert(fixMePls, i) end
     end
 
     for _, v in ipairs(fixMePls) do
         ElvDB.trackerbar[TB.myname].currency[v] = tonumber(ElvDB.trackerbar[TB.myname].currency[v])
     end
 
-    table.sort(
-        currency,
-        function(a, b)
-            return a > b
-        end
-    )
+    table.sort(currency, function(a, b) return a > b end)
     for i = #items + 1, #items + #currency do
         local button = bar.buttons[i]
 
@@ -268,9 +222,7 @@ function TB:UpdateBar(bar)
 end
 
 function TB:AddWatchStartValue(isItem, id)
-    if (not id) then
-        return
-    end
+    if not id then return end
     local table = isItem and "items" or "currency"
 
     self.sessionDB[table][id] = {}
@@ -285,11 +237,11 @@ function TB:AddWatch(item, id)
     local notificationItem = L["Added item watch for %s"]
     local notificationCurrency = L["Added currency watch for %s"]
 
-    if (not tContains(ElvDB.trackerbar[TB.myname][table], id)) then
-        ElvDB.trackerbar[TB.myname].count[table][id] =
-            item and GetItemCount(id, true) or (C_CurrencyInfo_GetCurrencyInfo(id)).quantity
+    if not tContains(ElvDB.trackerbar[TB.myname][table], id) then
+        ElvDB.trackerbar[TB.myname].count[table][id] = item and GetItemCount(id, true)
+            or (C_CurrencyInfo_GetCurrencyInfo(id)).quantity
         tinsert(ElvDB.trackerbar[TB.myname][table], id)
-        if (E.db.nihilistzscheui.utilitybars.trackerbar.notify) then
+        if E.db.nihilistzscheui.utilitybars.trackerbar.notify then
             local string = item and notificationItem or notificationCurrency
             UIErrorsFrame:AddMessage(
                 string:format(item and select(2, GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id))
@@ -301,83 +253,64 @@ function TB:AddWatch(item, id)
 end
 
 function TB:HookElvUIBags()
-    if (not B.BagFrames) then
-        return
-    end
+    if not B.BagFrames then return end
     for _, bagFrame in pairs(B.BagFrames) do
         for _, bagID in pairs(bagFrame.BagIDs) do
-            if (not self.hookedBags[bagID]) then
+            if not self.hookedBags[bagID] then
                 for slotID = 1, GetContainerNumSlots(bagID) do
                     local button = bagFrame.Bags[bagID][slotID]
                     button:RegisterForClicks("AnyUp")
-                    button:HookScript(
-                        "OnDoubleClick",
-                        function(_, mouseButton)
-                            if (mouseButton == "LeftButton") then
-                                self:AddWatch(true, GetContainerItemID(bagID, slotID))
-                            end
-                            ClearCursor()
-                        end
-                    )
+                    button:HookScript("OnDoubleClick", function(_, mouseButton)
+                        if mouseButton == "LeftButton" then self:AddWatch(true, GetContainerItemID(bagID, slotID)) end
+                        ClearCursor()
+                    end)
                 end
                 self.hookedBags[bagID] = true
             end
         end
     end
 
-    if (_G.ElvUIReagentBankFrameItem1 and not self.hookedBags[REAGENTBANK_CONTAINER]) then
+    if _G.ElvUIReagentBankFrameItem1 and not self.hookedBags[REAGENTBANK_CONTAINER] then
         for slotID = 1, 98 do
             local button = _G["ElvUIReagentBankFrameItem" .. slotID]
             button:RegisterForClicks("AnyUp")
-            button:HookScript(
-                "OnDoubleClick",
-                function(_, mouseButton)
-                    if (mouseButton == "LeftButton") then
-                        self:AddWatch(true, GetContainerItemID(REAGENTBANK_CONTAINER, slotID))
-                    end
-                    ClearCursorItem()
+            button:HookScript("OnDoubleClick", function(_, mouseButton)
+                if mouseButton == "LeftButton" then
+                    self:AddWatch(true, GetContainerItemID(REAGENTBANK_CONTAINER, slotID))
                 end
-            )
+                ClearCursorItem()
+            end)
         end
         self.hookedBags[REAGENTBANK_CONTAINER] = true
     end
 end
 
 function TB:HookCurrencyButtons()
-    if (not TokenFrameContainer.buttons) then
-        return false
-    end
-
-    for i = 1, #TokenFrameContainer.buttons do
-        local button = TokenFrameContainer.buttons[i]
-        if (not button.hooked) then
+    local count = 0
+    for _, button in pairs(TokenFrame.ScrollBox.ScrollTarget) do
+        if not button.isHeader and not button.nui_utibar_hooked then
             button:RegisterForClicks("AnyUp")
-            button:HookScript(
-                "OnDoubleClick",
-                function(_, mouseButton)
-                    if (mouseButton == "LeftButton") then
-                        local offset = HybridScrollFrame_GetOffset(TokenFrameContainer)
-                        local _, isHeader = C_CurrencyInfo_GetCurrencyListInfo(i + offset)
-                        if (not isHeader) then
-                            local link = C_CurrencyInfo_GetCurrencyListLink(i + offset)
-                            local id = tonumber(string.match(link, "currency:(%d+)"))
-                            self:AddWatch(false, id)
-                        end
+            button:HookScript("OnDoubleClick", function(_, mouseButton)
+                if mouseButton == "LeftButton" then
+                    local offset = HybridScrollFrame_GetOffset(TokenFrameContainer)
+                    local _, isHeader = C_CurrencyInfo_GetCurrencyListInfo(i + offset)
+                    if not isHeader then
+                        local link = C_CurrencyInfo_GetCurrencyListLink(i + offset)
+                        local id = tonumber(string.match(link, "currency:(%d+)"))
+                        self:AddWatch(false, id)
                     end
-                    TokenFramePopup:Hide()
                 end
-            )
-            button.hooked = true
+                TokenFramePopup:Hide()
+            end)
+            button.nui_utibar_hooked = true
+            count = count + 1
         end
     end
-
-    return #TokenFrameContainer.buttons
+    return count
 end
 
 function TB:UpdateAndNotify(item, id, count)
-    if (not id) then
-        return
-    end
+    if not id then return end
     local table = item and "items" or "currency"
     local oldCount = _G.ElvDB.trackerbar[TB.myname].count[table][id] or 0
 
@@ -386,16 +319,12 @@ function TB:UpdateAndNotify(item, id, count)
     local change = count - oldCount
     local link = item and select(2, GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id, 0)
     local notify = E.db.nihilistzscheui.utilitybars.trackerbar.notify
-    if (change and link and change > 0) then
+    if change and link and change > 0 then
         self.sessionDB[table][id].gained = self.sessionDB[table][id].gained + change
-        if (notify) then
-            UIErrorsFrame:AddMessage(earned:format(change, link, count))
-        end
-    elseif (change and link and change < 0) then
+        if notify then UIErrorsFrame:AddMessage(earned:format(change, link, count)) end
+    elseif change and link and change < 0 then
         self.sessionDB[table][id].lost = self.sessionDB[table][id].lost + -change
-        if (notify) then
-            UIErrorsFrame:AddMessage(lost:format(-change, link, count))
-        end
+        if notify then UIErrorsFrame:AddMessage(lost:format(-change, link, count)) end
     end
     _G.ElvDB.trackerbar[TB.myname].count[table][id] = count
 end
@@ -406,11 +335,11 @@ function TB.FixDataTable()
 end
 
 local function GetNumberOfTokenFrameButtons()
-    if (not TokenFrameContainer.buttons) then
-        return 0
+    local count = 0
+    for _, button in pairs(TokenFrame.ScrollBox.ScrollTarget) do
+        if type(button) == "table" and not button.isHeader then count = count + 1 end
     end
-
-    return #TokenFrameContainer.buttons
+    return count
 end
 
 function TB:Initialize()
@@ -427,7 +356,7 @@ function TB:Initialize()
     TB.myname = ("%s-%s"):format(E.myname, E.myrealm)
     _G.ElvDB = _G.ElvDB or {}
     local ElvDB = _G.ElvDB
-    if (not self.FixDataTable()) then
+    if not self.FixDataTable() then
         ElvDB.trackerbar = ElvDB.trackerbar or {}
         ElvDB.trackerbar[TB.myname] = ElvDB.trackerbar[TB.myname] or {}
         ElvDB.trackerbar[TB.myname].items = ElvDB.trackerbar[TB.myname].items or {}
@@ -454,23 +383,13 @@ function TB:Initialize()
 
     self.hookedBags = {}
     self:HookElvUIBags()
-    hooksecurefunc(
-        B,
-        "Layout",
-        function()
-            self:HookElvUIBags()
-        end
-    )
+    hooksecurefunc(B, "Layout", function() self:HookElvUIBags() end)
 
-    hooksecurefunc(
-        _G,
-        "TokenFrame_Update",
-        function()
-            if (GetNumberOfTokenFrameButtons() ~= self.hookedCurrency) then
-                self.hookedCurrency = self:HookCurrencyButtons()
-            end
+    hooksecurefunc(_G, "TokenFrame_Update", function()
+        if GetNumberOfTokenFrameButtons() ~= self.hookedCurrency then
+            self.hookedCurrency = self:HookCurrencyButtons()
         end
-    )
+    end)
 end
 
 NUB:RegisterUtilityBar(TB)

@@ -1,10 +1,10 @@
-## Interface: 10000
+## Interface: 30400
 ## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r
 ## Author: Nihilistzsche
 ## Version: 12.04
 ## Notes: An external edit for ElvUI and ElvUI Shadow & Light
 ## RequiredDeps: ElvUI
-## OptionalDeps: ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI
+## OptionalDeps: ElvUI_Shadow&Light, ElvUI_BenikUI, ElvUI_MerathilisUI
 ## OptionalDeps: AddOnSkins_NihilistzschezschePrivate, ElvUI_CPU, zPets, Executive_Assistant, TotalRP3, ElvUI_DynamicStatusIcons
 ## X-oUF: ElvUF
 ## X-Curse-Project-ID: 690477

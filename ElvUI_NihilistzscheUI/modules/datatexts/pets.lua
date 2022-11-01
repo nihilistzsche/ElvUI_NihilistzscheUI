@@ -34,17 +34,13 @@ local hexColor = "|cff00ff96"
 local db
 
 local function UpdateDisplay(self)
-    if db.id and db.text then
-        self.text:SetFormattedText(displayString, db.text)
-    end
+    if db.id and db.text then self.text:SetFormattedText(displayString, db.text) end
 
     local summonedPetID = C_PetJournal_GetSummonedPetGUID()
     if summonedPetID then
         local _, customName, _, _, _, _, _, petName, _, _, _ = C_PetJournal_GetPetInfoByPetID(summonedPetID)
         local creatureName = petName
-        if customName then
-            creatureName = customName
-        end
+        if customName then creatureName = customName end
         if creatureName then
             self.text:SetFormattedText(displayString, creatureName)
             db.id = summonedPetID
@@ -58,9 +54,7 @@ end
 local function ModifiedClick(_, id)
     local _, customName, _, _, _, _, _, petName = C_PetJournal_GetPetInfoByPetID(id)
     local creatureName = petName
-    if customName then
-        creatureName = customName
-    end
+    if customName then creatureName = customName end
 
     if IsShiftKeyDown() then
         C_PetJournal_PickupPet(id)
@@ -97,7 +91,7 @@ local specialPets = {
     "Snowfeather Hatchling",
     "Bloodgazer Hatchling",
     "Direbeak Hatchling",
-    "Sharptalon Hatchling"
+    "Sharptalon Hatchling",
 }
 
 local function AddSpecialPets(_, level)
@@ -105,10 +99,8 @@ local function AddSpecialPets(_, level)
     for i = 1, numPets do
         local petID, _, isOwned, customName, _, _, _, name, icon = C_PetJournal_GetPetInfoByIndex(i)
         local creatureName = name
-        if customName then
-            creatureName = customName
-        end
-        if (tContains(specialPets, name) and isOwned) then
+        if customName then creatureName = customName end
+        if tContains(specialPets, name) and isOwned then
             menu.text = creatureName
             menu.icon = icon
             menu.colorCode = "|cffffffff"
@@ -125,9 +117,7 @@ local function AddFavorites(self, level)
     if db.favOne ~= nil then
         local _, customName, _, _, _, _, _, petName, petIcon = C_PetJournal_GetPetInfoByPetID(db.favOne)
         local creatureName = petName
-        if customName then
-            creatureName = customName
-        end
+        if customName then creatureName = customName end
         menu.text = format("1. %s", creatureName)
         menu.icon = petIcon
         menu.colorCode = "|cffffffff"
@@ -137,18 +127,14 @@ local function AddFavorites(self, level)
         menu.notCheckable = true
 
         local summonedPetID = C_PetJournal_GetSummonedPetGUID()
-        if summonedPetID == db.favOne then
-            menu.colorCode = hexColor
-        end
+        if summonedPetID == db.favOne then menu.colorCode = hexColor end
         UIDropDownMenu_AddButton(menu, level)
     end
 
     if db.favTwo ~= nil then
         local _, customName, _, _, _, _, _, petName, petIcon = C_PetJournal_GetPetInfoByPetID(db.favTwo)
         local creatureName = petName
-        if customName then
-            creatureName = customName
-        end
+        if customName then creatureName = customName end
         menu.text = format("2. %s", creatureName)
         menu.icon = petIcon
         menu.colorCode = "|cffffffff"
@@ -158,18 +144,14 @@ local function AddFavorites(self, level)
         menu.notCheckable = true
 
         local summonedPetID = C_PetJournal_GetSummonedPetGUID()
-        if summonedPetID == db.favTwo then
-            menu.colorCode = hexColor
-        end
+        if summonedPetID == db.favTwo then menu.colorCode = hexColor end
         UIDropDownMenu_AddButton(menu, level)
     end
 
     if db.favThree ~= nil then
         local _, customName, _, _, _, _, _, petName, petIcon = C_PetJournal_GetPetInfoByPetID(db.favThree)
         local creatureName = petName
-        if customName then
-            creatureName = customName
-        end
+        if customName then creatureName = customName end
         menu.text = format("3. %s", creatureName)
         menu.icon = petIcon
         menu.colorCode = "|cffffffff"
@@ -179,9 +161,7 @@ local function AddFavorites(self, level)
         menu.notCheckable = true
 
         local summonedPetID = C_PetJournal_GetSummonedPetGUID()
-        if summonedPetID == db.favThree then
-            menu.colorCode = hexColor
-        end
+        if summonedPetID == db.favThree then menu.colorCode = hexColor end
         UIDropDownMenu_AddButton(menu, level)
     end
 
@@ -195,9 +175,7 @@ local function CreateMenu(self, level)
         for i = 1, numPets do
             local petID, _, isOwned, customName, _, _, _, name, icon = C_PetJournal_GetPetInfoByIndex(i)
             local creatureName = name
-            if customName then
-                creatureName = customName
-            end
+            if customName then creatureName = customName end
             --firstChar = strupper(strsub(creatureName, 1, 1))
             if isOwned then
                 menu.hasArrow = false -- Start menu creation
@@ -209,9 +187,7 @@ local function CreateMenu(self, level)
                 menu.arg1 = petID
 
                 local summonedPetID = C_PetJournal_GetSummonedPetGUID()
-                if summonedPetID == petID then
-                    menu.colorCode = "|cff00ff00"
-                end
+                if summonedPetID == petID then menu.colorCode = "|cff00ff00" end
                 UIDropDownMenu_AddButton(menu)
             end
         end
@@ -222,12 +198,8 @@ local function CreateMenu(self, level)
             for i = 1, numPets do
                 local _, _, isOwned, customName, _, _, _, name = C_PetJournal_GetPetInfoByIndex(i)
                 local creatureName = name
-                if customName then
-                    creatureName = customName
-                end
-                if creatureName and isOwned and creatureName:sub(1, 1):upper() == firstChar then
-                    tinsert(pets, i)
-                end
+                if customName then creatureName = customName end
+                if creatureName and isOwned and creatureName:sub(1, 1):upper() == firstChar then tinsert(pets, i) end
             end
             return pets
         end
@@ -249,12 +221,12 @@ local function CreateMenu(self, level)
             key = "A"
             alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZA"
             repeat
-                if (countByKey[key] > 0) then
+                if countByKey[key] > 0 then
                     for i = 1, depthByKey[key] do
                         menu.text = key
                         menu.notCheckable = true
                         menu.hasArrow = true
-                        menu.value = {["Level1_Key"] = key, ["Level1_Depth"] = i}
+                        menu.value = { ["Level1_Key"] = key, ["Level1_Depth"] = i }
                         UIDropDownMenu_AddButton(menu, level)
                     end
                 end
@@ -267,13 +239,11 @@ local function CreateMenu(self, level)
             local pets = CollectPetsByFirstChar(Level1_Key)
             local depthMod = 1 + ((Level1_Depth - 1) * 32)
             for k = depthMod, depthMod + 31 do
-                if (pets[k]) then
+                if pets[k] then
                     local petID, _, isOwned, customName, _, _, _, name, icon = C_PetJournal_GetPetInfoByIndex(pets[k])
                     local creatureName = name
-                    if customName then
-                        creatureName = customName
-                    end
-                    if (creatureName and isOwned) then
+                    if customName then creatureName = customName end
+                    if creatureName and isOwned then
                         menu.text = creatureName
                         menu.icon = icon
                         menu.colorCode = "|cffffffff"
@@ -304,18 +274,12 @@ end
 local function OnClick(self, button)
     DT.tooltip:Hide()
 
-    if (button == "RightButton" and not IsShiftKeyDown()) then
-        ToggleDropDownMenu(1, nil, F, self, 0, 0)
+    if button == "RightButton" and not IsShiftKeyDown() then ToggleDropDownMenu(1, nil, F, self, 0, 0) end
+    if IsShiftKeyDown() and button == "LeftButton" then ToggleCollectionsJournal(2) end
+    if button == "LeftButton" and not IsShiftKeyDown() then
+        if db.id ~= nil then C_PetJournal_SummonPetByGUID(db.id) end
     end
-    if (IsShiftKeyDown() and button == "LeftButton") then
-        ToggleCollectionsJournal(2)
-    end
-    if (button == "LeftButton" and not IsShiftKeyDown()) then
-        if db.id ~= nil then
-            C_PetJournal_SummonPetByGUID(db.id)
-        end
-    end
-    if (IsShiftKeyDown() and button == "RightButton") then
+    if IsShiftKeyDown() and button == "RightButton" then
         if IsAddOnLoaded("Blizzard_PetJournal") then
             ToggleDropDownMenu(1, nil, PetJournalFilterDropDown, self, 0, 0)
         else
@@ -355,20 +319,17 @@ end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
-F:SetScript(
-    "OnEvent",
-    function(self)
-        db = E.private.nihilistzscheui.pets
-        self.initialize = CreateMenu
-        self.displayMode = "MENU"
-        self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-    end
-)
+F:SetScript("OnEvent", function(self)
+    db = E.private.nihilistzscheui.pets
+    self.initialize = CreateMenu
+    self.displayMode = "MENU"
+    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+end)
 
 DT:RegisterDatatext(
     L["Battle Pets"],
     "NihilistzscheUI",
-    {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"},
+    { "PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE" },
     UpdateDisplay,
     OnUpdate,
     OnClick,

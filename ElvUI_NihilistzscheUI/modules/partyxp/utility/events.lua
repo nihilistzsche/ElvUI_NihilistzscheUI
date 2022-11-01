@@ -25,21 +25,17 @@ function PXP:PLAYER_ENTERING_WORLD()
     self:Update()
 end
 
-hooksecurefunc(
-    NUI,
-    "CustomQuestXPWatcher",
-    function(questXP)
-        PXP.QXPMessage(questXP)
-    end
-)
+hooksecurefunc(NUI, "CustomQuestXPWatcher", function(questXP) PXP.QXPMessage(questXP) end)
 
 function PXP:CHAT_MSG_ADDON(_, ...)
     local prefix, message, _, sender = ...
 
     if
-        (prefix ~= "PXP" and prefix ~= "PXPQXP" and prefix ~= "PXPREQ") or not sender or sender == E.myname or
-            strsplit("-", sender) == E.myname
-     then
+        (prefix ~= "PXP" and prefix ~= "PXPQXP" and prefix ~= "PXPREQ")
+        or not sender
+        or sender == E.myname
+        or strsplit("-", sender) == E.myname
+    then
         return
     end
 
@@ -49,13 +45,11 @@ function PXP:CHAT_MSG_ADDON(_, ...)
     if prefix == "PXP" then
         if message == "[DISABLED]" and self:GetDataForPartyMember(guid) and self.GetPartyMemberIndex(sender) then
             self:UpdateData(guid, "disabled", true)
-        elseif (self.GetPartyMemberIndex(sender)) then
+        elseif self.GetPartyMemberIndex(sender) then
             local level, current, max, rested = message:match("%[l:(%d+)c:(%d+)m:(%d+)r:(%d+)%]")
             level, current, max, rested = tonumber(level), tonumber(current), tonumber(max), tonumber(rested)
 
-            if level == GetMaxLevelForPlayerExpansion() then
-                return
-            end
+            if level == GetMaxLevelForPlayerExpansion() then return end
 
             self:UpdateData(
                 guid,
@@ -81,15 +75,11 @@ function PXP:CHAT_MSG_ADDON(_, ...)
             self.currentMessageProgress = 1
         else
             self.currentMessageProgress = self.currentMessageProgress + 1
-            if self.currentMessageProgress > PXP_UPDATE_THRESHOLD then
-                self.currentMessageProgress = 0
-            end
+            if self.currentMessageProgress > PXP_UPDATE_THRESHOLD then self.currentMessageProgress = 0 end
         end
     elseif prefix == "PXPQXP" then
         local qxp = message:match("%[qxp:(%d+)%]")
-        if not self:GetDataForPartyMember(guid) then
-            return
-        end
+        if not self:GetDataForPartyMember(guid) then return end
         self:UpdateData(guid, "qxp", qxp)
         self:Update()
     elseif prefix == "PXPREQ" then

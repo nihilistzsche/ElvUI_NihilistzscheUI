@@ -31,7 +31,7 @@ local Backdrop = {
     edgeFile = E.media.blankTex,
     tile = false,
     tileSize = 0,
-    edgeSize = 1
+    edgeSize = 1,
 }
 
 function NC.URLChatFrame_OnHyperlinkShow(self, link)
@@ -39,9 +39,7 @@ function NC.URLChatFrame_OnHyperlinkShow(self, link)
     if (link):sub(1, 3) == "url" then
         local ChatFrameEditBox = ChatEdit_ChooseBoxForSend()
         local currentLink = (link):sub(5)
-        if (not ChatFrameEditBox:IsShown()) then
-            ChatEdit_ActivateChat(ChatFrameEditBox)
-        end
+        if not ChatFrameEditBox:IsShown() then ChatEdit_ActivateChat(ChatFrameEditBox) end
         ChatFrameEditBox:Insert(currentLink)
         ChatFrameEditBox:HighlightText()
         return
@@ -65,9 +63,7 @@ function NC:SetStyle(f, panel, border)
         f:SetBackdropBorderColor(0, 0, 0)
     end
 
-    if (COMP.MERS) then
-        f:Styling()
-    end
+    if COMP.MERS then f:Styling() end
 end
 
 function NC:CreateDock()
@@ -83,14 +79,14 @@ function NC:CreateDock()
     dock:SetAlpha(0)
     dock:EnableMouse(false)
 
-    E:CreateMover(dock, dock:GetName() .. "Mover", "NihilistzscheChat Dock", nil, nil, nil, "ALL,SOLO,NIHILISTUI")
+    E:CreateMover(dock, dock:GetName() .. "Mover", "NihilistzscheChat Dock", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
 
     self.dock = dock
 end
 
 function NC:CheckDelayed()
     for sender, _ in pairs(self.delayed) do
-        if (self.userCache[sender]) then
+        if self.userCache[sender] then
             for _, args in ipairs(self.delayed[sender]) do
                 self:AddIncoming(args.event, args.msg, sender, args.guid)
             end
@@ -99,11 +95,9 @@ function NC:CheckDelayed()
 end
 
 function NC:FixSameRealm(string)
-    if (string:find("%-")) then
+    if string:find("%-") then
         local name, realm = string.split("-", string)
-        if (realm == self.myrealm) then
-            return name
-        end
+        if realm == self.myrealm then return name end
     end
     return string
 end
@@ -129,21 +123,14 @@ NC.Clients = {
     ZEUS = "Call of Duty: Black Ops Cold War",
     RTRO = "Blizzard Arcade Collection",
     ["WLBY"] = "Crash Bandicoot 4",
-    OSI = "Diablo II: Ressurected"
+    OSI = "Diablo II: Ressurected",
 }
 
-setmetatable(
-    NC.Clients,
-    {
-        __index = function(t, k)
-            return rawget(t, k) or ("Unknown: %s"):format(k)
-        end
-    }
-)
+setmetatable(NC.Clients, {
+    __index = function(t, k) return rawget(t, k) or ("Unknown: %s"):format(k) end,
+})
 
-function NC:GetRaceTexture(race)
-    return self.TexturePath .. string.format(self.CrestFormat, race)
-end
+function NC:GetRaceTexture(race) return self.TexturePath .. string.format(self.CrestFormat, race) end
 
 function NC:QueueWhoUpdate(sender)
     self.queuedWhoUpdates = self.queuedWhoUpdates or {}
@@ -152,31 +139,27 @@ end
 
 function NC:ProcessQueuedWhoRequests()
     for sender in pairs(self.queuedWhoUpdates or {}) do
-        local results =
-            LW:UserInfo(
-            sender,
-            {
-                callback = function(results)
-                    if (results) then
-                        self.userCache[sender] = {}
-                        self.userCache[sender].level = results.Level
-                        self.userCache[sender].class = results.Class
-                        self.userCache[sender].race = results.Race
-                        self.userCache[sender].name = results.Name
-                        self.queuedWhoUpdates[sender] = nil
-                        self:CheckDelayed()
-                    else
-                        self.userCache[sender] = {}
-                        self.userCache[sender].level = UNKNOWN
-                        self.userCache[sender].class = UNKNOWN
-                        self.userCache[sender].race = UNKNOWN
-                        self.userCache[sender].name = sender
-                        self:CheckDelayed()
-                    end
+        local results = LW:UserInfo(sender, {
+            callback = function(results)
+                if results then
+                    self.userCache[sender] = {}
+                    self.userCache[sender].level = results.Level
+                    self.userCache[sender].class = results.Class
+                    self.userCache[sender].race = results.Race
+                    self.userCache[sender].name = results.Name
+                    self.queuedWhoUpdates[sender] = nil
+                    self:CheckDelayed()
+                else
+                    self.userCache[sender] = {}
+                    self.userCache[sender].level = UNKNOWN
+                    self.userCache[sender].class = UNKNOWN
+                    self.userCache[sender].race = UNKNOWN
+                    self.userCache[sender].name = sender
+                    self:CheckDelayed()
                 end
-            }
-        )
-        if (results) then
+            end,
+        })
+        if results then
             self.userCache[sender] = {}
             self.userCache[sender].level = results.Level
             self.userCache[sender].class = results.Class
@@ -197,37 +180,37 @@ function NC:SetInfoString(event, sender, guid)
     local isWoW, raceBackground = false, nil
 
     local chatType, chatColor
-    if (event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") then
+    if event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" then
         chatType = "BN_WHISPER"
         chatColor = ChatTypeInfo[chatType]
         local id = BNet_GetBNetIDAccount(sender)
         local accountInfo = C_BattleNet_GetAccountInfoByID(id)
         local gameAccountInfo = C_BattleNet_GetGameAccountInfoByID(accountInfo.gameAccountInfo.gameAccountID)
-        if (gameAccountInfo.clientProgram == "WoW") then
+        if gameAccountInfo.clientProgram == "WoW" then
             local token = self.maleClasses[gameAccountInfo.className]
-            if (not token) then
-                token = self.femaleClasses[gameAccountInfo.className]
-            end
+            if not token then token = self.femaleClasses[gameAccountInfo.className] end
             local color = GetQuestDifficultyColor(gameAccountInfo.characterLevel)
             local levelColor = E:RGBToHex(color.r, color.g, color.b)
             local classColor = RAID_CLASS_COLORS[token]
             classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
             tabName = classColor .. accountInfo.accountName .. "|r"
-            infoString =
-                classColor ..
-                accountInfo.accountName ..
-                    " " ..
-                        gameAccountInfo.characterName ..
-                            "|r (" ..
-                                levelColor ..
-                                    gameAccountInfo.characterLevel ..
-                                        "|r  " ..
-                                            gameAccountInfo.raceName ..
-                                                " " .. classColor .. gameAccountInfo.className .. "|r) "
+            infoString = classColor
+                .. accountInfo.accountName
+                .. " "
+                .. gameAccountInfo.characterName
+                .. "|r ("
+                .. levelColor
+                .. gameAccountInfo.characterLevel
+                .. "|r  "
+                .. gameAccountInfo.raceName
+                .. " "
+                .. classColor
+                .. gameAccountInfo.className
+                .. "|r) "
             isWoW = true
             raceBackground = self:GetRaceTexture(self.raceMap[gameAccountInfo.raceName])
-            self.senderInfo[sender] = {classColor = classColor, toonName = gameAccountInfo.characterName}
-        elseif (gameAccountInfo.clientProgram) then
+            self.senderInfo[sender] = { classColor = classColor, toonName = gameAccountInfo.characterName }
+        elseif gameAccountInfo.clientProgram then
             local fixedClient = NC.Clients[gameAccountInfo.clientProgram]
             tabName = accountInfo.accountName
             infoString = accountInfo.accountName .. " (" .. fixedClient .. ")"
@@ -237,24 +220,22 @@ function NC:SetInfoString(event, sender, guid)
             infoString = "Unknown"
         end
         chat.hex = E:RGBToHex(chatColor.r, chatColor.g, chatColor.b)
-    elseif (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM") then
+    elseif event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" then
         local realm, class, level, race, name
         local onMyRealm = true
         local inParty = false
         self.senderInfo[sender] = nil
 
-        if (guid) then
+        if guid then
             local _
             class, _, race, _, _, name, realm = GetPlayerInfoByGUID(guid)
 
             onMyRealm = realm == ""
             inParty = UnitInParty(name)
 
-            if (not onMyRealm and not inParty) then
+            if not onMyRealm and not inParty then
                 level = UnitLevel(sender)
-                if (not level or level == 0) then
-                    level = "??"
-                end
+                if not level or level == 0 then level = "??" end
 
                 self.userCache[sender] = {}
                 self.userCache[sender].level = level
@@ -263,7 +244,7 @@ function NC:SetInfoString(event, sender, guid)
                 self.userCache[sender].name = name
             end
         end
-        if (onMyRealm or inParty) then
+        if onMyRealm or inParty then
             realm = onMyRealm and NC.myrealm or realm
 
             class = UnitClass(sender)
@@ -271,7 +252,7 @@ function NC:SetInfoString(event, sender, guid)
             race = UnitRace(sender)
             name = UnitName(sender)
 
-            if (class and level and level > 0 and race and name and not self.userCache[sender]) then
+            if class and level and level > 0 and race and name and not self.userCache[sender] then
                 self.userCache[sender] = {}
                 self.userCache[sender].level = level
                 self.userCache[sender].race = race
@@ -279,7 +260,7 @@ function NC:SetInfoString(event, sender, guid)
                 self.userCache[sender].name = name
             end
 
-            if (not self.userCache[sender] or self.userCache[sender].level == "UNKNOWN") then
+            if not self.userCache[sender] or self.userCache[sender].level == "UNKNOWN" then
                 self:QueueWhoUpdate(sender)
                 hasInfo = false
                 chat.hex = E:RGBToHex(1.0, 1.0, 1.0)
@@ -288,7 +269,7 @@ function NC:SetInfoString(event, sender, guid)
             end
         end
 
-        if (hasInfo) then
+        if hasInfo then
             level = self.userCache[sender].level
             class = self.userCache[sender].class
             race = self.userCache[sender].race
@@ -297,27 +278,40 @@ function NC:SetInfoString(event, sender, guid)
             raceBackground = self:GetRaceTexture(self.raceMap[race])
             local classColor
 
-            if (level ~= UNKNOWN) then
+            if level ~= UNKNOWN then
                 local color = level ~= "??" and GetQuestDifficultyColor(level) or GetQuestDifficultyColor(1)
                 local levelColor = E:RGBToHex(color.r, color.g, color.b)
 
                 local token = self.maleClasses[class]
-                if (not token) then
-                    token = self.femaleClasses[class]
-                end
+                if not token then token = self.femaleClasses[class] end
                 classColor = RAID_CLASS_COLORS[token]
                 classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
 
-                if (realm ~= NC.myrealm) then
-                    infoString =
-                        classColor ..
-                        name ..
-                            "|r (" ..
-                                levelColor .. level .. "|r " .. race .. " " .. classColor .. class .. "|r) " .. realm
+                if realm ~= NC.myrealm then
+                    infoString = classColor
+                        .. name
+                        .. "|r ("
+                        .. levelColor
+                        .. level
+                        .. "|r "
+                        .. race
+                        .. " "
+                        .. classColor
+                        .. class
+                        .. "|r) "
+                        .. realm
                 else
-                    infoString =
-                        classColor ..
-                        name .. "|r (" .. levelColor .. level .. "|r  " .. race .. " " .. classColor .. class .. "|r)"
+                    infoString = classColor
+                        .. name
+                        .. "|r ("
+                        .. levelColor
+                        .. level
+                        .. "|r  "
+                        .. race
+                        .. " "
+                        .. classColor
+                        .. class
+                        .. "|r)"
                 end
                 tabName = classColor .. name .. "|r"
             else
@@ -326,7 +320,7 @@ function NC:SetInfoString(event, sender, guid)
                 infoString = name
             end
 
-            self.senderInfo[sender] = {classColor = classColor, toonName = name}
+            self.senderInfo[sender] = { classColor = classColor, toonName = name }
             chat.hex = classColor
         end
     end
@@ -343,15 +337,16 @@ end
 function NC:AddIncoming(event, msg, sender, guid) -- Add messages to the text
     sender = NC:FixSameRealm(sender)
     local chat = self.chats[sender]
-    if (not chat) then
-        return
-    end
+    if not chat then return end
     local text = chat.Text
     if
-        (not text) or (strfind(msg, "<DBM>")) or (strfind(msg, "<Deadly Boss Mods>")) or (strfind(msg, "<VEM>")) or
-            (strfind(msg, "<Voice Encounter Mods>")) or
-            (strfind(msg, "<BigWigs>"))
-     then
+        not text
+        or (strfind(msg, "<DBM>"))
+        or (strfind(msg, "<Deadly Boss Mods>"))
+        or (strfind(msg, "<VEM>"))
+        or (strfind(msg, "<Voice Encounter Mods>"))
+        or (strfind(msg, "<BigWigs>"))
+    then
         return
     end -- Blocking dumb DBM messages
     local color, str
@@ -363,53 +358,58 @@ function NC:AddIncoming(event, msg, sender, guid) -- Add messages to the text
     end
 
     local res = NC:SetInfoString(event, sender, guid)
-    if (res == true) then
-        if (self.delayed[sender]) then
+    if res == true then
+        if self.delayed[sender] then
             local remove
             for i, v in ipairs(self.delayed[sender]) do
-                if (v.msg == msg) then
+                if v.msg == msg then
                     remove = i
                     break
                 end
             end
             tremove(self.delayed[sender], remove)
         end
-    elseif (res == false) then
-        if not (self.delayed[sender]) then
-            self.delayed[sender] = {}
-        end
-        tinsert(self.delayed[sender], {event = event, msg = msg, guid = guid})
+    elseif res == false then
+        if not self.delayed[sender] then self.delayed[sender] = {} end
+        tinsert(self.delayed[sender], { event = event, msg = msg, guid = guid })
         return
     else
         return
     end
 
     local timestamp = ""
-    if NC.db.windows.timestamp then
-        timestamp = NC:GetFormattedTime(false, true)
-    end
+    if NC.db.windows.timestamp then timestamp = NC:GetFormattedTime(false, true) end
 
-    if (not chat.hex) then
-        chat.hex = "|cffffffff"
-    end
+    if not chat.hex then chat.hex = "|cffffffff" end
 
     if event == "CHAT_MSG_WHISPER_INFORM" then -- Whisper
         local classColor = E.myclass == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[E.myclass]
         classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
-        if (self.senderInfo[sender]) then
-            str =
-                classColor ..
-                "@|r" ..
-                    self.senderInfo[sender].classColor ..
-                        "|Hplayer:" .. sender .. "|h" .. chat.hex .. sender .. "|r|h: " .. msg
+        if self.senderInfo[sender] then
+            str = classColor
+                .. "@|r"
+                .. self.senderInfo[sender].classColor
+                .. "|Hplayer:"
+                .. sender
+                .. "|h"
+                .. chat.hex
+                .. sender
+                .. "|r|h: "
+                .. msg
         else
             str = classColor .. "@|r" .. " |Hplayer:" .. sender .. "|h" .. chat.hex .. sender .. "|r|h:" .. msg
         end
     elseif event == "CHAT_MSG_WHISPER" then
-        if (self.senderInfo[sender]) then
-            str =
-                "|Hplayer:" ..
-                sender .. "|h" .. self.senderInfo[sender].classColor .. sender .. "|r|h" .. chat.hex .. ": " .. msg
+        if self.senderInfo[sender] then
+            str = "|Hplayer:"
+                .. sender
+                .. "|h"
+                .. self.senderInfo[sender].classColor
+                .. sender
+                .. "|r|h"
+                .. chat.hex
+                .. ": "
+                .. msg
         else
             str = "|Hplayer:" .. sender .. "|h" .. chat.hex .. sender .. "|r|h" .. ": " .. msg
         end
@@ -417,36 +417,40 @@ function NC:AddIncoming(event, msg, sender, guid) -- Add messages to the text
     elseif event == "CHAT_MSG_BN_WHISPER_INFORM" then -- BNet
         local classColor = E.myclass == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[E.myclass]
         classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
-        if (self.senderInfo[sender]) then
-            str =
-                classColor ..
-                "@|r" ..
-                    self.senderInfo[sender].classColor ..
-                        self.senderInfo[sender].toonName .. "|r" .. chat.hex .. " (" .. sender .. "): " .. msg
+        if self.senderInfo[sender] then
+            str = classColor
+                .. "@|r"
+                .. self.senderInfo[sender].classColor
+                .. self.senderInfo[sender].toonName
+                .. "|r"
+                .. chat.hex
+                .. " ("
+                .. sender
+                .. "): "
+                .. msg
         else
             str = classColor .. "@|r" .. sender .. ": " .. msg
         end
     else
-        if (self.senderInfo[sender]) then
-            str =
-                self.senderInfo[sender].classColor ..
-                self.senderInfo[sender].toonName .. "|r" .. chat.hex .. " (" .. sender .. "): " .. msg
+        if self.senderInfo[sender] then
+            str = self.senderInfo[sender].classColor
+                .. self.senderInfo[sender].toonName
+                .. "|r"
+                .. chat.hex
+                .. " ("
+                .. sender
+                .. "): "
+                .. msg
         else
             str = sender .. ": " .. msg
         end
         chat.LastMessage:SetText("Last message recieved at " .. NC:GetFormattedTime(true))
     end
 
-    if (not chat.StartFlashClosure) then
-        chat.StartFlashClosure = function()
-            self:StartFlash(chat.DockedName, 0.6)
-        end
-    end
+    if not chat.StartFlashClosure then chat.StartFlashClosure = function() self:StartFlash(chat.DockedName, 0.6) end end
 
-    if (not chat.TabStartFlashClosure) then
-        chat.TabStartFlashClosure = function()
-            self:StartFlash(self.tabs[chat].text, 0.6)
-        end
+    if not chat.TabStartFlashClosure then
+        chat.TabStartFlashClosure = function() self:StartFlash(self.tabs[chat].text, 0.6) end
     end
 
     if chat.minimized then
@@ -459,13 +463,9 @@ function NC:AddIncoming(event, msg, sender, guid) -- Add messages to the text
 end
 
 function NC:AddStatus(_, toast, author) -- Add messages to the text
-    if not self.chats[author] then
-        return
-    end
+    if not self.chats[author] then return end
     local text = self.chats[author].Text
-    if not text then
-        return
-    end
+    if not text then return end
 
     local status, hr, min, timestamp
 
@@ -498,9 +498,7 @@ function NC:CopyChat(frame)
         local lines = {}
         for i = 1, frame:GetNumMessages() do
             local t = frame:GetMessageInfo(i)
-            if (t) then
-                tinsert(lines, t)
-            end
+            if t then tinsert(lines, t) end
         end
         local text = table.concat(lines, "\n")
 
@@ -515,7 +513,7 @@ local date = _G.date
 
 function NC:GetFormattedTime(tag, timestamp)
     local hour, minutes
-    if (self.db.windows.localtime) then
+    if self.db.windows.localtime then
         hour, minutes = tonumber(date("%H")), tonumber(date("%M"))
     else
         hour, minutes = GetGameTime()
@@ -523,20 +521,16 @@ function NC:GetFormattedTime(tag, timestamp)
 
     local _tag = "AM"
 
-    if (minutes < 10) then
-        minutes = "0" .. tostring(minutes)
-    end
+    if minutes < 10 then minutes = "0" .. tostring(minutes) end
 
-    if (hour > 12) then
+    if hour > 12 then
         _tag = "PM"
 
-        if (self.db.windows.timeformat == "12Hour") then
-            hour = hour - 12
-        end
+        if self.db.windows.timeformat == "12Hour" then hour = hour - 12 end
     end
 
     if tag then
-        if (self.db.windows.timeformat == "12Hour") then
+        if self.db.windows.timeformat == "12Hour" then
             return format("%s:%s %s", hour, minutes, _tag)
         else
             return format("%s:%s ", hour, minutes)
@@ -567,9 +561,7 @@ function NC:StartFlash(obj, duration)
 end
 
 function NC:StopFlash(obj)
-    if obj.anim then
-        obj.anim:Stop()
-    end
+    if obj.anim then obj.anim:Stop() end
 end
 
 function NC:UpdateAll()

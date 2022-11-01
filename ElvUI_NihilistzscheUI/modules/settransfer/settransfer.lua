@@ -40,18 +40,15 @@ function ST:WithdrawDepositSetHelper(isWithdraw, setID)
                         local itemLink = C_Item_GetItemLink(itemLocation)
                         if itemLink then
                             local item = Item:CreateFromItemLink(itemLink)
-                            item:ContinueOnItemLoad(
-                                function()
-                                    local icon = item:GetItemIcon()
-                                    local itemMarkup = "|T" .. icon .. ":12|t "
-                                    local direction = isWithdraw and " |> bags" or "bank <| "
-                                    local message =
-                                        isWithdraw and (itemMarkup .. itemLink .. direction) or
-                                        (direction .. itemMarkup .. itemLink)
-                                    message = ("%s (%s)"):format(prefix, message)
-                                    DEFAULT_CHAT_FRAME:AddMessage(message, 1, 1, 1)
-                                end
-                            )
+                            item:ContinueOnItemLoad(function()
+                                local icon = item:GetItemIcon()
+                                local itemMarkup = "|T" .. icon .. ":12|t "
+                                local direction = isWithdraw and " |> bags" or "bank <| "
+                                local message = isWithdraw and (itemMarkup .. itemLink .. direction)
+                                    or (direction .. itemMarkup .. itemLink)
+                                message = ("%s (%s)"):format(prefix, message)
+                                DEFAULT_CHAT_FRAME:AddMessage(message, 1, 1, 1)
+                            end)
                         end
                     end
                     UseContainerItem(bagID, slotID)
@@ -63,12 +60,8 @@ function ST:WithdrawDepositSetHelper(isWithdraw, setID)
 end
 
 -- luacheck: push no self
-function ST:WithdrawSet(setID)
-    ST:WithdrawDepositSetHelper(true, setID)
-end
-function ST:DepositSet(setID)
-    ST:WithdrawDepositSetHelper(false, setID)
-end
+function ST:WithdrawSet(setID) ST:WithdrawDepositSetHelper(true, setID) end
+function ST:DepositSet(setID) ST:WithdrawDepositSetHelper(false, setID) end
 -- luacheck: pop
 
 local function CreateMenu(_, level)
@@ -88,7 +81,7 @@ local function CreateMenu(_, level)
         end
     else
         local setID = _G.UIDROPDOWNMENU_MENU_VALUE
-        if (setID) then
+        if setID then
             menu.text = "Withdraw"
             menu.notCheckable = true
             menu.func = ST.WithdrawSet
@@ -102,14 +95,11 @@ local function CreateMenu(_, level)
 end
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
-F:SetScript(
-    "OnEvent",
-    function(self)
-        self.initialize = CreateMenu
-        self.displayMode = "MENU"
-        self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-    end
-)
+F:SetScript("OnEvent", function(self)
+    self.initialize = CreateMenu
+    self.displayMode = "MENU"
+    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+end)
 
 function ST.CreateButton()
     local button = CreateFrame("Button", nil, B.BankFrame, "BackdropTemplate")
@@ -119,37 +109,24 @@ function ST.CreateButton()
     button.text:SetPoint("CENTER", button, "CENTER")
     button.text:SetText(L["Set Transfer"])
     button:Size(button.text:GetStringWidth() + 4, 12)
-    button:SetScript(
-        "OnClick",
-        function(self, button)
-            ToggleDropDownMenu(1, nil, F, self, 0, 0)
-        end
-    )
+    button:SetScript("OnClick", function(self, button) ToggleDropDownMenu(1, nil, F, self, 0, 0) end)
     return button
 end
 
 function ST:Initialize()
     NUI:RegisterDB(self, "settransfer")
     self.button = self.CreateButton()
-    hooksecurefunc(
-        B,
-        "Layout",
-        function(_, isBank)
-            if not isBank then
-                return
-            end
-            if _G.BankFrame.selectedTab ~= 1 or not ST.db.enabled then
-                return
-            end
-            local f = B:GetContainerFrame(isBank)
-            f:SetHeight(f:GetHeight() + 20)
-            ST.button:Point("TOPRIGHT", B.BankFrame, "TOPRIGHT", -4, -56)
-            ST.button:Show()
-            local slot = f.Bags[-1][1]
-            local point, relativeTo, relativePoint, xOfs, yOfs = slot:GetPoint()
-            slot:SetPoint(point, relativeTo, relativePoint, xOfs, yOfs - 20)
-        end
-    )
+    hooksecurefunc(B, "Layout", function(_, isBank)
+        if not isBank then return end
+        if _G.BankFrame.selectedTab ~= 1 or not ST.db.enabled then return end
+        local f = B:GetContainerFrame(isBank)
+        f:SetHeight(f:GetHeight() + 20)
+        ST.button:Point("TOPRIGHT", B.BankFrame, "TOPRIGHT", -4, -56)
+        ST.button:Show()
+        local slot = f.Bags[-1][1]
+        local point, relativeTo, relativePoint, xOfs, yOfs = slot:GetPoint()
+        slot:SetPoint(point, relativeTo, relativePoint, xOfs, yOfs - 20)
+    end)
 end
 
 NUI:RegisterModule(ST:GetName())

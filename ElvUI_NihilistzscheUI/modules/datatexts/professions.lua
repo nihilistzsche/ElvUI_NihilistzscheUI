@@ -98,7 +98,7 @@ local function OnEnter(self)
             name = name,
             texture = ("|T%s:12:12:1:0|t"):format(texture),
             rank = rank,
-            maxRank = maxRank
+            maxRank = maxRank,
         }
     end
 
@@ -108,7 +108,7 @@ local function OnEnter(self)
             name = name,
             texture = ("|T%s:12:12:1:0|t"):format(texture),
             rank = rank,
-            maxRank = maxRank
+            maxRank = maxRank,
         }
     end
 
@@ -118,7 +118,7 @@ local function OnEnter(self)
             name = name,
             texture = ("|T%s:12:12:1:0|t"):format(texture),
             rank = rank,
-            maxRank = maxRank
+            maxRank = maxRank,
         }
     end
 
@@ -128,7 +128,7 @@ local function OnEnter(self)
             name = name,
             texture = ("|T%s:12:12:1:0|t"):format(texture),
             rank = rank,
-            maxRank = maxRank
+            maxRank = maxRank,
         }
     end
 
@@ -138,19 +138,12 @@ local function OnEnter(self)
             name = name,
             texture = ("|T%s:12:12:1:0|t"):format(texture),
             rank = rank,
-            maxRank = maxRank
+            maxRank = maxRank,
         }
     end
 
-    if #professions == 0 then
-        return
-    end
-    sort(
-        professions,
-        function(a, b)
-            return a.name < b.name
-        end
-    )
+    if #professions == 0 then return end
+    sort(professions, function(a, b) return a.name < b.name end)
 
     for i = 1, #professions do
         DT.tooltip:AddDoubleLine(
@@ -187,7 +180,7 @@ NUI:RegisterModule(PDT:GetName())
 DT:RegisterDatatext(
     "Professions",
     "NihilistzscheUI",
-    {"PLAYER_ENTERING_WORLD", "CHAT_MSG_SKILL", "TRADE_SKILL_UPDATE"},
+    { "PLAYER_ENTERING_WORLD", "CHAT_MSG_SKILL", "TRADE_SKILL_UPDATE" },
     OnEvent,
     nil,
     Click,

@@ -10,19 +10,11 @@ local SML = LibStub("SharedMedia-1.0", true)
 local tinsert = _G.tinsert
 
 function MD:Register(mediatype, key, data, langmask)
-    if LSM3 then
-        LSM3:Register(mediatype, key, data, langmask)
-    end
-    if LSM2 then
-        LSM2:Register(mediatype, key, data)
-    end
-    if SML then
-        SML:Register(mediatype, key, data)
-    end
-    if not self.registry[mediatype] then
-        self.registry[mediatype] = {}
-    end
-    tinsert(self.registry[mediatype], {key, data, langmask})
+    if LSM3 then LSM3:Register(mediatype, key, data, langmask) end
+    if LSM2 then LSM2:Register(mediatype, key, data) end
+    if SML then SML:Register(mediatype, key, data) end
+    if not self.registry[mediatype] then self.registry[mediatype] = {} end
+    tinsert(self.registry[mediatype], { key, data, langmask })
 end
 
 function MD:AddTextures()

@@ -14,14 +14,10 @@ function VUF:ConstructPortrait(frame)
 end
 
 function VUF:PortraitUpdate(unit, event, shouldUpdate)
-    if unit == "vehicle" then
-        unit = "player"
-    end
+    if unit == "vehicle" then unit = "player" end
     local db = E.db.nihilistzscheui.vuf.units[unit]
 
-    if not db then
-        return
-    end
+    if not db then return end
 
     local portrait = db.portrait
     if portrait.enabled then
@@ -29,14 +25,12 @@ function VUF:PortraitUpdate(unit, event, shouldUpdate)
         self:SetAlpha(0.35)
     end
 
-    if (shouldUpdate or (event == "ElvUI_UpdateAllElements" and self:IsObjectType("Model"))) then
+    if shouldUpdate or (event == "ElvUI_UpdateAllElements" and self:IsObjectType("Model")) then
         local rotation = portrait.rotation or 0
         local camDistanceScale = portrait.camDistanceScale or 1
         local xOffset, yOffset = (portrait.xOffset or 0), (portrait.yOffset or 0)
 
-        if self:GetFacing() ~= (rotation / 60) then
-            self:SetFacing(rotation / 60)
-        end
+        if self:GetFacing() ~= (rotation / 60) then self:SetFacing(rotation / 60) end
 
         self:SetCamDistanceScale(camDistanceScale)
         self:SetPosition(0, xOffset, yOffset)

@@ -8,31 +8,31 @@ NI.ClassMountFavorites = {
     PRIEST = {
         [256] = {
             favFlyer = 861,
-            favGround = 861
+            favGround = 861,
         },
         [257] = {
             favFlyer = 861,
-            favGround = 861
+            favGround = 861,
         },
         [258] = {
             favFlyer = 861,
-            favGround = 861
-        }
+            favGround = 861,
+        },
     },
     WARLOCK = {
         [266] = {
             favFlyer = 898,
-            favGround = 898
+            favGround = 898,
         },
         [267] = {
             favFlyer = 930,
-            favGround = 930
+            favGround = 930,
         },
         [265] = {
             favFlyer = 931,
-            favGround = 931
-        }
-    }
+            favGround = 931,
+        },
+    },
 }
 
 function NI:GlobalNameplateSetup()
@@ -42,113 +42,109 @@ function NI:GlobalNameplateSetup()
         actions = {
             scale = 1.1,
             alpha = 100,
-            show = true
+            show = true,
         },
         triggers = {
             instanceType = {
-                petBattle = true
+                petBattle = true,
             },
             isActiveBattlePetPBN = true,
             priority = 90,
-            isBattlePetPBN = true
-        }
+            isBattlePetPBN = true,
+        },
     }
     E.global.nameplates.filters.Inactive_BattlePet_PBN = {
         actions = {
             scale = 0.8,
             alpha = 50,
-            show = true
+            show = true,
         },
         triggers = {
             instanceType = {
-                petBattle = true
+                petBattle = true,
             },
             isBattlePetPBN = true,
             isNotActiveBattlePetPBN = true,
-            priority = 91
-        }
+            priority = 91,
+        },
     }
-    classes = tFilter(classes, function(k,_) return k ~= "Adventurer" end)
+    classes = tFilter(classes, function(k, _) return k ~= "Adventurer" end)
     for c, filterClassName in pairs(classes) do
         self.classColor = E:ClassColor(c, true)
         E.global.nameplates.filters["Ally_BattlePet_PBN_" .. filterClassName] = {
             actions = {
                 color = {
                     healthColor = self:Color(),
-                    health = true
-                }
+                    health = true,
+                },
             },
             triggers = {
                 instanceType = {
-                    petBattle = true
+                    petBattle = true,
                 },
                 class = {
                     [c] = {
-                        enabled = true
-                    }
+                        enabled = true,
+                    },
                 },
                 isBattlePetPBN = true,
                 isAllyBattlePetPBN = true,
-                priority = 92
-            }
+                priority = 92,
+            },
         }
         E.global.nameplates.filters["Enemy_BattlePet_PBN_" .. filterClassName] = {
             actions = {
                 color = {
-                    healthColor = self:ModColor(
-                        function(x)
-                            return math.max(1 - x, 0.15)
-                        end
-                    ),
-                    health = true
-                }
+                    healthColor = self:ModColor(function(x) return math.max(1 - x, 0.15) end),
+                    health = true,
+                },
             },
             triggers = {
                 instanceType = {
-                    petBattle = true
+                    petBattle = true,
                 },
                 class = {
                     [c] = {
-                        enabled = true
-                    }
+                        enabled = true,
+                    },
                 },
                 isBattlePetPBN = true,
                 isEnemyPattlePetPBN = true,
-                priority = 93
-            }
+                priority = 93,
+            },
         }
     end
     E.global.nameplates.filters.Neutral_NonTarget_PBN = {
         actions = {
-            hide = true
+            hide = true,
         },
         triggers = {
             instanceType = {
-                petBattle = true
+                petBattle = true,
             },
             nameplateType = {
                 enemyNPC = true,
                 enable = true,
-                friendlyNPC = true
+                friendlyNPC = true,
             },
             isNotBattlePetPBN = true,
-            priority = 94
-        }
+            priority = 94,
+        },
     }
     E.global.nameplates.filters.Hide_PlayerNP_DuringPetBattle = {
         actions = {
-            hide = true
+            hide = true,
         },
         triggers = {
             nameplateType = {
                 player = true,
-                enable = true
+                enable = true,
             },
             priority = 95,
             instanceType = {
-                petBattle = true
-            }
-        }
+                petBattle = true,
+            },
+        },
     }
     if COMP.PA then
         E.global.nameplates.filters.BattlePet_PBN_PA = {
@@ -158,16 +154,16 @@ function NI:GlobalNameplateSetup()
                     level = "[pbuf:qualitycolor][pbuf:level]",
                     title = "[pbuf:breed]",
                     health = "[pbuf:health:percent]",
-                    power = "[pbuf:xp:current-max-percent]"
-                }
+                    power = "[pbuf:xp:current-max-percent]",
+                },
             },
             triggers = {
                 instanceType = {
-                    petBattle = true
+                    petBattle = true,
                 },
                 isBattlePetPBN = true,
-                priority = 99
-            }
+                priority = 99,
+            },
         }
     end
 end
@@ -178,177 +174,177 @@ function NI:NihilistzscheUISetup(isSpec)
     local filterClassName = self.currentLocalizedClass
     self:EDB().nameplates.filters.Active_BattlePet_PBN = {
         triggers = {
-            enable = true
-        }
+            enable = true,
+        },
     }
     self:EDB().nameplates.filters.Inactive_BattlePet_PBN = {
         triggers = {
-            enable = true
-        }
+            enable = true,
+        },
     }
     self:EDB().nameplates.filters["Ally_BattlePet_PBN_" .. filterClassName] = {
         triggers = {
-            enable = true
-        }
+            enable = true,
+        },
     }
     self:EDB().nameplates.filters["Enemy_BattlePet_PBN_" .. filterClassName] = {
         triggers = {
-            enable = true
-        }
+            enable = true,
+        },
     }
     self:EDB().nameplates.filters.Neutral_NonTarget_PBN = {
         triggers = {
-            enable = true
-        }
+            enable = true,
+        },
     }
     self:EDB().nameplates.filters.Hide_PlayerNP_DuringPetBattle = {
         triggers = {
-            enable = true
-        }
+            enable = true,
+        },
     }
     if COMP.PA then
         self:EDB().nameplates.filters.BattlePet_PBN_PA = {
             triggers = {
-                enable = true
-            }
+                enable = true,
+            },
         }
     end
     self:EDB().nihilistzscheui = {}
     self:EDB().nihilistzscheui.autolog = {
-        enabled = true
+        enabled = true,
     }
     self:EDB().nihilistzscheui.nihilistzschechat = {
         windows = {
-            font = self.db.font
-        }
+            font = self.db.font,
+        },
     }
     self:EDB().nihilistzscheui.cooldownBar = {
-        autohide = true
+        autohide = true,
     }
     self:EDB().nihilistzscheui.enhancedshadows = {
-        shadowcolor = self:Color()
+        shadowcolor = self:Color(),
     }
     self:EDB().nihilistzscheui.enhancednameplateauras = {
         ccDebuffCasterInfo = {
             font = self.db.font,
-            fontOutline = "THINOUTLINE"
-        }
+            fontOutline = "THINOUTLINE",
+        },
     }
     self:EDB().nihilistzscheui.hiddenArtifactTracker = {
         enabled = false,
-        font = self.db.font
+        font = self.db.font,
     }
     self:EDB().nihilistzscheui.petbattleautostart = {
         autoQuestAccept = true,
         autoQuestComplete = true,
-        autoStartBattle = true
+        autoStartBattle = true,
     }
     self:EDB().nihilistzscheui.pxp = {
         texture = self.db.texture,
-        font = self.db.font
+        font = self.db.font,
     }
     self:EDB().nihilistzscheui.utilitybars = {
         hideincombat = true,
         baitBar = {
-            mouseover = not NUI.Lulupeep
+            mouseover = not NUI.Lulupeep,
         },
         equipmentManagerBar = {
-            mouseover = not NUI.Lulupeep
+            mouseover = not NUI.Lulupeep,
         },
         engineertoybar = {
             mouseover = not NUI.Lulupeep,
             toys = {
-                [60854] = false
-            }
+                [60854] = false,
+            },
         },
         portalBar = {
             enabled = true,
-            mouseover = not NUI.Lulupeep
+            mouseover = not NUI.Lulupeep,
         },
         professionBar = {
-            mouseover = not NUI.Lulupeep
+            mouseover = not NUI.Lulupeep,
         },
         raidPrPBNar = {
             enabled = true,
-            mouseover = not NUI.Lulupeep
+            mouseover = not NUI.Lulupeep,
         },
         specSwitchBar = {
             enabled = true,
-            mouseover = not NUI.Lulupeep
+            mouseover = not NUI.Lulupeep,
         },
         toybar = {
             mouseover = not NUI.Lulupeep,
-            buttonsPerRow = 6
+            buttonsPerRow = 6,
         },
         toolsOfTheTradeBar = {
-            mouseover = not NUI.Lulupeep
+            mouseover = not NUI.Lulupeep,
         },
         farmBar = {
-            notify = not COMP.LST
+            notify = not COMP.LST,
         },
         trackerbar = {
-            notify = not COMP.LST
-        }
+            notify = not COMP.LST,
+        },
     }
     self:EDB().nihilistzscheui.raidCDs = {
         texture = self.db.texture,
         font = self.db.font,
-        solo = true
+        solo = true,
     }
     local castbars = {
         size = {
             horizontal = {
-                halfBar = true
-            }
-        }
+                halfBar = true,
+            },
+        },
     }
     local aurabars = {
         size = {
-            halfBar = true
-        }
+            halfBar = true,
+        },
     }
 
     self:EDB().nihilistzscheui.vuf = {
         hideOOC = not NUI.Lulupeep,
         units = {
-            pettarget = {enabled = false},
+            pettarget = { enabled = false },
             player = {
                 castbar = castbars,
-                aurabars = aurabars
+                aurabars = aurabars,
             },
-            target = {castbar = castbars, aurabars = aurabars},
-            pet = {aurabars = aurabars}
-        }
+            target = { castbar = castbars, aurabars = aurabars },
+            pet = { aurabars = aurabars },
+        },
     }
     if self.currentClass == "WARLOCK" then
         self:EDB().nihilistzscheui.warlockdemons = {
             font = self.db.font,
             texture = self.db.texture,
-            attachToNamePlate = true
+            attachToNamePlate = true,
         }
     end
 
     for unit, tbl in pairs(P.nihilistzscheui.vuf.units) do
         for element, etbl in pairs(tbl) do
-            if (etbl and type(etbl) == "table" and etbl.value and etbl.value.tag) then
+            if etbl and type(etbl) == "table" and etbl.value and etbl.value.tag then
                 self:EDB().nihilistzscheui.vuf.units[unit] = self:EDB().nihilistzscheui.vuf.units[unit] or {}
-                self:EDB().nihilistzscheui.vuf.units[unit][element] =
-                    self:EDB().nihilistzscheui.vuf.units[unit][element] or {}
-                self:EDB().nihilistzscheui.vuf.units[unit][element].value =
-                    self:EDB().nihilistzscheui.vuf.units[unit][element].value or {}
+                self:EDB().nihilistzscheui.vuf.units[unit][element] = self:EDB().nihilistzscheui.vuf.units[unit][element]
+                    or {}
+                self:EDB().nihilistzscheui.vuf.units[unit][element].value = self:EDB().nihilistzscheui.vuf.units[unit][element].value
+                    or {}
                 self:EDB().nihilistzscheui.vuf.units[unit][element].value.tag = "" .. etbl.value.tag
             end
         end
     end
     if not NUI.Lulupeep and COMP.CT then
         self:EDB().nihilistzscheui.vuf.units.player.health = {
-            value = {tag = "[healthcolor][health:current-percent][nui-absorbs]"}
+            value = { tag = "[healthcolor][health:current-percent][nui-absorbs]" },
         }
     end
     if not isSpec then
         self:EPRV().nihilistzscheui = self:EPRV().nihilistzscheui or {}
         if self.ClassMountFavorites[self.currentClass] then
-            self:EPRV().nihilistzscheui.mounts = {specFavs = {}}
+            self:EPRV().nihilistzscheui.mounts = { specFavs = {} }
             E:CopyTable(self:EPRV().nihilistzscheui.mounts.specFavs, self.ClassMountFavorites[self.currentClass])
         else
             self:EPRV().nihilistzscheui.mounts = self:EPRV().nihilistzscheui.mounts or {}

@@ -23,7 +23,7 @@ local ignoredInstanceMapIDs = {
     1158,
     1331,
     1159,
-    1160
+    1160,
 }
 
 -- Order Halls
@@ -35,7 +35,7 @@ local ignoredMapIDs = {
     1077,
     1057,
     1044,
-    1072
+    1072,
 }
 
 function AL:LoggingCombat(arg)
@@ -57,50 +57,36 @@ function AL:EnableCombatLogging()
 end
 
 function AL:CheckInstance(instanceType)
-    if (instanceType == "none") then
-        return
-    end
+    if instanceType == "none" then return end
 
-    if self.db[instanceType] then
-        return true
-    end
+    if self.db[instanceType] then return true end
 end
 
 function AL:PLAYER_ENTERING_WORLD()
     local inInstance, instanceType = IsInInstance()
-    if (not inInstance) then
-        if (self:LoggingCombat()) then
-            self:DisableCombatLogging()
-        end
+    if not inInstance then
+        if self:LoggingCombat() then self:DisableCombatLogging() end
         return
     end
 
     local instanceMapID = select(8, GetInstanceInfo())
     local currentMapAreaID = E.MapInfo.mapID
 
-    if (tContains(ignoredInstanceMapIDs, instanceMapID) or tContains(ignoredMapIDs, currentMapAreaID)) then
-        if self:LoggingCombat() then
-            self:DisableCombatLogging()
-        end
+    if tContains(ignoredInstanceMapIDs, instanceMapID) or tContains(ignoredMapIDs, currentMapAreaID) then
+        if self:LoggingCombat() then self:DisableCombatLogging() end
         return
     end
 
-    if (AL:CheckInstance(instanceType)) then
-        self:EnableCombatLogging()
-    end
+    if AL:CheckInstance(instanceType) then self:EnableCombatLogging() end
 end
 
-function AL:PLAYER_LOGOUT()
-    self:DisableCombatLogging()
-end
+function AL:PLAYER_LOGOUT() self:DisableCombatLogging() end
 
 function AL:UpdateEnabled()
-    if (not self.db.enabled) then
+    if not self.db.enabled then
         self:UnregisterEvent("PLAYER_ENTERING_WORLD")
         self:UnregisterEvent("PLAYER_LOGOUT")
-        if (self:LoggingCombat()) then
-            self:DisableCombatLogging()
-        end
+        if self:LoggingCombat() then self:DisableCombatLogging() end
     else
         self:RegisterEvent("PLAYER_ENTERING_WORLD")
         self:RegisterEvent("PLAYER_LOGOUT")
@@ -110,9 +96,7 @@ end
 
 function AL:Initialize()
     NUI:RegisterDB(self, "autolog")
-    local ForUpdateAll = function(_self)
-        _self:UpdateEnabled()
-    end
+    local ForUpdateAll = function(_self) _self:UpdateEnabled() end
     self.ForUpdateAll = ForUpdateAll
 
     self:RegisterEvent("PLAYER_ENTERING_WORLD")

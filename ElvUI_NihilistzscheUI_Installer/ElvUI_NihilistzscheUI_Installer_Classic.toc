@@ -1,0 +1,11 @@
+## Interface: 11403
+## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r |cffff2020Installer|r
+## Author: Nihilistzsche
+## Version: 12.04
+## Notes: The installer files for ElvUI_NihilistzscheUI.
+## SavedVariables: NUIIDB
+## RequiredDeps: ElvUI_NihilistzscheUI
+## OptionalDeps: ElvUI_NihilistzscheUI_Private, ElvUI_NihilistzscheUI_Lulupeep. ElvUI_Shadow&Light, ElvUI_BenikUI, ElvUI_MerathilisUI, AddOnSkins_NihilistzschePrivate, ElvUI_CPU, zPets, TotalRP3, OldGodWhispers
+
+core\load_core.xml
+installers\load_installers.xml

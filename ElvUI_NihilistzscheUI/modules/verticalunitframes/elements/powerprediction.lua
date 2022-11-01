@@ -12,23 +12,22 @@ function VUF:ConstructPowerPrediction(frame)
     mb:SetReverseFill(true)
     mb:Hide()
 
-    hooksecurefunc(
-        frame.Power,
-        "SetStatusBarColor",
-        function(_, r, g, b)
-            if frame and frame.PowerPrediction and frame.PowerPrediction.mainBar then
-                if
-                    UF and UF.db and UF.db.colors and UF.db.colors.powerPrediction and
-                        UF.db.colors.powerPrediction.enable
-                 then
-                    local color = UF.db.colors.powerPrediction.color
-                    frame.PowerPrediction.mainBar:SetStatusBarColor(color.r, color.g, color.b, color.a)
-                else
-                    frame.PowerPrediction.mainBar:SetStatusBarColor(r * 1.25, g * 1.25, b * 1.25)
-                end
+    hooksecurefunc(frame.Power, "SetStatusBarColor", function(_, r, g, b)
+        if frame and frame.PowerPrediction and frame.PowerPrediction.mainBar then
+            if
+                UF
+                and UF.db
+                and UF.db.colors
+                and UF.db.colors.powerPrediction
+                and UF.db.colors.powerPrediction.enable
+            then
+                local color = UF.db.colors.powerPrediction.color
+                frame.PowerPrediction.mainBar:SetStatusBarColor(color.r, color.g, color.b, color.a)
+            else
+                frame.PowerPrediction.mainBar:SetStatusBarColor(r * 1.25, g * 1.25, b * 1.25)
             end
         end
-    )
+    end)
 
     local ab
     if frame.AdditionalPower then
@@ -38,28 +37,27 @@ function VUF:ConstructPowerPrediction(frame)
         ab:SetReverseFill(true)
         ab:Hide()
 
-        hooksecurefunc(
-            frame.AdditionalPower,
-            "SetStatusBarColor",
-            function(_, r, g, b)
-                if frame and frame.PowerPrediction and frame.PowerPrediction.altBar then
-                    if
-                        UF and UF.db and UF.db.colors and UF.db.colors.powerPrediction and
-                            UF.db.colors.powerPrediction.enable
-                     then
-                        local color = UF.db.colors.powerPrediction.additional
-                        frame.PowerPrediction.altBar:SetStatusBarColor(color.r, color.g, color.b, color.a)
-                    else
-                        frame.PowerPrediction.altBar:SetStatusBarColor(r * 1.25, g * 1.25, b * 1.25)
-                    end
+        hooksecurefunc(frame.AdditionalPower, "SetStatusBarColor", function(_, r, g, b)
+            if frame and frame.PowerPrediction and frame.PowerPrediction.altBar then
+                if
+                    UF
+                    and UF.db
+                    and UF.db.colors
+                    and UF.db.colors.powerPrediction
+                    and UF.db.colors.powerPrediction.enable
+                then
+                    local color = UF.db.colors.powerPrediction.additional
+                    frame.PowerPrediction.altBar:SetStatusBarColor(color.r, color.g, color.b, color.a)
+                else
+                    frame.PowerPrediction.altBar:SetStatusBarColor(r * 1.25, g * 1.25, b * 1.25)
                 end
             end
-        )
+        end)
     end
 
     return {
         mainBar = mb,
-        altBar = ab
+        altBar = ab,
     }
 end
 

@@ -12,9 +12,9 @@ local C_ToyBox_GetToyFromIndex = _G.C_ToyBox.GetToyFromIndex
 
 function CB:UpdateSpells()
     for spellID, _ in pairs(self.cache) do
-        if (self:SpellIsOnCooldown(spellID)) then
+        if self:SpellIsOnCooldown(spellID) then
             local frame = self:FindFrame("spell", spellID)
-            if (frame) then
+            if frame then
                 self:UpdateFrame(frame)
             else
                 self:CreateFrame("spell", spellID)
@@ -34,7 +34,7 @@ function CB:UpdateItems()
 
             if id then
                 local frame = self:FindFrame("item", id)
-                if (frame) then
+                if frame then
                     self:UpdateFrame(frame)
                 else
                     self:CreateFrame("item", id)
@@ -55,7 +55,7 @@ function CB:UpdateItems()
 
                 if id then
                     local frame = self:FindFrame("item", id)
-                    if (frame) then
+                    if frame then
                         self:UpdateFrame(frame)
                     else
                         self:CreateFrame("item", id)
@@ -75,7 +75,7 @@ function CB:UpdateToys()
 
         if active == 1 and start > 0 and duration > 1.5 then
             local frame = self:FindFrame("item", id)
-            if (frame) then
+            if frame then
                 self:UpdateFrame(frame)
             else
                 self:CreateFrame("item", id)

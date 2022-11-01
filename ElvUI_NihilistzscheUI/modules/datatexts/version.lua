@@ -10,24 +10,18 @@ local IsAddOnLoaded = _G.IsAddOnLoaded
 local LoadAddOn = _G.LoadAddOn
 local GAME_VERSION_LABEL = _G.GAME_VERSION_LABEL
 
-local function OnEvent(self)
-    self.text:SetText(displayString)
-end
+local function OnEvent(self) self.text:SetText(displayString) end
 
 local ACD
 local function Click()
     E:ToggleOptionsUI()
 
     ACD = ACD or E.Libs.AceConfigDialog
-    if (not ACD) then
-        if (not IsAddOnLoaded("ElvUI_OptionsUI")) then
-            LoadAddOn("ElvUI_OptionsUI")
-        end
+    if not ACD then
+        if not IsAddOnLoaded("ElvUI_OptionsUI") then LoadAddOn("ElvUI_OptionsUI") end
         ACD = E.Libs.AceConfigDialog
     end
-    if (ACD) then
-        ACD:SelectGroup("ElvUI", "NihilistzscheUI")
-    end
+    if ACD then ACD:SelectGroup("ElvUI", "NihilistzscheUI") end
 end
 
 local function PrintURL(url) -- Credit: Azilroka
@@ -40,43 +34,43 @@ local function OnEnter(self)
     DT.tooltip:AddDoubleLine("ElvUI " .. GAME_VERSION_LABEL .. format(": |cff99ff33%s|r", Eversion))
     DT.tooltip:AddLine(" ")
 
-    if (COMP.SLE) then
-        local SLE = _G.ElvUI_SLE[1]
+    if COMP.SLE then
+        local SLE = _G["ElvUI_Shadow&Light"][1]
         DT.tooltip:AddLine(
             (SLE.Title or L.SLE_AUTHOR_INFO) .. GAME_VERSION_LABEL .. format(": |cff99ff33%s|r", SLE.version)
         )
         DT.tooltip:AddLine(" ")
         DT.tooltip:AddLine(
-            SLE.Title ..
-                format("v|cff00c0fa%s|r", SLE.version) ..
-                    L[" is loaded. For any issues or suggestions, please vist "] ..
-                        PrintURL("https://git.tukui.org/shadow-and-light/shadow-and-light/issues")
+            SLE.Title
+                .. format("v|cff00c0fa%s|r", SLE.version)
+                .. L[" is loaded. For any issues or suggestions, please vist "]
+                .. PrintURL("https://git.tukui.org/shadow-and-light/shadow-and-light/issues")
         )
         DT.tooltip:AddLine(" ")
     end
 
-    if (COMP.BUI) then
+    if COMP.BUI then
         local BUI = _G.ElvUI_BenikUI[1]
         DT.tooltip:AddLine(BUI.Title .. GAME_VERSION_LABEL .. format(": |cff99ff33%s|r", BUI.Version))
         DT.tooltip:AddLine(" ")
         DT.tooltip:AddLine(
-            BUI.Title ..
-                format("v|cff00c0fa%s|r", BUI.Version) ..
-                    L[" is loaded. For any issues or suggestions, please visit "] ..
-                        PrintURL("http://git.tukui.org/Benik/ElvUI_BenikUI/issues")
+            BUI.Title
+                .. format("v|cff00c0fa%s|r", BUI.Version)
+                .. L[" is loaded. For any issues or suggestions, please visit "]
+                .. PrintURL("http://git.tukui.org/Benik/ElvUI_BenikUI/issues")
         )
         DT.tooltip:AddLine(" ")
     end
 
-    if (COMP.MERS) then
+    if COMP.MERS then
         local MER = _G.ElvUI_MerathilisUI[1]
         DT.tooltip:AddLine(MER.Title .. GAME_VERSION_LABEL .. format(": |cff99ff33%s|r", MER.Version))
         DT.tooltip:AddLine(" ")
         DT.tooltip:AddLine(
-            MER.Title ..
-                format("v|cff00c0fa%s|r", MER.Version) ..
-                    L[" is loaded. For any issues or suggestions, please visit "] ..
-                        PrintURL("https://git.tukui.org/Merathilis/ElvUI_MerathilisUI/issues")
+            MER.Title
+                .. format("v|cff00c0fa%s|r", MER.Version)
+                .. L[" is loaded. For any issues or suggestions, please visit "]
+                .. PrintURL("https://git.tukui.org/Merathilis/ElvUI_MerathilisUI/issues")
         )
         DT.tooltip:AddLine(" ")
     end
@@ -84,29 +78,30 @@ local function OnEnter(self)
     DT.tooltip:AddLine(NUI.Title .. " " .. GAME_VERSION_LABEL .. format(": |cff99ff33%s|r", NUI.Version))
     DT.tooltip:AddLine(" ")
     DT.tooltip:AddLine(
-        NUI.Title ..
-            " " ..
-                format("v|cff00c0fa%s|r", NUI.Version) ..
-                    L[" is loaded. For any issues or suggestions, please visit "] ..
-                        PrintURL("https://git.tukui.org/Nihilistzsche/ElvUI_NihilistzscheUI/issues")
+        NUI.Title
+            .. " "
+            .. format("v|cff00c0fa%s|r", NUI.Version)
+            .. L[" is loaded. For any issues or suggestions, please visit "]
+            .. PrintURL("https://git.tukui.org/Nihilistzsche/ElvUI_NihilistzscheUI/issues")
     )
 
     DT.tooltip:Show()
 end
 
 local function ValueColorUpdate()
-    local name =
-        NUI.ShortTitle ..
-        (": |cff99ff33%s|r"):format(NUI.Version) .. " (|cfffe7b2cElvUI|r" .. format(": |cff99ff33%s|r", E.version)
-    if (COMP.SLE) then
+    local name = NUI.ShortTitle
+        .. (": |cff99ff33%s|r"):format(NUI.Version)
+        .. " (|cfffe7b2cElvUI|r"
+        .. format(": |cff99ff33%s|r", E.version)
+    if COMP.SLE then
         name = name .. ", |cff9482c9S&L|r"
-        name = name .. format(": |cff99ff33%s|r", _G.ElvUI_SLE[1].version)
+        name = name .. format(": |cff99ff33%s|r", _G["ElvUI_Shadow&Light"][1].version)
     end
-    if (COMP.BUI) then
+    if COMP.BUI then
         local BUI = _G.ElvUI_BenikUI[1]
         name = name .. ", |cff00c0faBUI|r" .. format(": |cff99ff33%s|r", BUI.Version)
     end
-    if (COMP.MERS) then
+    if COMP.MERS then
         local MER = _G.ElvUI_MerathilisUI[1]
         name = name .. ", |cffff7d0aMUI|r"
         name = name .. format(": |cff99ff33%s|r", MER.Version == "development" and "dev" or MER.Version)
@@ -120,7 +115,7 @@ E.valueColorUpdateFuncs[ValueColorUpdate] = true
 DT:RegisterDatatext(
     "NihilistzscheUI Version",
     "NihilistzscheUI",
-    {"PLAYER_ENTERING_WORLD"},
+    { "PLAYER_ENTERING_WORLD" },
     OnEvent,
     nil,
     Click,

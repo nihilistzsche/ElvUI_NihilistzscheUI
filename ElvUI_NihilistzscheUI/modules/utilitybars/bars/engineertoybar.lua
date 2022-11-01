@@ -11,11 +11,10 @@ local tContains = _G.tContains
 
 function ETOYB.CreateBar()
     -- luacheck: no max line length
-    local bar =
-        NUB:CreateBar(
+    local bar = NUB:CreateBar(
         "NihilistzscheUI_EngineerToyBar",
         "engineertoybar",
-        {"BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 65},
+        { "BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 65 },
         "Engineer Toy Bar"
     )
 
@@ -37,7 +36,7 @@ ETOYB.EngineerToys = {
     168667,
     168807,
     168808,
-    172924
+    172924,
 }
 
 table.sort(ETOYB.EngineerToys)
@@ -45,11 +44,9 @@ table.sort(ETOYB.EngineerToys)
 ETOYB.EngineeringSkillID = 202
 
 function ETOYB:IsEngineer()
-    for _, v in pairs({_G.GetProfessions()}) do
+    for _, v in pairs({ _G.GetProfessions() }) do
         local _, _, _, _, _, _, skillID = _G.GetProfessionInfo(v)
-        if skillID == self.EngineeringSkillID then
-            return true
-        end
+        if skillID == self.EngineeringSkillID then return true end
     end
     return false
 end
@@ -60,16 +57,14 @@ function ETOYB:GetToys(bar)
     for i = 1, C_ToyBox_GetNumToys() do
         local itemID = C_ToyBox_GetToyFromIndex(i)
 
-        if (tContains(self.EngineerToys, itemID)) then
+        if tContains(self.EngineerToys, itemID) then
             local shouldInsert
             if bar.db.toys[itemID] == nil then
                 shouldInsert = true
             else
                 shouldInsert = bar.db.toys[itemID]
             end
-            if shouldInsert then
-                tinsert(toys, itemID)
-            end
+            if shouldInsert then tinsert(toys, itemID) end
         end
     end
 

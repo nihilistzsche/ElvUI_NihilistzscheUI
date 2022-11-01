@@ -7,7 +7,7 @@ RCD.categories.immunities = {
         class = "DEMONHUNTER",
         spec = 1,
         cd = 120,
-        is_talent = true
+        is_talent = true,
     },
     [186265] = {
         -- Aspect of the Turtle
@@ -16,14 +16,14 @@ RCD.categories.immunities = {
             base = 180,
             talent = {
                 id = 266921,
-                modifierPct = 20
-            }
-        }
+                modifierPct = 20,
+            },
+        },
     },
     [45438] = {
         -- Ice Block
         class = "MAGE",
-        cd = 240
+        cd = 240,
     },
     [642] = {
         -- Divine Shield
@@ -32,13 +32,13 @@ RCD.categories.immunities = {
             base = 300,
             talent = {
                 id = 114154,
-                modifierPct = 30
-            }
-        }
+                modifierPct = 30,
+            },
+        },
     },
     [31224] = {
         -- Cloak of Shadows
         class = "ROGUE",
-        cd = 120
-    }
+        cd = 120,
+    },
 }

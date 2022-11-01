@@ -2,12 +2,8 @@ local NUI, E = _G.unpack(select(2, ...))
 local ES = NUI.EnhancedShadows
 local COMP = NUI.Compatibility
 
-if (COMP.PA) then
-    _G.ProjectAzilroka.ES = ES
-end
-if (COMP.AS) then
-    _G.AddOnSkins.ES = ES
-end
+if COMP.PA then _G.ProjectAzilroka.ES = ES end
+if COMP.AS then _G.AddOnSkins.ES = ES end
 
 _G.EnhancedShadows = ES
 
@@ -27,14 +23,12 @@ local NUM_STANCE_SLOTS = _G.NUM_STANCE_SLOTS
 local hooksecurefunc = _G.hooksecurefunc
 local C_Timer_After = _G.C_Timer.After
 
-if (not IsAddOnLoaded("Blizzard_TalentUI")) then
-    LoadAddOn("Blizzard_TalentUI")
-end
+if not IsAddOnLoaded("Blizzard_TalentUI") then LoadAddOn("Blizzard_TalentUI") end
 
 ES.AddOnFrames = {
     QG = "QuestGuru",
     CQL = "ClassicQuestLog",
-    LH = "LightHeadedFrame"
+    LH = "LightHeadedFrame",
 }
 
 function ES:ElvUIShadows()
@@ -52,13 +46,11 @@ function ES:ElvUIShadows()
         _G.ZoneAbilityFrame.SpellButton,
         _G.MinimapBackdrop,
         _G.GameTooltip,
-        _G.ElvConfigToggle
+        _G.ElvConfigToggle,
     }
 
     for k, v in pairs(self.AddOnFrames) do
-        if COMP[k] then
-            tinsert(Frames, _G[v])
-        end
+        if COMP[k] then tinsert(Frames, _G[v]) end
     end
 
     local BackdropFrames = {
@@ -70,7 +62,7 @@ function ES:ElvUIShadows()
         _G.RightChatPanel,
         _G.FarmModeMap,
         _G.GameTooltipStatusBar,
-        _G.LossOfControlFrame
+        _G.LossOfControlFrame,
     }
 
     if COMP.BUI then
@@ -105,7 +97,7 @@ function ES:ElvUIShadows()
 
     -- Stance Bar buttons
     for i = 1, NUM_STANCE_SLOTS do
-        local stanceBtn = {_G["ElvUI_StanceBarButton" .. i]}
+        local stanceBtn = { _G["ElvUI_StanceBarButton" .. i] }
         for _, button in pairs(stanceBtn) do
             if button then
                 button:CreateShadow()
@@ -115,7 +107,7 @@ function ES:ElvUIShadows()
     end
 
     -- Unitframes (toDo Player ClassBars, Target ComboBar)
-    local unitframes = {"Player", "Target", "TargetTarget", "Pet", "PetTarget", "Focus", "FocusTarget"}
+    local unitframes = { "Player", "Target", "TargetTarget", "Pet", "PetTarget", "Focus", "FocusTarget" }
 
     do
         for _, frame in pairs(unitframes) do
@@ -132,7 +124,7 @@ function ES:ElvUIShadows()
                 power:CreateShadow()
                 ES:RegisterFrameShadows(power)
             end
-            if (unit == "player" or unit == "target" or unit == "focus") then
+            if unit == "player" or unit == "target" or unit == "focus" then
                 if castbar then
                     castbar:CreateShadow()
                     castbar.ButtonIcon.bg:CreateShadow()
@@ -140,7 +132,7 @@ function ES:ElvUIShadows()
                     ES:RegisterFrameShadows(castbar.ButtonIcon.bg)
                 end
             end
-            if (unit == "player" or unit == "target") then
+            if unit == "player" or unit == "target" then
                 if portrait then
                     portrait:CreateShadow()
                     ES:RegisterFrameShadows(portrait)
@@ -152,7 +144,7 @@ function ES:ElvUIShadows()
     local LeftChatToggleButton = _G.LeftChatToggleButton
     local RightChatToggleButton = _G.RightChatToggleButton
 
-    if (LeftChatToggleButton) then
+    if LeftChatToggleButton then
         LeftChatToggleButton:SetFrameStrata("BACKGROUND")
         LeftChatToggleButton:SetFrameLevel(_G.LeftChatDataPanel:GetFrameLevel() - 1)
         Mixin(LeftChatToggleButton, BackdropTemplateMixin)
@@ -167,14 +159,9 @@ function ES:ElvUIShadows()
         ES:RegisterFrameShadow(RightChatToggleButton)
     end
 
-    _G.GameTooltip:HookScript(
-        "OnShow",
-        function()
-            ES:UpdateShadow(_G.GameTooltip.shadow)
-        end
-    )
+    _G.GameTooltip:HookScript("OnShow", function() ES:UpdateShadow(_G.GameTooltip.shadow) end)
 
-    if (COMP.LCP) then
+    if COMP.LCP then
         _G.LeftCoordDtPanel:CreateShadow()
         _G.RightCoordDtPanel:CreateShadow()
         _G.LocationPlusPanel:CreateShadow()
@@ -204,9 +191,7 @@ function ES:ElvUIShadows()
 end
 
 function ES:SkinAlerts()
-    if (not E.private.skins.blizzard.alertframes) then
-        return
-    end
+    if not E.private.skins.blizzard.alertframes then return end
     local function AddShadow(f)
         f.backdrop:CreateShadow()
         self:RegisterFrameShadows(f.backdrop)
@@ -214,9 +199,7 @@ function ES:SkinAlerts()
 
     local function H(s)
         local function S()
-            return function(f)
-                AddShadow(f)
-            end
+            return function(f) AddShadow(f) end
         end
 
         hooksecurefunc(s, "setUpFunction", S())
@@ -237,13 +220,11 @@ function ES:SkinAlerts()
         _G.MoneyWonAlertSystem,
         _G.StorePurchaseAlertSystem,
         _G.DigsiteCompleteAlertSystem,
-        _G.NewRecipeLearnedAlertSystem
+        _G.NewRecipeLearnedAlertSystem,
     }
 
     for _, system in pairs(systems) do
-        if system then
-            H(system)
-        end
+        if system then H(system) end
     end
 
     local alerts = {
@@ -256,13 +237,11 @@ function ES:SkinAlerts()
         _G.GarrisonRandomMissionAlertFrame,
         _G.WorldQuestCompleteAlertFrame,
         _G.GarrisonFollowerAlertFrame,
-        _G.LegendaryItemAlertFrame
+        _G.LegendaryItemAlertFrame,
     }
 
     for _, alert in pairs(alerts) do
-        if (alert) then
-            AddShadow(alert)
-        end
+        if alert then AddShadow(alert) end
     end
 end
 
@@ -298,34 +277,27 @@ function ES:RegisterShadow(shadow)
 end
 
 function ES:UpdateShadow(shadow)
-    local ShadowColor =
-        E.db.nihilistzscheui and E.db.nihilistzscheui.enhancedshadows and
-        E.db.nihilistzscheui.enhancedshadows.shadowcolor
+    local ShadowColor = E.db.nihilistzscheui
+        and E.db.nihilistzscheui.enhancedshadows
+        and E.db.nihilistzscheui.enhancedshadows.shadowcolor
     if not ShadowColor then
-        C_Timer_After(
-            1,
-            function()
-                self:UpdateShadow(shadow)
-            end
-        )
+        C_Timer_After(1, function() self:UpdateShadow(shadow) end)
         return
     end
     local r, g, b = ShadowColor.r, ShadowColor.g, ShadowColor.b
 
     local size = E.db.nihilistzscheui.enhancedshadows.size
     if size ~= LastSize then
-        if (shadow.inverted) then
+        if shadow.inverted then
             shadow:SetInside(nil, -size, -size)
         else
             shadow:SetOutside(nil, size, size)
         end
-        shadow:SetBackdrop(
-            {
-                edgeFile = Border,
-                edgeSize = E:Scale(size > 3 and size or 3),
-                insets = {left = E:Scale(5), right = E:Scale(5), top = E:Scale(5), bottom = E:Scale(5)}
-            }
-        )
+        shadow:SetBackdrop({
+            edgeFile = Border,
+            edgeSize = E:Scale(size > 3 and size or 3),
+            insets = { left = E:Scale(5), right = E:Scale(5), top = E:Scale(5), bottom = E:Scale(5) },
+        })
         LastSize = size
     end
     shadow:SetBackdropColor(r, g, b, 0)
@@ -336,26 +308,24 @@ end
 function ES:UpdateMERShadows()
     for frame, _ in pairs(_G.ElvUI_MerathilisUI[1].styling) do
         if frame and not frame.enhanced then
-            if (not frame.shadow) then
-                frame:CreateShadow()
-            end
+            if not frame.shadow then frame:CreateShadow() end
             self:RegisterFrameShadows(frame)
             frame.enhanced = true
         end
     end
 end
 
-if (COMP.MERS) then
+if COMP.MERS then
     local MER = _G.ElvUI_MerathilisUI[1]
     local realTable = MER.styling
-    local stylingShadow = setmetatable({}, {__index = realTable})
+    local stylingShadow = setmetatable({}, { __index = realTable })
 
     local mt = {
         __index = stylingShadow,
         __newindex = function(_, k, v)
             stylingShadow[k] = v
             ES:UpdateMERShadows()
-        end
+        end,
     }
 
     MER.styling = setmetatable({}, mt)
@@ -364,85 +334,54 @@ end
 function ES:MERInit()
     local MER = _G.ElvUI_MerathilisUI[1]
     self:UpdateMERShadows()
-    if not _G[MER.Title .. "MicroBar"] then
-        return
-    end
+    if not _G[MER.Title .. "MicroBar"] then return end
     _G[MER.Title .. "MicroBar"]:CreateShadow()
     self:RegisterFrameShadows(_G[MER.Title .. "MicroBar"])
 end
 
 function ES:EPBHook()
     local EPB = _G.EPB
-    hooksecurefunc(
-        EPB,
-        "UpdatePetFrame",
-        function(_, frame)
-            if not frame.enhanced then
-                if not frame.shadow then
-                    frame:CreateShadow()
-                end
-                ES:RegisterFrameShadows(frame)
-                frame.enhanced = true
-            end
+    hooksecurefunc(EPB, "UpdatePetFrame", function(_, frame)
+        if not frame.enhanced then
+            if not frame.shadow then frame:CreateShadow() end
+            ES:RegisterFrameShadows(frame)
+            frame.enhanced = true
         end
-    )
+    end)
 end
 
 function ES:Initialize()
     NUI:RegisterDB(self, "enhancedshadows")
-    if (not self.db.enabled) then
-        return
-    end
+    if not self.db.enabled then return end
     self.enable_state = self.db.enabled
     local ForUpdateAll = function(_self)
-        if _self.db.enabled ~= _self.enable_state then
-            E:StaticPopup_Show("CONFIG_RL")
-        end
+        if _self.db.enabled ~= _self.enable_state then E:StaticPopup_Show("CONFIG_RL") end
     end
     self.ForUpdateAll = ForUpdateAll
     Border = LSM:Fetch("border", "ElvUI GlowBorder")
-    hooksecurefunc(
-        NP,
-        "Update_Health",
-        function(_, frame)
-            if (not frame.Health.shadow) then
-                frame.Health:CreateShadow()
-            end
-            ES:RegisterFrameShadows(frame.Health)
-        end
-    )
+    hooksecurefunc(NP, "Update_Health", function(_, frame)
+        if not frame.Health.shadow then frame.Health:CreateShadow() end
+        ES:RegisterFrameShadows(frame.Health)
+    end)
 
-    hooksecurefunc(
-        DT,
-        "UpdatePanelInfo",
-        function(_, panelName, panel, ...)
-            if not panel then
-                panel = DT.RegisteredPanels[panelName]
-            end
-            if panel and not panel.shadow then
-                panel:CreateShadow()
-            end
-            ES:RegisterFrameShadows(panel)
-            for _, dataPanel in ipairs(panel.dataPanels) do
-                Mixin(dataPanel, BackdropTemplateMixin)
-                dataPanel:SetTemplate()
-                if not dataPanel.shadow then
-                    dataPanel:CreateShadow()
-                end
-                ES:RegisterFrameShadows(dataPanel)
-            end
+    hooksecurefunc(DT, "UpdatePanelInfo", function(_, panelName, panel, ...)
+        if not panel then panel = DT.RegisteredPanels[panelName] end
+        if panel and not panel.shadow then panel:CreateShadow() end
+        ES:RegisterFrameShadows(panel)
+        for _, dataPanel in ipairs(panel.dataPanels) do
+            Mixin(dataPanel, BackdropTemplateMixin)
+            dataPanel:SetTemplate()
+            if not dataPanel.shadow then dataPanel:CreateShadow() end
+            ES:RegisterFrameShadows(dataPanel)
         end
-    )
-    C_Timer.After(
-        5,
-        function()
-            for panelName, panel in pairs(DT.RegisteredPanels) do
-                DT:UpdatePanelInfo(panelName, panel)
-            end
+    end)
+    C_Timer.After(5, function()
+        for panelName, panel in pairs(DT.RegisteredPanels) do
+            DT:UpdatePanelInfo(panelName, panel)
         end
-    )
+    end)
 
-    local framesKeys = {"Arena", "Assist", "Boss", "Party", "Raid", "Tank"}
+    local framesKeys = { "Arena", "Assist", "Boss", "Party", "Raid", "Tank" }
     local frameKeys = {
         "Focus",
         "FocusTarget",
@@ -451,127 +390,84 @@ function ES:Initialize()
         "Player",
         "Target",
         "TargetTarget",
-        "TargetTargetTarget"
+        "TargetTargetTarget",
     }
 
     for _, frames in ipairs(framesKeys) do
-        hooksecurefunc(
-            UF,
-            "Update_" .. frames .. "Frames",
-            function(_, frame)
-                if (not frame.shadow) then
-                    frame:CreateShadow()
-                    ES:RegisterFrameShadows(frame)
-                end
+        hooksecurefunc(UF, "Update_" .. frames .. "Frames", function(_, frame)
+            if not frame.shadow then
+                frame:CreateShadow()
+                ES:RegisterFrameShadows(frame)
             end
-        )
+        end)
     end
 
     for _, frame in ipairs(frameKeys) do
-        hooksecurefunc(
-            UF,
-            "Update_" .. frame .. "Frame",
-            function(_, _frame)
-                if (not _frame.shadow) then
-                    _frame:CreateShadow()
-                    ES:RegisterFrameShadows(_frame)
-                end
+        hooksecurefunc(UF, "Update_" .. frame .. "Frame", function(_, _frame)
+            if not _frame.shadow then
+                _frame:CreateShadow()
+                ES:RegisterFrameShadows(_frame)
             end
-        )
+        end)
     end
 
     UF:Update_AllFrames()
 
-    if (COMP.IF) then
+    if COMP.IF then
         LoadAddOn("InFlight")
         _G.InFlight:CreateBar()
         _G.InFlightBar:CreateShadow()
         ES:RegisterFrameShadows(_G.InFlightBar)
-        _G.InFlightBar:HookScript(
-            "OnShow",
-            function(_)
-                ES:UpdateShadow(_.shadow)
-            end
-        )
+        _G.InFlightBar:HookScript("OnShow", function(_) ES:UpdateShadow(_.shadow) end)
     end
-    if (COMP.BUI) then
+    if COMP.BUI then
         local BUI = _G.ElvUI_BenikUI[1]
-        hooksecurefunc(
-            BUI,
-            "UpdateStyleColors",
-            function()
-                for frame, _ in pairs(BUI.styles) do
-                    if frame and not frame.enhanced then
-                        if (not frame.shadow) then
-                            frame:CreateShadow()
-                        end
-                        ES:RegisterFrameShadows(frame)
-                        frame.enhanced = true
-                    end
+        hooksecurefunc(BUI, "UpdateStyleColors", function()
+            for frame, _ in pairs(BUI.styles) do
+                if frame and not frame.enhanced then
+                    if not frame.shadow then frame:CreateShadow() end
+                    ES:RegisterFrameShadows(frame)
+                    frame.enhanced = true
                 end
             end
-        )
+        end)
         BUI:UpdateStyleColors()
     end
-    if (COMP.MERS) then
+    if COMP.MERS then
         local MER = _G.ElvUI_MerathilisUI[1]
         if MER.initialized then
             self:MERInit()
         else
-            hooksecurefunc(
-                _G.ElvUI_MerathilisUI[1],
-                "Initialize",
-                function()
-                    self:MERInit()
-                end
-            )
+            hooksecurefunc(_G.ElvUI_MerathilisUI[1], "Initialize", function() self:MERInit() end)
         end
     end
-    if (COMP.PA) then
-        if not _G.EPB then
-            LoadAddOn("ProjectAzilroka")
-        end
+    if COMP.PA then
+        if not _G.EPB then LoadAddOn("ProjectAzilroka") end
         if EPB.UpdatePetFrame then
             self:EPBHook()
         else
-            hooksecurefunc(
-                EPB,
-                "InitPetFrameAPI",
-                function()
-                    self:EPBHook()
-                end
-            )
+            hooksecurefunc(EPB, "InitPetFrameAPI", function() self:EPBHook() end)
         end
-        hooksecurefunc(
-            EPB,
-            "UpdateReviveBar",
-            function()
-                local f = function(frame)
-                    if not frame.enhanced then
-                        if not frame.shadow then
-                            frame:CreateShadow()
-                        end
-                        ES:RegisterFrameShadows(frame)
-                        frame.enhanced = true
-                    end
+        hooksecurefunc(EPB, "UpdateReviveBar", function()
+            local f = function(frame)
+                if not frame.enhanced then
+                    if not frame.shadow then frame:CreateShadow() end
+                    ES:RegisterFrameShadows(frame)
+                    frame.enhanced = true
                 end
-                f(EPB.holder.ReviveButton)
-                f(EPB.holder.BandageButton)
             end
-        )
+            f(EPB.holder.ReviveButton)
+            f(EPB.holder.BandageButton)
+        end)
     end
-    hooksecurefunc(
-        E,
-        "ToggleOptionsUI",
-        function(_)
-            local win = _:Config_GetWindow()
-            if (win and not win.shadow) then
-                win:CreateShadow()
-            elseif (win) then
-                ES:RegisterFrameShadows(win)
-            end
+    hooksecurefunc(E, "ToggleOptionsUI", function(_)
+        local win = _:Config_GetWindow()
+        if win and not win.shadow then
+            win:CreateShadow()
+        elseif win then
+            ES:RegisterFrameShadows(win)
         end
-    )
+    end)
 
     ES:SkinAlerts()
 end

@@ -1,6 +1,6 @@
 local NUI, E, L = _G.unpack(select(2, ...))
 local COMP = NUI.Compatibility
-local SLE = COMP.SLE and _G.ElvUI_SLE[1]
+local SLE = COMP.SLE and _G["ElvUI_Shadow&Light"][1]
 local lib = _G.LibStub("LibElv-GameMenu-1.0")
 
 local tinsert = _G.tinsert
@@ -41,8 +41,8 @@ function NUI:SetupProfileCallbacks()
 end
 
 function NUI:AddMoverCategories()
-    tinsert(E.ConfigModeLayouts, #(E.ConfigModeLayouts) + 1, "NIHILISTUI")
-    E.ConfigModeLocalizedStrings.NIHILISTUI = L[self.Title]
+    tinsert(E.ConfigModeLayouts, #E.ConfigModeLayouts + 1, "NIHILISTZSCHEUI")
+    E.ConfigModeLocalizedStrings.NIHILISTZSCHEUI = L[self.Title]
 end
 
 NUI.SpecialChatIcons = {
@@ -69,8 +69,8 @@ NUI.SpecialChatIcons = {
         Cherlyth = true,
         Tokashami = true,
         Millop = true,
-        Aeondalew = true
-    }
+        Aeondalew = true,
+    },
 }
 
 function NUI.PairsByKeys(startChar, f)
@@ -119,14 +119,10 @@ end
 
 local ACD
 function NUI.ClickGameMenu()
-    if InCombatLockdown() then
-        return
-    end
+    if InCombatLockdown() then return end
     ACD = ACD or E.Libs.AceConfigDialog
-    if (not ACD) then
-        if (not IsAddOnLoaded("ElvUI_OptionsUI")) then
-            LoadAddOn("ElvUI_OptionsUI")
-        end
+    if not ACD then
+        if not IsAddOnLoaded("ElvUI_OptionsUI") then LoadAddOn("ElvUI_OptionsUI") end
         ACD = E.Libs.AceConfigDialog
     end
     E:ToggleOptionsUI()
@@ -134,27 +130,22 @@ function NUI.ClickGameMenu()
     HideUIPanel(_G.GameMenuFrame)
 end
 
-if (SLE) then
+if SLE then
     NUI.SLEBuildGameMenu = SLE.BuildGameMenu
-    SLE.BuildGameMenu = function()
-    end
+    SLE.BuildGameMenu = function() end
 end
 
 function NUI:BuildGameMenu()
     local button = {
         name = "GameMenu_NihilistzschetUIConfig",
         text = NUI.Title,
-        func = function()
-            self.ClickGameMenu()
-        end
+        func = function() self.ClickGameMenu() end,
     }
     lib:AddMenuButton(button)
 
     lib:UpdateHolder()
 
-    if (SLE) then
-        NUI.SLEBuildGameMenu(SLE)
-    end
+    if SLE then NUI.SLEBuildGameMenu(SLE) end
 end
 
 function NUI.FixPetJournal()
@@ -165,45 +156,41 @@ function NUI.FixPetJournal()
 end
 
 function NUI:RegenWait(func, ...)
-    if (not InCombatLockdown() and not UnitAffectingCombat("player") and not UnitAffectingCombat("pet")) then
+    if not InCombatLockdown() and not UnitAffectingCombat("player") and not UnitAffectingCombat("pet") then
         func(...)
         return
     end
 
-    if (not NUI.waitFuncs) then
-        NUI.waitFuncs = {}
-    end
+    if not NUI.waitFuncs then NUI.waitFuncs = {} end
 
-    local newArgs = {...}
+    local newArgs = { ... }
     local found = false
     for _, info in ipairs(NUI.waitFuncs) do
-        if (info.func == func) then
+        if info.func == func then
             local argsEqual = true
-            if (#newArgs ~= #info.args) then
+            if #newArgs ~= #info.args then
                 argsEqual = false
             else
                 for i, arg in ipairs(info.args) do
-                    if (newArgs[i] ~= arg) then
+                    if newArgs[i] ~= arg then
                         argsEqual = false
                         break
                     end
                 end
             end
-            if (argsEqual) then
+            if argsEqual then
                 found = true
                 break
             end
         end
     end
 
-    if (not found) then
-        tinsert(NUI.waitFuncs, {func = func, args = {...}})
-    end
+    if not found then tinsert(NUI.waitFuncs, { func = func, args = { ... } }) end
     self:RegisterEvent("PLAYER_REGEN_ENABLED")
 end
 
 function NUI:PLAYER_REGEN_ENABLED()
-    if (not NUI.waitFuncs or #NUI.waitFuncs == 0) then
+    if not NUI.waitFuncs or #NUI.waitFuncs == 0 then
         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
         return
     end
@@ -218,9 +205,7 @@ function NUI:PLAYER_REGEN_ENABLED()
 end
 
 function NUI:UpdateRegisteredDBs()
-    if (not NUI.RegisteredDBs) then
-        return
-    end
+    if not NUI.RegisteredDBs then return end
 
     local dbs = NUI.RegisteredDBs
 
@@ -233,17 +218,13 @@ function NUI:UpdateAll()
     self:UpdateRegisteredDBs()
     for _, module in ipairs(self:GetRegisteredModules()) do
         local mod = NUI:GetModule(module)
-        if (mod and mod.ForUpdateAll) then
-            mod:ForUpdateAll()
-        end
+        if mod and mod.ForUpdateAll then mod:ForUpdateAll() end
     end
 end
 
 function NUI.UpdateRegisteredDB(tbl, path)
-    if type(path) ~= "string" then
-        return
-    end
-    local path_parts = {strsplit(".", path)}
+    if type(path) ~= "string" then return end
+    local path_parts = { strsplit(".", path) }
     local _db = E.db.nihilistzscheui
     for _, path_part in ipairs(path_parts) do
         _db = _db[path_part]
@@ -252,32 +233,22 @@ function NUI.UpdateRegisteredDB(tbl, path)
 end
 
 function NUI:RegisterDB(tbl, path)
-    if (not NUI.RegisteredDBs) then
-        NUI.RegisteredDBs = {}
-    end
+    if not NUI.RegisteredDBs then NUI.RegisteredDBs = {} end
     self.UpdateRegisteredDB(tbl, path)
     NUI.RegisteredDBs[tbl] = path
 end
 
-function NUI:GetCurrentQuestXP()
-    return NUI.currentQuestXP
-end
+function NUI:GetCurrentQuestXP() return NUI.currentQuestXP end
 
-function NUI.CustomQuestXPWatcher(questXP)
-    NUI.currentQuestXP = questXP
-end
+function NUI.CustomQuestXPWatcher(questXP) NUI.currentQuestXP = questXP end
 
 function NUI.CPW(func)
-    return function()
-        return func("player")
-    end
+    return function() return func("player") end
 end
 
 local function _GetAzeriteXP()
     local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
-    if (not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot()) then
-        return 0, 0, 0
-    end
+    if not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot() then return 0, 0, 0 end
 
     local x, m = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
     local l = C_AzeriteItem_GetPowerLevel(azeriteItemLocation)
@@ -285,17 +256,11 @@ local function _GetAzeriteXP()
     return x, m, l
 end
 
-function NUI.UnitAzeriteXP()
-    return (_GetAzeriteXP())
-end
+function NUI.UnitAzeriteXP() return (_GetAzeriteXP()) end
 
-function NUI.UnitAzeriteXPMax()
-    return (select(2, _GetAzeriteXP()))
-end
+function NUI.UnitAzeriteXPMax() return (select(2, _GetAzeriteXP())) end
 
-function NUI.UnitAzeriteLevel()
-    return (select(3, _GetAzeriteXP()))
-end
+function NUI.UnitAzeriteLevel() return (select(3, _GetAzeriteXP())) end
 
 -- Code from LibCandyBar-3.0
 function NUI.ResetCandyBarLabelDurationAnchors(bar)
@@ -315,7 +280,5 @@ function NUI.ForEach(tbl, func)
 end
 
 function NUI.ExecIf(condition, func)
-    if condition then
-        func()
-    end
+    if condition then func() end
 end

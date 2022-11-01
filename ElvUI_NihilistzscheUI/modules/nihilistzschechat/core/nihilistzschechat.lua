@@ -14,26 +14,22 @@ local format = _G.format
 local C_GuildInfo_GuildRoster = _G.C_GuildInfo.GuildRoster
 local tInvert = _G.tInvert
 
-local raceIdBlacklist = {12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 25, 26, 33}
+local raceIdBlacklist = { 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 25, 26, 33 }
 
 local maxRaceID = 37
 
 function NC:FillRaceMap()
     for i = 1, maxRaceID do
-        if (not tContains(raceIdBlacklist, i)) then
+        if not tContains(raceIdBlacklist, i) then
             local t = C_CreatureInfo_GetRaceInfo(i)
-            if (t) then
-                self.raceMap[t.raceName] = strlower(t.clientFileString)
-            end
+            if t then self.raceMap[t.raceName] = strlower(t.clientFileString) end
         end
     end
 end
 
 function NC:Initialize()
     NUI:RegisterDB(self, "nihilistzschechat")
-    if (not self.db.general.enabled) then
-        return
-    end
+    if not self.db.general.enabled then return end
     self.frame = CreateFrame("Frame", "NihilistzscheChat", E.UIParent)
     self.chats = {}
 
@@ -55,9 +51,7 @@ function NC:Initialize()
     self.maleClasses = tInvert(tMale)
     self.femaleClasses = tInvert(tFemale)
 
-    local ForUpdateAll = function(_self)
-        _self:UpdateAll()
-    end
+    local ForUpdateAll = function(_self) _self:UpdateAll() end
     self.ForUpdateAll = ForUpdateAll
 
     self:SetUpHooks()

@@ -1,4 +1,4 @@
-local NUI = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack(select(2, ...))
 local RCD = NUI.RaidCDs
 
 local GI = NUI.Libs.GI
@@ -22,9 +22,7 @@ function RCD:UpdatePlayer(_, guid, unit, info)
         spells[k] = RCD:GetSpellsForCategory(k, guid)
     end
     self.cached_players[guid].spells = spells
-    if (unit == "player") then
-        self:InspectPlayer("GroupInSpecT_InspectReady", guid, "player")
-    end
+    if unit == "player" then self:InspectPlayer("GroupInSpecT_InspectReady", guid, "player") end
     self:UpdateCDs()
 end
 
@@ -34,16 +32,12 @@ function RCD:RemovePlayer(_, guid)
 end
 
 function RCD:FillOutPvPTalentInfo(guid, unit)
-    if (not self.cached_players[guid]) then
-        return
-    end
+    if not self.cached_players[guid] then return end
 
     local function GetPvpTalentSlotInfo(_unit, slot)
-        if (_unit == "player") then
+        if _unit == "player" then
             local slotInfo = C_SpecializationInfo_GetPvpTalentSlotInfo(slot)
-            if (slotInfo) then
-                return slotInfo.selectedTalentID
-            end
+            if slotInfo then return slotInfo.selectedTalentID end
         else
             return C_SpecializationInfo_GetInspectSelectedPvpTalent(unit, slot)
         end
@@ -52,21 +46,17 @@ function RCD:FillOutPvPTalentInfo(guid, unit)
     local info = self.cached_players[guid].unitInfo
     info.pvpTalents = info.pvpTalents or {}
     wipe(info.pvpTalents)
-    if (UnitIsPVP(unit)) then
+    if UnitIsPVP(unit) then
         for slot = 1, 4 do
             local selectedTalentID = GetPvpTalentSlotInfo(unit, slot)
-            if (not selectedTalentID) then
-                break
-            end
+            if not selectedTalentID then break end
             info.pvpTalents[slot] = select(6, GetPvpTalentInfoByID(selectedTalentID))
         end
     end
 end
 
 function RCD:InspectPlayer(_, guid, unit)
-    if (not self.cached_players[guid]) then
-        return
-    end
+    if not self.cached_players[guid] then return end
 
     local items = {}
     for i = INVSLOT_HEAD, INVSLOT_RANGED do

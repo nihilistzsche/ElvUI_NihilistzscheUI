@@ -40,14 +40,10 @@ local db = {}
 
 local function GetCurrentMount()
     local numMounts = C_MountJournal_GetNumDisplayedMounts()
-    if numMounts == 0 then
-        return false, false
-    end
+    if numMounts == 0 then return false, false end
     for i = 1, numMounts do
         local name, _, _, isActive = C_MountJournal_GetDisplayedMountInfo(i)
-        if isActive then
-            return i, name
-        end
+        if isActive then return i, name end
     end
     return false, false
 end
@@ -65,9 +61,7 @@ end
 
 local function ModifiedClick(_, id)
     local specID, specname = GetSpecializationInfo(GetSpecialization())
-    if (not db.specFavs[specID]) then
-        db.specFavs[specID] = {}
-    end
+    if not db.specFavs[specID] then db.specFavs[specID] = {} end
     local name, _, _, _, _ = C_MountJournal_GetMountInfoByID(id)
     if not IsShiftKeyDown() and not IsControlKeyDown() and not IsAltKeyDown() then
         C_MountJournal_SummonByID(id)
@@ -106,7 +100,7 @@ local function ClearFavorites()
     DEFAULT_CHAT_FRAME:AddMessage((L["%sMounts:|r Favorites Cleared"]):format(hexColor))
 end
 
-local specialMounts = {522} -- Sky Golem
+local specialMounts = { 522 } -- Sky Golem
 
 local expertRidingSpellID = 34090
 local artisanRidingSpellID = 34091
@@ -114,8 +108,9 @@ local masterRidingSpellID = 90265
 
 _G.SummonFavoriteMount = function()
     local specID = GetSpecializationInfo(GetSpecialization())
-    local isSpellKnown =
-        IsSpellKnown(expertRidingSpellID) or IsSpellKnown(artisanRidingSpellID) or IsSpellKnown(masterRidingSpellID)
+    local isSpellKnown = IsSpellKnown(expertRidingSpellID)
+        or IsSpellKnown(artisanRidingSpellID)
+        or IsSpellKnown(masterRidingSpellID)
     if (isSpellKnown and IsFlyableArea()) and db.specFavs[specID] and db.specFavs[specID].favFlyer then
         C_MountJournal_SummonByID(db.specFavs[specID].favFlyer)
     elseif db.specFavs[specID] and db.specFavs[specID].favGround then
@@ -124,15 +119,13 @@ _G.SummonFavoriteMount = function()
 end
 
 local function SummonSkyGolem()
-    if (select(11, C_MountJournal_GetMountInfoByID(522))) then
-        C_MountJournal_SummonByID(522)
-    end
+    if select(11, C_MountJournal_GetMountInfoByID(522)) then C_MountJournal_SummonByID(522) end
 end
 
 local function AddSpecialMounts(_, level)
     for _, id in ipairs(specialMounts) do
         local name, _, icon, active, _, _, _, _, _, _, isCollected, _ = C_MountJournal_GetMountInfoByID(id)
-        if (isCollected) then
+        if isCollected then
             menu.text = name
             menu.icon = icon
             menu.colorCode = active == 1 and hexColor or "|cffffffff"
@@ -147,9 +140,7 @@ end
 
 local function AddFavorites(self, level)
     local specID = GetSpecializationInfo(GetSpecialization())
-    if (not db.specFavs[specID]) then
-        return
-    end
+    if not db.specFavs[specID] then return end
 
     if db.specFavs[specID].favFlyer ~= nil then
         local name, _, icon, active, _ = C_MountJournal_GetMountInfoByID(db.specFavs[specID].favFlyer)
@@ -201,7 +192,7 @@ local function CreateMenu(self, level)
     elseif numMounts <= 20 then
         for i = 1, numMounts do
             local name, _, icon, active, _, _, _, _, _, _, isCollected, id = C_MountJournal_GetDisplayedMountInfo(i)
-            if (isCollected) then
+            if isCollected then
                 menu.hasArrow = false
                 menu.notCheckable = true
                 menu.text = name
@@ -218,9 +209,7 @@ local function CreateMenu(self, level)
             local mounts = {}
             for i = 1, numMounts do
                 local name, _, _, _, _, _, _, _, _, _, isCollected = C_MountJournal_GetDisplayedMountInfo(i)
-                if name and isCollected and name:sub(1, 1):upper() == firstChar then
-                    tinsert(mounts, i)
-                end
+                if name and isCollected and name:sub(1, 1):upper() == firstChar then tinsert(mounts, i) end
             end
             return mounts
         end
@@ -242,12 +231,12 @@ local function CreateMenu(self, level)
             key = "A"
             alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZA"
             repeat
-                if (countByKey[key] > 0) then
+                if countByKey[key] > 0 then
                     for i = 1, depthByKey[key] do
                         menu.text = key
                         menu.notCheckable = true
                         menu.hasArrow = true
-                        menu.value = {["Level1_Key"] = key, ["Level1_Depth"] = i}
+                        menu.value = { ["Level1_Key"] = key, ["Level1_Depth"] = i }
                         UIDropDownMenu_AddButton(menu, level)
                     end
                 end
@@ -260,11 +249,11 @@ local function CreateMenu(self, level)
             local mounts = CollectMountsByFirstChar(Level1_Key)
             local depthMod = 1 + ((Level1_Depth - 1) * 16)
             for k = depthMod, depthMod + 15 do
-                if (mounts[k]) then
+                if mounts[k] then
                     local name, _, icon, active, _, _, _, _, _, _, isCollected, id =
                         C_MountJournal_GetDisplayedMountInfo(mounts[k])
-                    if (name) then
-                        if (isCollected) then
+                    if name then
+                        if isCollected then
                             menu.text = name
                             menu.icon = icon
                             menu.colorCode = active == 1 and hexColor or "|cffffffff"
@@ -301,9 +290,7 @@ local function OnClick(self, button)
     elseif IsAltKeyDown() and IsControlKeyDown() then
         SummonSkyGolem()
     elseif IsAltKeyDown() then
-        if (db.favAlt) then
-            C_MountJournal_SummonByID(db.favAlt)
-        end
+        if db.favAlt then C_MountJournal_SummonByID(db.favAlt) end
     elseif button == "RightButton" then
         ToggleDropDownMenu(1, nil, F, self, 0, 0)
     elseif button == "LeftButton" then
@@ -322,9 +309,7 @@ local function OnEnter(self)
     DT.tooltip:AddLine(("     %s"):format(L["<Right Click> to open mount list."]))
     DT.tooltip:AddLine(
         ("     %s"):format(
-            L[
-                "<Shift + Left Click> to summon your favorite flying or ground mount based on your ability in the current zone."
-            ]
+            L["<Shift + Left Click> to summon your favorite flying or ground mount based on your ability in the current zone."]
         )
     )
     DT.tooltip:AddLine(("     %s"):format(L["<Alt + Click> to summon your favorite alternate mount."]))
@@ -343,8 +328,8 @@ local function OnEnter(self)
 end
 
 local function MigrateMounts()
-    if (not db.favAlt) then
-        if (GetNumSpecializations() == 0) then
+    if not db.favAlt then
+        if GetNumSpecializations() == 0 then
             C_Timer_After(1, MigrateMounts)
             return
         end
@@ -371,23 +356,18 @@ _G.SLASH_MCF1 = "/mcf"
 _G.SlashCmdList.MCF = ClearFavorites
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
-F:SetScript(
-    "OnEvent",
-    function(self)
-        db = E.private.nihilistzscheui.mounts
-        if (not db.favAlt) then
-            MigrateMounts()
-        end
-        self.initialize = CreateMenu
-        self.displayMode = "MENU"
-        self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-    end
-)
+F:SetScript("OnEvent", function(self)
+    db = E.private.nihilistzscheui.mounts
+    if not db.favAlt then MigrateMounts() end
+    self.initialize = CreateMenu
+    self.displayMode = "MENU"
+    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+end)
 
 DT:RegisterDatatext(
     L.Mounts,
     "NihilistzscheUI",
-    {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"},
+    { "PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE" },
     UpdateDisplay,
     OnUpdate,
     OnClick,

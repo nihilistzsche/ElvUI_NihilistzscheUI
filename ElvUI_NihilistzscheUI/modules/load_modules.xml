@@ -10,6 +10,7 @@
     <Include file="datatexts\load_datatexts.xml"/>
     <Include file="enhancednameplateauras\load_enhancednameplateauras.xml"/>
     <Include file="hiddenartifacttracker\load_hiddenartifacttracker.xml"/>
+    <Include file="kaliels_tracker_mover\load_kaliels_tracker_mover.xml"/>
     <Include file="invertedshadows\load_invertedshadows.xml"/>
     <Include file="misc\load_misc.xml"/>
     <Include file="nihilistzschechat\load_nihilistzschechat.xml"/>

@@ -14,7 +14,7 @@ function VUF:ConstructCutaway(frame)
 
     return {
         Health = ch,
-        Power = cp
+        Power = cp,
     }
 end
 

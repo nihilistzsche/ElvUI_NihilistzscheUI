@@ -12,15 +12,15 @@ RCD.categories.externals = {
             base = 120,
             pvp_talent = {
                 id = 202424,
-                modifier = 30
-            }
-        }
+                modifier = 30,
+            },
+        },
     },
     [6940] = {
         -- Blessing of Sacrifice
         class = "PALADIN",
-        spec = {1, 2},
-        cd = 120
+        spec = { 1, 2 },
+        cd = 120,
     },
     [1022] = {
         -- Blessing of Protection
@@ -30,9 +30,9 @@ RCD.categories.externals = {
             pvp_talent = {
                 id = 216853,
                 spec = 2,
-                modifierPct = 33
-            }
-        }
+                modifierPct = 33,
+            },
+        },
     },
     [204018] = {
         -- Blessing of Spellwarding
@@ -44,9 +44,9 @@ RCD.categories.externals = {
             pvp_talent = {
                 id = 216853,
                 spec = 2,
-                modifierPct = 33
-            }
-        }
+                modifierPct = 33,
+            },
+        },
     },
     [633] = {
         -- Lay on Hands
@@ -56,13 +56,13 @@ RCD.categories.externals = {
             legendary = {
                 id = 137059,
                 slot = INVSLOT_HAND,
-                modifierPct = 70
+                modifierPct = 70,
             },
             talent = {
                 id = 114154,
-                modifierPct = 30
-            }
-        }
+                modifierPct = 30,
+            },
+        },
     },
     [47788] = {
         -- Guardian Spirit
@@ -72,9 +72,9 @@ RCD.categories.externals = {
             base = 180,
             pvp_talent = {
                 id = 196602,
-                modifier = 60
-            }
-        }
+                modifier = 60,
+            },
+        },
     },
     [33206] = {
         -- Pain Suppression
@@ -84,8 +84,8 @@ RCD.categories.externals = {
             base = 180,
             pvp_talent = {
                 id = 236771,
-                modifier = 120
-            }
-        }
-    }
+                modifier = 120,
+            },
+        },
+    },
 }

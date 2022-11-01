@@ -10,176 +10,116 @@ local GetXPExhaustion = _G.GetXPExhaustion
 -- luacheck: no max line length
 
 function CDB.RegisterExperienceTags()
-    NT:RegisterTag(
-        "xp:current",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
+    NT:RegisterTag("xp:current", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
 
+        return CDB:GetFormattedText("CURRENT", min, max)
+    end, "PLAYER_XP_UPDATE")
+
+    NT:RegisterTag("xp:max", function()
+        local _, max = UnitXP("player"), UnitXPMax("player")
+
+        return CDB:GetFormattedText("CURRENT", max, max)
+    end, "PLAYER_XP_UPDATE")
+
+    NT:RegisterTag("xp:percent", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+
+        return CDB:GetFormattedText("PERCENT", min, max)
+    end, "PLAYER_XP_UPDATE")
+
+    NT:RegisterTag("xp:tonext", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+
+        return CDB:GetFormattedText("TONEXT", min, max)
+    end, "PLAYER_XP_UPDATE")
+
+    NT:RegisterTag("xp:current-percent", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+
+        return CDB:GetFormattedText("CURRENT_PERCENT", min, max)
+    end, "PLAYER_XP_UPDATE")
+
+    NT:RegisterTag("xp:current-max", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+
+        return CDB:GetFormattedText("CURRENT_MAX", min, max)
+    end, "PLAYER_XP_UPDATE")
+
+    NT:RegisterTag("xp:current-max-percent", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+
+        return CDB:GetFormattedText("CURRENT_MAX_PERCENT", min, max)
+    end, "PLAYER_XP_UPDATE")
+
+    NT:RegisterTag("xp:rested", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+        local rested = GetXPExhaustion()
+
+        return CDB:GetFormattedText("RESTED", min, max, rested)
+    end, "PLAYER_XP_UPDATE")
+
+    NT:RegisterTag("xp:current-rested", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+        local rested = GetXPExhaustion()
+
+        if rested and rested > 0 then
+            return CDB:GetFormattedText("CURRENT_RESTED", min, max, rested)
+        else
             return CDB:GetFormattedText("CURRENT", min, max)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
+        end
+    end, "PLAYER_XP_UPDATE")
 
-    NT:RegisterTag(
-        "xp:max",
-        function()
-            local _, max = UnitXP("player"), UnitXPMax("player")
+    NT:RegisterTag("xp:current-percent-rested", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+        local rested = GetXPExhaustion()
 
-            return CDB:GetFormattedText("CURRENT", max, max)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
-
-    NT:RegisterTag(
-        "xp:percent",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-
-            return CDB:GetFormattedText("PERCENT", min, max)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
-
-    NT:RegisterTag(
-        "xp:tonext",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-
-            return CDB:GetFormattedText("TONEXT", min, max)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
-
-    NT:RegisterTag(
-        "xp:current-percent",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-
+        if rested and rested > 0 then
+            return CDB:GetFormattedText("CURRENT_PERCENT_RESTED", min, max, rested)
+        else
             return CDB:GetFormattedText("CURRENT_PERCENT", min, max)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
+        end
+    end, "PLAYER_XP_UPDATE")
 
-    NT:RegisterTag(
-        "xp:current-max",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
+    NT:RegisterTag("xp:current-max-rested", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+        local rested = GetXPExhaustion()
 
+        if rested and rested > 0 then
+            return CDB:GetFormattedText("CURRENT_MAX_RESTED", min, max, rested)
+        else
             return CDB:GetFormattedText("CURRENT_MAX", min, max)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
+        end
+    end, "PLAYER_XP_UPDATE")
 
-    NT:RegisterTag(
-        "xp:current-max-percent",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
+    NT:RegisterTag("xp:current-max-percent-rested", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
+        local rested = GetXPExhaustion()
 
+        if rested and rested > 0 then
+            return CDB:GetFormattedText("CURRENT_MAX_PERCENT_RESTED", min, max, rested)
+        else
             return CDB:GetFormattedText("CURRENT_MAX_PERCENT", min, max)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
+        end
+    end, "PLAYER_XP_UPDATE")
 
-    NT:RegisterTag(
-        "xp:rested",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-            local rested = GetXPExhaustion()
+    NT:RegisterTag("xp:bars", function()
+        local min, max = UnitXP("player"), UnitXPMax("player")
 
-            return CDB:GetFormattedText("RESTED", min, max, rested)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
+        return CDB:GetFormattedText("BUBBLES", min, max)
+    end, "PLAYER_XP_UPDATE")
 
-    NT:RegisterTag(
-        "xp:current-rested",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-            local rested = GetXPExhaustion()
+    NT:RegisterTag("xp:level", function()
+        local level = UnitLevel("player")
 
-            if rested and rested > 0 then
-                return CDB:GetFormattedText("CURRENT_RESTED", min, max, rested)
-            else
-                return CDB:GetFormattedText("CURRENT", min, max)
-            end
-        end,
-        "PLAYER_XP_UPDATE"
-    )
+        return CDB:GetFormattedText("CURRENT", level)
+    end, "PLAYER_XP_UPDATE")
 
-    NT:RegisterTag(
-        "xp:current-percent-rested",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-            local rested = GetXPExhaustion()
+    NT:RegisterTag("xp:nextlevel", function()
+        local level = UnitLevel("player")
 
-            if rested and rested > 0 then
-                return CDB:GetFormattedText("CURRENT_PERCENT_RESTED", min, max, rested)
-            else
-                return CDB:GetFormattedText("CURRENT_PERCENT", min, max)
-            end
-        end,
-        "PLAYER_XP_UPDATE"
-    )
-
-    NT:RegisterTag(
-        "xp:current-max-rested",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-            local rested = GetXPExhaustion()
-
-            if rested and rested > 0 then
-                return CDB:GetFormattedText("CURRENT_MAX_RESTED", min, max, rested)
-            else
-                return CDB:GetFormattedText("CURRENT_MAX", min, max)
-            end
-        end,
-        "PLAYER_XP_UPDATE"
-    )
-
-    NT:RegisterTag(
-        "xp:current-max-percent-rested",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-            local rested = GetXPExhaustion()
-
-            if rested and rested > 0 then
-                return CDB:GetFormattedText("CURRENT_MAX_PERCENT_RESTED", min, max, rested)
-            else
-                return CDB:GetFormattedText("CURRENT_MAX_PERCENT", min, max)
-            end
-        end,
-        "PLAYER_XP_UPDATE"
-    )
-
-    NT:RegisterTag(
-        "xp:bars",
-        function()
-            local min, max = UnitXP("player"), UnitXPMax("player")
-
-            return CDB:GetFormattedText("BUBBLES", min, max)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
-
-    NT:RegisterTag(
-        "xp:level",
-        function()
-            local level = UnitLevel("player")
-
-            return CDB:GetFormattedText("CURRENT", level)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
-
-    NT:RegisterTag(
-        "xp:nextlevel",
-        function()
-            local level = UnitLevel("player")
-
-            return CDB:GetFormattedText("CURRENT", level + 1)
-        end,
-        "PLAYER_XP_UPDATE"
-    )
+        return CDB:GetFormattedText("CURRENT", level + 1)
+    end, "PLAYER_XP_UPDATE")
 
     NT:RegisterTag(
         "xp:quest",
@@ -197,7 +137,7 @@ function CDB.RegisterExperienceTags()
 
             local min, max = UnitXP("player"), UnitXPMax("player")
             local cq = CDB.currQXP + min
-            if (cq >= max) then
+            if cq >= max then
                 return "[Level Up!]"
             else
                 return ""

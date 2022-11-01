@@ -1,13 +1,11 @@
 -- English localization file for enUS and enGB.
 local AceLocale = _G.ElvUI[1].Libs.ACL
 local L = AceLocale:NewLocale("ElvUI", "enUS", true)
-if not L then
-    return
-end
+if not L then return end
 
-L["NIHILISTUI_AUTHOR_INFO"] = "|cffff2020NihilistzscheUI|r by Nihilistzsche"
+L["NIHILISTZSCHEUI_AUTHOR_INFO"] = "|cffff2020NihilistzscheUI|r by Nihilistzsche"
 
-L["NIHILISTUI_CONTACTS"] =
+L["NIHILISTZSCHEUI_CONTACTS"] =
     [=[Report issues at |cFF00c0fa[|Hurl:https://git.tukui.org/Nihilistzsche/ElvUI_NihilistzscheUI/issues|hhttps://git.tukui.org/Nihilistzsche/ElvUI_NihilistzscheUI/issues|h]|r]=]
 
 -- Bait Bar
@@ -16,6 +14,9 @@ L["NihilistzscheUI BaitBar by Nihilistzsche, based on work by Azilroka"] = true
 L["NihilistzscheUI BaitBar provides a bar to use fishing baits from."] = true
 L["Enable the bait bar"] = true
 L["Only show the bait bar when you mouseover it"] = true
+
+-- BagSetEquipmentIcon
+L["BagSetEquipmentIcon"] = true
 
 -- ButtonStyle
 L["ButtonStyle"] = true
@@ -26,9 +27,8 @@ L["Enable the button style."] = true
 -- WatchBarNotifier
 L["WatchBarNotifier"] = true
 L["NihilistzscheUI WatchBarNotifier by Nihilistzsche"] = true
-L[
-        "NihilistzscheUI WatchBarNotifier prints out messages to a given chat frame when you gain experience, reputation, artifact xp, or honor.\n"
-    ] = true
+L["NihilistzscheUI WatchBarNotifier prints out messages to a given chat frame when you gain experience, reputation, artifact xp, or honor.\n"] =
+    true
 L["Enable the watcher."] = true
 L["WatchBarNotifier Options"] = true
 L["Chat Frame to output XP messages to.  1-10.  Enter 0 to disable xp watcher."] = true
@@ -152,9 +152,8 @@ L["Alpha of the bar"] = true
 -- Reminder
 L["Add Group"] = true
 L["Attempted to show a reminder icon that does not have any spells. You must add a spell first."] = true
-L[
-        "Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."
-    ] = true
+L["Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."] =
+    true
 L["Combat"] = true
 L["Disable Sound"] = true
 L["Don't play the warning sound."] = true
@@ -189,9 +188,8 @@ L["Sound"] = true
 L["Sound that will play when you have a warning icon displayed."] = true
 L["Strict Filter"] = true
 L["Talent Tree"] = true
-L[
-        "This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."
-    ] = true
+L["This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."] =
+    true
 L["Don't play the warning sound."] = true
 L["Tree Exception"] = true
 L["Weapon"] = true
@@ -240,17 +238,15 @@ L["Eclipse"] = true
 L["Override"] = true
 L["Override the texture for this element"] = true
 L["NihilistzscheUI VerticalUnitFrames by Nihilistzsche"] = true
-L[
-        "NihilistzscheUI VerticalUnitFrames provides a configurable centered, vertical unit frame option for use with ElvUI.\n"
-    ] = true
+L["NihilistzscheUI VerticalUnitFrames provides a configurable centered, vertical unit frame option for use with ElvUI.\n"] =
+    true
 L["Reset the settings of this addon to their defaults."] = true
 L["Hide the ElvUI Unitframes when the Vertical Unit Frame is enabled"] = true
 L["Hide the Vertical Unit Frame when out of Combat"] = true
 L["Hide Out of Combat"] = true
 L["Enable Mouse"] = true
-L[
-        "Enable the mouse to interface with the vertical unit frame (this option has no effect if ElvUI Unitframes are hidden)"
-    ] = true
+L["Enable the mouse to interface with the vertical unit frame (this option has no effect if ElvUI Unitframes are hidden)"] =
+    true
 L["Set the Alpha of the Vertical Unit Frame when in combat"] = true
 L["The texture that will be used for statusbars on this element."] = true
 L["Override the font for this element"] = true
@@ -261,8 +257,7 @@ L["Texture"] = true
 L["Tick Color"] = true
 L["Value"] = true
 L["Default"] = true
-L["NihilistzscheUI_VerticalUnitFrames_CREDITS"] =
-    [[Many thanks to the following people:
+L["NihilistzscheUI_VerticalUnitFrames_CREDITS"] = [[Many thanks to the following people:
 
 Tukz whose unitframe code was the basis for the Vertical Unit Frame
 Elv for his amazing UI which was the inspiration for version 3
@@ -277,9 +272,8 @@ The Tukui community for being supportive
 ]]
 
 L["Thank you for using NihilistzscheUI VerticalUnitFrames!"] = true
-L[
-        "Here you can choose between the simple layout (only player health and power) or the default layout for the Vertical Unit Frame"
-    ] = true
+L["Here you can choose between the simple layout (only player health and power) or the default layout for the Vertical Unit Frame"] =
+    true
 L["Simple Layout"] = true
 L["Default Layout"] = true
 L["Simple Layout Set"] = true
@@ -407,9 +401,8 @@ L["Sets the size of the timers."] = true
 L["Threshold (in seconds) before text is shown in the MM:SS format. Set to -1 to never change to this format."] = true
 
 L["Above Icons"] = true
-L[
-        "Additional spacing between icon and statusbar. If a negative value is chosen then the statusbar is shown inside the icon. Changing this requires you to reload UI."
-    ] = true
+L["Additional spacing between icon and statusbar. If a negative value is chosen then the statusbar is shown inside the icon. Changing this requires you to reload UI."] =
+    true
 L["Allows you to choose which texture to use for statusbar backdrops. If disabled, no texture will be used."] = true
 L["Allows you to choose which texture to use for statusbars. If disabled, no texture will be used."] = true
 L["Always Show Text"] = true
@@ -417,12 +410,10 @@ L["Below Icons"] = true
 L["Buffs Threshold"] = true
 L["Buffs"] = true
 L["Changes the statusbar to use a static color instead of going from green to red the lower duration it has."] = true
-L[
-        "Choose where you want the statusbar to be positioned. If you position it on the left or right side of the icon I advice you to increase Horizontal Spacing for Buffs and Debuffs. Changing this requires you to reload UI."
-    ] = true
-L[
-        "Choose which color you want the statusbar backdrops to use. Tip: use light colors for dark statusbar colors and vice versa."
-    ] = true
+L["Choose where you want the statusbar to be positioned. If you position it on the left or right side of the icon I advice you to increase Horizontal Spacing for Buffs and Debuffs. Changing this requires you to reload UI."] =
+    true
+L["Choose which color you want the statusbar backdrops to use. Tip: use light colors for dark statusbar colors and vice versa."] =
+    true
 L["Choose which color you want your statusbars to use."] = true
 L["Color when the text is in the HH:MM format (provided by the ExactAuras addon)."] = true
 L["Debuffs Threshold"] = true
@@ -443,9 +434,8 @@ L["Numbers"] = true
 L["Position and Size"] = true
 L["Right Side of Icons"] = true
 L["Show bars for auras without a duration."] = true
-L[
-        "Show text in addition to statusbars. (You might need to move the text by changing the offset in the Buffs and Debuffs section)"
-    ] = true
+L["Show text in addition to statusbars. (You might need to move the text by changing the offset in the Buffs and Debuffs section)"] =
+    true
 L["Show timers as bars instead of text."] = true
 L["Static Statusbar Color"] = true
 L["Statusbar Backdrop Color"] = true
@@ -471,9 +461,8 @@ L["(Hold Shift) Memory Usage"] = true
 L["Announce Freed"] = true
 L["Announce how much memory was freed by the garbage collection."] = true
 L["Bandwidth"] = true
-L[
-        "Display world or home latency on the datatext.  Home latency refers to your realm server.  World latency refers to the current world server."
-    ] = true
+L["Display world or home latency on the datatext.  Home latency refers to your realm server.  World latency refers to the current world server."] =
+    true
 L["Download"] = true
 L["FPS"] = true
 L["Garbage Collect"] = true
@@ -630,9 +619,7 @@ L["Show/Hide the coord frames"] = true
 L["Add Group"] = "Add Group"
 L["Attempted to show a reminder icon that does not have any spells. You must add a spell first."] =
     "Attempted to show a reminder icon that does not have any spells. You must add a spell first."
-L[
-        "Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."
-    ] =
+L["Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."] =
     "Change this if you want the Reminder module to check for weapon enchants, setting this will cause it to ignore any spells listed."
 L["Combat"] = "Combat"
 L["Disable Sound"] = "Disable Sound"
@@ -662,9 +649,7 @@ L["Sound that will play when you have a warning icon displayed."] =
 L["Spell"] = "Spell"
 L["Strict Filter"] = "Strict Filter"
 L["Talent Tree"] = "Talent Tree"
-L[
-        "This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."
-    ] =
+L["This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."] =
     "This ensures you can only see spells that you actually know. You may want to uncheck this option if you are trying to monitor a spell that is not directly clickable out of your spellbook."
 L["Tree Exception"] = "Tree Exception"
 L["Weapon"] = "Weapon"

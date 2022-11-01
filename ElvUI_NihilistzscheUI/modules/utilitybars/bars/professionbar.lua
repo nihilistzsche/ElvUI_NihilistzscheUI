@@ -12,26 +12,15 @@ local tinsert = _G.tinsert
 local CreateFrame = _G.CreateFrame
 
 function PB:CreateBar()
-    local bar =
-        NUB:CreateBar(
+    local bar = NUB:CreateBar(
         "NihilistzscheUI_ProfessionBar",
         "professionBar",
-        {"BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 2},
+        { "BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 2 },
         "Profession Bar"
     )
 
-    NUB.RegisterCreateButtonHook(
-        bar,
-        function(button)
-            self:CreateButtonHook(button)
-        end
-    )
-    NUB.RegisterUpdateButtonHook(
-        bar,
-        function(button, ...)
-            self.UpdateButtonHook(button, ...)
-        end
-    )
+    NUB.RegisterCreateButtonHook(bar, function(button) self:CreateButtonHook(button) end)
+    NUB.RegisterUpdateButtonHook(bar, function(button, ...) self.UpdateButtonHook(button, ...) end)
 
     return bar
 end
@@ -45,11 +34,11 @@ PB.SkillFixMap = {
     [333] = -13262,
     [755] = -31252,
     [773] = -51005,
-    [794] = -80451
+    [794] = -80451,
 }
 
 PB.ClassProfMap = {
-    DEATHKNIGHT = 53428
+    DEATHKNIGHT = 53428,
 }
 
 function PB:CreateButtonHook(button)
@@ -70,22 +59,20 @@ function PB:GetProfessions()
     local professions = {}
     local ranks = {}
 
-    for _, v in pairs({GetProfessions()}) do
+    for _, v in pairs({ GetProfessions() }) do
         local name, _, rank, _, _, _, skillID = GetProfessionInfo(v)
-        if (name) then
-            if (self.SkillFixMap[skillID]) then
+        if name then
+            if self.SkillFixMap[skillID] then
                 local realSkill = self.SkillFixMap[skillID]
-                if (realSkill > 0) then
+                if realSkill > 0 then
                     name = GetSpellInfo(realSkill)
                     tinsert(professions, name)
                     ranks[name] = rank
                 else
                     tinsert(professions, name)
                     ranks[name] = rank
-                    local secondSkillName = GetSpellInfo(-(self.SkillFixMap[skillID]))
-                    if (secondSkillName) then
-                        tinsert(professions, secondSkillName)
-                    end
+                    local secondSkillName = GetSpellInfo(-self.SkillFixMap[skillID])
+                    if secondSkillName then tinsert(professions, secondSkillName) end
                 end
             else
                 tinsert(professions, name)
@@ -94,7 +81,7 @@ function PB:GetProfessions()
         end
     end
 
-    if (self.ClassProfMap[E.myclass]) then
+    if self.ClassProfMap[E.myclass] then
         local name = GetSpellInfo(self.ClassProfMap[E.myclass])
         tinsert(professions, name)
     end
@@ -111,9 +98,7 @@ function PB:UpdateBar(bar)
     for i, prof in ipairs(professions) do
         local button = bar.buttons[i]
         local _, _, _, _, _, _, spellID = GetSpellInfo(prof)
-        if (spellID) then
-            NUB.UpdateButtonAsSpell(bar, button, spellID, prof, ranks)
-        end
+        if spellID then NUB.UpdateButtonAsSpell(bar, button, spellID, prof, ranks) end
     end
 
     NUB.UpdateBar(self, bar, "ELVUIBAR25BINDBUTTON")

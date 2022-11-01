@@ -31,13 +31,11 @@ local menu = {}
 local startChar = {
     [L.AI] = {},
     [L.JR] = {},
-    [L.SZ] = {}
+    [L.SZ] = {},
 }
 
 local function GetTitleFormat(data)
-    if data == -1 then
-        return ("|cff71d5ff%s|r"):format(L.None)
-    end
+    if data == -1 then return ("|cff71d5ff%s|r"):format(L.None) end
     local title, formatTitle, replace, name
     title = GetTitleName(data)
     if title:sub(1, 1) == " " then
@@ -73,16 +71,11 @@ local function UpdateTitles()
                 id = i,
                 name = title:sub(1, 1) == " " and title:sub(2) or title:sub(1, title:len() - 1),
                 formatName = GetTitleFormat(i),
-                current = current
+                current = current,
             }
         end
     end
-    sort(
-        titles,
-        function(a, b)
-            return a.name < b.name
-        end
-    )
+    sort(titles, function(a, b) return a.name < b.name end)
 end
 
 local function TitleClick(_, info)
@@ -99,9 +92,7 @@ local function CreateMenu(_, level)
     UpdateTitles()
     menu = wipe(menu)
 
-    if #titles == 0 then
-        return
-    end
+    if #titles == 0 then return end
     if #titles <= 10 then
         menu.hasArrow = false
         menu.notCheckable = true
@@ -129,7 +120,7 @@ local function CreateMenu(_, level)
                 menu.notCheckable = true
                 menu.hasArrow = true
                 menu.value = {
-                    ["Level1_Key"] = key
+                    ["Level1_Key"] = key,
                 }
                 UIDropDownMenu_AddButton(menu, level)
             end
@@ -187,19 +178,12 @@ function Frame:PLAYER_ENTERING_WORLD()
 
     UpdateTitles()
 end
-Frame:SetScript(
-    "OnEvent",
-    function(self, event, ...)
-        self[event](self, ...)
-    end
-)
+Frame:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
 Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 local interval = 15
 local function Update(self, elapsed)
-    if not self.lastUpdate then
-        self.lastUpdate = 0
-    end
+    if not self.lastUpdate then self.lastUpdate = 0 end
     self.lastUpdate = self.lastUpdate + elapsed
     if self.lastUpdate > interval then
         UpdateTitles()
@@ -212,9 +196,7 @@ local function Update(self, elapsed)
     end
 end
 
-local function Click(self)
-    ToggleDropDownMenu(1, nil, Frame, self, 0, 0)
-end
+local function Click(self) ToggleDropDownMenu(1, nil, Frame, self, 0, 0) end
 
 local function ValueColorUpdate(hex)
     displayString = join("", "%s:", " ", hex, "%d|r")

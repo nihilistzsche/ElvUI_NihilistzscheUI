@@ -13,26 +13,18 @@ local CreateFrame = _G.CreateFrame
 local Item = _G.Item
 
 function PRB.CreateBar()
-    local bar =
-        NUB:CreateBar(
+    local bar = NUB:CreateBar(
         "NihilistzscheUI_PortalBar",
         "portalBar",
-        {"BOTTOMRIGHT", _G.NihilistzscheUI_ProfessionBar, "TOPRIGHT", 0, 2},
+        { "BOTTOMRIGHT", _G.NihilistzscheUI_ProfessionBar, "TOPRIGHT", 0, 2 },
         "Portal Bar"
     )
-    if COMP.SLE then
-        NUB.RegisterUpdateButtonHook(
-            bar,
-            function(button)
-                PRB.UpdateButtonHook(button)
-            end
-        )
-    end
+    if COMP.SLE then NUB.RegisterUpdateButtonHook(bar, function(button) PRB.UpdateButtonHook(button) end) end
     return bar
 end
 
 if COMP.SLE then
-    local EM = _G.ElvUI_SLE[1].EquipManager or _G.ElvUI_SLE[1]:GetModule("EquipManager")
+    local EM = _G["ElvUI_Shadow&Light"][1].EquipManager or _G["ElvUI_Shadow&Light"][1]:GetModule("EquipManager")
 
     function PRB.PLAYER_ENTERING_WORLD()
         EM.lock = false
@@ -41,16 +33,13 @@ if COMP.SLE then
 
     function PRB.UpdateButtonHook(button)
         if not button.__OnClick_Hooked then
-            button:HookScript(
-                "OnClick",
-                function(self)
-                    local t = self:GetAttribute("type")
-                    if t == "item" then
-                        EM.lock = true
-                        PRB:RegisterEvent("PLAYER_ENTERING_WORLD")
-                    end
+            button:HookScript("OnClick", function(self)
+                local t = self:GetAttribute("type")
+                if t == "item" then
+                    EM.lock = true
+                    PRB:RegisterEvent("PLAYER_ENTERING_WORLD")
                 end
-            )
+            end)
             button.__OnClick_Hooked = true
         end
     end
@@ -62,9 +51,9 @@ function PRB.CreateButtons(bar)
     local function addItemButton(itemID, row)
         local count = GetItemCount(itemID)
 
-        if (count > 0) then
+        if count > 0 then
             local button = bar.buttons[j]
-            if (not button) then
+            if not button then
                 button = NUB.CreateButton(bar)
                 bar.buttons[j] = button
             end
@@ -77,9 +66,9 @@ function PRB.CreateButtons(bar)
     end
 
     local function addSpellButton(spellID, row)
-        if (IsSpellKnown(spellID)) then
+        if IsSpellKnown(spellID) then
             local button = bar.buttons[j]
-            if (not button) then
+            if not button then
                 button = NUB.CreateButton(bar)
                 bar.buttons[j] = button
             end
@@ -92,7 +81,7 @@ function PRB.CreateButtons(bar)
     end
 
     local function addButton(id, row)
-        if (id < 0) then
+        if id < 0 then
             addSpellButton(math.abs(id), row)
         else
             addItemButton(id, row)
@@ -102,11 +91,9 @@ function PRB.CreateButtons(bar)
     local checkAndAdd
 
     checkAndAdd = function(k, v, row)
-        if (type(v) == "table") then
+        if type(v) == "table" then
             for _k, _v in pairs(v) do
-                if (type(_k) == "number") then
-                    checkAndAdd(_k, _v, row)
-                end
+                if type(_k) == "number" then checkAndAdd(_k, _v, row) end
             end
         else
             addButton(k, row)
@@ -116,14 +103,12 @@ function PRB.CreateButtons(bar)
     local function addDbData(key, row)
         local db = PT:GetSetTable(key)
         for k, v in pairs(db) do
-            if (type(k) == "number") then
-                checkAndAdd(k, v, row)
-            end
+            if type(k) == "number" then checkAndAdd(k, v, row) end
         end
     end
 
     for row, key in pairs(bar.keys) do
-        if (type(key) == "table") then
+        if type(key) == "table" then
             for _, _k in ipairs(key) do
                 addDbData(_k, row)
             end
@@ -137,16 +122,14 @@ function PRB.UpdateBarKeys(bar)
     bar.keys = {
         "NihilistzscheUI.TeleportSpells.Teleports",
         "NihilistzscheUI.TeleportSpells.Portals",
-        {"Misc.Hearth", "NihilistzscheUI.Misc.Hearth"}
+        { "Misc.Hearth", "NihilistzscheUI.Misc.Hearth" },
     }
 
-    if (bar.db.challengeModePandaria) then
+    if bar.db.challengeModePandaria then
         tinsert(bar.keys, 3, "NihilistzscheUI.TeleportSpells.ChallengeMode.Pandaria")
     end
 
-    if (bar.db.challengeModeDraenor) then
-        tinsert(bar.keys, 4, "NihilistzscheUI.TeleportSpells.ChallengeMode.Draenor")
-    end
+    if bar.db.challengeModeDraenor then tinsert(bar.keys, 4, "NihilistzscheUI.TeleportSpells.ChallengeMode.Draenor") end
 end
 
 function PRB:UpdateBar(bar)
@@ -155,34 +138,22 @@ function PRB:UpdateBar(bar)
     PRB.CreateButtons(bar)
 
     NUB.UpdateBarMultRow(self, bar, "ELVUIBAR24BINDBUTTON")
-    if COMP.MERS then
-        self:BlacklistPortalItemMeraAutoButtons(bar)
-    end
+    if COMP.MERS then self:BlacklistPortalItemMeraAutoButtons(bar) end
 end
 
 function PRB.AddNihilsitzscheUIData()
     -- luacheck: no max line length
-    PT:AddData(
-        "NihilistzscheUI.TeleportSpells",
-        "Rev: 1",
-        {
-            ["NihilistzscheUI.TeleportSpells.Teleports"] = "-556,-53140,-120145,-3565,-32271,-3562,-3567,-33690,-35715,-32272,-49358,-176248,-3561,-49359,-3566,-88342,-88344,-3563,-132621,-132627,-176242,-18960,-50977,-126892,-193753,-193759, -224768, -281403, -281404, -312372,-344587",
-            ["NihilistzscheUI.TeleportSpells.Portals"] = "-53142, -120146, -11419, -32266, -11416, -11417, -33691, -35717, -32267, -49361, -176246, -10059, -49360, -11420, -88345, -88346, -11418, -132620, -132626, -176244, -224871, -281400, -281402,-344597",
-            ["NihilistzscheUI.TeleportSpells.ChallengeMode.Pandaria"] = "-131228, -131204, -131222, -131225, -131206, -131205, -131229, -131231, -131232",
-            ["NihilistzscheUI.TeleportSpells.ChallengeMode.Draenor"] = "-169764, -169762, -169766, -169763, -169769, -169765, -169767, -169769"
-        }
-    )
+    PT:AddData("NihilistzscheUI.TeleportSpells", "Rev: 1", {
+        ["NihilistzscheUI.TeleportSpells.Teleports"] = "-556,-53140,-120145,-3565,-32271,-3562,-3567,-33690,-35715,-32272,-49358,-176248,-3561,-49359,-3566,-88342,-88344,-3563,-132621,-132627,-176242,-18960,-50977,-126892,-193753,-193759, -224768, -281403, -281404, -312372,-344587",
+        ["NihilistzscheUI.TeleportSpells.Portals"] = "-53142, -120146, -11419, -32266, -11416, -11417, -33691, -35717, -32267, -49361, -176246, -10059, -49360, -11420, -88345, -88346, -11418, -132620, -132626, -176244, -224871, -281400, -281402,-344597",
+        ["NihilistzscheUI.TeleportSpells.ChallengeMode.Pandaria"] = "-131228, -131204, -131222, -131225, -131206, -131205, -131229, -131231, -131232",
+        ["NihilistzscheUI.TeleportSpells.ChallengeMode.Draenor"] = "-169764, -169762, -169766, -169763, -169769, -169765, -169767, -169769",
+    })
     local nihilistzscheHearth = "163073,180817"
-    if E.myrace == "GNOME" then
-        nihilistzscheHearth = nihilistzscheHearth .. ", 168862"
-    end
-    PT:AddData(
-        "NihilistzscheUI.Misc",
-        "Rev: 1",
-        {
-            ["NihilistzscheUI.Misc.Hearth"] = nihilistzscheHearth
-        }
-    )
+    if E.myrace == "GNOME" then nihilistzscheHearth = nihilistzscheHearth .. ", 168862" end
+    PT:AddData("NihilistzscheUI.Misc", "Rev: 1", {
+        ["NihilistzscheUI.Misc.Hearth"] = nihilistzscheHearth,
+    })
 end
 
 if COMP.MERS then
@@ -195,22 +166,16 @@ if COMP.MERS then
             local item = Item:CreateFromItemID(itemID)
 
             if item and not item:IsItemEmpty() and not E.db.mui.autoButtons.blackList[itemID] then
-                item:ContinueOnItemLoad(
-                    function()
-                        E.db.mui.autoButtons.blackList[itemID] = item:GetItemName()
-                    end
-                )
+                item:ContinueOnItemLoad(function() E.db.mui.autoButtons.blackList[itemID] = item:GetItemName() end)
             end
         end
 
         local checkAndAdd
 
         checkAndAdd = function(k, v)
-            if (type(v) == "table") then
+            if type(v) == "table" then
                 for _k, _v in pairs(v) do
-                    if (type(_k) == "number") then
-                        checkAndAdd(_k, _v)
-                    end
+                    if type(_k) == "number" then checkAndAdd(_k, _v) end
                 end
             else
                 addBlacklist(k)
@@ -220,14 +185,12 @@ if COMP.MERS then
         local function addDbData(key)
             local db = PT:GetSetTable(key)
             for k, v in pairs(db) do
-                if (type(k) == "number") then
-                    checkAndAdd(k, v)
-                end
+                if type(k) == "number" then checkAndAdd(k, v) end
             end
         end
 
         for _, key in pairs(self.bar.keys) do
-            if (type(key) == "table") then
+            if type(key) == "table" then
                 for _, _k in ipairs(key) do
                     addDbData(_k)
                 end

@@ -38,7 +38,7 @@ function VUF:ConstructHealthPrediction(frame)
         anchor2 = "TOP",
         health = health,
         parent = parent,
-        frame = frame
+        frame = frame,
     }
 end
 

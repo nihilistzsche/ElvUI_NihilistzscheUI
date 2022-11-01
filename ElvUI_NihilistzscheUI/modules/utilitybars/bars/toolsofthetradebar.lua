@@ -10,21 +10,16 @@ local CreateFrame = _G.CreateFrame
 
 function TOTTB.AddTools()
     -- luacheck: no max line length
-    PT:AddData(
-        "NihilistzscheUI.ToolsOfTheTrade",
-        "Rev: 1",
-        {
-            ["NihilistzscheUI.ToolsOfTheTrade"] = "156631,152839,164766,153670,153716,154170,164733,164740"
-        }
-    )
+    PT:AddData("NihilistzscheUI.ToolsOfTheTrade", "Rev: 1", {
+        ["NihilistzscheUI.ToolsOfTheTrade"] = "156631,152839,164766,153670,153716,154170,164733,164740",
+    })
 end
 
 function TOTTB.CreateBar()
-    local bar =
-        NUB:CreateBar(
+    local bar = NUB:CreateBar(
         "NihilistzscheUI_ToolsOfTheTradeBar",
         "toolsOfTheTradeBar",
-        {"CENTER", E.UIParent, "CENTER", 0, -280},
+        { "CENTER", E.UIParent, "CENTER", 0, -280 },
         "Tools of the Trade Bar"
     )
 
@@ -34,7 +29,7 @@ end
 local availableZones = {
     [875] = true, -- Zandalar, (Continent)
     [876] = true, -- Kul Tiras (Continent)
-    [1355] = true -- Nazjatar (Map)
+    [1355] = true, -- Nazjatar (Map)
 }
 
 function TOTTB.CanUseToolOfTheTrade()
@@ -53,9 +48,9 @@ function TOTTB:UpdateBar(bar)
     local function addButton(itemID)
         local count = GetItemCount(itemID)
 
-        if (count > 0) then
+        if count > 0 then
             local button = bar.buttons[j]
-            if (not button) then
+            if not button then
                 button = NUB.CreateButton(bar)
                 bar.buttons[j] = button
             end
@@ -69,30 +64,24 @@ function TOTTB:UpdateBar(bar)
     local checkAndAdd
 
     checkAndAdd = function(k, v)
-        if (type(v) == "table") then
+        if type(v) == "table" then
             for _k, _v in pairs(v) do
-                if (type(_k) == "number") then
-                    checkAndAdd(_k, _v)
-                end
+                if type(_k) == "number" then checkAndAdd(_k, _v) end
             end
         else
             addButton(k)
         end
     end
 
-    if (inToolZone) then
+    if inToolZone then
         local db = PT:GetSetTable("NihilistzscheUI.ToolsOfTheTrade")
         for k, v in pairs(db) do
-            if (type(k) == "number") then
-                checkAndAdd(k, v)
-            end
+            if type(k) == "number" then checkAndAdd(k, v) end
         end
     end
 
     NUB.UpdateBar(self, bar, "ELVUIBAR32BINDBUTTON")
-    if (not inToolZone) then
-        RegisterStateDriver(bar, "visibility", "hide")
-    end
+    if not inToolZone then RegisterStateDriver(bar, "visibility", "hide") end
 end
 
 function TOTTB:Initialize()

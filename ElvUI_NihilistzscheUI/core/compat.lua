@@ -19,7 +19,7 @@ end
 
 COMP.BUI = COMP.IsAddOnEnabled("ElvUI_BenikUI")
 COMP.MERS = COMP.IsAddOnEnabled("ElvUI_MerathilisUI")
-COMP.SLE = COMP.IsAddOnEnabled("ElvUI_SLE")
+COMP.SLE = COMP.IsAddOnEnabled("ElvUI_Shadow&Light")
 COMP.LCP = COMP.IsAddOnEnabled("ElvUI_LocPlus")
 COMP.WQT = COMP.IsAddOnEnabled("WorldQuestTracker")
 COMP.PA = COMP.IsAddOnEnabled("ProjectAzilroka")
@@ -46,7 +46,7 @@ function COMP.Print(addon, feature)
     if
         (E.private.nihilistzscheui.comp and E.private.nihilistzscheui.comp[addon] and
             E.private.nihilistzscheui.comp[addon][feature])
-     then
+    then
         return
     end
     print(NUI.Title .. " has |cffff2020disabled|r " .. feature .. " from " .. addon .. " due to incompatiblities.")
@@ -56,7 +56,7 @@ function COMP.Print(addon, feature)
 end
 
 function COMP:SLECompatibility()
-    local SLE = _G.ElvUI_SLE[1]
+    local SLE = _G["ElvUI_Shadow&Light"][1]
     if (Disable(E.private.sle.module.shadows)) then
         self.Print(SLE.Title, "shadows")
     end

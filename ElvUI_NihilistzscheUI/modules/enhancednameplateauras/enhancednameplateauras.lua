@@ -19,20 +19,16 @@ local function CCDebuffTextNeedsUpdate(button, db)
 end
 
 local function SetAndSaveCCDebuffFontInfo(button, db)
-   if db.fontOutline == "NONE" then
-        db.fontOutline = ""
-   end
+    if db.fontOutline == "NONE" then db.fontOutline = "" end
     button.cc_name:FontTemplate(E.Libs.LSM:Fetch("font", db.font), db.fontSize, db.fontOutline)
-    button.cc_name.lastFontInfo = {db.font, db.fontSize, db.fontOutline}
+    button.cc_name.lastFontInfo = { db.font, db.fontSize, db.fontOutline }
 end
 
 function ENA:PostUpdateAura(unit, button)
-    if not string.find(unit, "nameplate") then
-        return
-    end
+    if not string.find(unit, "nameplate") then return end
     if button then
         local spell, ccSpell
-        if (button.spellID) then
+        if button.spellID then
             spell = E.global.nameplates.spellList[button.spellID]
             ccSpell = E.global.unitframe.aurafilters.CCDebuffs.spells[button.spellID]
         end
@@ -70,7 +66,7 @@ function ENA:PostUpdateAura(unit, button)
         button:SetWidth(width)
         button:SetHeight(height)
 
-        button.size = {width = width, height = height}
+        button.size = { width = width, height = height }
         -- Stacks
         local stackSize = 7
 
@@ -83,7 +79,7 @@ function ENA:PostUpdateAura(unit, button)
         button.count:FontTemplate(nil, stackSize, "OUTLINE")
 
         if ENA.db.ccDebuffCasterInfo.enable and ccSpell and ccSpell ~= "" and button.caster then
-            if (CCDebuffTextNeedsUpdate(button, ENA.db.ccDebuffCasterInfo)) then
+            if CCDebuffTextNeedsUpdate(button, ENA.db.ccDebuffCasterInfo) then
                 SetAndSaveCCDebuffFontInfo(button, ENA.db.ccDebuffCasterInfo)
             end
             local name = UnitName(button.caster)
@@ -123,17 +119,11 @@ end
 
 function ENA:SortAuras(element)
     local function sortAuras(buttonA, buttonB)
-        if (buttonA:IsShown() ~= buttonB:IsShown()) then
-            return buttonA:IsShown()
-        end
+        if buttonA:IsShown() ~= buttonB:IsShown() then return buttonA:IsShown() end
 
-        if (not buttonA.size and not buttonB.size) then
-            return true
-        end
+        if not buttonA.size and not buttonB.size then return true end
 
-        if (not buttonA.size ~= not buttonB.size) then
-            return not buttonB.size
-        end
+        if not buttonA.size ~= not buttonB.size then return not buttonB.size end
 
         local aWidth = buttonA.size.width
         local aHeight = buttonA.size.height
@@ -151,13 +141,9 @@ end
 
 function ENA.SetPosition(element, _, to)
     local from = 1
-    if not element[from] then
-        return
-    end
+    if not element[from] then return end
 
-    if not element.forceShow and not element.forceCreate then
-        ENA.SortAuras(ENA, element)
-    end
+    if not element.forceShow and not element.forceCreate then ENA.SortAuras(ENA, element) end
 
     local anchor = element.initialAnchor or "BOTTOMLEFT"
     local growthx = (element["growth-x"] == "LEFT" and -1) or 1
@@ -174,10 +160,8 @@ function ENA.SetPosition(element, _, to)
 
     for i = from, to do
         local button = element[i]
-        if (not button) then
-            break
-        end
-        eheight = math.max(eheight, element[i].size and (element[i].size.height) or 0)
+        if not button then break end
+        eheight = math.max(eheight, element[i].size and element[i].size.height or 0)
         button:ClearAllPoints()
         button:SetPoint(anchor, element, anchor, GetAnchorPoint(i), 0)
     end
@@ -188,9 +172,9 @@ function ENA:UpdateSpellList()
     local filters = E.global.nameplates.spellList
 
     for key, value in pairs(filters) do
-        if (not tonumber(key) or value.version ~= 2) then
+        if not tonumber(key) or value.version ~= 2 then
             local spellID = select(7, GetSpellInfo(key))
-            if (spellID) then
+            if spellID then
                 filters[spellID] = value
                 filters[spellID].version = 2
             end

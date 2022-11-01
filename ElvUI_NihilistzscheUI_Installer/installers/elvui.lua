@@ -13,8 +13,8 @@ function NI:ElvUINonHealerSetup()
         portrait = {
             overlay = true,
             enable = true,
-            fullOverlay = true
-        }
+            fullOverlay = true,
+        },
     }
     self:EDB().unitframe.units.raid = {
         raidWideSorting = false,
@@ -23,20 +23,20 @@ function NI:ElvUINonHealerSetup()
         portrait = {
             overlay = true,
             enable = true,
-            fullOverlay = true
-        }
+            fullOverlay = true,
+        },
     }
     self:EDB().unitframe.units.party = {
         roleIcon = {
             yOffset = -4,
             attachTo = "Frame",
-            position = "TOP"
+            position = "TOP",
         },
         portrait = {
             overlay = true,
             enable = true,
-            fullOverlay = true
-        }
+            fullOverlay = true,
+        },
     }
 
     self.SaveMoverPosition("ElvUF_RaidMover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
@@ -54,31 +54,31 @@ function NI:ElvUIHealerSetup()
             sizeOverride = 16,
             yOffset = -7,
             anchorPoint = "TOPRIGHT",
-            xOffset = -4
+            xOffset = -4,
         },
         health = {
             frequentUpdates = true,
             position = "BOTTOM",
-            text_format = "[healthcolor][health:deficit]"
+            text_format = "[healthcolor][health:deficit]",
         },
         growthDirection = "LEFT_UP",
         power = {
-            text_format = ""
+            text_format = "",
         },
         verticalSpacing = 9,
         roleIcon = {
-            position = "BOTTOMRIGHT"
+            position = "BOTTOMRIGHT",
         },
         GPSArrow = {
-            size = 40
+            size = 40,
         },
         healPrediction = {
-            enable = true
+            enable = true,
         },
         width = 80,
         name = {
             text_format = "[namecolor][name:short]",
-            position = "TOP"
+            position = "TOP",
         },
         height = 45,
         buffs = {
@@ -92,30 +92,30 @@ function NI:ElvUIHealerSetup()
             useFilter = "TurtleBuffs",
             noConsolidated = false,
             sizeOverride = 22,
-            enable = true
+            enable = true,
         },
         portrait = {
             overlay = true,
             enable = true,
-            fullOverlay = true
-        }
+            fullOverlay = true,
+        },
     }
     self:EDB().unitframe.units.raid40 = {
         growthDirection = "LEFT_UP",
         healPrediction = {
-            enable = true
+            enable = true,
         },
         health = {
-            frequentUpdates = true
+            frequentUpdates = true,
         },
         height = 30,
         portrait = {
             overlay = true,
             enable = true,
-            fullOverlay = true
-        }
+            fullOverlay = true,
+        },
     }
-    self:EDB().unitframe.units.raidpet = {enabled = true, colorPetByUnitClass = true}
+    self:EDB().unitframe.units.raidpet = { enabled = true, colorPetByUnitClass = true }
     self:EDB().unitframe.units.raid = {
         horizontalSpacing = 9,
         debuffs = {
@@ -123,19 +123,19 @@ function NI:ElvUIHealerSetup()
             xOffset = -4,
             yOffset = -7,
             anchorPoint = "TOPRIGHT",
-            enable = true
+            enable = true,
         },
         growthDirection = "LEFT_UP",
         verticalSpacing = 9,
         rdebuffs = {
-            enable = false
+            enable = false,
         },
         raidWideSorting = false,
         healPrediction = {
-            enable = true
+            enable = true,
         },
         health = {
-            frequentUpdates = true
+            frequentUpdates = true,
         },
         height = 45,
         buffs = {
@@ -149,13 +149,13 @@ function NI:ElvUIHealerSetup()
             useFilter = "TurtleBuffs",
             noConsolidated = false,
             sizeOverride = 22,
-            enable = true
+            enable = true,
         },
         portrait = {
             overlay = true,
             enable = true,
-            fullOverlay = true
-        }
+            fullOverlay = true,
+        },
     }
 
     self.SaveMoverPosition("ElvUF_Raid40Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 442, 343)
@@ -171,136 +171,134 @@ function NI:NameplateSetup()
     local nameFormat = "[namecolor][name]"
     if not NUI.Lulupeep and COMP.TT then
         nameFormat = "[name:title:health:classcolors]"
-        if NUI.Private then
-            nameFormat = "[pvp:icon]" .. nameFormat
-        end
+        if NUI.Private then nameFormat = "[pvp:icon]" .. nameFormat end
     end
     self:EDB()["v11NamePlateReset"] = true
     self:EDB().nameplates = {
         healthBar = {
             text = {
                 enable = true,
-                format = "CURRENT_PERCENT"
-            }
+                format = "CURRENT_PERCENT",
+            },
         },
         colors = {
             glowColor = self:Color(),
             selection = {
-                [5] = self:Color()
-            }
+                [5] = self:Color(),
+            },
         },
         filters = {
             Friendly_NameHealth_NonTarget = {
                 triggers = {
-                    enable = not NUI.Lulupeep
-                }
+                    enable = not NUI.Lulupeep,
+                },
             },
             Enemy_Player = {
                 triggers = {
-                    enable = true
-                }
+                    enable = true,
+                },
             },
             ["My_Minions_" .. filterClassName] = {
                 triggers = {
-                    enable = true
-                }
+                    enable = true,
+                },
             },
             Player_NameHealth_NonTarget = {
                 triggers = {
-                    enable = not NUI.Lulupeep
-                }
-            }
+                    enable = not NUI.Lulupeep,
+                },
+            },
         },
         visibility = {
             friendly = {
                 pets = true,
                 guardians = true,
-                minions = true
-            }
+                minions = true,
+            },
         },
         units = {
             PLAYER = {
                 enable = true,
                 castbar = {
-                    font = self.db.font
+                    font = self.db.font,
                 },
                 pvpindicator = {
-                    enable = true
+                    enable = true,
                 },
                 name = {
                     enable = true,
                     font = self.db.font,
-                    format = nameFormat
+                    format = nameFormat,
                 },
                 power = {
                     enable = false,
                     text = {
-                        enable = true
-                    }
+                        enable = true,
+                    },
                 },
                 health = {
                     text = {
                         enable = true,
-                        font = self.db.font
-                    }
+                        font = self.db.font,
+                    },
                 },
                 visibility = {
-                    showAlways = true
+                    showAlways = true,
                 },
                 title = {
                     enable = true,
                     yOffset = -12,
                     font = self.db.font,
-                    position = "CENTER"
-                }
+                    position = "CENTER",
+                },
             },
             ["TARGET"] = {
                 ["arrowScale"] = 0.5,
                 ["arrow"] = "Arrow57",
-                ["glowStyle"] = "style8"
+                ["glowStyle"] = "style8",
             },
             ENEMY_NPC = {
                 debuffs = {
                     filters = {
-                        priority = "Blacklist,Dispellable,blockNoDuration,Personal,Boss,CCDebuffs"
+                        priority = "Blacklist,Dispellable,blockNoDuration,Personal,Boss,CCDebuffs",
                     },
-                    countFont = self.db.font
+                    countFont = self.db.font,
                 },
                 portrait = {
-                    position = "LEFT"
+                    position = "LEFT",
                 },
                 level = {
                     font = self.db.font,
                     fontOutline = "THICKOUTLINE",
-                    format = "[difficultycolor][level]"
+                    format = "[difficultycolor][level]",
                 },
                 castbar = {
-                    font = self.db.font
+                    font = self.db.font,
                 },
                 pvpindicator = {
-                    enable = true
+                    enable = true,
                 },
                 eliteIcon = {
-                    enable = true
+                    enable = true,
                 },
                 health = {
                     text = {
-                        font = self.db.font
+                        font = self.db.font,
                     },
-                    healprediction = true
+                    healprediction = true,
                 },
                 power = {
-                    displayAltPower = false
+                    displayAltPower = false,
                 },
                 buffs = {
                     filters = {
-                        priority = "Blacklist,blockNoDuration,Personal,TurtleBuffs"
+                        priority = "Blacklist,blockNoDuration,Personal,TurtleBuffs",
                     },
-                    countFont = self.db.font
+                    countFont = self.db.font,
                 },
                 name = {
                     font = self.db.font,
-                    fontOutline = "THICKOUTLINE"
+                    fontOutline = "THICKOUTLINE",
                 },
                 title = {
                     fontSize = 8,
@@ -309,135 +307,135 @@ function NI:NameplateSetup()
                     font = self.db.font,
                     position = "CENTER",
                     format = "|cffffff00[quest:info]|r",
-                    fontOutline = "THICKOUTLINE"
-                }
+                    fontOutline = "THICKOUTLINE",
+                },
             },
             FRIENDLY_NPC = {
                 debuffs = {
-                    countFont = self.db.font
+                    countFont = self.db.font,
                 },
                 level = {
                     font = self.db.font,
-                    fontOutline = "THICKOUTLINE"
+                    fontOutline = "THICKOUTLINE",
                 },
                 pvpindicator = {
-                    enable = true
+                    enable = true,
                 },
                 health = {
                     text = {
-                        font = self.db.font
-                    }
+                        font = self.db.font,
+                    },
                 },
                 castbar = {
-                    font = self.db.font
+                    font = self.db.font,
                 },
                 buffs = {
-                    countFont = self.db.font
+                    countFont = self.db.font,
                 },
                 name = {
                     font = self.db.font,
                     fontOutline = "THICKOUTLINE",
-                    format = "[namecolor][name]"
+                    format = "[namecolor][name]",
                 },
                 title = {
-                    enable = true
+                    enable = true,
                 },
-                nameOnly = false
+                nameOnly = false,
             },
             ENEMY_PLAYER = {
                 debuffs = {
                     filters = {
-                        priority = "Blacklist,Dispellable,blockNoDuration,Personal,Boss,CCDebuffs"
+                        priority = "Blacklist,Dispellable,blockNoDuration,Personal,Boss,CCDebuffs",
                     },
-                    countFont = self.db.font
+                    countFont = self.db.font,
                 },
                 portrait = {
                     classicon = true,
-                    position = "LEFT"
+                    position = "LEFT",
                 },
                 level = {
                     font = self.db.font,
-                    fontOutline = "THICKOUTLINE"
+                    fontOutline = "THICKOUTLINE",
                 },
                 pvpindicator = {
                     showBadge = false,
-                    enable = true
+                    enable = true,
                 },
                 name = {
                     font = self.db.font,
                     fontOutline = "THICKOUTLINE",
-                    format = nameFormat
+                    format = nameFormat,
                 },
                 castbar = {
-                    font = self.db.font
+                    font = self.db.font,
                 },
                 buffs = {
                     filters = {
                         maxDuration = 0,
-                        priority = "Blacklist,blockNoDuration,Personal,TurtleBuffs"
+                        priority = "Blacklist,blockNoDuration,Personal,TurtleBuffs",
                     },
-                    countFont = self.db.font
+                    countFont = self.db.font,
                 },
                 health = {
                     text = {
-                        font = self.db.font
+                        font = self.db.font,
                     },
-                    healprediction = true
-                }
+                    healprediction = true,
+                },
             },
             FRIENDLY_PLAYER = {
                 debuffs = {
-                    countFont = self.db.font
+                    countFont = self.db.font,
                 },
                 portrait = {
-                    position = "LEFT"
+                    position = "LEFT",
                 },
                 level = {
                     font = self.db.font,
-                    fontOutline = "THICKOUTLINE"
+                    fontOutline = "THICKOUTLINE",
                 },
                 pvpindicator = {
-                    enable = true
+                    enable = true,
                 },
                 health = {
                     text = {
-                        font = self.db.font
-                    }
+                        font = self.db.font,
+                    },
                 },
                 castbar = {
-                    font = self.db.font
+                    font = self.db.font,
                 },
                 buffs = {
-                    countFont = self.db.font
+                    countFont = self.db.font,
                 },
                 title = {
                     enable = true,
                     yOffset = -12,
                     font = self.db.font,
-                    position = "CENTER"
+                    position = "CENTER",
                 },
                 name = {
                     font = self.db.font,
                     fontOutline = "THICKOUTLINE",
-                    format = nameFormat
-                }
-            }
+                    format = nameFormat,
+                },
+            },
         },
         preciseTimer = true,
         auraAnchor = 0,
         threat = {
-            badScale = 1.2
+            badScale = 1.2,
         },
         glowColor = self:Color(),
         cutaway = {
             health = {
                 enabled = true,
-                forceBlankTexture = false
+                forceBlankTexture = false,
             },
             power = {
                 enabled = true,
-                forceBlankTexture = false
-            }
+                forceBlankTexture = false,
+            },
         },
         fontSize = 10,
         statusbar = self.db.texture,
@@ -447,37 +445,37 @@ function NI:NameplateSetup()
         durationFont = self.db.font,
         clampToScreen = true,
         displayStyle = "BLIZZARD",
-        loadDistance = 100
+        loadDistance = 100,
     }
     if needsPetFilter then
         self:EDB().nameplates.filters["My_Pet_" .. filterClassName] = {
             triggers = {
-                enable = true
-            }
+                enable = true,
+            },
         }
     end
     if self.currentClass == "WARLOCK" then
         self:EDB().nameplates.filters.Demonology_Warlock_Demon_AboutToExpire = {
             triggers = {
-                enable = true
-            }
+                enable = true,
+            },
         }
     end
     if COMP.IsAddOnEnabled("TotalRP3") and COMP.IsAddOnEnabled("RP_Tags") then
         self:EDB().nameplates.filters.PlayerHasRPProfile = {
             triggers = {
-                enable = true
-            }
+                enable = true,
+            },
         }
     end
 end
 
 function NI:GlobalNameplateSetup()
-    local needsPetFilterClasses = {"DEATHKNIGHT", "MAGE", "HUNTER", "WARLOCK"}
+    local needsPetFilterClasses = { "DEATHKNIGHT", "MAGE", "HUNTER", "WARLOCK" }
     wipe(E.global.nameplates.filters or {})
     local classes = {}
     _G.FillLocalizedClassList(classes, false)
-     classes = tFilter(classes, function(k,_) return k ~= "Adventurer" end)
+    classes = tFilter(classes, function(k, _) return k ~= "Adventurer" end)
     for c, filterClassName in pairs(classes) do
         local needsPetFilter = tContains(needsPetFilterClasses, c)
         self.classColor = E:ClassColor(c, true)
@@ -486,20 +484,20 @@ function NI:GlobalNameplateSetup()
                 actions = {
                     color = {
                         healthColor = self:Color(),
-                        health = true
+                        health = true,
                     },
                     tags = {
-                        title = " "
-                    }
+                        title = " ",
+                    },
                 },
                 triggers = {
                     class = {
                         [c] = {
-                            enabled = true
-                        }
+                            enabled = true,
+                        },
                     },
-                    isPet = true
-                }
+                    isPet = true,
+                },
             }
         end
         if self.currentClass == "WARLOCK" then
@@ -507,59 +505,59 @@ function NI:GlobalNameplateSetup()
                 actions = {
                     flash = {
                         enable = true,
-                        speed = 6
+                        speed = 6,
                     },
-                    scale = 1.25
+                    scale = 1.25,
                 },
                 triggers = {
                     isOwnedByPlayer = true,
                     isDemonologyWarlockDemonNUI = true,
-                    demonologyWarlockDemonAboutToExpireNUI = true
-                }
+                    demonologyWarlockDemonAboutToExpireNUI = true,
+                },
             }
         end
         E.global.nameplates.filters["My_Minions_" .. filterClassName] = {
             actions = {
                 tags = {
-                    title = " "
+                    title = " ",
                 },
                 color = {
                     healthColor = self:Color(),
-                    health = true
+                    health = true,
                 },
-                scale = 0.85
+                scale = 0.85,
             },
             triggers = {
                 triggers = {
                     class = {
                         [c] = {
-                            enabled = true
-                        }
-                    }
+                            enabled = true,
+                        },
+                    },
                 },
                 isNotPet = true,
-                isPlayerControlled = true
-            }
+                isPlayerControlled = true,
+            },
         }
     end
 
     if not NUI.Lulupeep then
         E.global.nameplates.filters.Player_NameHealth_NonTarget = {
             actions = {
-                nameOnly = true
+                nameOnly = true,
             },
             triggers = {
                 notTarget = true,
                 nameplateType = {
                     player = true,
-                    enable = true
+                    enable = true,
                 },
-                priority = 6
-            }
+                priority = 6,
+            },
         }
         E.global.nameplates.filters.Friendly_NameHealth_NonTarget = {
             actions = {
-                nameOnly = true
+                nameOnly = true,
             },
             triggers = {
                 priority = 6,
@@ -568,17 +566,17 @@ function NI:GlobalNameplateSetup()
                 nameplateType = {
                     enable = true,
                     friendlyPlayer = true,
-                    friendlyNPC = true
-                }
-            }
+                    friendlyNPC = true,
+                },
+            },
         }
     end
     if COMP.TT and COMP.IsAddOnEnabled("TotalRP3") and COMP.IsAddOnEnabled("RP_Tags") then
         E.global.nameplates.filters.PlayerHasRPProfile = {
             actions = {
                 tags = {
-                    name = "[pvp:icon][rp:statuscolor][rp:status][rp:icon][rp:title:name:classcolors]"
-                }
+                    name = "[pvp:icon][rp:statuscolor][rp:status][rp:icon][rp:title:name:classcolors]",
+                },
             },
             triggers = {
                 hasRPProfile = true,
@@ -587,10 +585,10 @@ function NI:GlobalNameplateSetup()
                     player = true,
                     enable = true,
                     friendlyPlayer = true,
-                    enemyPlayer = true
+                    enemyPlayer = true,
                 },
-                priority = 3
-            }
+                priority = 3,
+            },
         }
     end
 end
@@ -598,28 +596,26 @@ end
 function NI.NihilistzscheDatatextPanelSetup()
     local db = E.global.datatexts.customPanels
 
-    local function copy(newKey)
-        db["DTB2_" .. newKey] = E:CopyTable({}, E.global.datatexts.newPanelInfo)
-    end
-    copy("NihilistzscheUI")
-    copy("NihilistzscheUIR")
-    copy("NihilistzscheUIT")
-    db.DTB2_NihilistzscheUIT.numPoints = 1
+    local function copy(newKey) db["DTB2_" .. newKey] = E:CopyTable({}, E.global.datatexts.newPanelInfo) end
+    copy("NihilistzscheUILL")
+    copy("NihilistzscheUILR")
+    copy("NihilistzscheUIUR")
+    db.DTB2_NihilistzscheUIUR.numPoints = 1
     if NUI.Private then
-        copy("NihilistzscheUILT")
-        db.DTB2_NihilistzscheUILT.numPoints = 1
+        copy("NihilistzscheUIUL")
+        db.DTB2_NihilistzscheUIUL.numPoints = 1
     end
 end
 
 local template = {
-    [1] = {point = "TOPLEFT", x = 0, numSlots = 3},
-    [2] = {point = "TOP", x = -((E.eyefinity or E.screenWidth) / 5), numSlots = 3},
-    [3] = {point = "TOP", x = 0, numSlots = 1},
-    [4] = {point = "TOP", x = ((E.eyefinity or E.screenWidth) / 5), numSlots = 3},
-    [5] = {point = "TOPRIGHT", x = 0, numSlots = 3},
-    [6] = {point = "BOTTOM", x = -((E.eyefinity or E.screenWidth) / 6 - 15), numSlots = 3},
-    [7] = {point = "BOTTOM", x = 0, numSlots = 1},
-    [8] = {point = "BOTTOM", x = ((E.eyefinity or E.screenWidth) / 6 - 15), numSlots = 3}
+    [1] = { point = "TOPLEFT", x = 0, numSlots = 3 },
+    [2] = { point = "TOP", x = -((E.eyefinity or E.screenWidth) / 5), numSlots = 3 },
+    [3] = { point = "TOP", x = 0, numSlots = 1 },
+    [4] = { point = "TOP", x = ((E.eyefinity or E.screenWidth) / 5), numSlots = 3 },
+    [5] = { point = "TOPRIGHT", x = 0, numSlots = 3 },
+    [6] = { point = "BOTTOM", x = -((E.eyefinity or E.screenWidth) / 6 - 15), numSlots = 3 },
+    [7] = { point = "BOTTOM", x = 0, numSlots = 1 },
+    [8] = { point = "BOTTOM", x = ((E.eyefinity or E.screenWidth) / 6 - 15), numSlots = 3 },
 }
 
 local width = {
@@ -630,7 +626,7 @@ local width = {
     [5] = (E.eyefinity or E.screenWidth) / 5,
     [6] = (E.eyefinity or E.screenWidth) / 4 - 60,
     [7] = (E.eyefinity or E.screenWidth) / 10 - 4,
-    [8] = (E.eyefinity or E.screenWidth) / 4 - 60
+    [8] = (E.eyefinity or E.screenWidth) / 4 - 60,
 }
 
 function NI:DatatextPanelSetup()
@@ -643,7 +639,7 @@ function NI:DatatextPanelSetup()
         ID = 1889,
         DISPLAY_IN_MAIN_TOOLTIP = true,
         ICON = "|T255347:16:16:0:0:64:64:4:60:4:60|t",
-        SHOW_MAX = false
+        SHOW_MAX = false,
     }
     E.global.datatexts.customPanels = E.global.datatexts.customPanels or {}
     E.global.datatexts.newPanelInfo = {
@@ -666,8 +662,8 @@ function NI:DatatextPanelSetup()
             enable = true,
             font = self.db.font,
             fontSize = 12,
-            fontOutline = "OUTLINE"
-        }
+            fontOutline = "OUTLINE",
+        },
     }
     local db = E.global.datatexts.customPanels
 
@@ -691,25 +687,25 @@ function NI:ElvUISetup(role, isSpec)
         backdropfadecolor = {
             r = 0.054,
             g = 0.054,
-            b = 0.054
+            b = 0.054,
         },
         valuecolor = self:Color(true),
         vendorGrays = true,
         minimap = {
             icons = {
                 classHall = {
-                    position = "BOTTOMLEFT"
-                }
+                    position = "BOTTOMLEFT",
+                },
             },
-            locationFont = self.db.font
+            locationFont = self.db.font,
         },
         altPowerBar = {
             statusBar = self.db.texture,
-            font = self.db.font
+            font = self.db.font,
         },
         topPanel = false,
         bottomPanel = false,
-        autoTrackReputation = true
+        autoTrackReputation = true,
     }
     self:EDB().databars = {
         experience = {
@@ -722,7 +718,7 @@ function NI:ElvUISetup(role, isSpec)
             questCurrentZoneOnly = true,
             questCompletedOnly = true,
             -- luacheck: push no max line length
-            tag = "[name] Lvl [xp:level] XP: [xp:current]/[xp:max] ([xp:percent]) [xp:rested] Rested ([xp:quest] Quest) [xp:levelup?]"
+            tag = "[name] Lvl [xp:level] XP: [xp:current]/[xp:max] ([xp:percent]) [xp:rested] Rested ([xp:quest] Quest) [xp:levelup?]",
             -- luacheck: pop
         },
         reputation = {
@@ -732,7 +728,7 @@ function NI:ElvUISetup(role, isSpec)
             width = 410,
             textSize = 9,
             font = self.db.font,
-            tag = "[rep:name]: [rep:standing] ([rep:current-max-percent])"
+            tag = "[rep:name]: [rep:standing] ([rep:current-max-percent])",
         },
         azerite = {
             enable = true,
@@ -741,7 +737,7 @@ function NI:ElvUISetup(role, isSpec)
             width = 410,
             textSize = 9,
             font = self.db.font,
-            tag = "[azerite:name] Level: [azerite:level] (XP: [azerite:current] / [azerite:max], [azerite:percent])"
+            tag = "[azerite:name] Level: [azerite:level] (XP: [azerite:current] / [azerite:max], [azerite:percent])",
         },
         honor = {
             enable = true,
@@ -751,39 +747,39 @@ function NI:ElvUISetup(role, isSpec)
             textSize = 9,
             font = self.db.font,
             tag = "[name] Honor Level [honor:level] XP: [honor:current]/[honor:max] ([honor:percent])",
-            hideBelowMaxLevel = true
+            hideBelowMaxLevel = true,
         },
         threat = {
-            font = self.db.font
+            font = self.db.font,
         },
         colors = {
             useCustomFactionColors = true,
             factionColors = {
-                [1] = {r = 0.63, g = 0, b = 0},
-                [2] = {r = 0.63, g = 0, b = 0},
-                [3] = {r = 0.63, g = 0, b = 0},
-                [4] = {r = 0.82, g = 0.67, b = 0},
-                [5] = {r = 0.32, g = 0.67, b = 0},
-                [6] = {r = 0.32, g = 0.67, b = 0},
-                [7] = {r = 0.32, g = 0.67, b = 0},
-                [8] = {r = 0, g = 0.75, b = 0.44},
+                [1] = { r = 0.63, g = 0, b = 0 },
+                [2] = { r = 0.63, g = 0, b = 0 },
+                [3] = { r = 0.63, g = 0, b = 0 },
+                [4] = { r = 0.82, g = 0.67, b = 0 },
+                [5] = { r = 0.32, g = 0.67, b = 0 },
+                [6] = { r = 0.32, g = 0.67, b = 0 },
+                [7] = { r = 0.32, g = 0.67, b = 0 },
+                [8] = { r = 0, g = 0.75, b = 0.44 },
                 [9] = {
                     r = 186 / 255,
                     g = 183 / 255,
-                    b = 107 / 255
-                }
-            }
-        }
+                    b = 107 / 255,
+                },
+            },
+        },
     }
 
     self:EDB().hideTutorial = 1
     self:EDB().auras = {
         timeYOffset = -4,
         font = self.db.font,
-        buffs = {growthDirection = "RIGHT_DOWN"},
-        debuffs = {growthDirection = "RIGHT_DOWN"},
+        buffs = { growthDirection = "RIGHT_DOWN" },
+        debuffs = { growthDirection = "RIGHT_DOWN" },
         barShow = true,
-        barColor = self:Color()
+        barColor = self:Color(),
     }
 
     self:EDB().bagsOffsetFixed = true
@@ -802,18 +798,18 @@ function NI:ElvUISetup(role, isSpec)
         countFont = self.db.font,
         vendorGrays = {
             details = true,
-            enable = true
-        }
+            enable = true,
+        },
     }
 
     self:EDB().minimap = {
         instance = {
-            font = self.db.font
+            font = self.db.font,
         },
         mapicons = {
             iconmouseover = true,
-            iconsize = 24
-        }
+            iconsize = 24,
+        },
     }
 
     self:EDB().gridSize = 128
@@ -826,85 +822,83 @@ function NI:ElvUISetup(role, isSpec)
             healthclass = true,
             colorhealthbyvalue = true,
             healPrediction = {
-                maxOverflow = 0.2
+                maxOverflow = 0.2,
             },
             powerPrediction = {
-                enable = true
-            }
+                enable = true,
+            },
         },
         statusbar = self.db.texture,
         font = self.db.font,
         units = {
             pet = {
                 enable = true,
-                colorPetByUnitClass = true
+                colorPetByUnitClass = true,
             },
             targettarget = {
-                enable = false
+                enable = false,
             },
             player = {
                 enable = false,
                 castbar = {
                     height = 28,
-                    width = 401.666666666667
-                }
+                    width = 401.666666666667,
+                },
             },
             focus = {
                 enable = false,
                 castbar = {
                     height = 0,
-                    width = 0
-                }
+                    width = 0,
+                },
             },
             target = {
                 debuffs = {
-                    enable = false
+                    enable = false,
                 },
                 smartAuraDisplay = "SHOW_DEBUFFS_ON_FRIENDLIES",
                 enable = false,
                 buffs = {
                     playerOnly = {
-                        friendly = true
-                    }
+                        friendly = true,
+                    },
                 },
                 castbar = {
                     height = 0,
-                    width = 0
+                    width = 0,
                 },
                 aurabar = {
-                    attachTo = "BUFFS"
-                }
+                    attachTo = "BUFFS",
+                },
             },
             arena = {
                 castbar = {
                     height = 6.66664361953735,
-                    width = 192.500137329102
+                    width = 192.500137329102,
                 },
                 portrait = {
                     overlay = true,
                     enable = true,
-                    fullOverlay = true
-                }
+                    fullOverlay = true,
+                },
             },
             boss = {
                 growthDirection = "RIGHT",
                 width = 190,
                 castbar = {
                     width = 190,
-                    height = 5
+                    height = 5,
                 },
                 portrait = {
                     overlay = true,
                     enable = true,
-                    fullOverlay = true
-                }
-            }
-        }
+                    fullOverlay = true,
+                },
+            },
+        },
     }
     local LeftMiniPanelDT = "Time"
-    if COMP.MERS then
-        LeftMiniPanelDT = "Altoholic"
-    end
+    if COMP.MERS then LeftMiniPanelDT = "Altoholic" end
 
     self:EDB().datatexts = {
         font = self.db.font,
@@ -917,120 +911,116 @@ function NI:ElvUISetup(role, isSpec)
                 backdrop = false,
                 "Crit",
                 "Mastery",
-                "Haste"
+                "Haste",
             },
             RightChatDataPanel = {
                 backdrop = false,
                 "Bags",
                 "Currencies",
-                "Gold"
+                "Gold",
             },
             MinimapPanel = {
                 backdrop = false,
                 LeftMiniPanelDT,
-                "Mounts"
-            }
-        }
+                "Mounts",
+            },
+        },
     }
-    self:EDB().datatexts.panels.DTB2_NihilistzscheUI = {
+    self:EDB().datatexts.panels.DTB2_NihilistzscheUILL = {
         enable = true,
         "DungeonTools",
         "QuickJoin",
-        "Improved System"
+        "Improved System",
     }
-    self:EDB().datatexts.panels.DTB2_NihilistzscheUIR = {
+    self:EDB().datatexts.panels.DTB2_NihilistzscheUILR = {
         enable = true,
         "FamilyFamiliarHelper",
         "Rematch",
-        "tdBattlePetScript"
+        "tdBattlePetScript",
     }
-    self:EDB().datatexts.panels.DTB2_NihilistzscheUIT = {
+    self:EDB().datatexts.panels.DTB2_NihilistzscheUIUL = {
         enable = true,
-        "Rarity"
+        "Rarity",
     }
     local NUI_DataPanel_6_LeftDT = "Quick Join"
-    if (NUI.Private) then
-        NUI_DataPanel_6_LeftDT = "NihilistzscheUI Dungeon/Raid Difficulty"
-    end
+    if NUI.Private then NUI_DataPanel_6_LeftDT = "NihilistzscheUI Dungeon/Raid Difficulty" end
     self:EDB().datatexts.panels.NUI_DataPanel_1 = {
         enable = true,
         "NihilistzscheUI Account Item Level",
         "War Mode",
-        "Broker_TimeToExecute_kill"
+        "Broker_TimeToExecute_kill",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_2 = {
         enable = true,
         "Locked Out",
         "LegionInvasionTimer",
-        "BFAInvasionTimer"
+        "BFAInvasionTimer",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_3 = {
         enable = true,
-        "NihilistzscheUI Version"
+        "NihilistzscheUI Version",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_4 = {
         enable = true,
         "Missions",
         "Mail",
-        "S&L Item Level"
+        "S&L Item Level",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_5 = {
         enable = true,
         "NihilistzscheUI Azerite Powers",
         "DungeonHelper",
-        "LDB-WoWToken"
+        "LDB-WoWToken",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_6 = {
         enable = true,
         "CallToArms",
         NUI_DataPanel_6_LeftDT,
-        "Chat Tweaks"
+        "Chat Tweaks",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_7 = {
         enable = true,
-        "Cecile Meter Overlay"
+        "Cecile Meter Overlay",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_8 = {
         enable = true,
         self.DataTextsByRole[role],
         "BtWQuests",
-        "ClassTactics Talent Manager"
+        "ClassTactics Talent Manager",
     }
     if NUI.Private then
-        self:EDB().datatexts.panels.DTB2_NihilistzscheUILT = {
+        self:EDB().datatexts.panels.DTB2_NihilistzscheUIUR = {
             enable = true,
-            [1] = "NihilistzscheUI Pet Challenge Tracker"
+            [1] = "NihilistzscheUI Pet Challenge Tracker",
         }
     end
     local bar7enabled = true
-    if (self.currentClass == "DRUID" or self.currentClass == "ROGUE") then
-        bar7enabled = false
-    end
+    if self.currentClass == "DRUID" or self.currentClass == "ROGUE" then bar7enabled = false end
     self:EDB().actionbar = {
         font = self.db.font,
         ["bar1"] = {
-            mouseover = true
+            mouseover = true,
         },
         ["bar2"] = {
             enabled = true,
             mouseover = true,
-            buttons = 6
+            buttons = 6,
         },
         ["bar3"] = {
             mouseover = true,
-            buttonsPerRow = 12
+            buttonsPerRow = 12,
         },
         ["bar4"] = {
-            mouseover = true
+            mouseover = true,
         },
         ["bar5"] = {
             mouseover = true,
-            buttonsPerRow = 12
+            buttonsPerRow = 12,
         },
         ["bar6"] = {
             enabled = true,
             mouseover = true,
-            buttons = 6
+            buttons = 6,
         },
         ["bar7"] = {
             buttonspacing = 2,
@@ -1039,7 +1029,7 @@ function NI:ElvUISetup(role, isSpec)
             buttons = 6,
             backdrop = false,
             mouseover = true,
-            buttonsize = 32
+            buttonsize = 32,
         },
         ["bar8"] = {
             buttonspacing = 2,
@@ -1048,33 +1038,33 @@ function NI:ElvUISetup(role, isSpec)
             buttons = 6,
             backdrop = false,
             mouseover = true,
-            buttonsize = 32
+            buttonsize = 32,
         },
         barPet = {
-            mouseover = true
+            mouseover = true,
         },
         stanceBar = {
             mouseover = true,
-            point = "BOTTOM"
-        }
+            point = "BOTTOM",
+        },
     }
 
     self:EDB().epa = {
         poh = {
-            enable = false
-        }
+            enable = false,
+        },
     }
     self:EDB().chat = {
         font = self.db.font,
         tabFont = self.db.font,
         copyChatLines = true,
-        socialQueueMessages = true
+        socialQueueMessages = true,
     }
     self:EDB().tooltip = {
         font = self.db.font,
         healthBar = {
-            font = self.db.font
-        }
+            font = self.db.font,
+        },
     }
 
     if not isSpec then
@@ -1086,34 +1076,32 @@ function NI:ElvUISetup(role, isSpec)
             chatBubbleFont = self.db.font,
             nameplateLargeFont = self.db.font,
             nameplateFont = self.db.font,
-         }
+        }
 
         self:EPRV().skins = self:EPRV().skins or {}
         self:EPRV().skins.parchmentRemoverEnable = true
         self:EPRV().skins.blizzard = {
             questChoice = true,
             alertframes = true,
-            objectiveTracker = false
+            objectiveTracker = false,
         }
         self:EPRV().auras = {
             masque = {
                 buffs = false,
-                debuffs = false
-            }
+                debuffs = false,
+            },
         }
         self:EPRV().actionbar = {
             masque = {
                 actionbars = false,
                 petBar = false,
-                stanceBar = false
-            }
+                stanceBar = false,
+            },
         }
 
-        if not COMP.BAGGINS then
-            self:EPRV().bags = {
-                enable = true
-            }
-        end
+        if not COMP.BAGGINS then self:EPRV().bags = {
+            enable = true,
+        } end
 
         SetCVar("autoLootDefault", "1")
         SetCVar("movieSubtitle", "1")
@@ -1125,25 +1113,11 @@ function NI:ElvUISetup(role, isSpec)
     NI:EDB().movers = NI:EDB().movers or {}
     wipe(NI:EDB().movers)
 
-    self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUIMover", "BOTTOM", _G.LeftChatPanel, "TOP", 0, 4)
-    self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUIRMover", "BOTTOM", _G.RightChatPanel, "TOP", 0, 4)
-    self.SaveMoverPosition(
-        "DTPanelDTB2_NihilistzscheUITMover",
-        "BOTTOM",
-        "DTPanelDTB2_NihilistzscheUIMover",
-        "TOP",
-        0,
-        4
-    )
+    self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUILLMover", "BOTTOM", _G.LeftChatPanel, "TOP", 0, 4)
+    self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUILRMover", "BOTTOM", _G.RightChatPanel, "TOP", 0, 4)
+    self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUIULMover", "BOTTOM", _G.LeftChatPanel, "TOP", 0, 30)
     if NUI.Private then
-        self.SaveMoverPosition(
-            "DTPanelDTB2_NihilistzscheUILTMover",
-            "BOTTOM",
-            "DTPanelDTB2_NihilistzscheUIRMover",
-            "TOP",
-            0,
-            4
-        )
+        self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUIURMover", "BOTTOM", _G.RightChatPanel, "TOP", 0, 30)
     end
     for i = 1, 8 do
         self.SaveMoverPosition(
@@ -1158,12 +1132,12 @@ function NI:ElvUISetup(role, isSpec)
 
     -- Action Bars
     self.SaveMoverPosition("ElvAB_1", "BOTTOM", E.UIParent, "BOTTOM", 0, 26)
-    self.SaveMoverPosition("ElvAB_3", "RIGHT", "ElvAB_1", "LEFT", -2, 0)
-    self.SaveMoverPosition("ElvAB_2", "BOTTOM", "ElvAB_3", "TOP", 0, 2)
-    self.SaveMoverPosition("ElvAB_6", "LEFT", "ElvAB_1", "RIGHT", 2, 0)
-    self.SaveMoverPosition("ElvAB_5", "BOTTOM", "ElvAB_6", "TOP", 0, 2)
-    self.SaveMoverPosition("ElvAB_7", "BOTTOM", "ElvAB_2", "TOP", 0, 2)
-    self.SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_2", "TOP", 0, 2)
+    self.SaveMoverPosition("ElvAB_2", "RIGHT", "ElvAB_1", "LEFT", -2, 0)
+    self.SaveMoverPosition("ElvAB_3", "BOTTOM", "ElvAB_2", "TOP", 0, 2)
+    self.SaveMoverPosition("ElvAB_5", "LEFT", "ElvAB_1", "RIGHT", 2, 0)
+    self.SaveMoverPosition("ElvAB_6", "BOTTOM", "ElvAB_5", "TOP", 0, 2)
+    self.SaveMoverPosition("ElvAB_7", "BOTTOM", "ElvAB_3", "TOP", 0, 2)
+    self.SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_3", "TOP", 0, 2)
     self.SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 415, 0)
     self.SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 227)
 
@@ -1213,20 +1187,16 @@ function NI:ElvUISetup(role, isSpec)
 
     self.SaveMoverPosition("VOICECHAT", "TOPRIGHT", E.UIParent, "TOPRIGHT", -504, -68)
 
-    local function c()
-        return "ElvUI" .. (role == "Healer" and "Healer" or "NonHealer") .. "Setup"
-    end
+    local function c() return "ElvUI" .. (role == "Healer" and "Healer" or "NonHealer") .. "Setup" end
 
     self[c()](self)
 
     for k in pairs(P.unitframe.units) do
         self:EDB().unitframe.units[k] = self:EDB().unitframe.units[k] or {}
         self:EDB().unitframe.units[k].cutaway = {
-            health = {enabled = true}
+            health = { enabled = true },
         }
-        if (P.unitframe.units[k].cutaway.power) then
-            self:EDB().unitframe.units[k].cutaway.power = {enabled = true}
-        end
+        if P.unitframe.units[k].cutaway.power then self:EDB().unitframe.units[k].cutaway.power = { enabled = true } end
     end
 end
 
@@ -1236,28 +1206,28 @@ function NI:ElvUILuluSetup()
             orientation = "HORIZONTAL",
             height = 30,
             textSize = 14,
-            width = 415
+            width = 415,
         },
         reputation = {
             enable = true,
             height = 28,
             orientation = "HORIZONTAL",
             textSize = 15,
-            width = 415
+            width = 415,
         },
         experience = {
             orientation = "HORIZONTAL",
             height = 28,
             textSize = 13,
-            width = 415
+            width = 415,
         },
         honor = {
             maxleveltag = "[mouseover][honor:maxlevel]",
             height = 35,
             orientation = "HORIZONTAL",
             textSize = 14,
-            width = 415
-        }
+            width = 415,
+        },
     }
     self:EDB().general = {
         stickyFrames = false,
@@ -1266,36 +1236,36 @@ function NI:ElvUILuluSetup()
         backdropfadecolor = {
             r = 0.054,
             g = 0.054,
-            b = 0.054
+            b = 0.054,
         },
         valuecolor = {
             r = 0.09,
             g = 0.513,
-            b = 0.819
+            b = 0.819,
         },
         vendorGrays = true,
         interruptAnnounce = "SAY",
-        autoAcceptInvite = true
+        autoAcceptInvite = true,
     }
     self:EDB().auras = {
         fontSize = 12,
         timeYOffset = -4,
-        font = self.db.font
+        font = self.db.font,
     }
     self:EDB().epa = {
         poh = {
-            enable = true
-        }
+            enable = true,
+        },
     }
     self:EDB().tooltip = {
         alwaysCompareItems = true,
         RaidProg = {
-            enable = true
+            enable = true,
         },
-        showFaction = true
+        showFaction = true,
     }
     self:EDB().garrison = {
-        autoBorder = true
+        autoBorder = true,
     }
     self:EDB().datatexts = self:EDB().datatexts or {}
     self:EDB().datatexts.panels = self:EDB().datatexts.panels or {}
@@ -1354,9 +1324,9 @@ function NI:ElvUILuluSetup()
     self:EDB().tooltip = {
         fontSize = 12,
         healthBar = {
-            font = self.db.font
+            font = self.db.font,
         },
-        font = self.db.font
+        font = self.db.font,
     }
     self:EDB().unitframe = {
         fontSize = 12,
@@ -1365,32 +1335,32 @@ function NI:ElvUILuluSetup()
                 enable = false,
                 castbar = {
                     height = 5.00000095367432,
-                    width = 128.333419799805
-                }
+                    width = 128.333419799805,
+                },
             },
             boss = {
                 castbar = {
                     height = 5.00000095367432,
-                    width = 214.166656494141
-                }
+                    width = 214.166656494141,
+                },
             },
             party = {
                 rdebuffs = {
-                    font = self.db.font
-                }
+                    font = self.db.font,
+                },
             },
             player = {
                 debuffs = {
-                    attachTo = "BUFFS"
+                    attachTo = "BUFFS",
                 },
                 portrait = {
-                    enable = true
+                    enable = true,
                 },
                 castbar = {
                     enable = false,
                     insideInfoPanel = false,
                     height = 8.33332252502441,
-                    width = 52.4999542236328
+                    width = 52.4999542236328,
                 },
                 enable = false,
                 width = 54,
@@ -1398,28 +1368,28 @@ function NI:ElvUILuluSetup()
                 buffs = {
                     enable = true,
                     noDuration = false,
-                    attachTo = "FRAME"
+                    attachTo = "FRAME",
                 },
                 height = 250,
                 aurabar = {
-                    enable = false
-                }
+                    enable = false,
+                },
             },
             ["raid40"] = {
                 rdebuffs = {
-                    font = self.db.font
-                }
+                    font = self.db.font,
+                },
             },
             focus = {
                 enable = false,
                 castbar = {
                     height = 5.00000095367432,
-                    width = 188.333282470703
-                }
+                    width = 188.333282470703,
+                },
             },
             target = {
                 portrait = {
-                    enable = true
+                    enable = true,
                 },
                 smartAuraDisplay = "DISABLED",
                 enable = false,
@@ -1427,92 +1397,92 @@ function NI:ElvUILuluSetup()
                 castbar = {
                     enable = false,
                     height = 8.33334064483643,
-                    width = 268.333312988281
+                    width = 268.333312988281,
                 },
                 aurabar = {
-                    enable = false
-                }
+                    enable = false,
+                },
             },
             arena = {
                 castbar = {
                     height = 4.99996471405029,
-                    width = 197.499862670898
-                }
+                    width = 197.499862670898,
+                },
             },
             raid = {
                 rdebuffs = {
-                    font = self.db.font
+                    font = self.db.font,
                 },
-                raidWideSorting = false
+                raidWideSorting = false,
             },
             targettarget = {
-                enable = false
-            }
+                enable = false,
+            },
         },
         smoothbars = true,
         colors = {
             castColor = {
                 r = 0.1,
                 g = 0.1,
-                b = 0.1
+                b = 0.1,
             },
             auraBarBuff = {
                 r = 0.1,
                 g = 0.1,
-                b = 0.1
+                b = 0.1,
             },
             health = {
                 r = 0.1,
                 g = 0.1,
-                b = 0.1
+                b = 0.1,
             },
             classResources = {
                 WARLOCK = {
                     [3] = {
                         b = 0.305882352941177,
                         g = 0.901960784313726,
-                        r = 0.529411764705882
-                    }
-                }
-            }
+                        r = 0.529411764705882,
+                    },
+                },
+            },
         },
         fontOutline = "",
         font = self.db.font,
         statusbar = self.db.texture,
         hud = {
             copied = true,
-            hideOOC = true
-        }
+            hideOOC = true,
+        },
     }
     self:EDB().actionbar = {
         ["bar3"] = {
             enabled = false,
-            backdrop = true
+            backdrop = true,
         },
         ["bar6"] = {
-            enabled = true
+            enabled = true,
         },
         ["bar2"] = {
             enabled = true,
-            backdrop = true
+            backdrop = true,
         },
         ["bar5"] = {
-            enabled = false
+            enabled = false,
         },
         font = self.db.font,
         fontOutline = "",
         ["bar4"] = {
-            enabled = false
+            enabled = false,
         },
         microbar = {
-            enabled = true
+            enabled = true,
         },
-        backdropSpacingConverted = true
+        backdropSpacingConverted = true,
     }
     self:EDB().CBPO = {
         player = {
-            overlay = false
-        }
+            overlay = false,
+        },
     }
     self:EDB().bags = {
         countFontSize = 12,
@@ -1521,23 +1491,21 @@ function NI:ElvUILuluSetup()
         itemLevelFontOutline = "",
         itemLevelFontSize = 12,
         ignoreItems = "",
-        strata = "DIALOG"
+        strata = "DIALOG",
     }
     self:EDB().chat = {
         chatHistory = false,
         font = self.db.font,
         tabFont = self.db.font,
         tapFontSize = 12,
-        fontSize = 12
+        fontSize = 12,
     }
 end
 
 function NI:ElvUIGlobalSetup()
     self:DatatextPanelSetup()
     self:GlobalNameplateSetup()
-    if not NUI.Lulupeep then
-        self:NihilistzscheDatatextPanelSetup()
-    end
+    if not NUI.Lulupeep then self:NihilistzscheDatatextPanelSetup() end
 end
 
 NI:RegisterGlobalAddOnInstaller("ElvUI", NI.ElvUIGlobalSetup)

@@ -7,36 +7,39 @@ NP.animateddatabars = {
     ticks = {
         enabled = true,
         width = 3,
-        alpha = .6
-    }
+        alpha = 0.6,
+    },
 }
 NP.autolog = {
     enabled = false,
     party = true,
-    raid = true
+    raid = true,
+}
+NP.bagequipmentseticon = {
+    enable = true,
 }
 NP.buttonStyle = {
-    enabled = true
+    enabled = true,
 }
 NP.cardinalpoints = {
-    enabled = true
+    enabled = true,
 }
 NP.cleanDraenorZoneButton = {
     enabled = true,
     mouseover = false,
     buttonsize = 64,
-    alpha = 1
+    alpha = 1,
 }
 NP.cooldownBar = {
     enabled = true,
     autohide = false,
     alpha = 1,
-    switchTime = 2
+    switchTime = 2,
 }
 NP.enhancedshadows = {
     enabled = true,
-    shadowcolor = {r = 0, g = 0, b = 0},
-    size = 3
+    shadowcolor = { r = 0, g = 0, b = 0 },
+    size = 3,
 }
 NP.enhancednameplateauras = {
     ccDebuffCasterInfo = {
@@ -45,8 +48,8 @@ NP.enhancednameplateauras = {
         fontOutline = "OUTLINE",
         fontSize = 10,
         classColor = true,
-        textColor = {r = 1.0, g = 1.0, b = 1.0}
-    }
+        textColor = { r = 1.0, g = 1.0, b = 1.0 },
+    },
 }
 NP.hiddenArtifactTracker = {
     enabled = true,
@@ -55,14 +58,14 @@ NP.hiddenArtifactTracker = {
     font = "PT Sans Narrow",
     fontSize = 9,
     fontFlags = "THICKOUTLINE",
-    mouseoverText = false
+    mouseoverText = false,
 }
 NP.nihilistzschechat = {
     general = {
         enabled = true,
-        bordercolor = {r = 0.2, g = 0.2, b = 0.2},
-        backdropcolor = {r = 0.075, g = 0.075, b = 0.075},
-        alpha = 1
+        bordercolor = { r = 0.2, g = 0.2, b = 0.2 },
+        backdropcolor = { r = 0.075, g = 0.075, b = 0.075 },
+        alpha = 1,
     },
     windows = {
         autofade = false,
@@ -75,17 +78,17 @@ NP.nihilistzschechat = {
         texture = E.blankTex,
         font = "PT Sans Narrow",
         timeformat = "12Hour",
-        localtime = true
-    }
+        localtime = true,
+    },
 }
 NP.petbattlenameplates = {
     enabled = true,
-    showBreedID = true
+    showBreedID = true,
 }
 NP.petbattleautostart = {
     autoQuestAccept = false,
     autoQuestComplete = false,
-    autoStartBattle = false
+    autoStartBattle = false,
 }
 NP.pxp = {
     enabled = true,
@@ -100,12 +103,12 @@ NP.pxp = {
     color = {
         r = 0,
         g = 0.4,
-        b = 1
-    }
+        b = 1,
+    },
 }
 NP.profdt = {
     prof = "prof1",
-    hint = true
+    hint = true,
 }
 NP.raidCDs = {
     enabled = true,
@@ -125,12 +128,12 @@ NP.raidCDs = {
         utilityCDs = {},
         immunities = {},
         interrupts = {},
-        battleRes = {}
-    }
+        battleRes = {},
+    },
 }
 NP.settransfer = {
     enabled = true,
-    notify = true
+    notify = true,
 }
 NP.sysdt = {
     maxAddons = 25,
@@ -138,11 +141,11 @@ NP.sysdt = {
     showMS = true,
     latency = "home",
     showMemory = false,
-    announceFreed = true
+    announceFreed = true,
 }
 NP.talentloadouts = {}
 NP.titlesdt = {
-    useName = true
+    useName = true,
 }
 NP.utilitybars = {
     hideincombat = false,
@@ -153,7 +156,7 @@ NP.utilitybars = {
         buttonsize = 32,
         alpha = 1,
         vertical = false,
-        buttonsPerRow = 11
+        buttonsPerRow = 11,
     },
     equipmentManagerBar = {
         enabled = true,
@@ -161,7 +164,7 @@ NP.utilitybars = {
         spacing = 4,
         buttonsize = 32,
         vertical = true,
-        alpha = 1
+        alpha = 1,
     },
     farmBar = {
         enabled = true,
@@ -171,7 +174,7 @@ NP.utilitybars = {
         alpha = 1,
         notify = true,
         buttonsPerRow = 11,
-        vertical = false
+        vertical = false,
     },
     portalBar = {
         enabled = true,
@@ -181,7 +184,7 @@ NP.utilitybars = {
         alpha = 1,
         challengeModePandaria = false,
         challengeModeDraenor = false,
-        vertical = false
+        vertical = false,
     },
     professionBar = {
         enabled = true,
@@ -189,7 +192,7 @@ NP.utilitybars = {
         spacing = 4,
         buttonsize = 32,
         alpha = 1,
-        vertical = false
+        vertical = false,
     },
     raidPrepBar = {
         enabled = true,
@@ -198,7 +201,7 @@ NP.utilitybars = {
         buttonsize = 32,
         alpha = 1,
         buttonsPerRow = 11,
-        vertical = false
+        vertical = false,
     },
     specSwitchBar = {
         enabled = true,
@@ -206,7 +209,7 @@ NP.utilitybars = {
         spacing = 4,
         buttonsize = 32,
         alpha = 1,
-        vertical = true
+        vertical = true,
     },
     toolsOfTheTradeBar = {
         enabled = true,
@@ -215,7 +218,7 @@ NP.utilitybars = {
         buttonsize = 32,
         alpha = 1,
         buttonsPerRow = 11,
-        vertical = false
+        vertical = false,
     },
     trackerbar = {
         enabled = true,
@@ -225,7 +228,7 @@ NP.utilitybars = {
         alpha = 1,
         notify = true,
         buttonsPerRow = 11,
-        vertical = false
+        vertical = false,
     },
     engineertoybar = {
         enabled = true,
@@ -235,7 +238,7 @@ NP.utilitybars = {
         alpha = 1,
         buttonsPerRow = 11,
         vertical = false,
-        toys = {}
+        toys = {},
     },
     toybar = {
         enabled = true,
@@ -244,8 +247,8 @@ NP.utilitybars = {
         buttonsize = 32,
         alpha = 1,
         buttonsPerRow = 11,
-        vertical = false
-    }
+        vertical = false,
+    },
 }
 NP.vuf = {
     enabled = true,
@@ -271,9 +274,9 @@ NP.vuf = {
             attachTo = "health",
             pointTo = "TOPLEFT",
             xOffset = -20,
-            yOffset = 20
+            yOffset = 20,
         },
-        tag = ""
+        tag = "",
     },
     units = {
         player = {
@@ -283,7 +286,7 @@ NP.vuf = {
                 enabled = true,
                 size = {
                     height = 150,
-                    width = 50
+                    width = 50,
                 },
                 value = {
                     enabled = true,
@@ -292,10 +295,10 @@ NP.vuf = {
                         attachTo = "health",
                         pointTo = "TOPLEFT",
                         xOffset = -20,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[healthcolor][health:current-percent]"
-                }
+                    tag = "[healthcolor][health:current-percent]",
+                },
             },
             power = {
                 enabled = true,
@@ -304,11 +307,11 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "RIGHT",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 150,
-                    width = 10
+                    width = 10,
                 },
                 value = {
                     enabled = true,
@@ -317,22 +320,22 @@ NP.vuf = {
                         attachTo = "power",
                         pointTo = "TOPRIGHT",
                         xOffset = 10,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[powercolor][power:current-percent]"
-                }
+                    tag = "[powercolor][power:current-percent]",
+                },
             },
             cutaway = {
                 health = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
+                    fadeOutTime = 0.6,
                 },
                 power = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
-                }
+                    fadeOutTime = 0.6,
+                },
             },
             additionalpower = {
                 enabled = true,
@@ -341,16 +344,16 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "BOTTOMLEFT",
                     xOffset = 2,
-                    yOffset = 4
+                    yOffset = 4,
                 },
                 spaced = true,
                 spacesettings = {
                     offset = 4,
-                    spacing = 6
+                    spacing = 6,
                 },
                 size = {
                     height = 142,
-                    width = 7
+                    width = 7,
                 },
                 value = {
                     enabled = true,
@@ -359,35 +362,35 @@ NP.vuf = {
                         attachTo = "additionalpower",
                         pointTo = "BOTTOMLEFT",
                         xOffset = -4,
-                        yOffset = 15
+                        yOffset = 15,
                     },
-                    tag = "[mana:current-max]"
-                }
+                    tag = "[mana:current-max]",
+                },
             },
             castbar = {
                 enabled = true,
                 ticks = true,
-                tickcolor = {r = 0.4, g = 0.4, b = 0.4},
+                tickcolor = { r = 0.4, g = 0.4, b = 0.4 },
                 format = "REMAINING",
                 displayTarget = false,
                 size = {
                     horizontal = {
                         height = 26,
                         width = 220,
-                        halfBar = false
+                        halfBar = false,
                     },
                     vertical = {
                         height = 150,
-                        width = 10
-                    }
+                        width = 10,
+                    },
                 },
                 anchor = {
                     pointFrom = "BOTTOM",
                     attachTo = "power",
                     pointTo = "BOTTOM",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             name = {
                 enabled = true,
@@ -397,8 +400,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 0,
-                    yOffset = 15
-                }
+                    yOffset = 15,
+                },
             },
             classbars = {
                 enabled = true,
@@ -407,16 +410,16 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "BOTTOMLEFT",
                     xOffset = 2,
-                    yOffset = 2
+                    yOffset = 2,
                 },
                 spaced = true,
                 spacesettings = {
                     offset = 4,
-                    spacing = 6
+                    spacing = 6,
                 },
                 size = {
                     height = 146,
-                    width = 7
+                    width = 7,
                 },
                 value = {
                     enabled = true,
@@ -425,10 +428,10 @@ NP.vuf = {
                         attachTo = "classbars",
                         pointTo = "BOTTOMLEFT",
                         xOffset = -4,
-                        yOffset = 15
+                        yOffset = 15,
                     },
-                    tag = "[classpowercolor][classpower:current-max]"
-                }
+                    tag = "[classpowercolor][classpower:current-max]",
+                },
             },
             stagger = {
                 enabled = true,
@@ -437,24 +440,24 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "BOTTOMLEFT",
                     xOffset = 0,
-                    yOffset = -2
+                    yOffset = -2,
                 },
                 spaced = true,
                 spacesettings = {
                     offset = 4,
-                    spacing = 6
+                    spacing = 6,
                 },
                 size = {
                     height = 7,
-                    width = 50
-                }
+                    width = 50,
+                },
             },
             aurabars = {
                 enabled = true,
                 size = {
                     height = 20,
                     width = 146,
-                    halfBar = false
+                    halfBar = false,
                 },
                 playerOnly = true,
                 selfBuffs = true,
@@ -469,7 +472,7 @@ NP.vuf = {
                 enemyAuraType = "HARMFUL",
                 clickThrough = false,
                 reverseFill = false,
-                abbrevName = false
+                abbrevName = false,
             },
             buffs = {
                 enabled = false,
@@ -478,12 +481,12 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 9,
-                    yOffset = 40
+                    yOffset = 40,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             debuffs = {
                 enabled = false,
@@ -492,26 +495,26 @@ NP.vuf = {
                     attachTo = "buffs",
                     pointTo = "BOTTOM",
                     xOffset = 9,
-                    yOffset = 6
+                    yOffset = 6,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             raidicon = {
                 enabled = true,
                 size = {
                     height = 16,
-                    width = 16
+                    width = 16,
                 },
                 anchor = {
                     pointFrom = "CENTER",
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             restingindicator = {
                 enabled = true,
@@ -520,8 +523,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOPLEFT",
                     xOffset = -6,
-                    yOffset = 10
-                }
+                    yOffset = 10,
+                },
             },
             combatindicator = {
                 enabled = true,
@@ -530,8 +533,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOPRIGHT",
                     xOffset = 6,
-                    yOffset = 10
-                }
+                    yOffset = 10,
+                },
             },
             pvptext = {
                 enabled = true,
@@ -540,18 +543,18 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "BOTTOM",
                     xOffset = 0,
-                    yOffset = -6
+                    yOffset = -6,
                 },
-                tag = "[pvptimer]"
+                tag = "[pvptimer]",
             },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
                 anchorPoint = "BOTTOM",
-                height = -1
+                height = -1,
             },
             powerPrediction = {
-                enabled = true
+                enabled = true,
             },
             gcd = {
                 enabled = true,
@@ -560,23 +563,23 @@ NP.vuf = {
                     attachTo = "power",
                     pointTo = "RIGHT",
                     xOffset = 4,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 150,
-                    width = 4
-                }
+                    width = 4,
+                },
             },
             portrait = {
                 enabled = true,
                 camDistanceScale = 1.3,
                 rotation = 0,
                 xOffset = 0,
-                yOffset = 0
+                yOffset = 0,
             },
             resurrectindicator = {
-                enabled = true
-            }
+                enabled = true,
+            },
         },
         target = {
             enabled = true,
@@ -585,7 +588,7 @@ NP.vuf = {
                 enabled = true,
                 size = {
                     height = 150,
-                    width = 50
+                    width = 50,
                 },
                 value = {
                     enabled = true,
@@ -594,10 +597,10 @@ NP.vuf = {
                         attachTo = "health",
                         pointTo = "RIGHT",
                         xOffset = 6,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[healthcolor][health:current-percent]"
-                }
+                    tag = "[healthcolor][health:current-percent]",
+                },
             },
             power = {
                 enabled = true,
@@ -606,11 +609,11 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "LEFT",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 150,
-                    width = 10
+                    width = 10,
                 },
                 value = {
                     enabled = true,
@@ -619,22 +622,22 @@ NP.vuf = {
                         attachTo = "power",
                         pointTo = "LEFT",
                         xOffset = -4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[powercolor][power:current-percent]"
-                }
+                    tag = "[powercolor][power:current-percent]",
+                },
             },
             cutaway = {
                 health = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
+                    fadeOutTime = 0.6,
                 },
                 power = {
                     enabled = false,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
-                }
+                    fadeOutTime = 0.6,
+                },
             },
             castbar = {
                 enabled = true,
@@ -643,22 +646,22 @@ NP.vuf = {
                     attachTo = "power",
                     pointTo = "BOTTOM",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
-                color = {r = 0.1, g = 0.1, b = 0.1},
-                interruptcolor = {r = 0.78, g = 0.25, b = 0.25},
+                color = { r = 0.1, g = 0.1, b = 0.1 },
+                interruptcolor = { r = 0.78, g = 0.25, b = 0.25 },
                 size = {
                     horizontal = {
                         height = 26,
                         width = 220,
-                        halfBar = false
+                        halfBar = false,
                     },
                     vertical = {
                         height = 150,
-                        width = 10
-                    }
+                        width = 10,
+                    },
                 },
-                format = "REMAINING"
+                format = "REMAINING",
             },
             name = {
                 enabled = true,
@@ -668,30 +671,30 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 0,
-                    yOffset = 15
-                }
+                    yOffset = 15,
+                },
             },
             aurabars = {
                 enabled = true,
                 size = {
                     height = 20,
                     width = 146,
-                    halfBar = false
+                    halfBar = false,
                 },
                 growthDirection = "DOWN",
-                playerOnly = {friendly = true, enemy = true},
-                useBlacklist = {friendly = true, enemy = true},
-                useWhitelist = {friendly = false, enemy = false},
-                noDuration = {friendly = true, enemy = true},
-                selfBuffs = {friendly = true, enemy = true},
-                onlyDispellable = {friendly = false, enemy = false},
+                playerOnly = { friendly = true, enemy = true },
+                useBlacklist = { friendly = true, enemy = true },
+                useWhitelist = { friendly = false, enemy = false },
+                noDuration = { friendly = true, enemy = true },
+                selfBuffs = { friendly = true, enemy = true },
+                onlyDispellable = { friendly = false, enemy = false },
                 maxDuration = 300,
                 useFilter = "",
                 friendlyAuraType = "HELPFUL",
                 enemyAuraType = "HARMFUL",
                 clickThrough = false,
                 reverseFill = false,
-                abbrevName = false
+                abbrevName = false,
             },
             buffs = {
                 enabled = true,
@@ -700,12 +703,12 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 9,
-                    yOffset = 40
+                    yOffset = 40,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             debuffs = {
                 enabled = false,
@@ -714,39 +717,39 @@ NP.vuf = {
                     attachTo = "buffs",
                     pointTo = "BOTTOM",
                     xOffset = 9,
-                    yOffset = 6
+                    yOffset = 6,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
                 anchorPoint = "BOTTOM",
-                height = -1
+                height = -1,
             },
             raidicon = {
                 enabled = true,
                 size = {
                     height = 16,
-                    width = 16
+                    width = 16,
                 },
                 anchor = {
                     pointFrom = "CENTER",
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             portrait = {
                 enabled = true,
                 camDistanceScale = 1.3,
                 rotation = 0,
                 xOffset = 0,
-                yOffset = 0
+                yOffset = 0,
             },
             phaseindicator = {
                 enabled = true,
@@ -756,9 +759,9 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
-            }
+                    yOffset = 0,
+                },
+            },
         },
         pet = {
             enabled = true,
@@ -766,7 +769,7 @@ NP.vuf = {
                 enabled = true,
                 size = {
                     height = 112,
-                    width = 37
+                    width = 37,
                 },
                 value = {
                     enabled = true,
@@ -775,10 +778,10 @@ NP.vuf = {
                         attachTo = "health",
                         pointTo = "LEFT",
                         xOffset = -4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[healthcolor][health:current-percent]"
-                }
+                    tag = "[healthcolor][health:current-percent]",
+                },
             },
             power = {
                 enabled = true,
@@ -787,11 +790,11 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "RIGHT",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 112,
-                    width = 10
+                    width = 10,
                 },
                 value = {
                     enabled = true,
@@ -800,22 +803,22 @@ NP.vuf = {
                         attachTo = "power",
                         pointTo = "RIGHT",
                         xOffset = 4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[powercolor][power:current-percent]"
-                }
+                    tag = "[powercolor][power:current-percent]",
+                },
             },
             cutaway = {
                 health = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
+                    fadeOutTime = 0.6,
                 },
                 power = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
-                }
+                    fadeOutTime = 0.6,
+                },
             },
             castbar = {
                 enabled = true,
@@ -824,20 +827,20 @@ NP.vuf = {
                     attachTo = "power",
                     pointTo = "BOTTOM",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 112,
-                    width = 10
+                    width = 10,
                 },
-                format = "REMAINING"
+                format = "REMAINING",
             },
             aurabars = {
                 enabled = true,
                 size = {
                     height = 20,
                     width = 120,
-                    halfBar = false
+                    halfBar = false,
                 },
                 useBlacklist = true,
                 useWhitelist = false,
@@ -850,7 +853,7 @@ NP.vuf = {
                 enemyAuraType = "HARMFUL",
                 clickThrough = false,
                 reverseFill = false,
-                abbrevName = false
+                abbrevName = false,
             },
             name = {
                 enabled = true,
@@ -860,8 +863,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 0,
-                    yOffset = 15
-                }
+                    yOffset = 15,
+                },
             },
             raidicon = {
                 enabled = true,
@@ -870,8 +873,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             buffs = {
                 enabled = true,
@@ -880,12 +883,12 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 9,
-                    yOffset = 40
+                    yOffset = 40,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             debuffs = {
                 enabled = false,
@@ -894,26 +897,26 @@ NP.vuf = {
                     attachTo = "buffs",
                     pointTo = "BOTTOM",
                     xOffset = 9,
-                    yOffset = 6
+                    yOffset = 6,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             portrait = {
                 enabled = true,
                 camDistanceScale = 1.3,
                 rotation = 0,
                 xOffset = 0,
-                yOffset = 0
+                yOffset = 0,
             },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
                 anchorPoint = "BOTTOM",
-                height = -1
-            }
+                height = -1,
+            },
         },
         targettarget = {
             enabled = true,
@@ -923,7 +926,7 @@ NP.vuf = {
                 enabled = true,
                 size = {
                     height = 112,
-                    width = 37
+                    width = 37,
                 },
                 value = {
                     enabled = true,
@@ -932,10 +935,10 @@ NP.vuf = {
                         attachTo = "health",
                         pointTo = "RIGHT",
                         xOffset = 6,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[healthcolor][health:current-percent]"
-                }
+                    tag = "[healthcolor][health:current-percent]",
+                },
             },
             power = {
                 enabled = true,
@@ -944,11 +947,11 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "LEFT",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 112,
-                    width = 10
+                    width = 10,
                 },
                 value = {
                     enabled = true,
@@ -957,22 +960,22 @@ NP.vuf = {
                         attachTo = "power",
                         pointTo = "LEFT",
                         xOffset = -4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[powercolor][power:current-percent]"
-                }
+                    tag = "[powercolor][power:current-percent]",
+                },
             },
             cutaway = {
                 health = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
+                    fadeOutTime = 0.6,
                 },
                 power = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
-                }
+                    fadeOutTime = 0.6,
+                },
             },
             name = {
                 enabled = true,
@@ -982,8 +985,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 0,
-                    yOffset = 15
-                }
+                    yOffset = 15,
+                },
             },
             raidicon = {
                 enabled = true,
@@ -992,22 +995,22 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             portrait = {
                 enabled = true,
                 camDistanceScale = 1.3,
                 rotation = 0,
                 xOffset = 0,
-                yOffset = 0
+                yOffset = 0,
             },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
                 anchorPoint = "BOTTOM",
-                height = -1
-            }
+                height = -1,
+            },
         },
         targettargettarget = {
             enabled = false,
@@ -1015,7 +1018,7 @@ NP.vuf = {
                 enabled = true,
                 size = {
                     height = 112,
-                    width = 37
+                    width = 37,
                 },
                 value = {
                     enabled = true,
@@ -1024,10 +1027,10 @@ NP.vuf = {
                         attachTo = "health",
                         pointTo = "RIGHT",
                         xOffset = 6,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[healthcolor][health:current-percent]"
-                }
+                    tag = "[healthcolor][health:current-percent]",
+                },
             },
             power = {
                 enabled = true,
@@ -1036,11 +1039,11 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "LEFT",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 112,
-                    width = 10
+                    width = 10,
                 },
                 value = {
                     enabled = true,
@@ -1049,22 +1052,22 @@ NP.vuf = {
                         attachTo = "power",
                         pointTo = "LEFT",
                         xOffset = -4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[powercolor][power:current-percent]"
-                }
+                    tag = "[powercolor][power:current-percent]",
+                },
             },
             cutaway = {
                 health = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
+                    fadeOutTime = 0.6,
                 },
                 power = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
-                }
+                    fadeOutTime = 0.6,
+                },
             },
             name = {
                 enabled = true,
@@ -1074,8 +1077,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 0,
-                    yOffset = 15
-                }
+                    yOffset = 15,
+                },
             },
             raidicon = {
                 enabled = true,
@@ -1084,22 +1087,22 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             portrait = {
                 enabled = true,
                 camDistanceScale = 1.3,
                 rotation = 0,
                 xOffset = 0,
-                yOffset = 0
+                yOffset = 0,
             },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
                 anchorPoint = "BOTTOM",
-                height = -1
-            }
+                height = -1,
+            },
         },
         pettarget = {
             enabled = true,
@@ -1107,7 +1110,7 @@ NP.vuf = {
                 enabled = true,
                 size = {
                     height = 112,
-                    width = 37
+                    width = 37,
                 },
                 value = {
                     enabled = true,
@@ -1116,10 +1119,10 @@ NP.vuf = {
                         attachTo = "health",
                         pointTo = "LEFT",
                         xOffset = -4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[healthcolor][health:current-percent]"
-                }
+                    tag = "[healthcolor][health:current-percent]",
+                },
             },
             power = {
                 enabled = true,
@@ -1128,11 +1131,11 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "RIGHT",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 112,
-                    width = 10
+                    width = 10,
                 },
                 value = {
                     enabled = true,
@@ -1141,22 +1144,22 @@ NP.vuf = {
                         attachTo = "power",
                         pointTo = "RIGHT",
                         xOffset = 4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[powercolor][power:current-percent]"
-                }
+                    tag = "[powercolor][power:current-percent]",
+                },
             },
             cutaway = {
                 health = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
+                    fadeOutTime = 0.6,
                 },
                 power = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
-                }
+                    fadeOutTime = 0.6,
+                },
             },
             buffs = {
                 enabled = true,
@@ -1165,12 +1168,12 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 9,
-                    yOffset = 40
+                    yOffset = 40,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             debuffs = {
                 enabled = false,
@@ -1179,12 +1182,12 @@ NP.vuf = {
                     attachTo = "buffs",
                     pointTo = "BOTTOM",
                     xOffset = 9,
-                    yOffset = 6
+                    yOffset = 6,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             name = {
                 enabled = true,
@@ -1194,8 +1197,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 0,
-                    yOffset = 15
-                }
+                    yOffset = 15,
+                },
             },
             raidicon = {
                 enabled = true,
@@ -1204,20 +1207,20 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             portrait = {
                 enabled = true,
                 rotation = 0,
-                camDistanceScale = 1
+                camDistanceScale = 1,
             },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
                 anchorPoint = "BOTTOM",
-                height = -1
-            }
+                height = -1,
+            },
         },
         focus = {
             enabled = true,
@@ -1225,7 +1228,7 @@ NP.vuf = {
                 enabled = true,
                 size = {
                     height = 112,
-                    width = 37
+                    width = 37,
                 },
                 value = {
                     enabled = true,
@@ -1234,10 +1237,10 @@ NP.vuf = {
                         attachTo = "health",
                         pointTo = "LEFT",
                         xOffset = -4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[healthcolor][health:current-percent]"
-                }
+                    tag = "[healthcolor][health:current-percent]",
+                },
             },
             power = {
                 enabled = true,
@@ -1246,11 +1249,11 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "RIGHT",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 112,
-                    width = 10
+                    width = 10,
                 },
                 value = {
                     enabled = true,
@@ -1259,22 +1262,22 @@ NP.vuf = {
                         attachTo = "power",
                         pointTo = "RIGHT",
                         xOffset = 4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[powercolor][power:current-percent]"
-                }
+                    tag = "[powercolor][power:current-percent]",
+                },
             },
             cutaway = {
                 health = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
+                    fadeOutTime = 0.6,
                 },
                 power = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
-                }
+                    fadeOutTime = 0.6,
+                },
             },
             castbar = {
                 enabled = true,
@@ -1283,13 +1286,13 @@ NP.vuf = {
                     attachTo = "power",
                     pointTo = "BOTTOM",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 112,
-                    width = 10
+                    width = 10,
                 },
-                format = "REMAINING"
+                format = "REMAINING",
             },
             name = {
                 enabled = true,
@@ -1299,8 +1302,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 0,
-                    yOffset = 15
-                }
+                    yOffset = 15,
+                },
             },
             raidicon = {
                 enabled = true,
@@ -1309,8 +1312,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             buffs = {
                 enabled = true,
@@ -1319,12 +1322,12 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 9,
-                    yOffset = 40
+                    yOffset = 40,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             debuffs = {
                 enabled = false,
@@ -1333,24 +1336,24 @@ NP.vuf = {
                     attachTo = "buffs",
                     pointTo = "BOTTOM",
                     xOffset = 9,
-                    yOffset = 6
+                    yOffset = 6,
                 },
                 size = {
                     height = 26,
-                    width = 252
-                }
+                    width = 252,
+                },
             },
             portrait = {
                 enabled = true,
                 rotation = 0,
-                camDistanceScale = 1
+                camDistanceScale = 1,
             },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
                 anchorPoint = "BOTTOM",
-                height = -1
-            }
+                height = -1,
+            },
         },
         focustarget = {
             enabled = false,
@@ -1358,7 +1361,7 @@ NP.vuf = {
                 enabled = true,
                 size = {
                     height = 112,
-                    width = 37
+                    width = 37,
                 },
                 value = {
                     enabled = true,
@@ -1367,10 +1370,10 @@ NP.vuf = {
                         attachTo = "health",
                         pointTo = "RIGHT",
                         xOffset = 6,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[healthcolor][health:current-percent]"
-                }
+                    tag = "[healthcolor][health:current-percent]",
+                },
             },
             power = {
                 enabled = true,
@@ -1379,11 +1382,11 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "LEFT",
                     xOffset = 0,
-                    yOffset = 0
+                    yOffset = 0,
                 },
                 size = {
                     height = 112,
-                    width = 10
+                    width = 10,
                 },
                 value = {
                     enabled = true,
@@ -1392,22 +1395,22 @@ NP.vuf = {
                         attachTo = "power",
                         pointTo = "LEFT",
                         xOffset = -4,
-                        yOffset = 0
+                        yOffset = 0,
                     },
-                    tag = "[powercolor][power:current-percent]"
-                }
+                    tag = "[powercolor][power:current-percent]",
+                },
             },
             cutaway = {
                 health = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
+                    fadeOutTime = 0.6,
                 },
                 power = {
                     enabled = true,
                     lengthBeforeFade = 0.3,
-                    fadeOutTime = 0.6
-                }
+                    fadeOutTime = 0.6,
+                },
             },
             name = {
                 enabled = true,
@@ -1417,8 +1420,8 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "TOP",
                     xOffset = 0,
-                    yOffset = 15
-                }
+                    yOffset = 15,
+                },
             },
             raidicon = {
                 enabled = true,
@@ -1427,22 +1430,22 @@ NP.vuf = {
                     attachTo = "health",
                     pointTo = "CENTER",
                     xOffset = 0,
-                    yOffset = 0
-                }
+                    yOffset = 0,
+                },
             },
             portrait = {
                 enabled = true,
                 rotation = 0,
-                camDistanceScale = 1
+                camDistanceScale = 1,
             },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
                 anchorPoint = "BOTTOM",
-                height = -1
-            }
-        }
-    }
+                height = -1,
+            },
+        },
+    },
 }
 
 NP.warlockdemons = {
@@ -1458,35 +1461,35 @@ NP.warlockdemons = {
     color = {
         r = 0.58,
         g = 0.51,
-        b = 0.79
+        b = 0.79,
     },
     alpha = 1,
     demons = {
-        ["Wild Imp"] = {enable = true},
-        ["Demonic Tyrant"] = {enable = true},
-        Dreadstalker = {enable = true},
-        Felguard = {enable = true},
-        Bilescourge = {enable = true},
-        Vilefiend = {enable = true},
-        ["Prince Malchezaar"] = {enable = true},
-        ["Illidari Satyr"] = {enable = true},
-        ["Vicious Hellhound"] = {enable = true},
-        ["Eye of Gul'dan"] = {enable = true},
-        ["Void Terror"] = {enable = true},
-        Shivarra = {enable = true},
-        Wrathguard = {enable = true},
-        Darkhound = {enable = true},
-        ["Ur'zul"] = {enable = true},
-        ["Fel Lord"] = {enable = true},
-        Observer = {enable = true}
-    }
+        ["Wild Imp"] = { enable = true },
+        ["Demonic Tyrant"] = { enable = true },
+        Dreadstalker = { enable = true },
+        Felguard = { enable = true },
+        Bilescourge = { enable = true },
+        Vilefiend = { enable = true },
+        ["Prince Malchezaar"] = { enable = true },
+        ["Illidari Satyr"] = { enable = true },
+        ["Vicious Hellhound"] = { enable = true },
+        ["Eye of Gul'dan"] = { enable = true },
+        ["Void Terror"] = { enable = true },
+        Shivarra = { enable = true },
+        Wrathguard = { enable = true },
+        Darkhound = { enable = true },
+        ["Ur'zul"] = { enable = true },
+        ["Fel Lord"] = { enable = true },
+        Observer = { enable = true },
+    },
 }
 NP.databarnotifier = {
     enabled = true,
     xpchatframe = "3",
     repchatframe = "3",
     axpchatframe = "3",
-    honorchatframe = "3"
+    honorchatframe = "3",
 }
 
 -- Custom DataBar

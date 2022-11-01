@@ -9,35 +9,35 @@ function NI:BenikUISetup(isSpec)
         self:EPRV().benikui = self:EPRV().benikui or {}
         self:EPRV().benikui.install_complete = BUI.Version
     end
-    self:EDB().benikui = {installed = true}
+    self:EDB().benikui = { installed = true }
     self:EDB().benikui.general = {
         splashScreen = false,
-        benikuiStyle = true
+        benikuiStyle = true,
     }
     self:EDB().benikuiDatabars = {
         threat = {
             buiStyle = true,
             notifiers = {
-                position = "ABOVE"
-            }
+                position = "ABOVE",
+            },
         },
         experience = {
-            enable = false
+            enable = false,
         },
         azerite = {
-            enable = false
+            enable = false,
         },
         reputation = {
-            enable = false
+            enable = false,
         },
         honor = {
-            enable = false
-        }
+            enable = false,
+        },
     }
     self:EDB().benikui.benikuiWidgetbars = {
         mawBar = {
-            enable = false
-        }
+            enable = false,
+        },
     }
     self:EDB().benikui.actionbars = {
         style = {
@@ -52,50 +52,48 @@ function NI:BenikUISetup(isSpec)
             ["bar9"] = true,
             ["bar10"] = true,
             petbar = true,
-            stancebar = true
-        }
+            stancebar = true,
+        },
     }
     self:EDB().benikui.datatexts = {
-        mail = {toggle = false},
-        chat = {enable = false},
-        [2] = {enable = false}
+        mail = { toggle = false },
+        chat = { enable = false },
+        [2] = { enable = false },
     }
 
     self:EDB().dashboards = {
         dashFont = {
-            dbfont = self.db.font
+            dbfont = self.db.font,
         },
         customBarColor = self:Color(),
-        system = {enableSystem = false},
-        tokens = {enableTokens = false},
+        system = { enableSystem = false },
+        tokens = { enableTokens = false },
         professions = {
             enableProfessions = not NUI.Lulupeep,
             combat = false,
             width = 414,
-            mouseover = not NUI.Lulupeep
-        }
+            mouseover = not NUI.Lulupeep,
+        },
     }
     self:EDB().benikui.misc = {
         ilevel = {
-            font = self.db.font
-        }
+            font = self.db.font,
+        },
     }
     self:EDB().datatexts.panels.BuiMiddleDTPanel = {
-        ["enable"] = false
+        ["enable"] = false,
     }
     self.SaveMoverPosition("RequestStopButton", "TOP", E.UIParent, "TOP", 0, -315)
     self.SaveMoverPosition(
         "ProfessionsMover",
         "BOTTOM",
-        NUI.Private and "DTPanelDTB2_NihilistzscheUILTMover" or "DTPanelDTB2_NihilistzscheUIRMover",
+        NUI.Private and "DTPanelDTB2_NihilistzscheUIURMover" or "DTPanelDTB2_NihilistzscheUILRRMover",
         "TOP",
         0,
         4
     )
 end
 
-if (COMP.BUI) then
-    NI:SaveInstallTable(_G.ElvUI_BenikUI[1])
-end
+if COMP.BUI then NI:SaveInstallTable(_G.ElvUI_BenikUI[1]) end
 
 NI:RegisterAddOnInstaller("ElvUI_BenikUI", NI.BenikUISetup, true)

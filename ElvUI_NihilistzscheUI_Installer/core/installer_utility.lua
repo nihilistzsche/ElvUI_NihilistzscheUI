@@ -14,7 +14,7 @@ NI.DataTextsByRole = {
     Tank = "Armor",
     CasterDPS = "Primary Stat",
     MeleeDPS = "Attack Power",
-    Healer = "Primary Stat"
+    Healer = "Primary Stat",
 }
 
 function NI.SaveMoverPosition(mover, anchor, parent, point, x, y)
@@ -25,27 +25,18 @@ end
 
 function NI:InitBaseProfile(n, r)
     self.baseProfile = (n or E.myname) .. " - " .. (r or E.myrealm)
-    if n then
-        self.currentName = n
-    end
-    if r then
-        self.currentRealm = r
-    end
-    if not n then
-        self.baseProfileKey = E.myLocalizedClass .. " - NihilistzscheUI"
-    end
+    if n then self.currentName = n end
+    if r then self.currentRealm = r end
+    if not n then self.baseProfileKey = E.myLocalizedClass .. " - NihilistzscheUI" end
 end
 
 function NI:UpdateProfileKey(overrideKey)
     local isFemale = UnitSex("player") == 3
-    local lclass =
-        isFemale and _G.LOCALIZED_CLASS_NAMES_FEMALE[self.currentClass] or
-        _G.LOCALIZED_CLASS_NAMES_MALE[self.currentClass]
+    local lclass = isFemale and _G.LOCALIZED_CLASS_NAMES_FEMALE[self.currentClass]
+        or _G.LOCALIZED_CLASS_NAMES_MALE[self.currentClass]
     self.currentLocalizedClass = lclass
     self.profileKey = lclass .. " - " .. (overrideKey and overrideKey or "NihilistzscheUI")
-    if not overrideKey then
-        self.privateProfileKey = lclass .. " - NihilistzscheUI"
-    end
+    if not overrideKey then self.privateProfileKey = lclass .. " - NihilistzscheUI" end
 end
 
 function NI:SetProfile(db, tbl, overrideKey)
@@ -58,18 +49,19 @@ function NI:SetProfile(db, tbl, overrideKey)
 end
 
 NI.ClassSpecProfiles = {
-    DEATHKNIGHT = {"Tank", "MeleeDPS", "MeleeDPS"},
-    DEMONHUNTER = {"MeleeDPS", "Tank"},
-    DRUID = {"CasterDPS", "MeleeDPS", "Tank", "Healer"},
+    DEATHKNIGHT = { "Tank", "MeleeDPS", "MeleeDPS" },
+    DEMONHUNTER = { "MeleeDPS", "Tank" },
+    DRUID = { "CasterDPS", "MeleeDPS", "Tank", "Healer" },
     HUNTER = "MeleeDPS",
     MAGE = "CasterDPS",
-    MONK = {"Tank", "Healer", "MeleeDPS"},
-    PALADIN = {"Healer", "Tank", "MeleeDPS"},
-    PRIEST = {"Healer", "Healer", "CasterDPS"},
+    MONK = { "Tank", "Healer", "MeleeDPS" },
+    PALADIN = { "Healer", "Tank", "MeleeDPS" },
+    PRIEST = { "Healer", "Healer", "CasterDPS" },
     ROGUE = "MeleeDPS",
-    SHAMAN = {"CasterDPS", "MeleeDPS", "Healer"},
+    SHAMAN = { "CasterDPS", "MeleeDPS", "Healer" },
     WARLOCK = "CasterDPS",
-    WARRIOR = {"MeleeDPS", "MeleeDPS", "Tank"}
+    WARRIOR = { "MeleeDPS", "MeleeDPS", "Tank" },
+    EVOKER = { "CasterDPS", "Healer" }
 }
 
 function NI:SetupSpecProfiles()
@@ -83,25 +75,22 @@ function NI:SetupSpecProfiles()
                 self:NameplateSetup()
                 self:NihilistzscheUISetup(true)
                 for addon, func in pairs(self.ElvUIModifiers) do
-                    if COMP.IsAddOnEnabled(addon) then
-                        func(self, true)
-                    end
+                    if COMP.IsAddOnEnabled(addon) then func(self, true) end
                 end
                 seenRole[role] = true
             end
         end
-        _G.ElvDB.namespaces["LibDualSpec-1.0"].char[self.baseProfile] = {enabled = true}
+        _G.ElvDB.namespaces["LibDualSpec-1.0"].char[self.baseProfile] = { enabled = true }
         for i, role in ipairs(tbl) do
-            _G.ElvDB.namespaces["LibDualSpec-1.0"].char[self.baseProfile][i] =
-                self.currentLocalizedClass .. " - " .. role
+            _G.ElvDB.namespaces["LibDualSpec-1.0"].char[self.baseProfile][i] = self.currentLocalizedClass
+                .. " - "
+                .. role
         end
     end
 end
 
 function NI:ColorBase(settings)
-    if (not settings or type(settings) ~= "table") then
-        settings = {mod = E.noop, alpha = false, keyStyle = "key"}
-    end
+    if not settings or type(settings) ~= "table" then settings = { mod = E.noop, alpha = false, keyStyle = "key" } end
 
     local includeAlpha = settings.alpha
     local classColor = self.classColor
@@ -110,16 +99,12 @@ function NI:ColorBase(settings)
         r, g, b = settings.mod(r), settings.mod(g), settings.mod(b)
     end
     if not settings.keyStyle or settings.keyStyle == "key" then
-        local out = {r = r, g = g, b = b}
-        if includeAlpha then
-            out.a = 1
-        end
+        local out = { r = r, g = g, b = b }
+        if includeAlpha then out.a = 1 end
         return out
     else
-        local out = {r, g, b}
-        if includeAlpha then
-            tinsert(out, 1)
-        end
+        local out = { r, g, b }
+        if includeAlpha then tinsert(out, 1) end
         return out
     end
 end
@@ -128,7 +113,7 @@ function NI:Color(includeAlpha)
     local settings = {
         mod = E.noop,
         alpha = includeAlpha == true,
-        keyStyle = "key"
+        keyStyle = "key",
     }
     return self:ColorBase(settings)
 end
@@ -137,7 +122,7 @@ function NI:ModColor(modFunc, includeAlpha)
     local settings = {
         mod = modFunc,
         alpha = includeAlpha == true,
-        keyStyle = "key"
+        keyStyle = "key",
     }
     return self:ColorBase(settings)
 end
@@ -146,7 +131,7 @@ function NI:IColor(includeAlpha)
     local settings = {
         mod = E.noop,
         alpha = includeAlpha == true,
-        keyStyle = "index"
+        keyStyle = "index",
     }
     return self:ColorBase(settings)
 end
@@ -165,20 +150,18 @@ function NI:RegisterAddOnInstaller(addonName, func, overrideName, characterSpeci
         self.CharacterSpecificAddOnFunctions[addonName] = func
     end
     self.InstalledAddOnSet[string.lower(addonName)] = addonName
-    if (overrideName and type(overrideName) == "string") then
+    if overrideName and type(overrideName) == "string" then
         self.InstalledAddOnOverrideNames[string.lower(addonName)] = overrideName
-    elseif (overrideName and type(overrideName) == "boolean") then
+    elseif overrideName and type(overrideName) == "boolean" then
         NI.ElvUIModifiers[addonName] = func
     end
 end
 
-function NI:RegisterGlobalAddOnInstaller(addonName, func)
-    self.GlobalAddOnSetupFunctions[addonName] = func
-end
+function NI:RegisterGlobalAddOnInstaller(addonName, func) self.GlobalAddOnSetupFunctions[addonName] = func end
 
 function NI:RunGlobalAddOnInstallers()
     for addon, setupFunc in pairs(self.GlobalAddOnSetupFunctions) do
-        if (COMP.IsAddOnEnabled(addon)) then
+        if COMP.IsAddOnEnabled(addon) then
             LoadAddOn(addon)
             setupFunc(self)
         end
@@ -187,7 +170,7 @@ end
 
 function NI:RunAddOnInstallers()
     for addon, setupFunc in pairs(self.AddOnSetupFunctions) do
-        if (COMP.IsAddOnEnabled(addon)) then
+        if COMP.IsAddOnEnabled(addon) then
             LoadAddOn(addon)
             setupFunc(self)
         end
@@ -204,13 +187,9 @@ function NI:RunCharacterSpecificAddOnInstallers()
 end
 
 function NI:CharacterSpecificSetup(realm, name)
-    if (not NI.HasCharacterSpecificSetup) then
-        return
-    end
-    if (NI.HasCharacterSpecificSetup[realm]) then
-        if (NI.HasCharacterSpecificSetup[realm][name]) then
-            self[NI.HasCharacterSpecificSetup[realm][name]](self)
-        end
+    if not NI.HasCharacterSpecificSetup then return end
+    if NI.HasCharacterSpecificSetup[realm] then
+        if NI.HasCharacterSpecificSetup[realm][name] then self[NI.HasCharacterSpecificSetup[realm][name]](self) end
     end
 end
 
@@ -218,9 +197,7 @@ function NI:GetInstalledAddOnSet()
     local addons = {}
 
     for addon, addonName in pairs(self.InstalledAddOnSet) do
-        if (COMP.IsAddOnEnabled(addonName)) then
-            tinsert(addons, addon)
-        end
+        if COMP.IsAddOnEnabled(addonName) then tinsert(addons, addon) end
     end
 
     return addons
@@ -228,106 +205,85 @@ end
 
 function NI.AreInstalledAddOnsEqual(installedAddOnSetA, installedAddOnSetB)
     for _, installedAddOn in ipairs(installedAddOnSetA) do
-        if (not tContains(installedAddOnSetB, installedAddOn)) then
-            return false
-        end
+        if not tContains(installedAddOnSetB, installedAddOn) then print("Missing ",installedAddOn, " from B set.") return false end
     end
 
     for _, installedAddOn in ipairs(installedAddOnSetB) do
-        if (not tContains(installedAddOnSetA, installedAddOn)) then
-            return false
-        end
+        if not tContains(installedAddOnSetA, installedAddOn) then print("Missing ", installedAddOn, " from a set.")return false end
     end
 
     return true
 end
 
 function NI:ShouldInstall()
-    if _G.NUIIDB and _G.NUIIDB.skipped then
-        return false
-    end
+    if _G.NUIIDB and _G.NUIIDB.skipped then return false end
 
     local tbl = _G.NUIIDB.installInfo
 
-    if not tbl then
-        return true
-    end
+    if not tbl then print("No install info table.") return true end
 
     local currentInstalledAddOnSet = self:GetInstalledAddOnSet()
 
     local prevInstalledAddOnSet = tbl.installedAddons or {}
 
-    if (tbl.version < NI.GetInstallVersion() or tbl.installerBuild < NI.GetInstallBuild()) then
-        return true
-    end
+    if tbl.version < NI.GetInstallVersion() or tbl.installerBuild < NI.GetInstallBuild() then return true end
 
-    if (not self.AreInstalledAddOnsEqual(currentInstalledAddOnSet, prevInstalledAddOnSet)) then
-        return true
-    end
+    --if not self.AreInstalledAddOnsEqual(currentInstalledAddOnSet, prevInstalledAddOnSet) then return true end
 
     if self.db.texture == G.nihilistzscheui.installer.texture and self.db.font == G.nihilistzscheui.installer.font then
         return false
     end
 
-    if (not tbl.installerDetails) then
-        return true
-    end
+    if not tbl.installerDetails then return true end
 
-    if tbl.installerDetails.texture ~= self.db.texture or tbl.installerDetails.font ~= self.db.font then
-        return true
-    end
+    if tbl.installerDetails.texture ~= self.db.texture or tbl.installerDetails.font ~= self.db.font then return true end
 
     local isSpecProfileClass = type(self.ClassSpecProfiles[E.myclass]) == "table"
 
     local specProfileTbl
     if
-        not NUI.Lulupeep and
-            (_G.ElvDB.namespaces and _G.ElvDB.namespaces["LibDualSpec-1.0"] and
-                _G.ElvDB.namespaces["LibDualSpec-1.0"].char)
-     then
+        not NUI.Lulupeep
+        and (
+            _G.ElvDB.namespaces
+            and _G.ElvDB.namespaces["LibDualSpec-1.0"]
+            and _G.ElvDB.namespaces["LibDualSpec-1.0"].char
+        )
+    then
         specProfileTbl = _G.ElvDB.namespaces["LibDualSpec-1.0"].char[self.baseProfile]
     end
 
     if isSpecProfileClass then
-        if not specProfileTbl then
-            return not NUI.Lulupeep
-        end
-        if not specProfileTbl.enabled then
-            return true
-        end
+        if not specProfileTbl then return not NUI.Lulupeep end
+        if not specProfileTbl.enabled then return true end
         local profileBase = E.myLocalizedClass .. " - "
-        for i = 1, #(NI.ClassSpecProfiles[E.myclass]) do
-            if (specProfileTbl[i] ~= profileBase .. NI.ClassSpecProfiles[E.myclass][i]) then
-                return true
-            end
+        for i = 1, #NI.ClassSpecProfiles[E.myclass] do
+            if specProfileTbl[i] ~= profileBase .. NI.ClassSpecProfiles[E.myclass][i] then return true end
         end
         return false
     end
 
-    if _G.ElvDB.profileKeys[self.baseProfile] ~= self.baseProfileKey then
-        return true
-    end
+    if _G.ElvDB.profileKeys[self.baseProfile] ~= self.baseProfileKey then return true end
 
     return false
 end
 
 function NI:SaveInstallerVersion(skipping)
     wipe(_G.NUIIDB)
-    if (skipping) then
+    if skipping then
         _G.NUIIDB.skipped = true
     else
-        _G.NUIIDB.installInfo = {version = self.GetInstallVersion(), installerBuild = self.GetInstallBuild()}
+        _G.NUIIDB.installInfo = { version = self.GetInstallVersion(), installerBuild = self.GetInstallBuild() }
     end
 end
 
 function NI:SaveInstallerDetails()
-    _G.NUIIDB.installInfo.installerDetails = {texture = self.db.texture, font = self.db.font}
+    _G.NUIIDB.installInfo.installerDetails = { texture = self.db.texture, font = self.db.font }
 end
 
 NI.savedPluginTables = {}
 
 function NI:SaveInstallTable(tbl)
-    if (not self.savedPluginTables[tbl]) then
+    if not self.savedPluginTables[tbl] then
         self.savedPluginTables[tbl] = tbl.installTable
         tbl.installTable = nil
     end
@@ -426,7 +382,7 @@ function NI.BaseElvUISetup()
         "ACHIEVEMENT",
         "GUILD_ACHIEVEMENT",
         "BN_WHISPER",
-        "BN_INLINE_TOAST_ALERT"
+        "BN_INLINE_TOAST_ALERT",
     }
     ChatFrame_RemoveAllMessageGroups(_G.ChatFrame1)
     for _, v in ipairs(chatGroup) do
@@ -434,7 +390,7 @@ function NI.BaseElvUISetup()
     end
 
     -- keys taken from `ChatTypeGroup` which weren't added above to ChatFrame1
-    chatGroup = {"COMBAT_XP_GAIN", "COMBAT_HONOR_GAIN", "COMBAT_FACTION_CHANGE", "SKILL", "LOOT", "CURRENCY", "MONEY"}
+    chatGroup = { "COMBAT_XP_GAIN", "COMBAT_HONOR_GAIN", "COMBAT_FACTION_CHANGE", "SKILL", "LOOT", "CURRENCY", "MONEY" }
     ChatFrame_RemoveAllMessageGroups(_G.ChatFrame3)
     for _, v in ipairs(chatGroup) do
         ChatFrame_AddMessageGroup(_G.ChatFrame3, v)
@@ -461,7 +417,7 @@ function NI.BaseElvUISetup()
         "OFFICER",
         "ACHIEVEMENT",
         "GUILD_ACHIEVEMENT",
-        "COMMUNITIES_CHANNEL"
+        "COMMUNITIES_CHANNEL",
     }
     for i = 1, _G.MAX_WOW_CHAT_CHANNELS do
         tinsert(chatGroup, "CHANNEL" .. i)
@@ -477,13 +433,9 @@ function NI.BaseElvUISetup()
 
     if E.Chat then
         E.Chat:PositionChats()
-        if E.db.RightChatPanelFaded then
-            _G.RightChatToggleButton:Click()
-        end
+        if E.db.RightChatPanelFaded then _G.RightChatToggleButton:Click() end
 
-        if E.db.LeftChatPanelFaded then
-            _G.LeftChatToggleButton:Click()
-        end
+        if E.db.LeftChatPanelFaded then _G.LeftChatToggleButton:Click() end
     end
     -- SetCVars
     SetCVar("statusTextDisplay", "BOTH")
@@ -503,13 +455,13 @@ function NI.BaseElvUISetup()
 
     NP:CVarReset()
 
-    _G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:SetValue("SHIFT")
-    _G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:RefreshValue()
+    --_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:SetValue("SHIFT")
+    --_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:RefreshValue()
 
     E:SetupTheme("class", true)
 
     if not NUIIDB.uiScaleSet then
-        E.global.general.UIScale = E:PixelBestSize()
+        E.global.general.UIScale = 0.64
         NUIIDB.uiScaleSet = true
     end
     E:PixelScaleChanged()

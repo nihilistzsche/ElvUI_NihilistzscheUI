@@ -29,12 +29,10 @@ function VUF:ConstructTargetFrame(frame, unit)
 
     frame.colors = _G.ElvUF.colors
 
-    frame.OnFirstUpdateFinish = function()
-        frame:SetAlpha(self.db.alpha)
-    end
+    frame.OnFirstUpdateFinish = function() frame:SetAlpha(self.db.alpha) end
 
     frame:Point("LEFT", E.UIParent, "CENTER", 275, 0) --Set to default position
-    E:CreateMover(frame, frame:GetName() .. "Mover", "Target Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTUI")
+    E:CreateMover(frame, frame:GetName() .. "Mover", "Target Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
 end
 
 VUF:RegisterUnit("target")

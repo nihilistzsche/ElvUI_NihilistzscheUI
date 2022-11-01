@@ -4,7 +4,7 @@ local VUF = NUI.VerticalUnitFrames
 function VUF:ConstructGCD(frame)
     self:AddElement(frame, "gcd")
     local GCD = self:ConstructStatusBar(frame, "gcd")
-    GCD:SetStatusBarColor(.8, .8, .8, 0)
+    GCD:SetStatusBarColor(0.8, 0.8, 0.8, 0)
     GCD:SetAlpha(1)
     GCD:SetOrientation("VERTICAL")
     GCD:SetFrameStrata(frame.Power:GetFrameStrata())

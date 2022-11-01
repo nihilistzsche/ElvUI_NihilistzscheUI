@@ -10,13 +10,11 @@ local QuestMapFrame = _G.QuestMapFrame
 local CreateFrame = _G.CreateFrame
 
 function NM.UpdateQuestMapFrame()
-    if (COMP.QG or COMP.CQL) then
+    if COMP.QG or COMP.CQL then
         WorldMapFrame.SidePanelToggle.OpenButton:Hide()
-        WorldMapFrame.SidePanelToggle.OpenButton.Show = function()
-        end
+        WorldMapFrame.SidePanelToggle.OpenButton.Show = function() end
         WorldMapFrameTitleText:SetText("World Map")
-        WorldMapFrameTitleText.SetText = function()
-        end
+        WorldMapFrameTitleText.SetText = function() end
     else
         local frame = CreateFrame("Frame", nil, QuestMapFrame)
         QuestMapFrame.QuestCountFrame = frame
@@ -33,13 +31,10 @@ function NM.UpdateQuestMapFrame()
         local str = "%d / 25 Quests"
         frame.text:SetFormattedText(str, select(2, C_QuestLog.GetNumQuestLogEntries()))
 
-        frame:SetScript(
-            "OnEvent",
-            function()
-                local _, quests = C_QuestLog.GetNumQuestLogEntries()
+        frame:SetScript("OnEvent", function()
+            local _, quests = C_QuestLog.GetNumQuestLogEntries()
 
-                frame.text:SetFormattedText(str, quests)
-            end
-        )
+            frame.text:SetFormattedText(str, quests)
+        end)
     end
 end

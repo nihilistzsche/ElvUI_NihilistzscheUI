@@ -1,8 +1,6 @@
 local NUI = _G.unpack(select(2, ...))
 local COMP = NUI.Compatibility
-if (not COMP.AS) then
-    return
-end
+if not COMP.AS then return end
 
 local AS = _G.unpack(_G.AddOnSkins)
 local SASX = NUI.NihilistzscheUIAddOnSkinExtension
@@ -17,7 +15,7 @@ function SASX.HideBloodShieldTracker()
         _G.BloodShieldTracker_PurgatoryBar,
         _G.BloodShieldTracker_PWSBar,
         _G.BloodShieldTracker_ShieldBar,
-        _G.BloodShieldTracker_TotalAbsorbsBar
+        _G.BloodShieldTracker_TotalAbsorbsBar,
     }
 
     for _, bar in pairs(Bars) do

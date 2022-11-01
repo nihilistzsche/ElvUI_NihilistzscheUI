@@ -60,9 +60,7 @@ end
 function PXP:UpdateBar(bar)
     local guid = bar.guid
     local data = self:GetDataForPartyMember(guid)
-    if (not data) then
-        return
-    end
+    if not data then return end
 
     bar:SetMinMaxValues(0, data.max)
     bar:SetValue(data.current)
@@ -72,7 +70,7 @@ function PXP:UpdateBar(bar)
     rbar:SetValue(min(data.current + data.rested), data.max)
 
     NT:Tag(bar.ctKey, self.db.tag)
-    if (not data.qxp) then
+    if not data.qxp then
         bar.questbar:Hide()
         return
     end
@@ -82,7 +80,7 @@ function PXP:UpdateBar(bar)
 
     qbar:SetMinMaxValues(0, data.max)
     qbar:SetValue(min(data.max, cq))
-    if (cq >= data.max) then
+    if cq >= data.max then
         qbar:SetStatusBarColor(0.2, 0.6, 0.2, 0.8)
     else
         qbar:SetStatusBarColor(1.0, 1.0, 0.2, 0.4)
@@ -91,9 +89,7 @@ function PXP:UpdateBar(bar)
 end
 
 function PXP:RecycleBar(bar)
-    if (not self.barCache) then
-        self.barCache = {}
-    end
+    if not self.barCache then self.barCache = {} end
     bar:Hide()
     tinsert(self.barCache, bar)
     tremove(self.bars, tInvert(self.bars)[bar])
@@ -101,9 +97,7 @@ end
 
 function PXP:GetBarForPartyMember(guid)
     for _, bar in ipairs(self.bars) do
-        if (bar.guid == guid) then
-            return bar
-        end
+        if bar.guid == guid then return bar end
     end
 end
 
@@ -115,14 +109,10 @@ function PXP.GetPartyMemberGUIDFromName(name)
     else
         n = name
     end
-    if (r == E.myrealm) then
-        r = ""
-    end
+    if r == E.myrealm then r = "" end
     for i = 1, GetNumGroupMembers() do
         local _n, _r = UnitName("party" .. i)
-        if n == _n and r == _r then
-            return UnitGUID("party" .. i)
-        end
+        if n == _n and r == _r then return UnitGUID("party" .. i) end
     end
     return nil
 end
@@ -135,22 +125,16 @@ function PXP.GetPartyMemberIndex(name)
     else
         n = name
     end
-    if (r == E.myrealm) then
-        r = ""
-    end
+    if r == E.myrealm then r = "" end
     for i = 1, GetNumGroupMembers() do
         local _n, _r = UnitName("party" .. i)
-        if n == _n and r == _r then
-            return "party" .. i
-        end
+        if n == _n and r == _r then return "party" .. i end
     end
     return nil
 end
 
 function PXP:Update()
-    if not self.db.enabled then
-        return
-    end
+    if not self.db.enabled then return end
     for i = 1, GetNumSubgroupMembers() do
         local guid = UnitGUID("party" .. i)
         local data = self:GetDataForPartyMember(guid)
@@ -159,12 +143,10 @@ function PXP:Update()
             -- luacheck: no max line length
             if (data.level == GetMaxLevelForPlayerExpansion() or data.disabled) and self:GetBarForPartyMember(guid) then
                 local bar = self:GetBarForPartyMember(guid)
-                if (bar) then
-                    self:RecycleBar(bar)
-                end
+                if bar then self:RecycleBar(bar) end
             else
                 local bar = self:GetBarForPartyMember(guid)
-                if (not bar) then
+                if not bar then
                     bar = self:CreateBar()
                     tinsert(self.bars, bar)
                 end
@@ -185,9 +167,7 @@ function PXP:Update()
         end
     end
 
-    local function sortBars(barA, barB)
-        return barA.guid < barB.guid
-    end
+    local function sortBars(barA, barB) return barA.guid < barB.guid end
 
     table.sort(self.bars, sortBars)
 
@@ -207,16 +187,12 @@ local ctKeyID = 1
 
 function PXP:CreateBar()
     local bar = self.barCache and tremove(self.barCache) or nil
-    if (bar) then
-        return
-    end
+    if bar then return end
 
     bar = CreateFrame("StatusBar", nil, _G.NihilistzscheUI_PartyXPHolder, "BackdropTemplate")
     bar:SetSize(_G.NihilistzscheUI_PartyXPHolder:GetSize())
     bar:CreateBackdrop("Transparent")
-    if (COMP.MERS) then
-        bar:Styling()
-    end
+    if COMP.MERS then bar:Styling() end
 
     bar:SetStatusBarTexture(LSM:Fetch("statusbar", self.db.texture))
     if ES then
@@ -267,7 +243,7 @@ function PXP.ShowBar(bar)
 end
 
 function PXP:Enable()
-    if (self.db.enabled) then
+    if self.db.enabled then
         self:RegisterEvents()
         self.Message()
         self:Update()
@@ -301,7 +277,7 @@ function PXP:Initialize()
         nil,
         nil,
         nil,
-        "GENERAL,ALL,NIHILISTUI"
+        "GENERAL,ALL,NIHILISTZSCHEUI"
     )
 
     self.frame = frame

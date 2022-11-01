@@ -21,24 +21,18 @@ local styles = {
     TONEXT = "%s",
     BUBBLES = "%s",
     PERCENT = "%s%%",
-    RESTED = "%s"
+    RESTED = "%s",
 }
 
 function CDB:GetFormattedText(style, min, max, rested)
-    if (not styles[style] or not min) then
-        return
-    end
+    if not styles[style] or not min then return end
 
-    if max == 0 then
-        max = 1
-    end
+    if max == 0 then max = 1 end
 
     local useStyle = styles[style]
 
     local percentValue
-    if max ~= nil then
-        percentValue = floor(min / max * 100)
-    end
+    if max ~= nil then percentValue = floor(min / max * 100) end
 
     if style == "TONEXT" then
         local deficit = max - min
@@ -48,9 +42,9 @@ function CDB:GetFormattedText(style, min, max, rested)
             return string.format(useStyle, deficit)
         end
     elseif
-        style == "CURRENT" or
-            ((style == "CURRENT_MAX" or style == "CURRENT_MAX_PERCENT" or style == "CURRENT_PERCENT") and min == max)
-     then
+        style == "CURRENT"
+        or ((style == "CURRENT_MAX" or style == "CURRENT_MAX_PERCENT" or style == "CURRENT_PERCENT") and min == max)
+    then
         return string.format(styles.CURRENT, min)
     elseif style == "CURRENT_MAX" then
         return string.format(useStyle, min, max)
@@ -59,11 +53,15 @@ function CDB:GetFormattedText(style, min, max, rested)
     elseif style == "CURRENT_MAX_PERCENT" then
         return string.format(useStyle, min, max, percentValue)
     elseif
-        style == "CURRENT_RESTED" or
-            ((style == "CURRENT_MAX_RESTED" or style == "CURRENT_MAX_PERCENT_RESTED" or
-                style == "CURRENT_PERCENT_RESTED") and
-                min == max)
-     then
+        style == "CURRENT_RESTED"
+        or (
+            (
+                style == "CURRENT_MAX_RESTED"
+                or style == "CURRENT_MAX_PERCENT_RESTED"
+                or style == "CURRENT_PERCENT_RESTED"
+            ) and min == max
+        )
+    then
         return string.format(styles.CURRENT_RESTED, min, rested)
     elseif style == "CURRENT_MAX_RESTED" then
         return string.format(useStyle, min, max, rested)
@@ -75,9 +73,7 @@ function CDB:GetFormattedText(style, min, max, rested)
         local bubbles = floor(20 * (max - min) / max)
         return string.format(useStyle, bubbles)
     elseif style == "RESTED" then
-        if not rested then
-            rested = 0
-        end
+        if not rested then rested = 0 end
         return string.format(useStyle, rested)
     elseif style == "PERCENT" then
         return string.format(useStyle, percentValue)
@@ -89,19 +85,12 @@ function CDB:RegisterDataBar(key, frame)
     NT:RegisterFontString(key, frame.text)
 end
 
-function CDB:UpdateTag(frameKey)
-    NT:Tag(frameKey, E.db.databars[frameKey].tag)
-end
+function CDB:UpdateTag(frameKey) NT:Tag(frameKey, E.db.databars[frameKey].tag) end
 
 function CDB:Initialize()
     CDB.currQexperience = NUI:GetCurrentQuestXP()
 
-    NT:RegisterTag(
-        "name",
-        function()
-            return UnitName("player")
-        end
-    )
+    NT:RegisterTag("name", function() return UnitName("player") end)
 
     self.RegisterExperienceTags()
     self.RegisterRepTags()

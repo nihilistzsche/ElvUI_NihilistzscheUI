@@ -16,19 +16,11 @@ function NC:InitializeChatSystem()
 
     local tabFrame = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")
     tabFrame:Point("CENTER", E.UIParent, "CENTER", 300, 300)
-    tabFrame:SetScript(
-        "OnDragStart",
-        function(self)
-            self:SetUserPlaced(true)
-            self:StartMoving()
-        end
-    )
-    tabFrame:SetScript(
-        "OnDragStop",
-        function(self)
-            self:StopMovingOrSizing()
-        end
-    )
+    tabFrame:SetScript("OnDragStart", function(self)
+        self:SetUserPlaced(true)
+        self:StartMoving()
+    end)
+    tabFrame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
     tabFrame:CreateBackdrop("Transparent")
     tabFrame:EnableMouse(true)
     tabFrame:SetMovable(true)
@@ -36,20 +28,16 @@ function NC:InitializeChatSystem()
 
     tabFrame:CreateShadow()
     ES:RegisterFrameShadows(tabFrame)
-    if (COMP.BUI) then
+    if COMP.BUI then
         tabFrame:BuiStyle("Outside")
         local BFM = _G.ElvUI_BenikUI[1].FlightMode
-        hooksecurefunc(
-            BFM,
-            "SetFlightMode",
-            function(self, status)
-                if (status) then
-                    tabFrame:SetParent(self.FlightMode)
-                else
-                    tabFrame:SetParent(E.UIParent)
-                end
+        hooksecurefunc(BFM, "SetFlightMode", function(self, status)
+            if status then
+                tabFrame:SetParent(self.FlightMode)
+            else
+                tabFrame:SetParent(E.UIParent)
             end
-        )
+        end)
     end
     self.tabFrame = tabFrame
     self.tabs = {}
@@ -58,7 +46,7 @@ function NC:InitializeChatSystem()
 end
 
 function NC:AcquireTab(chat)
-    if (#self.tabPool > 0) then
+    if #self.tabPool > 0 then
         local tab = tremove(self.tabPool)
         self.tabs[chat] = tab
     else
@@ -68,7 +56,7 @@ end
 
 function NC:ReleaseTab(chat)
     local tab = self.tabs[chat]
-    if (tab) then
+    if tab then
         tab:Hide()
         self.tabs[chat] = nil
         tinsert(self.tabPool, tab)
@@ -76,20 +64,13 @@ function NC:ReleaseTab(chat)
 end
 
 function NC:CreateTab(chat)
-    if (self.tabs[chat]) then
-        return
-    end
+    if self.tabs[chat] then return end
     local tab = CreateFrame("Button", nil, self.tabFrame, "BackdropTemplate")
     tab:SetTemplate("Transparent")
     tab:Size(64, 24)
     tab:SetText(chat.tabName)
     tab:Show()
-    tab:SetScript(
-        "OnClick",
-        function(self, button, down)
-            NC:ClickTab(self, not self.shown)
-        end
-    )
+    tab:SetScript("OnClick", function(self, button, down) NC:ClickTab(self, not self.shown) end)
     local fs = tab:CreateFontString(nil, "OVERLAY")
     fs:FontTemplate()
     fs:Size(60, 24)
@@ -106,33 +87,27 @@ function NC:CreateTab(chat)
 end
 
 function NC:ShowTab(chat)
-    if (not self.tabs[chat]) then
-        return
-    end
-    if (not self.tabs[chat].forceHidden) then
-        self.tabs[chat]:Show()
-    end
+    if not self.tabs[chat] then return end
+    if not self.tabs[chat].forceHidden then self.tabs[chat]:Show() end
     self:UpdateTabs()
 end
 
 function NC:HideTab(chat)
-    if (not self.tabs[chat]) then
-        return
-    end
+    if not self.tabs[chat] then return end
     self.tabs[chat]:Hide()
     self:UpdateTabs()
 end
 
 function NC:ClickTab(btn)
     local chat = tInvert(self.tabs)[btn]
-    if (chat) then
+    if chat then
         chat:Show()
         chat.active = true
         btn.Flash:SetScript("OnUpdate", nil)
         btn:SetTemplate("Transparent")
         self:StopFlash(btn.Flash)
         for k, v in pairs(self.tabs) do
-            if (k ~= chat) then
+            if k ~= chat then
                 k:Hide()
                 v:SetTemplate("Transparent")
                 k.active = false
@@ -142,9 +117,7 @@ function NC:ClickTab(btn)
 end
 
 function NC:UpdateTab(chat, text)
-    if (not self.tabs[chat]) then
-        return
-    end
+    if not self.tabs[chat] then return end
     self.tabs[chat].text:SetText(text)
 end
 
@@ -155,7 +128,7 @@ function NC:UpdateTabs()
     local tabs = {}
     local forceHiddenTab
     for chat, tab in pairs(self.tabs) do
-        if (tab:IsShown() or (not chat.minimized and tab.forceHidden)) then
+        if tab:IsShown() or (not chat.minimized and tab.forceHidden) then
             shownTabs = true
             tab:ClearAllPoints()
             if i == 1 then
@@ -163,33 +136,27 @@ function NC:UpdateTabs()
             else
                 tab:SetPoint("LEFT", tabs[i - 1], "RIGHT", 4, 0)
             end
-            if chat.active then
-                foundActiveTab = true
-            end
-            if (tab.forceHidden) then
-                forceHiddenTab = tab
-            end
+            if chat.active then foundActiveTab = true end
+            if tab.forceHidden then forceHiddenTab = tab end
             tinsert(tabs, tab)
             i = i + 1
         end
     end
 
-    if (shownTabs) then
-        if (not foundActiveTab) then
-            self:ClickTab(tabs[1])
-        end
+    if shownTabs then
+        if not foundActiveTab then self:ClickTab(tabs[1]) end
         local defaultWidth = NC.db.windows.width
         local tabWidth = ((i - 1) * 64) + ((i - 2) * 4) + 8
 
         local width = tabWidth > defaultWidth and tabWidth + 4 or defaultWidth + 4
         self.tabFrame:Size(width, NC.db.windows.height + 70)
-        if (#tabs == 1) then
+        if #tabs == 1 then
             local chat = tInvert(self.tabs)[tabs[1]]
             chat:SetPoint("TOPLEFT", self.tabFrame, "TOPLEFT")
             self.tabFrame:Size(defaultWidth, NC.db.windows.height + 46)
             tabs[1]:Hide()
             tabs[1].forceHidden = true
-        elseif (forceHiddenTab) then
+        elseif forceHiddenTab then
             forceHiddenTab:Show()
             local chat = tInvert(self.tabs)[forceHiddenTab]
             chat:SetPoint("TOPLEFT", self.tabFrame, "TOPLEFT", 0, -24)
@@ -199,9 +166,7 @@ function NC:UpdateTabs()
     self.tabFrame:SetShown(shownTabs)
 end
 
-function NC:GetDefaultEditBox()
-    return FCFDock_GetSelectedWindow(GENERAL_CHAT_DOCK).editBox
-end
+function NC:GetDefaultEditBox() return FCFDock_GetSelectedWindow(GENERAL_CHAT_DOCK).editBox end
 
 function NC:UpdateDockedWindows()
     for key, chat in ipairs(self.dockedWindows) do
@@ -222,7 +187,7 @@ function NC:SetMinimized(chat)
     ChatEdit_DeactivateChat(self:GetDefaultEditBox())
     chat.editBox:SetFrameStrata("LOW")
     local point, relativeTo, relativePoint, xOfs, yOfs = chat:GetPoint()
-    chat.point = {point, relativeTo, relativePoint, xOfs, yOfs}
+    chat.point = { point, relativeTo, relativePoint, xOfs, yOfs }
     self.forcedEdit = false
     chat:Size(E:Scale(4), E:Scale(1))
     chat.Bottom:Hide()
@@ -257,9 +222,7 @@ function NC:SetMaximized(chat)
     chat.Name:SetAlpha(1)
     chat.DockedName:SetAlpha(0)
 
-    if not self.db.windows.showtitle then
-        chat.Name:SetAlpha(0)
-    end
+    if not self.db.windows.showtitle then chat.Name:SetAlpha(0) end
 
     chat.minimized = false
 
@@ -272,13 +235,11 @@ function NC:SetMaximized(chat)
 
     self:UpdateDockedWindows()
 
-    if (not self.tabs[chat].forceHidden) then
-        self:ShowTab(chat)
-    end
+    if not self.tabs[chat].forceHidden then self:ShowTab(chat) end
     self:UpdateTabs()
 
     chat:ClearAllPoints()
-    if (self.tabs[chat].forceHidden) then
+    if self.tabs[chat].forceHidden then
         chat:SetPoint("TOPLEFT", self.tabFrame, "TOPLEFT")
     else
         chat:SetPoint("TOPLEFT", self.tabFrame, "TOPLEFT", 0, -24)
@@ -320,7 +281,7 @@ function NC:OnEnterPressed(editBox) -- Add messages to the text
     editBox.Backdrop:SetBackdropBorderColor(0, 0, 0)
     editBox.Backdrop:Hide()
 
-    if (message == "" or message == " ") then
+    if message == "" or message == " " then
         ChatEdit_DeactivateChat(editBox)
         ChatEdit_ActivateChat(self:GetDefaultEditBox())
         ChatEdit_DeactivateChat(self:GetDefaultEditBox()) -- Hide it
@@ -328,7 +289,7 @@ function NC:OnEnterPressed(editBox) -- Add messages to the text
         return false
     end
 
-    if (chatType == "BN_WHISPER") then -- BNet
+    if chatType == "BN_WHISPER" then -- BNet
         local id = BNet_GetBNetIDAccount(chatTarget)
 
         if id then
@@ -339,7 +300,7 @@ function NC:OnEnterPressed(editBox) -- Add messages to the text
     else
         SendChatMessage(message, chatType, nil, chatTarget)
         editBox:SetText("")
-        if (chatType ~= editBox:GetAttribute("stickType")) then
+        if chatType ~= editBox:GetAttribute("stickType") then
             editBox:SetAttribute("chatType", editBox:GetAttribute("stickyType"))
         end
         return true
@@ -347,7 +308,7 @@ function NC:OnEnterPressed(editBox) -- Add messages to the text
 end
 
 function NC:AcquireChat(chatType, chatTarget)
-    if (#self.chatPool > 0) then
+    if #self.chatPool > 0 then
         local chat = tremove(self.chatPool)
         chat.EditBox.chatType = chatType
         chat.EditBox:SetAttribute("chatType", chatType)
@@ -358,14 +319,9 @@ function NC:AcquireChat(chatType, chatTarget)
         chat.target = chatTarget
         self.chats[chatTarget] = chat
         self:AcquireTab(chat)
-        if (InCombatLockdown()) or (self.db.windows.autohide) then -- Auto minimize incoming msg if in combat
+        if (InCombatLockdown()) or self.db.windows.autohide then -- Auto minimize incoming msg if in combat
             self:SetMinimized(chat)
-            chat.Flash:SetScript(
-                "OnUpdate",
-                function()
-                    self:StartFlash(chat.DockedName, 0.6)
-                end
-            )
+            chat.Flash:SetScript("OnUpdate", function() self:StartFlash(chat.DockedName, 0.6) end)
         else
             self:ShowTab(chat)
             self:UpdateTabs()
@@ -378,7 +334,7 @@ function NC:AcquireChat(chatType, chatTarget)
 end
 
 function NC:ReleaseChat(chat)
-    if (chat) then
+    if chat then
         chat:Hide()
         tinsert(self.chatPool, chat)
         chat.Text:Clear()
@@ -390,17 +346,13 @@ end
 
 function NC:FindChat(chatTarget)
     for k, v in pairs(self.chats) do
-        if k == chatTarget then
-            return v
-        end
+        if k == chatTarget then return v end
     end
 end
 
 function NC:InitNewFrame(chatType, chatTarget)
     local chat = self:FindChat(chatTarget)
-    if chat then
-        return chat
-    end
+    if chat then return chat end
 
     local sendTo = chatTarget
     local chatColor = ChatTypeInfo[chatType]
@@ -422,23 +374,13 @@ function NC:InitNewFrame(chatType, chatTarget)
     chat:EnableMouse(true)
     chat:EnableMouseWheel(true)
     chat:SetScript("OnMouseWheel", NC.OnMouseWheel)
-    chat:SetScript(
-        "OnMouseDown",
-        function(self)
-            NC.tabFrame:SetUserPlaced(true)
-            NC.tabFrame:StartMoving()
-        end
-    )
-    chat:SetScript(
-        "OnMouseUp",
-        function(self)
-            NC.tabFrame:StopMovingOrSizing()
-        end
-    )
+    chat:SetScript("OnMouseDown", function(self)
+        NC.tabFrame:SetUserPlaced(true)
+        NC.tabFrame:StartMoving()
+    end)
+    chat:SetScript("OnMouseUp", function(self) NC.tabFrame:StopMovingOrSizing() end)
 
-    if (COMP.MERS) then
-        chat:Styling()
-    end
+    if COMP.MERS then chat:Styling() end
 
     chat.Flash = CreateFrame("Frame")
 
@@ -446,9 +388,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     top:CreateBackdrop("Transparent")
     top.backdrop:SetAllPoints()
 
-    if (COMP.MERS) then
-        top:Styling()
-    end
+    if COMP.MERS then top:Styling() end
 
     top:Size(self.db.windows.width, 23)
     top:Point("TOP", chat, "TOP")
@@ -461,9 +401,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     bottom:CreateBackdrop("Transparent")
     bottom.backdrop:SetAllPoints()
 
-    if (COMP.MERS) then
-        bottom:Styling()
-    end
+    if COMP.MERS then bottom:Styling() end
 
     bottom:Size(self.db.windows.width, 23)
     bottom:SetPoint("BOTTOM", chat, "BOTTOM")
@@ -494,14 +432,9 @@ function NC:InitNewFrame(chatType, chatTarget)
 
     local invisibleMaximizeButton = CreateFrame("Button")
     invisibleMaximizeButton:SetAllPoints(dockedName)
-    invisibleMaximizeButton:SetScript(
-        "OnClick",
-        function(self, button, down)
-            if chat.minimized then
-                NC:SetMaximized(chat)
-            end
-        end
-    )
+    invisibleMaximizeButton:SetScript("OnClick", function(self, button, down)
+        if chat.minimized then NC:SetMaximized(chat) end
+    end)
 
     chat.InvisibleMaximizeButton = invisibleMaximizeButton
 
@@ -517,16 +450,13 @@ function NC:InitNewFrame(chatType, chatTarget)
     text:SetHyperlinksEnabled(true)
     text:SetScript("OnHyperlinkEnter", MessageWindow_Hyperlink_OnEnter)
     text:SetScript("OnHyperlinkLeave", MessageWindow_Hyperlink_OnLeave)
-    text:SetScript(
-        "OnHyperlinkClick",
-        function(self, link, text, button)
-            if strsub(link, 1, 3) == "url" then
-                NC:URLChatFrame_OnHyperlinkShow(self, link)
-            else
-                SetItemRef(link, text, button, self)
-            end
+    text:SetScript("OnHyperlinkClick", function(self, link, text, button)
+        if strsub(link, 1, 3) == "url" then
+            NC:URLChatFrame_OnHyperlinkShow(self, link)
+        else
+            SetItemRef(link, text, button, self)
         end
-    )
+    end)
 
     chat.Text = text
 
@@ -539,25 +469,10 @@ function NC:InitNewFrame(chatType, chatTarget)
     chat.copybutton.tex:SetInside()
     chat.copybutton.tex:SetTexture([[Interface\AddOns\ElvUI\media\textures\copy.tga]])
 
-    chat.copybutton:SetScript(
-        "OnMouseUp",
-        function(self, btn)
-            NC:CopyChat(chat.Text)
-        end
-    )
+    chat.copybutton:SetScript("OnMouseUp", function(self, btn) NC:CopyChat(chat.Text) end)
 
-    chat.copybutton:SetScript(
-        "OnEnter",
-        function(self)
-            self:SetAlpha(1)
-        end
-    )
-    chat.copybutton:SetScript(
-        "OnLeave",
-        function(self)
-            self:SetAlpha(0)
-        end
-    )
+    chat.copybutton:SetScript("OnEnter", function(self) self:SetAlpha(1) end)
+    chat.copybutton:SetScript("OnLeave", function(self) self:SetAlpha(0) end)
 
     local editBox = CreateFrame("EditBox", nil, chat.Bottom)
     editBox:SetFont(LSM:Fetch("font", self.db.windows.font), 12, "")
@@ -580,56 +495,37 @@ function NC:InitNewFrame(chatType, chatTarget)
 
     ChatFrame_AddPrivateMessageTarget(chat, chatTarget)
 
-    editBox:SetScript(
-        "OnEditFocusGained",
-        function(self)
-            self.Backdrop:SetBackdropBorderColor(chatColor.r, chatColor.g, chatColor.b)
-            self.Backdrop:Show()
-            ACTIVE_CHAT_EDIT_BOX = self
-        end
-    )
+    editBox:SetScript("OnEditFocusGained", function(self)
+        self.Backdrop:SetBackdropBorderColor(chatColor.r, chatColor.g, chatColor.b)
+        self.Backdrop:Show()
+        ACTIVE_CHAT_EDIT_BOX = self
+    end)
 
-    editBox:SetScript(
-        "OnChar",
-        function(self)
-            ChatEdit_ParseText(self, 0)
-        end
-    )
+    editBox:SetScript("OnChar", function(self) ChatEdit_ParseText(self, 0) end)
 
-    editBox:SetScript(
-        "OnMouseDown",
-        function(self)
-            NC.forcedEdit = true
-            self:SetAutoFocus(true)
-            self.Backdrop:SetBackdropBorderColor(chatColor.r, chatColor.g, chatColor.b)
-            self.Backdrop:Show()
-            ACTIVE_CHAT_EDIT_BOX = self
-            CC_LAST_ACTIVE_CHAT_EDIT_BOX = self -- because we picked it ourselves
-        end
-    )
+    editBox:SetScript("OnMouseDown", function(self)
+        NC.forcedEdit = true
+        self:SetAutoFocus(true)
+        self.Backdrop:SetBackdropBorderColor(chatColor.r, chatColor.g, chatColor.b)
+        self.Backdrop:Show()
+        ACTIVE_CHAT_EDIT_BOX = self
+        CC_LAST_ACTIVE_CHAT_EDIT_BOX = self -- because we picked it ourselves
+    end)
 
-    editBox:SetScript(
-        "OnEscapePressed",
-        function(self)
-            self:SetAutoFocus(false)
-            self:ClearFocus()
-            self.Backdrop:SetBackdropBorderColor(0, 0, 0)
-            self.Backdrop:Hide()
-            self:SetText("")
-            LAST_ACTIVE_CHAT_EDIT_BOX = self
-        end
-    )
+    editBox:SetScript("OnEscapePressed", function(self)
+        self:SetAutoFocus(false)
+        self:ClearFocus()
+        self.Backdrop:SetBackdropBorderColor(0, 0, 0)
+        self.Backdrop:Hide()
+        self:SetText("")
+        LAST_ACTIVE_CHAT_EDIT_BOX = self
+    end)
 
-    editBox:SetScript(
-        "OnEnterPressed",
-        function(self)
-            ChatEdit_ParseText(self, 1)
-            local set_active = NC:OnEnterPressed(self)
-            if set_active then
-                LAST_ACTIVE_CHAT_EDIT_BOX = self
-            end
-        end
-    )
+    editBox:SetScript("OnEnterPressed", function(self)
+        ChatEdit_ParseText(self, 1)
+        local set_active = NC:OnEnterPressed(self)
+        if set_active then LAST_ACTIVE_CHAT_EDIT_BOX = self end
+    end)
     chat.EditBox = editBox
     chat.editBox = editBox
 
@@ -655,32 +551,19 @@ function NC:InitNewFrame(chatType, chatTarget)
     closeButton:Point("TOPRIGHT", chat.Top, "TOPRIGHT", E:Scale(-4), E:Scale(-4))
     closeButton:EnableMouse(true)
     closeButton:SetFrameStrata("HIGH")
-    closeButton:SetScript(
-        "OnMouseDown",
-        function()
-            ChatEdit_ActivateChat(NC:GetDefaultEditBox())
-            ChatEdit_DeactivateChat(NC:GetDefaultEditBox())
-            NC.forcedEdit = false
+    closeButton:SetScript("OnMouseDown", function()
+        ChatEdit_ActivateChat(NC:GetDefaultEditBox())
+        ChatEdit_DeactivateChat(NC:GetDefaultEditBox())
+        NC.forcedEdit = false
 
-            NC:ReleaseTab(chat)
-            NC:UpdateTabs()
+        NC:ReleaseTab(chat)
+        NC:UpdateTabs()
 
-            NC:ReleaseChat(chat)
-        end
-    )
+        NC:ReleaseChat(chat)
+    end)
 
-    closeButton:SetScript(
-        "OnEnter",
-        function(self)
-            self.Text:SetTextColor(1, 0, 0)
-        end
-    )
-    closeButton:SetScript(
-        "OnLeave",
-        function(self)
-            self.Text:SetTextColor(1, 1, 1)
-        end
-    )
+    closeButton:SetScript("OnEnter", function(self) self.Text:SetTextColor(1, 0, 0) end)
+    closeButton:SetScript("OnLeave", function(self) self.Text:SetTextColor(1, 1, 1) end)
 
     chat.CloseButton = closeButton
 
@@ -696,29 +579,14 @@ function NC:InitNewFrame(chatType, chatTarget)
     minimizeButton:SetPoint("RIGHT", chat.CloseButton, "LEFT", E:Scale(-3), 0)
     minimizeButton:EnableMouse(true)
     minimizeButton:SetFrameStrata("DIALOG")
-    minimizeButton:SetScript(
-        "OnMouseDown",
-        function()
-            if not chat.minimized then
-                self:SetMinimized(chat)
-            end
-        end
-    )
+    minimizeButton:SetScript("OnMouseDown", function()
+        if not chat.minimized then self:SetMinimized(chat) end
+    end)
 
     chat.MinimizeButton = minimizeButton
 
-    minimizeButton:SetScript(
-        "OnEnter",
-        function(self)
-            self.Text:SetTextColor(1, 0, 0)
-        end
-    )
-    minimizeButton:SetScript(
-        "OnLeave",
-        function(self)
-            self.Text:SetTextColor(1, 1, 1)
-        end
-    )
+    minimizeButton:SetScript("OnEnter", function(self) self.Text:SetTextColor(1, 0, 0) end)
+    minimizeButton:SetScript("OnLeave", function(self) self.Text:SetTextColor(1, 1, 1) end)
 
     local minimizeButtonText = minimizeButton:CreateFontString(nil, "OVERLAY")
     minimizeButtonText:SetFont(LSM:Fetch("font", "ElvUI Pixel"), 12, "MONOCHROMEOUTLINE")
@@ -728,14 +596,9 @@ function NC:InitNewFrame(chatType, chatTarget)
     chat.MinimizeButton.Text = minimizeButtonText
 
     self:AcquireTab(chat)
-    if (InCombatLockdown()) or (self.db.windows.autohide) then -- Auto minimize incoming msg if in combat
+    if (InCombatLockdown()) or self.db.windows.autohide then -- Auto minimize incoming msg if in combat
         self:SetMinimized(chat)
-        chat.Flash:SetScript(
-            "OnUpdate",
-            function()
-                self:StartFlash(chat.DockedName, 0.6)
-            end
-        )
+        chat.Flash:SetScript("OnUpdate", function() self:StartFlash(chat.DockedName, 0.6) end)
     else
         self:ShowTab(chat)
         self:UpdateTabs()

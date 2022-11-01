@@ -9,7 +9,7 @@ local hooksecurefunc = _G.hooksecurefunc
 
 function NM.HookAFK()
     local SS = AFK.AFKMode
-    if (COMP.BUI) then
+    if COMP.BUI then
         SS.bottom.nuilogo = SS.bottom:CreateTexture(nil, "OVERLAY")
         SS.bottom.nuilogo:SetTexture(
             "Interface\\AddOns\\ElvUI_NihilistzscheUI\\media\\textures\\elvui_nihilistzscheui_logo.tga"
@@ -26,14 +26,12 @@ function NM.HookAFK()
     end
 end
 
-if (COMP.SLE and NUI.Private) then
-    local SLE = _G.ElvUI_SLE[1]
+if COMP.SLE and NUI.Private then
+    local SLE = _G["ElvUI_Shadow&Light"][1]
     local SSS = SLE.Screensaver or SLE:GetModule("Screensaver")
 
     local function Setup()
-        if (not E.private.sle.module.screensaver) then
-            return
-        end
+        if not E.private.sle.module.screensaver then return end
         local SS = AFK.AFKMode
         SS.ClassCrest = SS.Top:CreateTexture(nil, "OVERLAY")
         SS.ClassCrest:Size(SSS.db.crest.size, SSS.db.crest.size)

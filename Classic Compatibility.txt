@@ -1,0 +1,9 @@
+Classic Compatibility
+
+The following modules definitely will not work in Classic/Wrath:
+
+Azerite/Honor bars/notifiers
+Toys in the Cooldown bars
+Azerite Power/Mount/Pets Datatexts
+QuestMapFrame misc module most likely
+

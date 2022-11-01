@@ -8,21 +8,17 @@ local BS = NUI.ButtonStyle
 
 function VUF:PostUpdateBar_AuraBars(unit, statusBar, index, position, duration, expiration, debuffType, isStealable)
     local dbUnit = unit
-    if not unit or unit == "vehicle" then
-        dbUnit = "player"
-    end
-    if not VUF.db.units[dbUnit] or not VUF.db.units[dbUnit].aurabars then
-        return
-    end
+    if not unit or unit == "vehicle" then dbUnit = "player" end
+    if not VUF.db.units[dbUnit] or not VUF.db.units[dbUnit].aurabars then return end
     self.db = VUF.db.units[dbUnit].aurabars
     UF.PostUpdateBar_AuraBars(self, unit, statusBar, index, position, duration, expiration, debuffType, isStealable)
 
     local halfBar = VUF.db.units[dbUnit].aurabars.size.halfBar
     local width = self.auraBarWidth or 225
     local height = self.auraBarHeight or 20
-    statusBar:SetSize(width, height * (halfBar and .5 or 1))
+    statusBar:SetSize(width, height * (halfBar and 0.5 or 1))
     statusBar.nameText:ClearAllPoints()
-    if (halfBar) then
+    if halfBar then
         statusBar.nameText:SetPoint("BOTTOMLEFT", statusBar, "TOPLEFT", 2, 2)
         statusBar.timeText:ClearAllPoints()
         statusBar.timeText:SetPoint("BOTTOMRIGHT", statusBar, "TOPRIGHT", -2, 2)
@@ -31,7 +27,7 @@ function VUF:PostUpdateBar_AuraBars(unit, statusBar, index, position, duration, 
     end
     statusBar.nameText:SetPoint("RIGHT", statusBar.timeText, "LEFT", -4, 0)
     statusBar.icon:SetSize(height, height)
-    if (halfBar) then
+    if halfBar then
         statusBar.icon:ClearAllPoints()
         statusBar.icon:SetPoint("BOTTOMRIGHT", statusBar, "BOTTOMLEFT", -2, 0)
     end
@@ -45,9 +41,7 @@ function VUF:AuraBarsSetPosition(from, to)
 
     for i = from, to do
         local button = self[i]
-        if not button then
-            break
-        end
+        if not button then break end
 
         button:ClearAllPoints()
         button:Point(anchor, self, anchor, 0, (i == 1 and 0) or (growth * ((i - 1) * (height + spacing))))
@@ -71,9 +65,7 @@ function VUF:ConstructAuraBarHeader(frame)
     auraBar.sparkEnabled = true
     auraBar.initialAnchor = "BOTTOMLEFT"
     auraBar.type = "aurabar"
-    if (frame.db) then
-        frame.db.aurabar = UF.db.units[frame.unit].aurabar
-    end
+    if frame.db then frame.db.aurabar = UF.db.units[frame.unit].aurabar end
     return auraBar
 end
 

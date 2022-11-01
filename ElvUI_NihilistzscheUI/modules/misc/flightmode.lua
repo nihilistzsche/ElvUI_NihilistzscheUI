@@ -3,9 +3,7 @@ local COMP = NUI.Compatibility
 local VUF = NUI.VerticalUnitFrames
 local LO = E.Layout
 
-if (not COMP.BUI) then
-    return
-end
+if not COMP.BUI then return end
 
 local NFM = NUI.Misc.FlightMode
 
@@ -19,9 +17,7 @@ function NFM:SetFlightMode(status)
         self.NUIInFlightMode = true
         if E.private.chat.enable then
             RightChatPanel:SetParent(self.FlightMode)
-            if RightChatPanel.backdrop.shadow then
-                RightChatPanel.backdrop.shadow:Hide()
-            end
+            if RightChatPanel.backdrop.shadow then RightChatPanel.backdrop.shadow:Hide() end
             RightChatPanel:ClearAllPoints()
             RightChatPanel:Point("BOTTOMRIGHT", self.FlightMode.bottom, "TOPRIGHT", -24, 24)
 
@@ -35,7 +31,7 @@ function NFM:SetFlightMode(status)
             end
             _G.RightChatDataPanel:Hide()
         end
-    elseif (self.NUIInFlightMode) then
+    elseif self.NUIInFlightMode then
         self.NUIInFlightMode = false
         if E.private.chat.enable then
             RightChatPanel:SetParent(E.UIParent)

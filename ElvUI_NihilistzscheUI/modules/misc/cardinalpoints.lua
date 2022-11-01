@@ -23,9 +23,7 @@ function CP:CreateFrame()
     self.frame = frame
 end
 
-function CP:Update()
-    self.frame:SetShown(E.db.nihilistzscheui.cardinalpoints.enabled)
-end
+function CP:Update() self.frame:SetShown(E.db.nihilistzscheui.cardinalpoints.enabled) end
 
 function CP:Initialize()
     self:CreateFrame()

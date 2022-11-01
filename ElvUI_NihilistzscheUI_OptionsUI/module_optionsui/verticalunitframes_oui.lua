@@ -1,8 +1,6 @@
 local NUI, E, L, _, P, _ = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local VUF = NUI.VerticalUnitFrames
-if not VUF then
-    return
-end
+if not VUF then return end
 local UF = E.UnitFrames
 
 local NONE = _G.NONE
@@ -17,22 +15,20 @@ local positionValues = {
     BOTTOMRIGHT = "BOTTOMRIGHT",
     CENTER = "CENTER",
     TOP = "TOP",
-    BOTTOM = "BOTTOM"
+    BOTTOM = "BOTTOM",
 }
 
 local growthValues = {
     UP = L.Up,
-    DOWN = L.Down
+    DOWN = L.Down,
 }
 
 function VUF:GenerateValidAnchors(unit, element, value)
-    local anchors = {self = "self", ui = "ui"}
+    local anchors = { self = "self", ui = "ui" }
 
     for e, _ in pairs(self.units[unit]) do
         if value or e ~= element then
-            if self:GetElement(e) then
-                anchors[e] = e
-            end
+            if self:GetElement(e) then anchors[e] = e end
         end
     end
     for u, _ in pairs(self.units) do
@@ -60,15 +56,14 @@ function VUF:GenerateElementOptionsTable(
     hasValue,
     hasTag,
     hasSpacing,
-    hasTicks)
+    hasTicks
+)
     local ACD = E.Libs.AceConfigDialog
     local options = {
         order = order,
         type = "group",
         name = L[name],
-        get = function(info)
-            return E.db.nihilistzscheui.vuf.units[unit][element][info[#info]]
-        end,
+        get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element][info[#info]] end,
         set = function(info, value)
             E.db.nihilistzscheui.vuf.units[unit][element][info[#info]] = value
             VUF:UpdateAllFrames()
@@ -77,22 +72,18 @@ function VUF:GenerateElementOptionsTable(
             enabled = {
                 type = "toggle",
                 order = 1,
-                name = L.Enable
-            }
-        }
+                name = L.Enable,
+            },
+        },
     }
-    if element == "cutaway" then
-        options.args.enabled = nil
-    end
+    if element == "cutaway" then options.args.enabled = nil end
     if hasAnchor then
         options.args.anchor = {
             order = 2,
             type = "group",
             name = L.Anchor,
             guiInline = true,
-            get = function(info)
-                return E.db.nihilistzscheui.vuf.units[unit][element].anchor[info[#info]]
-            end,
+            get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].anchor[info[#info]] end,
             set = function(info, value)
                 E.db.nihilistzscheui.vuf.units[unit][element].anchor[info[#info]] = value
                 VUF:UpdateAllFrames()
@@ -102,20 +93,20 @@ function VUF:GenerateElementOptionsTable(
                     type = "select",
                     name = L["Point To"],
                     order = 1,
-                    values = positionValues
+                    values = positionValues,
                 },
                 attachTo = {
                     type = "select",
                     name = L["Attach To"],
                     desc = L["What to attach this element to."],
                     order = 2,
-                    values = self:GenerateValidAnchors(unit, element)
+                    values = self:GenerateValidAnchors(unit, element),
                 },
                 pointFrom = {
                     type = "select",
                     name = L["Point From"],
                     order = 3,
-                    values = positionValues
+                    values = positionValues,
                 },
                 xOffset = {
                     order = 4,
@@ -123,7 +114,7 @@ function VUF:GenerateElementOptionsTable(
                     type = "range",
                     min = -1000,
                     max = 1000,
-                    step = 1
+                    step = 1,
                 },
                 yOffset = {
                     order = 5,
@@ -131,9 +122,9 @@ function VUF:GenerateElementOptionsTable(
                     type = "range",
                     min = -1000,
                     max = 1000,
-                    step = 1
-                }
-            }
+                    step = 1,
+                },
+            },
         }
     end
     if hasSize then
@@ -144,9 +135,7 @@ function VUF:GenerateElementOptionsTable(
                     type = "group",
                     name = L.Size,
                     guiInline = true,
-                    get = function(info)
-                        return E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]]
-                    end,
+                    get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]] end,
                     set = function(info, value)
                         E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]] = value
                         VUF:UpdateAllFrames()
@@ -158,7 +147,7 @@ function VUF:GenerateElementOptionsTable(
                             type = "range",
                             min = 7,
                             max = 50,
-                            step = 1
+                            step = 1,
                         },
                         height = {
                             order = 5,
@@ -166,9 +155,9 @@ function VUF:GenerateElementOptionsTable(
                             type = "range",
                             min = 20,
                             max = 600,
-                            step = 1
-                        }
-                    }
+                            step = 1,
+                        },
+                    },
                 }
             else
                 options.args.size = {
@@ -176,9 +165,7 @@ function VUF:GenerateElementOptionsTable(
                     type = "group",
                     name = L.Size,
                     guiInline = true,
-                    get = function(info)
-                        return E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]]
-                    end,
+                    get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]] end,
                     set = function(info, value)
                         E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]] = value
                         VUF:UpdateAllFrames()
@@ -190,7 +177,7 @@ function VUF:GenerateElementOptionsTable(
                             type = "range",
                             min = 100,
                             max = 500,
-                            step = 1
+                            step = 1,
                         },
                         height = {
                             order = 5,
@@ -198,14 +185,14 @@ function VUF:GenerateElementOptionsTable(
                             type = "range",
                             min = 20,
                             max = 80,
-                            step = 1
+                            step = 1,
                         },
                         halfBar = {
                             order = 6,
                             name = L["Half-Bar"],
-                            type = "toggle"
-                        }
-                    }
+                            type = "toggle",
+                        },
+                    },
                 }
             end
         else
@@ -214,9 +201,7 @@ function VUF:GenerateElementOptionsTable(
                 type = "group",
                 name = L.Size,
                 guiInline = true,
-                get = function(info)
-                    return E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]]
-                end,
+                get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]] end,
                 set = function(info, value)
                     E.db.nihilistzscheui.vuf.units[unit][element].size[info[#info]] = value
                     VUF:UpdateAllFrames()
@@ -227,9 +212,7 @@ function VUF:GenerateElementOptionsTable(
                         type = "group",
                         name = L.Horizontal,
                         guiInline = true,
-                        get = function(info)
-                            return E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]]
-                        end,
+                        get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]] end,
                         set = function(info, value)
                             E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]] = value
                             VUF:UpdateAllFrames()
@@ -241,7 +224,7 @@ function VUF:GenerateElementOptionsTable(
                                 type = "range",
                                 min = 7,
                                 max = 500,
-                                step = 1
+                                step = 1,
                             },
                             height = {
                                 order = 5,
@@ -249,23 +232,21 @@ function VUF:GenerateElementOptionsTable(
                                 type = "range",
                                 min = 20,
                                 max = 600,
-                                step = 1
+                                step = 1,
                             },
                             halfBar = {
                                 order = 6,
                                 name = L["Half-Bar"],
-                                type = "toggle"
-                            }
-                        }
+                                type = "toggle",
+                            },
+                        },
                     },
                     vertical = {
                         order = 3,
                         type = "group",
                         name = L.Vertical,
                         guiInline = true,
-                        get = function(info)
-                            return E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]]
-                        end,
+                        get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]] end,
                         set = function(info, value)
                             E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]] = value
                             VUF:UpdateAllFrames()
@@ -277,7 +258,7 @@ function VUF:GenerateElementOptionsTable(
                                 type = "range",
                                 min = 7,
                                 max = 50,
-                                step = 1
+                                step = 1,
                             },
                             height = {
                                 order = 5,
@@ -285,11 +266,11 @@ function VUF:GenerateElementOptionsTable(
                                 type = "range",
                                 min = 20,
                                 max = 600,
-                                step = 1
-                            }
-                        }
-                    }
-                }
+                                step = 1,
+                            },
+                        },
+                    },
+                },
             }
         end
     end
@@ -300,9 +281,7 @@ function VUF:GenerateElementOptionsTable(
             type = "group",
             name = L.Value,
             guiInline = true,
-            get = function(info)
-                return E.db.nihilistzscheui.vuf.units[unit][element].value[info[#info]]
-            end,
+            get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].value[info[#info]] end,
             set = function(info, value)
                 E.db.nihilistzscheui.vuf.units[unit][element].value[info[#info]] = value
                 VUF:UpdateAllFrames()
@@ -311,16 +290,14 @@ function VUF:GenerateElementOptionsTable(
                 enabled = {
                     type = "toggle",
                     order = 1,
-                    name = L.Enable
+                    name = L.Enable,
                 },
                 anchor = {
                     order = 2,
                     type = "group",
                     name = L.Anchor,
                     guiInline = true,
-                    get = function(info)
-                        return E.db.nihilistzscheui.vuf.units[unit][element].value.anchor[info[#info]]
-                    end,
+                    get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].value.anchor[info[#info]] end,
                     set = function(info, value)
                         E.db.nihilistzscheui.vuf.units[unit][element].value.anchor[info[#info]] = value
                         VUF:UpdateAllFrames()
@@ -331,7 +308,7 @@ function VUF:GenerateElementOptionsTable(
                             name = L["Attach To"],
                             desc = L["What to attach this element to."],
                             order = 3,
-                            values = self:GenerateValidAnchors(unit, element, true)
+                            values = self:GenerateValidAnchors(unit, element, true),
                         },
                         xOffset = {
                             order = 5,
@@ -339,7 +316,7 @@ function VUF:GenerateElementOptionsTable(
                             type = "range",
                             min = -1000,
                             max = 1000,
-                            step = 1
+                            step = 1,
                         },
                         yOffset = {
                             order = 6,
@@ -347,11 +324,11 @@ function VUF:GenerateElementOptionsTable(
                             type = "range",
                             min = -1000,
                             max = 1000,
-                            step = 1
-                        }
-                    }
-                }
-            }
+                            step = 1,
+                        },
+                    },
+                },
+            },
         }
     end
 
@@ -362,7 +339,7 @@ function VUF:GenerateElementOptionsTable(
                 width = "full",
                 name = L["Text Format"],
                 desc = L.TEXT_FORMAT_DESC,
-                order = 3
+                order = 3,
             }
         else
             options.args.tag = {
@@ -370,7 +347,7 @@ function VUF:GenerateElementOptionsTable(
                 width = "full",
                 name = L["Text Format"],
                 desc = L.TEXT_FORMAT_DESC,
-                order = 3
+                order = 3,
             }
         end
     end
@@ -385,16 +362,14 @@ function VUF:GenerateElementOptionsTable(
                 spaced = {
                     type = "toggle",
                     order = 1,
-                    name = L.Spaced
+                    name = L.Spaced,
                 },
                 spacesettings = {
                     order = 2,
                     type = "group",
                     name = L.Anchor,
                     guiInline = true,
-                    get = function(info)
-                        return E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]]
-                    end,
+                    get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]] end,
                     set = function(info, value)
                         E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]] = value
                         VUF:UpdateAllFrames()
@@ -406,7 +381,7 @@ function VUF:GenerateElementOptionsTable(
                             type = "range",
                             min = -200,
                             max = 200,
-                            step = 1
+                            step = 1,
                         },
                         spacing = {
                             order = 6,
@@ -414,11 +389,11 @@ function VUF:GenerateElementOptionsTable(
                             type = "range",
                             min = 1,
                             max = 100,
-                            step = 1
-                        }
-                    }
-                }
-            }
+                            step = 1,
+                        },
+                    },
+                },
+            },
         }
     end
 
@@ -427,7 +402,7 @@ function VUF:GenerateElementOptionsTable(
             type = "select",
             order = 2,
             name = L["Growth Direction"],
-            values = growthValues
+            values = growthValues,
         }
     end
 
@@ -442,7 +417,7 @@ function VUF:GenerateElementOptionsTable(
             order = 4,
             min = 0,
             max = 360,
-            step = 1
+            step = 1,
         }
         options.args.camDistanceScale = {
             type = "range",
@@ -451,7 +426,7 @@ function VUF:GenerateElementOptionsTable(
             order = 5,
             min = 0.01,
             max = 4,
-            step = 0.01
+            step = 0.01,
         }
         options.args.xOffset = {
             order = 6,
@@ -460,7 +435,7 @@ function VUF:GenerateElementOptionsTable(
             desc = L["Position the Model horizontally."],
             min = -1,
             max = 1,
-            step = 0.01
+            step = 0.01,
         }
         options.args.yOffset = {
             order = 7,
@@ -469,7 +444,7 @@ function VUF:GenerateElementOptionsTable(
             desc = L["Position the Model vertically."],
             min = -1,
             max = 1,
-            step = 0.01
+            step = 0.01,
         }
     end
 
@@ -481,7 +456,7 @@ function VUF:GenerateElementOptionsTable(
             isPercent = true,
             min = 0.5,
             max = 1.5,
-            step = 0.01
+            step = 0.01,
         }
     end
 
@@ -493,8 +468,8 @@ function VUF:GenerateElementOptionsTable(
             values = {
                 CURRENTMAX = L["Current / Max"],
                 CURRENT = L.Current,
-                REMAINING = L.Remaining
-            }
+                REMAINING = L.Remaining,
+            },
         }
         if hasTicks then
             options.args.ticks = {
@@ -502,16 +477,14 @@ function VUF:GenerateElementOptionsTable(
                 type = "toggle",
                 name = L.Ticks,
                 -- luacheck: push no max line length
-                desc = L[
-                    "Display tick marks on the castbar for channelled spells. This will adjust automatically for spells like Drain Soul and add additional ticks based on haste."
-                ]
+                desc = L["Display tick marks on the castbar for channelled spells. This will adjust automatically for spells like Drain Soul and add additional ticks based on haste."],
                 -- luacheck: pop
             }
             options.args.displayTarget = {
                 order = 14,
                 type = "toggle",
                 name = L["Display Target"],
-                desc = L["Display the target of your current cast. Useful for mouseover casts."]
+                desc = L["Display the target of your current cast. Useful for mouseover casts."],
             }
             options.args.tickcolor = {
                 order = 15,
@@ -525,15 +498,13 @@ function VUF:GenerateElementOptionsTable(
                     local t = E.db.nihilistzscheui.vuf.units[unit][element][info[#info]]
                     t.r, t.g, t.b = r, g, b
                     VUF:UpdateAllFrames()
-                end
+                end,
             }
         end
     end
 
     if element == "healPrediction" then
-        local getFunc = function(info)
-            return E.db.unitframe.units[unit].healPrediction[info[#info]]
-        end
+        local getFunc = function(info) return E.db.unitframe.units[unit].healPrediction[info[#info]] end
         local setFunc = function(info, value)
             E.db.unitframe.units[unit].healPrediction[info[#info]] = value
             VUF:UpdateAllFrames()
@@ -546,18 +517,14 @@ function VUF:GenerateElementOptionsTable(
             set = setFunc,
             min = -1,
             max = 500,
-            step = 1
+            step = 1,
         }
         options.args.colorsButton = {
             order = 3,
             type = "execute",
             name = L.COLORS,
-            func = function()
-                ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction")
-            end,
-            disabled = function()
-                return not E.UnitFrames.Initialized
-            end
+            func = function() ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction") end,
+            disabled = function() return not E.UnitFrames.Initialized end,
         }
         options.args.anchorPoint = {
             order = 5,
@@ -568,8 +535,8 @@ function VUF:GenerateElementOptionsTable(
             values = {
                 TOP = "TOP",
                 BOTTOM = "BOTTOM",
-                CENTER = "CENTER"
-            }
+                CENTER = "CENTER",
+            },
         }
         options.args.absorbStyle = {
             order = 6,
@@ -582,42 +549,28 @@ function VUF:GenerateElementOptionsTable(
                 NORMAL = L.Normal,
                 REVERSED = L.Reversed,
                 WRAPPED = L.Wrapped,
-                OVERFLOW = L.Overflow
-            }
+                OVERFLOW = L.Overflow,
+            },
         }
         options.args.overflowButton = {
             order = 7,
             type = "execute",
             name = L["Max Overflow"],
-            func = function()
-                ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction")
-            end,
-            disabled = function()
-                return not E.UnitFrames.Initialized
-            end
+            func = function() ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction") end,
+            disabled = function() return not E.UnitFrames.Initialized end,
         }
-        options.args.warning =
-            E.Libs.ACH:Description(
-            function()
-                if E.db.unitframe.colors.healPrediction.maxOverflow == 0 then
-                    local text =
-                        L[
-                        "Max Overflow is set to zero. Absorb Overflows will be hidden when using Overflow style.\nIf used together Max Overflow at zero and Overflow mode will act like Normal mode without the ending sliver of overflow."
-                    ]
-                    return text ..
-                        (E.db.unitframe.units[unit].healPrediction.absorbStyle == "OVERFLOW" and
-                            " |cffFF9933You are using Overflow with Max Overflow at zero.|r " or
-                            "")
-                end
-            end,
-            50,
-            "medium",
-            nil,
-            nil,
-            nil,
-            nil,
-            "full"
-        )
+        options.args.warning = E.Libs.ACH:Description(function()
+            if E.db.unitframe.colors.healPrediction.maxOverflow == 0 then
+                local text =
+                    L["Max Overflow is set to zero. Absorb Overflows will be hidden when using Overflow style.\nIf used together Max Overflow at zero and Overflow mode will act like Normal mode without the ending sliver of overflow."]
+                return text
+                    .. (
+                        E.db.unitframe.units[unit].healPrediction.absorbStyle == "OVERFLOW"
+                            and " |cffFF9933You are using Overflow with Max Overflow at zero.|r "
+                        or ""
+                    )
+            end
+        end, 50, "medium", nil, nil, nil, nil, "full")
     end
 
     if element == "cutaway" then
@@ -626,9 +579,7 @@ function VUF:GenerateElementOptionsTable(
             type = "group",
             guiInline = true,
             name = L.Health,
-            get = function(info)
-                return E.db.nihilistzscheui.vuf.units[unit].cutaway.health[info[#info]]
-            end,
+            get = function(info) return E.db.nihilistzscheui.vuf.units[unit].cutaway.health[info[#info]] end,
             set = function(info, value)
                 E.db.nihilistzscheui.vuf.units[unit].cutaway.health[info[#info]] = value
                 VUF:UpdateAllFrames()
@@ -637,7 +588,7 @@ function VUF:GenerateElementOptionsTable(
                 enabled = {
                     type = "toggle",
                     order = 1,
-                    name = L.Enable
+                    name = L.Enable,
                 },
                 lengthBeforeFade = {
                     type = "range",
@@ -647,9 +598,7 @@ function VUF:GenerateElementOptionsTable(
                     min = 0.1,
                     max = 1,
                     step = 0.1,
-                    disabled = function()
-                        return not E.db.nihilistzscheui.vuf.units[unit].cutaway.health.enabled
-                    end
+                    disabled = function() return not E.db.nihilistzscheui.vuf.units[unit].cutaway.health.enabled end,
                 },
                 fadeOutTime = {
                     type = "range",
@@ -659,20 +608,16 @@ function VUF:GenerateElementOptionsTable(
                     min = 0.1,
                     max = 1,
                     step = 0.1,
-                    disabled = function()
-                        return not E.db.nihilistzscheui.vuf.units[unit].cutaway.health.enabled
-                    end
-                }
-            }
+                    disabled = function() return not E.db.nihilistzscheui.vuf.units[unit].cutaway.health.enabled end,
+                },
+            },
         }
         options.args.power = {
             order = 2,
             type = "group",
             name = L.Power,
             guiInline = true,
-            get = function(info)
-                return E.db.nihilistzscheui.vuf.units[unit].cutaway.power[info[#info]]
-            end,
+            get = function(info) return E.db.nihilistzscheui.vuf.units[unit].cutaway.power[info[#info]] end,
             set = function(info, value)
                 E.db.nihilistzscheui.vuf.units[unit].cutaway.power[info[#info]] = value
                 VUF:UpdateAllFrames()
@@ -681,7 +626,7 @@ function VUF:GenerateElementOptionsTable(
                 enabled = {
                     type = "toggle",
                     order = 1,
-                    name = L.Enable
+                    name = L.Enable,
                 },
                 lengthBeforeFade = {
                     type = "range",
@@ -691,9 +636,7 @@ function VUF:GenerateElementOptionsTable(
                     min = 0.1,
                     max = 1,
                     step = 0.1,
-                    disabled = function()
-                        return not E.db.nameplates.cutaway.power.enabled
-                    end
+                    disabled = function() return not E.db.nameplates.cutaway.power.enabled end,
                 },
                 fadeOutTime = {
                     type = "range",
@@ -703,11 +646,9 @@ function VUF:GenerateElementOptionsTable(
                     min = 0.1,
                     max = 1,
                     step = 0.1,
-                    disabled = function()
-                        return not E.db.nameplates.cutaway.power.enabled
-                    end
-                }
-            }
+                    disabled = function() return not E.db.nameplates.cutaway.power.enabled end,
+                },
+            },
         }
     end
     if unit == "player" and E.myclass == "DEATHKNIGHT" then
@@ -719,15 +660,13 @@ function VUF:GenerateElementOptionsTable(
             values = {
                 asc = L.Ascending,
                 desc = L.Descending,
-                NONE = NONE
+                NONE = NONE,
             },
-            get = function(info)
-                return E.db.unitframe.units.playe.classbar[info[#info]]
-            end,
+            get = function(info) return E.db.unitframe.units.playe.classbar[info[#info]] end,
             set = function(info, value)
                 E.db.unitframe.units.playe.classbar[info[#info]] = value
                 VUF:UpdateAllFrames()
-            end
+            end,
         }
     end
 
@@ -756,22 +695,22 @@ local elementOptions = {
     portrait = "Portrait",
     resurrectindicator = "ResurrectIndicator",
     phaseindicator = "PhaseIndicator",
-    cutaway = "Cutaway"
+    cutaway = "Cutaway",
 }
 
 local nameMap = {
     playeraurabar = {
-        mover = "Player Vertical Unit Frame AuraBar Header"
+        mover = "Player Vertical Unit Frame AuraBar Header",
     },
     targetaurabar = {
-        mover = "Target Vertical Unit Frame AuraBar Header"
+        mover = "Target Vertical Unit Frame AuraBar Header",
     },
     playercastbar = {
-        mover = "Player Vertical Unit Frame Castbar"
+        mover = "Player Vertical Unit Frame Castbar",
     },
     targetcastbar = {
-        mover = "Target Vertical Unit Frame Castbar"
-    }
+        mover = "Target Vertical Unit Frame Castbar",
+    },
 }
 
 function VUF:GenerateUnitOptionTable(unit, name, order, mover, elements)
@@ -780,9 +719,7 @@ function VUF:GenerateUnitOptionTable(unit, name, order, mover, elements)
         type = "group",
         order = order,
         childGroups = "select",
-        get = function(info)
-            return E.db.nihilistzscheui.vuf.units[unit][info[#info]]
-        end,
+        get = function(info) return E.db.nihilistzscheui.vuf.units[unit][info[#info]] end,
         set = function(info, value)
             E.db.nihilistzscheui.vuf.units[unit][info[#info]] = value
             VUF:UpdateAllFrames()
@@ -791,7 +728,7 @@ function VUF:GenerateUnitOptionTable(unit, name, order, mover, elements)
             enabled = {
                 type = "toggle",
                 order = 1,
-                name = L.Enable
+                name = L.Enable,
             },
             resetSettings = {
                 type = "execute",
@@ -806,19 +743,15 @@ function VUF:GenerateUnitOptionTable(unit, name, order, mover, elements)
                         E:ResetMovers(aurabarMover)
                         E:ResetMovers(castbarMover)
                     end
-                end
+                end,
             },
             customText = {
                 order = 50,
                 name = L["Custom Texts"],
                 type = "input",
                 width = "full",
-                desc = L[
-                    "Create a custom fontstring. Once you enter a name you will be able to select it from the elements dropdown list."
-                ],
-                get = function()
-                    return ""
-                end,
+                desc = L["Create a custom fontstring. Once you enter a name you will be able to select it from the elements dropdown list."],
+                get = function() return "" end,
                 set = function(_, textName)
                     for object, _ in pairs(E.db.nihilistzscheui.vuf.units[unit]) do
                         if object:lower() == textName:lower() then
@@ -828,9 +761,9 @@ function VUF:GenerateUnitOptionTable(unit, name, order, mover, elements)
                     end
 
                     VUF:AddCustomText(unit, textName)
-                end
-            }
-        }
+                end,
+            },
+        },
     }
     if unit == "player" or unit == "target" then
         options.args.horizCastbar = {
@@ -838,13 +771,11 @@ function VUF:GenerateUnitOptionTable(unit, name, order, mover, elements)
             order = 20,
             name = L["Horizontal Castbar"],
             desc = L["Use a horizontal castbar"],
-            get = function(info)
-                return E.db.nihilistzscheui.vuf.units[unit][info[#info]]
-            end,
+            get = function(info) return E.db.nihilistzscheui.vuf.units[unit][info[#info]] end,
             set = function(info, value)
                 E.db.nihilistzscheui.vuf.units[unit][info[#info]] = value
                 VUF:UpdateAllFrames()
-            end
+            end,
         }
     end
     for element, _ in pairs(elements) do
@@ -872,7 +803,7 @@ function VUF:GenerateOptionTables(options)
         "focus",
         "focustarget",
         "pettarget",
-        "targettargettarget"
+        "targettargettarget",
     }
     for _, unit in ipairs(optionUnits) do
         local optionName = E:StringTitle(unit)
@@ -906,14 +837,12 @@ function VUF:GenerateOptions()
             header = {
                 order = 1,
                 type = "header",
-                name = L["NihilistzscheUI VerticalUnitFrames by Nihilistzsche"]
+                name = L["NihilistzscheUI VerticalUnitFrames by Nihilistzsche"],
             },
             description = {
                 order = 2,
                 type = "description",
-                name = L[
-                    "NihilistzscheUI VerticalUnitFrames provides a configurable centered, vertical unit frame option for use with ElvUI.\n"
-                ]
+                name = L["NihilistzscheUI VerticalUnitFrames provides a configurable centered, vertical unit frame option for use with ElvUI.\n"],
             },
             credits = {
                 order = 10000,
@@ -924,16 +853,16 @@ function VUF:GenerateOptions()
                     creditheader = {
                         order = 1,
                         type = "header",
-                        name = L.Credits
+                        name = L.Credits,
                     },
                     credits = {
                         order = 2,
                         type = "description",
-                        name = L.NihilistzscheUI_VerticalUnitFrames_CREDITS
-                    }
-                }
-            }
-        }
+                        name = L.NihilistzscheUI_VerticalUnitFrames_CREDITS,
+                    },
+                },
+            },
+        },
     }
     options.args.vufgen = {
         order = 4,
@@ -946,13 +875,11 @@ function VUF:GenerateOptions()
                 order = 1,
                 name = L.Enable,
                 desc = L["Enable the Vertical Unit Frames."],
-                get = function(info)
-                    return E.db.nihilistzscheui.vuf[info[#info]]
-                end,
+                get = function(info) return E.db.nihilistzscheui.vuf[info[#info]] end,
                 set = function(info, value)
                     E.db.nihilistzscheui.vuf[info[#info]] = value
                     self:Enable()
-                end
+                end,
             },
             resetsettings = {
                 type = "execute",
@@ -966,7 +893,7 @@ function VUF:GenerateOptions()
                     self:UpdateHideSetting()
                     self:UpdateAllFrames()
                     self:UpdateMouseSetting()
-                end
+                end,
             },
             oldDefault = {
                 type = "execute",
@@ -979,7 +906,7 @@ function VUF:GenerateOptions()
                     self:UpdateHideSetting()
                     self:UpdateAllFrames()
                     self:UpdateMouseSetting()
-                end
+                end,
             },
             simpleLayout = {
                 type = "execute",
@@ -992,7 +919,7 @@ function VUF:GenerateOptions()
                     self:UpdateHideSetting()
                     self:UpdateAllFrames()
                     self:UpdateMouseSetting()
-                end
+                end,
             },
             comboLayout = {
                 type = "execute",
@@ -1005,84 +932,72 @@ function VUF:GenerateOptions()
                     self:UpdateHideSetting()
                     self:UpdateAllFrames()
                     self:UpdateMouseSetting()
-                end
-            }
-        }
+                end,
+            },
+        },
     }
     options.args.vufOptions = {
         order = 5,
         type = "group",
         name = L["Vertical Unit Frame Options"],
-        get = function(info)
-            return E.db.nihilistzscheui.vuf[info[#info]]
-        end,
-        set = function(info, value)
-            E.db.nihilistzscheui.vuf[info[#info]] = value
-        end,
+        get = function(info) return E.db.nihilistzscheui.vuf[info[#info]] end,
+        set = function(info, value) E.db.nihilistzscheui.vuf[info[#info]] = value end,
         args = {
             hideElv = {
                 type = "toggle",
                 order = 8,
                 name = L["Hide ElvUI Unitframes"],
                 desc = L["Hide the ElvUI Unitframes when the Vertical Unit Frame is enabled"],
-                get = function(info)
-                    return E.db.nihilistzscheui.vuf[info[#info]]
-                end,
+                get = function(info) return E.db.nihilistzscheui.vuf[info[#info]] end,
                 set = function(info, value)
                     E.db.nihilistzscheui.vuf[info[#info]] = value
                     self:UpdateElvUFSetting()
-                end
+                end,
             },
             flash = {
                 type = "toggle",
                 order = 15,
                 name = L.Flash,
-                desc = L["Flash health/power when the low threshold is reached"]
+                desc = L["Flash health/power when the low threshold is reached"],
             },
             screenflash = {
                 type = "toggle",
                 order = 16,
                 name = L["Screen Flash"],
-                desc = L["Flash the screen border red when the low threshold is reached"]
+                desc = L["Flash the screen border red when the low threshold is reached"],
             },
             warningText = {
                 type = "toggle",
                 order = 16,
                 name = L["Text Warning"],
-                desc = L["Show a Text Warning when the low threshold is reached"]
+                desc = L["Show a Text Warning when the low threshold is reached"],
             },
             hideOOC = {
                 type = "toggle",
                 order = 17,
                 name = L["Hide Out of Combat"],
                 desc = L["Hide the Vertical Unit Frame when out of Combat"],
-                get = function(info)
-                    return E.db.nihilistzscheui.vuf[info[#info]]
-                end,
+                get = function(info) return E.db.nihilistzscheui.vuf[info[#info]] end,
                 set = function(info, value)
                     E.db.nihilistzscheui.vuf[info[#info]] = value
                     self:UpdateHideSetting()
-                end
+                end,
             },
             enableMouse = {
                 type = "toggle",
                 order = 19,
                 name = L["Enable Mouse"],
                 desc = L[
-                    -- luacheck: push no max line length
-                    "Enable the mouse to interface with the vertical unit frame (this option has no effect if ElvUI Unitframes are hidden)"
+                                        -- luacheck: push no max line length
+"Enable the mouse to interface with the vertical unit frame (this option has no effect if ElvUI Unitframes are hidden)"
                     -- luacheck: pop
                 ],
-                get = function(info)
-                    return E.db.nihilistzscheui.vuf[info[#info]]
-                end,
+                get = function(info) return E.db.nihilistzscheui.vuf[info[#info]] end,
                 set = function(info, value)
                     E.db.nihilistzscheui.vuf[info[#info]] = value
                     self:UpdateMouseSetting()
                 end,
-                disabled = function()
-                    return E.db.nihilistzscheui.vuf.hideElv
-                end
+                disabled = function() return E.db.nihilistzscheui.vuf.hideElv end,
             },
             alpha = {
                 type = "range",
@@ -1091,7 +1006,7 @@ function VUF:GenerateOptions()
                 desc = L["Set the Alpha of the Vertical Unit Frame when in combat"],
                 min = 0,
                 max = 1,
-                step = .05
+                step = 0.05,
             },
             alphaOOC = {
                 type = "range",
@@ -1100,7 +1015,7 @@ function VUF:GenerateOptions()
                 desc = L["Set the Alpha of the Vertical Unit Frame when out of combat"],
                 min = 0,
                 max = 1,
-                step = 0.05
+                step = 0.05,
             },
             lowThreshold = {
                 type = "range",
@@ -1109,9 +1024,9 @@ function VUF:GenerateOptions()
                 desc = L["Start flashing health/power under this percentage"],
                 min = 0,
                 max = 100,
-                step = 1
-            }
-        }
+                step = 1,
+            },
+        },
     }
     self:GenerateOptionTables(options)
     return options

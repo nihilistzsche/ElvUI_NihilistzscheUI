@@ -18,9 +18,7 @@ function VUF:ConstructStagger(frame)
     local staggerBar = self:ConstructStatusBar(frame, "stagger", frame, "staggerbar")
     staggerBar:SetFrameStrata("MEDIUM")
     staggerBar:SetTemplate("Transparent")
-    if (COMP.MERS) then
-        staggerBar:Styling()
-    end
+    if COMP.MERS then staggerBar:Styling() end
     staggerBar:SetFrameLevel(8)
     staggerBar:SetBackdropBorderColor(0, 0, 0, 0)
     staggerBar.PostUpdateVisibility = VUF.PostUpdateStaggerBar
@@ -34,15 +32,11 @@ function VUF:ConstructSubBars(frame, element, name, num)
     local bars = self:CreateFrame(frame, element)
     bars:SetFrameLevel(frame:GetFrameLevel() + 30)
     bars:SetTemplate("Transparent")
-    if (COMP.MERS) then
-        bars:Styling()
-    end
+    if COMP.MERS then bars:Styling() end
     bars:SetBackdropBorderColor(0, 0, 0, 0)
 
-    if (element == "classbars") then
-        bars.UpdateTexture = function()
-            return
-        end --We don't use textures but statusbars, so prevent errors
+    if element == "classbars" then
+        bars.UpdateTexture = function() return end --We don't use textures but statusbars, so prevent errors
     end
 
     for i = 1, num do
@@ -90,9 +84,7 @@ end
 function VUF:ConstructRunes(frame)
     local bars = self:ConstructSubBars(frame, "classbars", "rune", 6)
 
-    if (frame.db) then
-        frame.db.classbar = UF.db.units[frame.unit].classbar
-    end
+    if frame.db then frame.db.classbar = UF.db.units[frame.unit].classbar end
 
     bars.sortOrder = (frame.db.classbar.sortDirection ~= "NONE") and frame.db.classbar.sortDirection
     bars.colorSpec = true
@@ -101,9 +93,7 @@ function VUF:ConstructRunes(frame)
 end
 
 -- Construct harmony bar for monks
-function VUF:ConstructHarmony(frame)
-    return self:ConstructSubBars(frame, "classbars", "harmony", 6)
-end
+function VUF:ConstructHarmony(frame) return self:ConstructSubBars(frame, "classbars", "harmony", 6) end
 
 -- Construct arcane bar for mages
 function VUF:ConstructArcaneBar(frame)
@@ -128,15 +118,13 @@ end
 function VUF:UpdateClassBar(frame, element)
     local ElvUF = _G.ElvUF
     local unit = frame.unit
-    if (unit == "vehicle") then
-        unit = "player"
-    end
+    if unit == "vehicle" then unit = "player" end
     if not self.db.units[unit] then
         self:ScheduleTimer("UpdateClassBar", 1, frame, element)
         return
     end
     local config = self.db.units[unit][element]
-    if (not config) then
+    if not config then
         self:ScheduleTimer("UpdateClassBar", 1, frame, element)
         return
     end
@@ -194,10 +182,8 @@ function VUF:UpdateClassBar(frame, element)
         self:ScheduleTimer("UpdateClassBar", 1, frame, element)
         return
     end
-    if (not frame[e].PostUpdate) then
-        frame[e].PostUpdate = function(_self, ...)
-            self.PostUpdateClassBar(_self, frame, element, {...})
-        end
+    if not frame[e].PostUpdate then
+        frame[e].PostUpdate = function(_self, ...) self.PostUpdateClassBar(_self, frame, element, { ... }) end
     end
 
     if spaced then
@@ -205,43 +191,34 @@ function VUF:UpdateClassBar(frame, element)
     else
         frame[e]:SetAlpha(1)
     end
-    if not maxPoints then
-        maxPoints = numPoints
-    end
-    if not curPoints then
-        curPoints = 0
-    end
-    if (numPoints == 0) then
-        return
-    end
+    if not maxPoints then maxPoints = numPoints end
+    if not curPoints then curPoints = 0 end
+    if numPoints == 0 then return end
 
     local height = (size.height - (spaced and totalspacing or 2)) / numPoints
     local chargedIndex
     if E.myclass == "ROGUE" then
         local chargedPoints = GetUnitChargedPowerPoints(frame.unit)
-        if chargedPoints then
-            chargedIndex = chargedPoints[1]
-        end
+        if chargedPoints then chargedIndex = chargedPoints[1] end
     end
     for i = 1, maxPoints do
         frame[e][i]:Size(size.width, height)
         if not frame[e][i].SetAlpha_ then
             frame[e][i].SetAlpha_ = frame[e][i].SetAlpha
-            frame[e][i].SetAlpha = function(_self, alpha)
-                _self:SetAlpha_(_self.enabled and alpha or _self.alpha)
-            end
+            frame[e][i].SetAlpha = function(_self, alpha) _self:SetAlpha_(_self.enabled and alpha or _self.alpha) end
         end
         if
-            E.myclass ~= "PALADIN" and E.myclass ~= "MAGE" and E.myclass ~= "MONK" and E.myclass ~= "WARLOCK" and
-                E.myclass ~= "DRUID" and
-                E.myclass ~= "DEATHKNIGHT" and
-                E.myclass ~= "ROGUE"
-         then
+            E.myclass ~= "PALADIN"
+            and E.myclass ~= "MAGE"
+            and E.myclass ~= "MONK"
+            and E.myclass ~= "WARLOCK"
+            and E.myclass ~= "DRUID"
+            and E.myclass ~= "DEATHKNIGHT"
+            and E.myclass ~= "ROGUE"
+        then
             frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors[frame.ClassBar]))
 
-            if frame[e][i].bg then
-                frame[e][i].bg:SetTexture(unpack(ElvUF.colors[frame.ClassBar]))
-            end
+            if frame[e][i].bg then frame[e][i].bg:SetTexture(unpack(ElvUF.colors[frame.ClassBar])) end
         else
             if E.myclass == "MONK" then
                 frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors.ClassBars[E.myclass][i]))
@@ -263,22 +240,16 @@ function VUF:UpdateClassBar(frame, element)
         if config.enabled and i <= numPoints then
             frame[e][i].enabled = true
             frame[e][i].alpha = 1
-            frame[e][i]:SetAlpha(i <= curPoints and 1 or .2)
+            frame[e][i]:SetAlpha(i <= curPoints and 1 or 0.2)
             if spaced then
-                frame[e][i]:SetAlpha(i <= curPoints and 1 or .2)
-                if frame[e][i].backdrop then
-                    frame[e][i].backdrop:Show()
-                end
+                frame[e][i]:SetAlpha(i <= curPoints and 1 or 0.2)
+                if frame[e][i].backdrop then frame[e][i].backdrop:Show() end
             else
-                if frame[e][i].backdrop then
-                    frame[e][i].backdrop:Hide()
-                end
+                if frame[e][i].backdrop then frame[e][i].backdrop:Hide() end
             end
         else
             frame[e][i].enabled = false
-            if frame[e][i].backdrop then
-                frame[e][i].backdrop:Hide()
-            end
+            if frame[e][i].backdrop then frame[e][i].backdrop:Hide() end
             frame[e][i].alpha = 0
             frame[e][i]:SetAlpha(0)
         end
@@ -287,16 +258,14 @@ end
 
 function VUF:UpdateClassBarAnchors(frame, element)
     local config = self.db.units[frame.unit][element]
-    if (not config) then
+    if not config then
         VUF:ScheduleTimer("UpdateClassBar", 1, frame, element)
         return
     end
 
     local spaced = config.spaced
     local spacing = config.spacesettings.spacing
-    if not spaced then
-        spacing = 1
-    end
+    if not spaced then spacing = 1 end
 
     if element == "classbars" then
         local classIcons = frame.ClassBar
@@ -314,7 +283,7 @@ end
 function VUF:PostUpdateClassBar(frame, element, args)
     local unit = frame.unit
     local e = VUF:GetElement(element)
-    if (unit == "vehicle" and element == "classbars") then
+    if unit == "vehicle" and element == "classbars" then
         frame:DisableElement(e)
         return
     else
@@ -323,16 +292,14 @@ function VUF:PostUpdateClassBar(frame, element, args)
     local config = VUF.db.units[unit][element]
     if config and config.enabled then
         VUF:UpdateClassBar(frame, element)
-        if (self._PostUpdate) then
-            self:_PostUpdate(unpack(args))
-        end
+        if self._PostUpdate then self:_PostUpdate(unpack(args)) end
     else
         self:Hide()
     end
 end
 
 function VUF:PostUpdateStaggerBar(_, _, isShown)
-    if (isShown) then
+    if isShown then
         self:Show()
     else
         self:Hide()
@@ -343,7 +310,7 @@ function VUF:PostUpdateArcaneChargeBar()
     local talentSpecialization = GetSpecialization()
 
     local alpha
-    if (talentSpecialization ~= 1) then
+    if talentSpecialization ~= 1 then
         alpha = 0
     else
         alpha = 1
@@ -384,7 +351,7 @@ function VUF:PostUpdateHolyPower()
     end
 
     for i = 1, 5 do
-        local alpha = enabled and (i <= curPoints and 1 or .2) or 0
+        local alpha = enabled and (i <= curPoints and 1 or 0.2) or 0
         self[i]:SetAlpha(alpha)
         self[i]:SetShown(enabled)
     end
@@ -396,12 +363,12 @@ function VUF:PostUpdateSoulShards()
     local num = UnitPower(unit, Enum_PowerType_SoulShards)
 
     for i = 1, 5 do
-        if (i <= num) then
+        if i <= num then
             self[i]:Show()
             self[i]:SetAlpha(1)
         else
             self[i]:Show()
-            self[i]:SetAlpha(.2)
+            self[i]:SetAlpha(0.2)
         end
     end
 end
@@ -419,8 +386,8 @@ function VUF:PostUpdateComboPoints()
     end
 
     for i = 1, max do
-        if (enabled) then
-            if (i <= cp) then
+        if enabled then
+            if i <= cp then
                 self[i]:Show()
                 self[i]:SetAlpha(1)
             else

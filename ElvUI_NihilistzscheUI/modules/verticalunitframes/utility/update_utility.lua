@@ -9,9 +9,7 @@ local gsub = _G.gsub
 local CreateFrame = _G.CreateFrame
 
 function VUF.UpdatePredictionStatusBar(prediction, parent, name)
-    if not (prediction and parent) then
-        return
-    end
+    if not (prediction and parent) then return end
     local texture = (not parent.isTransparent and parent:GetStatusBarTexture():GetTexture()) or E.media.blankTex
     if name == "Health" then
         UF:Update_StatusBar(prediction.myBar, texture)
@@ -24,18 +22,14 @@ function VUF.UpdatePredictionStatusBar(prediction, parent, name)
 end
 
 function VUF:UpdateElement(frame, element)
-    if element == "castbar" then
-        self:GetCastbar(frame)
-    end
+    if element == "castbar" then self:GetCastbar(frame) end
 
     local config = self.db.units[frame.unit][element]
 
     local size = config.size
     local e = self.units[frame.unit].elements[element]
     if size then
-        if element == "portrait" then
-            return
-        end
+        if element == "portrait" then return end
         if e.statusbars then
             local horizCastbar
             if element == "castbar" and size.vertical ~= nil then
@@ -48,20 +42,20 @@ function VUF:UpdateElement(frame, element)
             end
 
             for _, statusbar in pairs(e.statusbars) do
-                local height = (horizCastbar and size.halfBar) and size.height * .5 or size.height
-                if element == "powerprediction" then
-                    height = 0
-                end
+                local height = (horizCastbar and size.halfBar) and size.height * 0.5 or size.height
+                if element == "powerprediction" then height = 0 end
                 statusbar:Size(size.width, height)
             end
             if element == "castbar" then
-                if (frame.unit ~= "player" and frame.unit ~= "target") or not self.db.units[frame.unit].horizCastbar then
+                if
+                    (frame.unit ~= "player" and frame.unit ~= "target") or not self.db.units[frame.unit].horizCastbar
+                then
                     frame.Castbar.Spark:Width(frame.Castbar:GetWidth() * 2)
                 else
                     frame.Castbar.Spark:Height(frame.Castbar:GetHeight() * 2)
                     frame.Castbar.Text:ClearAllPoints()
                     frame.Castbar.Time:ClearAllPoints()
-                    if (size.halfBar) then
+                    if size.halfBar then
                         frame.Castbar.Text:SetPoint(
                             "BOTTOMLEFT",
                             frame.Castbar,
@@ -80,16 +74,12 @@ function VUF:UpdateElement(frame, element)
         if e.frame then
             local height = size.height
             if element == "classbars" then
-                if config.spaced then
-                    height = (height + 2) - (config.spacesettings.offset * 2)
-                end
+                if config.spaced then height = (height + 2) - (config.spacesettings.offset * 2) end
             end
             e.WIDTH = size.width
             e.HEIGHT = height
             e.frame:Size(size.width, height)
-            if element == "classbars" then
-                self:UpdateClassBar(frame, element)
-            end
+            if element == "classbars" then self:UpdateClassBar(frame, element) end
         end
     end
     local texture = LSM:Fetch("statusbar", UF.db.statusbar)
@@ -97,9 +87,7 @@ function VUF:UpdateElement(frame, element)
     if e.statusbars then
         for _, statusbar in pairs(e.statusbars) do
             statusbar:SetStatusBarTexture(texture)
-            if element == "power" then
-                statusbar.texture = texture
-            end
+            if element == "power" then statusbar.texture = texture end
         end
     end
     if e.textures then
@@ -159,8 +147,8 @@ function VUF:UpdateElement(frame, element)
         local debuffColor = UF.db.colors.auraBarDebuff
         local aurabars = frame.AuraBars
         aurabars.db = config
-        aurabars.buffColor = {buffColor.r, buffColor.g, buffColor.b}
-        aurabars.debuffColor = {debuffColor.r, debuffColor.g, debuffColor.b}
+        aurabars.buffColor = { buffColor.r, buffColor.g, buffColor.b }
+        aurabars.debuffColor = { debuffColor.r, debuffColor.g, debuffColor.b }
         aurabars.auraBarHeight = size.height
         aurabars.auraBarWidth = size.width
         aurabars:Size(size.width, size.height)
@@ -185,9 +173,7 @@ function VUF:UpdateElementAnchor(frame, element)
         local c = UF.db.colors.healPrediction
         local healPrediction = frame[e]
         if enabled then
-            if not frame:IsElementEnabled("HealthPrediction") then
-                frame:EnableElement("HealthPrediction")
-            end
+            if not frame:IsElementEnabled("HealthPrediction") then frame:EnableElement("HealthPrediction") end
 
             UF:Configure_HealComm(frame)
 
@@ -200,14 +186,14 @@ function VUF:UpdateElementAnchor(frame, element)
     if element == "powerPrediction" then
         local mb = frame.PowerPrediction.mainBar
         local ab = frame.PowerPrediction.altBar
-        if (frame.Power) then
+        if frame.Power then
             mb:ClearAllPoints()
             mb:SetPoint("LEFT", frame.Power, "LEFT")
             mb:SetPoint("RIGHT", frame.Power, "RIGHT")
             mb:SetPoint("BOTTOM", frame.Power:GetStatusBarTexture(), "BOTTOM")
         end
 
-        if (frame.AdditionalPower) then
+        if frame.AdditionalPower then
             ab:ClearAllPoints()
             ab:SetPoint("LEFT", frame.AdditionalPower, "LEFT")
             ab:SetPoint("RIGHT", frame.AdditionalPower, "RIGHT")
@@ -222,22 +208,20 @@ function VUF:UpdateElementAnchor(frame, element)
                 frame:DisableElement("Cutaway")
             else
                 enabled = true
-                if not frame:IsElementEnabled("Cutaway") then
-                    frame:EnableElement("Cutaway")
-                end
+                if not frame:IsElementEnabled("Cutaway") then frame:EnableElement("Cutaway") end
 
                 local hs, ps = frame.Cutaway:UpdateConfigurationValues(c)
 
                 local ch = frame.Cutaway.Health
                 local cp = frame.Cutaway.Power
-                if (ch and hs) then
+                if ch and hs then
                     local texture = frame.Health:GetStatusBarTexture()
                     ch:ClearAllPoints()
                     ch:SetPoint("BOTTOMLEFT", texture, "TOPLEFT")
                     ch:SetPoint("BOTTOMRIGHT", texture, "TOPRIGHT")
                 end
 
-                if (cp and ps) then
+                if cp and ps then
                     local texture = frame.Power:GetStatusBarTexture()
                     cp:ClearAllPoints()
                     cp:SetPoint("BOTTOMLEFT", texture, "TOPLEFT")
@@ -251,22 +235,16 @@ function VUF:UpdateElementAnchor(frame, element)
         frame.AuraBars.down = growthDirection == "DOWN"
     end
     local anchor = config.anchor
-    if element == "stagger" and not (E.myclass == "MONK") then
-        return
-    end
+    if element == "stagger" and not (E.myclass == "MONK") then return end
 
     local hasAnchor = anchor ~= nil
     if element == "castbar" then
         if frame.unit == "player" or frame.unit == "target" then
-            if self.db.units[frame.unit].horizCastbar then
-                hasAnchor = false
-            end
+            if self.db.units[frame.unit].horizCastbar then hasAnchor = false end
         end
     end
 
-    if element == "stagger" then
-        enabled = GetSpecialization() == 1
-    end
+    if element == "stagger" then enabled = GetSpecialization() == 1 end
 
     if element == "health" then
         frame.Health:ClearAllPoints()
@@ -287,14 +265,10 @@ function VUF:UpdateElementAnchor(frame, element)
         local xOffset = anchor.xOffset
         local yOffset = anchor.yOffset
         local _frame = frame[e]
-        if (element == "classbars") then
-            if config.spaced then
-                yOffset = yOffset + config.spacesettings.offset
-            end
+        if element == "classbars" then
+            if config.spaced then yOffset = yOffset + config.spacesettings.offset end
         end
-        if not _frame or not attachTo then
-            return
-        end
+        if not _frame or not attachTo then return end
         _frame:Point(pointFrom, attachTo, pointTo, xOffset, yOffset)
     elseif element == "aurabars" or element == "castbar" then
         local f, format, moverFormat
@@ -308,16 +282,10 @@ function VUF:UpdateElementAnchor(frame, element)
             moverFormat = "%s Castbar Mover"
         end
         local stringTitle = E:StringTitle(frame.unit)
-        if stringTitle:find("target") then
-            stringTitle = gsub(stringTitle, "target", "Target")
-        end
+        if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
         local name = string.format(format, stringTitle)
-        if not self.moversCreated then
-            self.moversCreated = {}
-        end
-        if not self.moversCreated[frame.unit] then
-            self.moversCreated[frame.unit] = {}
-        end
+        if not self.moversCreated then self.moversCreated = {} end
+        if not self.moversCreated[frame.unit] then self.moversCreated[frame.unit] = {} end
         if not self.moversCreated[frame.unit][element] then
             local holder = CreateFrame("Frame", nil, f)
             holder:Size(f:GetWidth(), f:GetHeight())
@@ -342,15 +310,13 @@ function VUF:UpdateElementAnchor(frame, element)
                 nil,
                 nil,
                 nil,
-                "ALL,SOLO,NIHILISTUI"
+                "ALL,SOLO,NIHILISTZSCHEUI"
             )
             self.moversCreated[frame.unit][element] = true
         end
     elseif element == "portrait" then
         local portrait = frame.Portrait
-        if not portrait then
-            return
-        end
+        if not portrait then return end
         portrait:ClearAllPoints()
         portrait:SetFrameLevel(frame.Health:GetFrameLevel())
         portrait:SetAllPoints(frame.Health)
@@ -362,9 +328,7 @@ function VUF:UpdateElementAnchor(frame, element)
             portrait:Hide()
         end
     end
-    if config.tag then
-        frame:Tag(frame[e], config.tag)
-    end
+    if config.tag then frame:Tag(frame[e], config.tag) end
     if config.value and frame[e].value then
         local venable = config.value.enabled
         local vanchor = config.value.anchor
@@ -374,9 +338,7 @@ function VUF:UpdateElementAnchor(frame, element)
         local vxOffset = vanchor.xOffset
         local vyOffset = vanchor.yOffset
         frame[e].value:SetPoint(vpointFrom, vattachTo, vpointTo, vxOffset, vyOffset)
-        if config.value.tag then
-            frame:Tag(frame[e].value, config.value.tag)
-        end
+        if config.value.tag then frame:Tag(frame[e].value, config.value.tag) end
         if venable then
             frame[e].value:Show()
         else
@@ -390,9 +352,7 @@ function VUF:UpdateElementAnchor(frame, element)
     end
 
     if enabled then
-        if element == "aurabars" then
-            frame[e]:ForceUpdate()
-        end
+        if element == "aurabars" then frame[e]:ForceUpdate() end
         if config.value and frame[e].value then
             if config.value.enabled then
                 frame[e].value:Show()
@@ -400,32 +360,21 @@ function VUF:UpdateElementAnchor(frame, element)
                 frame[e].value:Hide()
             end
         end
-        if (element == "raidicon") then
-            frame[e]:Size(frame:GetWidth() * .8)
-        end
-        if frame[e].ForceUpdate and not frame.OnFirstUpdateFinish then
-            frame[e]:ForceUpdate()
-        end
+        if element == "raidicon" then frame[e]:Size(frame:GetWidth() * 0.8) end
+        if frame[e].ForceUpdate and not frame.OnFirstUpdateFinish then frame[e]:ForceUpdate() end
         frame:EnableElement(e)
     else
         frame:DisableElement(e)
-        if config.value and frame[e].value then
-            frame[e].value:Hide()
-        end
+        if config.value and frame[e].value then frame[e].value:Hide() end
         if element == "classbars" then -- Dirty hack for DKs
-            VUF:ScheduleTimer(
-                function()
-                    local oldValue = E.db.unitframe.units.player.classbar.enable
-                    E.db.unitframe.units.player.classbar.enable = false
-                    UF:CreateAndUpdateUF("player")
-                    E.db.unitframe.units.player.classbar.enable = oldValue
-                    UF:CreateAndUpdateUF("player")
-                end,
-                1
-            )
+            VUF:ScheduleTimer(function()
+                local oldValue = E.db.unitframe.units.player.classbar.enable
+                E.db.unitframe.units.player.classbar.enable = false
+                UF:CreateAndUpdateUF("player")
+                E.db.unitframe.units.player.classbar.enable = oldValue
+                UF:CreateAndUpdateUF("player")
+            end, 1)
         end
-        if frame[e].ForceUpdate then
-            frame[e]:ForceUpdate()
-        end
+        if frame[e].ForceUpdate then frame[e]:ForceUpdate() end
     end
 end

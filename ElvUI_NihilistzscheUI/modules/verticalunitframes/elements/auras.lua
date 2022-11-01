@@ -134,11 +134,11 @@ function VUF:PostCreateAura(button)
     button.Glow:Point("TOPLEFT", button, "TOPLEFT", -3, 3)
     button.Glow:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
     button.Glow:SetFrameStrata("BACKGROUND")
-    button.Glow:SetBackdrop {
+    button.Glow:SetBackdrop({
         edgeFile = E.media.blankTex,
         edgeSize = 3,
-        insets = {left = 0, right = 0, top = 0, bottom = 0}
-    }
+        insets = { left = 0, right = 0, top = 0, bottom = 0 },
+    })
     button.Glow:SetBackdropColor(0, 0, 0, 0)
     button.Glow:SetBackdropBorderColor(0, 0, 0)
 
@@ -148,7 +148,7 @@ function VUF:PostCreateAura(button)
     local FadeOut = Animation:CreateAnimation("Alpha")
     FadeOut:SetFromAlpha(1)
     FadeOut:SetToAlpha(0.1)
-    FadeOut:SetDuration(.6)
+    FadeOut:SetDuration(0.6)
     FadeOut:SetSmoothing("IN_OUT")
 
     button.Animation = Animation
@@ -158,8 +158,8 @@ end
 function VUF:PostUpdateAura(unit, icon, index, _, _, _, duration)
     local _, _, _, _, dtype, _, expirationTime, _, isStealable = UnitAura(unit, index, icon.filter)
     if icon then
-        if (icon.filter == "HARMFUL") then
-            if (not UnitIsFriend("player", unit) and icon.owner ~= "player" and icon.owner ~= "vehicle") then
+        if icon.filter == "HARMFUL" then
+            if not UnitIsFriend("player", unit) and icon.owner ~= "player" and icon.owner ~= "vehicle" then
                 icon.icon:SetDesaturated(true)
                 icon:SetBackdropBorderColor(unpack(E.media.bordercolor))
             else
@@ -169,17 +169,14 @@ function VUF:PostUpdateAura(unit, icon, index, _, _, _, duration)
             end
         else
             if
-                (isStealable or
-                    ((E.myclass == "MAGE" or E.myclass == "PRIEST" or E.myclass == "SHAMAN") and dtype == "Magic")) and
-                    not UnitIsFriend("player", unit)
-             then
-                if not icon.Animation:IsPlaying() then
-                    icon.Animation:Play()
-                end
+                (
+                    isStealable
+                    or ((E.myclass == "MAGE" or E.myclass == "PRIEST" or E.myclass == "SHAMAN") and dtype == "Magic")
+                ) and not UnitIsFriend("player", unit)
+            then
+                if not icon.Animation:IsPlaying() then icon.Animation:Play() end
             else
-                if icon.Animation:IsPlaying() then
-                    icon.Animation:Stop()
-                end
+                if icon.Animation:IsPlaying() then icon.Animation:Stop() end
             end
         end
 

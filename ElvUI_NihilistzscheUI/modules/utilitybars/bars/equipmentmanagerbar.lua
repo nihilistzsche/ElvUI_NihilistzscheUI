@@ -25,25 +25,14 @@ local C_EquipmentSet_GetNumEquipmentSets = _G.C_EquipmentSet.GetNumEquipmentSets
 local C_EquipmentSet_UseEquipmentSet = _G.C_EquipmentSet.UseEquipmentSet
 
 function EM:CreateBar()
-    local bar =
-        NUB:CreateBar(
+    local bar = NUB:CreateBar(
         "NihilistzscheUI_EquipmentManagerBar",
         "equipmentManagerBar",
-        {"BOTTOMLEFT", _G.LeftChatPanel, "BOTTOMRIGHT", 4, 24},
+        { "BOTTOMLEFT", _G.LeftChatPanel, "BOTTOMRIGHT", 4, 24 },
         "Equipment Manager Bar"
     )
-    NUB.RegisterCreateButtonHook(
-        bar,
-        function(button)
-            self:CreateButtonHook(button)
-        end
-    )
-    NUB.RegisterUpdateButtonHook(
-        bar,
-        function(button)
-            self.UpdateButtonHook(bar, button)
-        end
-    )
+    NUB.RegisterCreateButtonHook(bar, function(button) self:CreateButtonHook(button) end)
+    NUB.RegisterUpdateButtonHook(bar, function(button) self.UpdateButtonHook(bar, button) end)
     bar:Size(36, 160)
 
     return bar
@@ -58,55 +47,40 @@ function EM.CreateEditButton(button)
     editButton.Icon = editButton:CreateTexture(nil, "ARTWORK")
     editButton.Icon:SetTexture("Interface\\WorldMap\\GEAR_64GREY")
     editButton.Icon:SetAllPoints()
-    editButton.Icon:SetAlpha(.5)
+    editButton.Icon:SetAlpha(0.5)
 
-    editButton:SetScript(
-        "OnEnter",
-        function(self)
-            local setName = self:GetParent().data
-            if not setName then
-                return
-            end
-            self.Icon:SetAlpha(1)
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(EQUIPMENT_SET_EDIT)
-        end
-    )
-    editButton:SetScript(
-        "OnLeave",
-        function(self)
-            local setName = self:GetParent().data
-            if not setName then
-                return
-            end
-            self.Icon:SetAlpha(.5)
-            GameTooltip_Hide()
-        end
-    )
-    editButton:SetScript(
-        "OnClick",
-        function(self)
-            local setName = self:GetParent().data
-            if not setName then
-                return
-            end
-            ToggleCharacter("PaperDollFrame")
-            local isShown = PaperDollEquipmentManagerPane:IsVisible()
-            PaperDollEquipmentManagerPane:Show()
-            PaperDollEquipmentManagerPane:SetShown(isShown)
-            PaperDollEquipmentManagerPane.selectedSetName = setName
-            PaperDollFrame_ClearIgnoredSlots()
-            PaperDollFrame_IgnoreSlotsForSet(setName)
-            PaperDollEquipmentManagerPane_Update()
-            GearManagerDialogPopup:Hide()
-            StaticPopup_Hide("CONFIRM_SAVE_EQUIPMENT_SET")
-            StaticPopup_Hide("CONFIRM_OVERWRITE_EQUIPMENT_SET")
-            GearManagerDialogPopup:Show()
-            GearManagerDialogPopup.isEdit = true
-            GearManagerDialogPopup.origName = setName
-            RecalculateGearManagerDialogPopup(setName, self:GetParent().texture:GetTexture())
-        end
-    )
+    editButton:SetScript("OnEnter", function(self)
+        local setName = self:GetParent().data
+        if not setName then return end
+        self.Icon:SetAlpha(1)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:SetText(EQUIPMENT_SET_EDIT)
+    end)
+    editButton:SetScript("OnLeave", function(self)
+        local setName = self:GetParent().data
+        if not setName then return end
+        self.Icon:SetAlpha(0.5)
+        GameTooltip_Hide()
+    end)
+    editButton:SetScript("OnClick", function(self)
+        local setName = self:GetParent().data
+        if not setName then return end
+        ToggleCharacter("PaperDollFrame")
+        local isShown = PaperDollEquipmentManagerPane:IsVisible()
+        PaperDollEquipmentManagerPane:Show()
+        PaperDollEquipmentManagerPane:SetShown(isShown)
+        PaperDollEquipmentManagerPane.selectedSetName = setName
+        PaperDollFrame_ClearIgnoredSlots()
+        PaperDollFrame_IgnoreSlotsForSet(setName)
+        PaperDollEquipmentManagerPane_Update()
+        GearManagerDialogPopup:Hide()
+        StaticPopup_Hide("CONFIRM_SAVE_EQUIPMENT_SET")
+        StaticPopup_Hide("CONFIRM_OVERWRITE_EQUIPMENT_SET")
+        GearManagerDialogPopup:Show()
+        GearManagerDialogPopup.isEdit = true
+        GearManagerDialogPopup.origName = setName
+        RecalculateGearManagerDialogPopup(setName, self:GetParent().texture:GetTexture())
+    end)
 
     editButton:Show()
 
@@ -121,30 +95,20 @@ function EM.CreateSaveButton(button)
     saveButton:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT", 0, 0)
     saveButton.Icon = saveButton:CreateTexture(nil, "ARTWORK")
     saveButton.Icon:SetAllPoints()
-    saveButton:SetScript(
-        "OnEnter",
-        function(self)
-            local setName = self:GetParent().data
-            if not setName then
-                return
-            end
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(SAVE_CHANGES)
-        end
-    )
+    saveButton:SetScript("OnEnter", function(self)
+        local setName = self:GetParent().data
+        if not setName then return end
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:SetText(SAVE_CHANGES)
+    end)
     saveButton:SetScript("OnLeave", GameTooltip_Hide)
-    saveButton:SetScript(
-        "OnClick",
-        function(self)
-            local setName = self:GetParent().data
-            if not setName then
-                return
-            end
-            local setID = C_EquipmentSet_GetEquipmentSetID(setName)
-            local Dialog = StaticPopup_Show("CONFIRM_SAVE_EQUIPMENT_SET", setName)
-            Dialog.data = setID
-        end
-    )
+    saveButton:SetScript("OnClick", function(self)
+        local setName = self:GetParent().data
+        if not setName then return end
+        local setID = C_EquipmentSet_GetEquipmentSetID(setName)
+        local Dialog = StaticPopup_Show("CONFIRM_SAVE_EQUIPMENT_SET", setName)
+        Dialog.data = setID
+    end)
 
     saveButton:Show()
 
@@ -154,7 +118,7 @@ end
 function EM:CreateButtonHook(button)
     button.missingOverlay = button:CreateTexture(nil, "OVERLAY")
     button.missingOverlay:SetInside()
-    button.missingOverlay:SetColorTexture(1, .2, .2, .4)
+    button.missingOverlay:SetColorTexture(1, 0.2, 0.2, 0.4)
 
     button.setnametext = button:CreateFontString(nil, "OVERLAY")
     button.setnametext:FontTemplate(LSM:Fetch("font", E.db.general.font), 10, "THINOUTLINE")
@@ -164,25 +128,18 @@ function EM:CreateButtonHook(button)
     button.setnametext:Point("TOP", 0, 0)
 
     button.SetTooltip = function(_self)
-        if not _self.data then
-            return nil
-        end
+        if not _self.data then return nil end
         local ret = GameTooltip:SetEquipmentSet(_self.data)
         GameTooltip:Show()
         return ret
     end
-    button:SetScript(
-        "OnClick",
-        function(_self)
-            if not _self.data then
-                return
-            end
-            local equipmentSetID = C_EquipmentSet_GetEquipmentSetID(_self.data)
-            if not select(4, C_EquipmentSet_GetEquipmentSetInfo(equipmentSetID)) then
-                C_EquipmentSet_UseEquipmentSet(equipmentSetID)
-            end
+    button:SetScript("OnClick", function(_self)
+        if not _self.data then return end
+        local equipmentSetID = C_EquipmentSet_GetEquipmentSetID(_self.data)
+        if not select(4, C_EquipmentSet_GetEquipmentSetInfo(equipmentSetID)) then
+            C_EquipmentSet_UseEquipmentSet(equipmentSetID)
         end
-    )
+    end)
 
     button.editButton = self.CreateEditButton(button)
     button.saveButton = self.CreateSaveButton(button)
@@ -197,7 +154,7 @@ function EM.UpdateButtonHook(bar, button)
     button.texture:SetTexture(setIcon)
     button.missingOverlay:SetShown(numMissing > 0)
 
-    if (numEquipped < numItems) then
+    if numEquipped < numItems then
         button.saveButton.Icon:SetTexture("Interface\\RaidFrame\\ReadyCheck-NotReady")
         button.saveButton:Enable()
         button.saveButton:EnableMouse(true)
@@ -223,14 +180,14 @@ function EM:UpdateBar(bar)
 
     NUB.UpdateBar(self, bar, "ELVUIBAR20BINDBUTTON")
     for _, button in ipairs(bar.buttons) do
-        if (bar.db.mouseover) then
-            if not (self.sbhooks[button]) then
+        if bar.db.mouseover then
+            if not self.sbhooks[button] then
                 self:HookScript(button.editButton, "OnEnter", "SecondaryButton_OnEnter")
                 self:HookScript(button.saveButton, "OnEnter", "SecondaryButton_OnEnter")
                 self.sbhooks[button] = true
             end
         else
-            if (self.sbhooks[button]) then
+            if self.sbhooks[button] then
                 self:Unhook(button.editButton, "OnEnter")
                 self:Unhook(button.saveButton, "OnEnter")
                 self.sbhooks[button] = nil
@@ -239,9 +196,7 @@ function EM:UpdateBar(bar)
     end
 end
 
-function EM:SecondaryButton_OnEnter(button)
-    self:Button_OnEnter(button:GetParent())
-end
+function EM:SecondaryButton_OnEnter(button) self:Button_OnEnter(button:GetParent()) end
 
 function EM:Initialize()
     NUB:InjectScripts(self)

@@ -16,25 +16,14 @@ local C_Timer_After = _G.C_Timer.After
 local CreateFrame = _G.CreateFrame
 
 function SSB:CreateBar()
-    local bar =
-        NUB:CreateBar(
+    local bar = NUB:CreateBar(
         "NihilistzscheUI_SpecSwitchBar",
         "specSwitchBar",
-        {"CENTER", E.UIParent, "CENTER", 0, 0},
+        { "CENTER", E.UIParent, "CENTER", 0, 0 },
         "SpecSwitchBar"
     )
-    NUB.RegisterCreateButtonHook(
-        bar,
-        function(button)
-            self:CreateButtonHook(button)
-        end
-    )
-    NUB.RegisterUpdateButtonHook(
-        bar,
-        function(button)
-            self.UpdateButtonHook(button)
-        end
-    )
+    NUB.RegisterCreateButtonHook(bar, function(button) self:CreateButtonHook(button) end)
+    NUB.RegisterUpdateButtonHook(bar, function(button) self.UpdateButtonHook(button) end)
     bar:Size(32, 32)
 
     NUB.CreateButtons(bar, GetNumSpecializations() + 1)
@@ -50,15 +39,15 @@ function SSB:CreateButtonHook(button)
         GameTooltip:SetOwner(_self, "ANCHOR_RIGHT")
         GameTooltip:SetText(format("%s %s", icon, name), 1, 1, 1)
         GameTooltip:AddLine(description, nil, nil, nil, true)
-        if (GetSpecialization() ~= _self.data) then
+        if GetSpecialization() ~= _self.data then
             GameTooltip:AddLine(" ")
             GameTooltip:AddLine("Click to change specialization")
         end
-        if (GetLootSpecialization() ~= specID) then
+        if GetLootSpecialization() ~= specID then
             local lootSpec = GetLootSpecialization()
             local str = "Right-click to set the loot specialization to %s.|nCurrently %s."
             local lootStr
-            if (lootSpec == 0) then
+            if lootSpec == 0 then
                 lootStr = ("Default (%s)"):format(select(2, GetSpecializationInfo(GetSpecialization())))
             else
                 lootStr = select(2, GetSpecializationInfoByID(lootSpec))
@@ -69,26 +58,21 @@ function SSB:CreateButtonHook(button)
         GameTooltip:Show()
         return false
     end
-    button:SetScript(
-        "OnClick",
-        function(_self, _button)
-            if (_button == "LeftButton" and _self.data ~= GetSpecialization()) then
-                SetSpecialization(_self.data)
-            end
-            if (_button == "RightButton" and _self.data ~= GetLootSpecialization()) then
-                SetLootSpecialization(GetSpecializationInfo(_self.data))
-            end
+    button:SetScript("OnClick", function(_self, _button)
+        if _button == "LeftButton" and _self.data ~= GetSpecialization() then SetSpecialization(_self.data) end
+        if _button == "RightButton" and _self.data ~= GetLootSpecialization() then
+            SetLootSpecialization(GetSpecializationInfo(_self.data))
         end
-    )
+    end)
 end
 
 function SSB.UpdateButtonHook(button)
-    if (button.data == 0) then
+    if button.data == 0 then
         button.SetTooltip = function(self)
             local lootSpec = GetLootSpecialization()
             local str = "Set the loot specialization to Default.|nCurrently %s."
             local lootStr
-            if (lootSpec == 0) then
+            if lootSpec == 0 then
                 lootStr = ("Default (%s)"):format(select(2, GetSpecializationInfo(GetSpecialization())))
             else
                 lootStr = select(2, GetSpecializationInfoByID(lootSpec))
@@ -98,21 +82,16 @@ function SSB.UpdateButtonHook(button)
             GameTooltip:Show()
             return false
         end
-        button:SetScript(
-            "OnClick",
-            function()
-                SetLootSpecialization(0)
-            end
-        )
-        if (GetLootSpecialization() == 0) then
+        button:SetScript("OnClick", function() SetLootSpecialization(0) end)
+        if GetLootSpecialization() == 0 then
             button:SetBackdropBorderColor(1, 1, 0)
         else
             button:SetTemplate("Transparent")
         end
     else
-        if (GetSpecialization() == button.data) then
+        if GetSpecialization() == button.data then
             button:SetBackdropBorderColor(0, 1, 0)
-        elseif (GetLootSpecialization() == GetSpecializationInfo(button.data)) then
+        elseif GetLootSpecialization() == GetSpecializationInfo(button.data) then
             button:SetBackdropBorderColor(1, 1, 0)
         else
             button:SetTemplate("Transparent")
@@ -120,18 +99,16 @@ function SSB.UpdateButtonHook(button)
     end
 end
 
-local function UpdateBarClosure()
-    SSB:UpdateBar(SSB.bar)
-end
+local function UpdateBarClosure() SSB:UpdateBar(SSB.bar) end
 
 function SSB:UpdateBar(bar)
-    if (GetNumSpecializations() == 0) then
+    if GetNumSpecializations() == 0 then
         C_Timer_After(1, UpdateBarClosure)
         return
     end
     for i = 1, GetNumSpecializations() + 1 do
         local button = bar.buttons[i]
-        if (i <= GetNumSpecializations()) then
+        if i <= GetNumSpecializations() then
             button.data = i
             NUB.UpdateButtonAsCustom(bar, button, select(4, GetSpecializationInfo(i)))
         else

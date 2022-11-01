@@ -34,7 +34,7 @@ local statusColors = {
     "|cff0CD809",
     "|cffE8DA0F",
     "|cffFF9000",
-    "|cffD80909"
+    "|cffD80909",
 }
 
 local enteredFrame = false
@@ -50,12 +50,10 @@ _G.StaticPopupDialogs.CONFIRM_RELOAD_UI = {
     text = L["Reload UI?"],
     button1 = L.Yes,
     button2 = L.No,
-    OnAccept = function()
-        ReloadUI()
-    end,
+    OnAccept = function() ReloadUI() end,
     timeout = 10,
     whileDead = true,
-    hideOnEscape = true
+    hideOnEscape = true,
 }
 
 local function FormatMemory(memory)
@@ -71,24 +69,20 @@ end
 
 local function RebuildAddonList()
     local addonCount = GetNumAddOns()
-    if addonCount == #memoryTable then
-        return
-    end
+    if addonCount == #memoryTable then return end
 
     memoryTable = {}
     cpuTable = {}
     for i = 1, addonCount do
-        memoryTable[i] = {i, select(2, GetAddOnInfo(i)), 0, IsAddOnLoaded(i)}
-        cpuTable[i] = {i, select(2, GetAddOnInfo(i)), 0, IsAddOnLoaded(i)}
+        memoryTable[i] = { i, select(2, GetAddOnInfo(i)), 0, IsAddOnLoaded(i) }
+        cpuTable[i] = { i, select(2, GetAddOnInfo(i)), 0, IsAddOnLoaded(i) }
     end
 end
 
 local function GetNumLoadedAddons()
     local loaded = 0
     for i = 1, GetNumAddOns() do
-        if IsAddOnLoaded(i) then
-            loaded = loaded + 1
-        end
+        if IsAddOnLoaded(i) then loaded = loaded + 1 end
     end
     return loaded
 end
@@ -104,14 +98,9 @@ local function UpdateMemory()
         totalMemory = totalMemory + addonMemory
     end
 
-    sort(
-        memoryTable,
-        function(a, b)
-            if a and b then
-                return a[3] > b[3]
-            end
-        end
-    )
+    sort(memoryTable, function(a, b)
+        if a and b then return a[3] > b[3] end
+    end)
 
     return totalMemory
 end
@@ -127,14 +116,9 @@ local function UpdateCPU()
         totalCPU = totalCPU + addonCPU
     end
 
-    sort(
-        cpuTable,
-        function(a, b)
-            if a and b then
-                return a[3] > b[3]
-            end
-        end
-    )
+    sort(cpuTable, function(a, b)
+        if a and b then return a[3] > b[3] end
+    end)
 
     return totalCPU
 end
@@ -206,10 +190,8 @@ local function OnEnter(self)
     if IsShiftKeyDown() or not cpuProfiling then
         DT.tooltip:AddLine(" ")
         for i = 1, #memoryTable do
-            if E.db.nihilistzscheui.sysdt.maxAddons - shown <= 1 then
-                break
-            end
-            if (memoryTable[i][4]) then
+            if E.db.nihilistzscheui.sysdt.maxAddons - shown <= 1 then break end
+            if memoryTable[i][4] then
                 local red = memoryTable[i][3] / totalMemory
                 local green = 1 - red
                 DT.tooltip:AddDoubleLine(
@@ -219,7 +201,7 @@ local function OnEnter(self)
                     1,
                     1,
                     red,
-                    green + .5,
+                    green + 0.5,
                     0
                 )
                 shown = shown + 1
@@ -231,10 +213,8 @@ local function OnEnter(self)
         shown = 0
         DT.tooltip:AddLine(" ")
         for i = 1, #cpuTable do
-            if E.db.nihilistzscheui.sysdt.maxAddons - shown <= 1 then
-                break
-            end
-            if (cpuTable[i][4]) then
+            if E.db.nihilistzscheui.sysdt.maxAddons - shown <= 1 then break end
+            if cpuTable[i][4] then
                 local red = cpuTable[i][3] / totalCPU
                 local green = 1 - red
                 DT.tooltip:AddDoubleLine(
@@ -244,7 +224,7 @@ local function OnEnter(self)
                     1,
                     1,
                     red,
-                    green + .5,
+                    green + 0.5,
                     0
                 )
                 shown = shown + 1
@@ -299,19 +279,19 @@ local function Update(self, t)
         end
 
         -- set the datatext
-        local fpsString =
-            E.db.nihilistzscheui.sysdt.showFPS and ("%s: %s%d|r "):format(L.FPS, statusColors[fpsColor], fps) or ""
-        local msString =
-            E.db.nihilistzscheui.sysdt.showMS and ("%s: %s%d|r "):format(L.MS, statusColors[latencyColor], latency) or
-            ""
-        local memString =
-            E.db.nihilistzscheui.sysdt.showMemory and ("|cffffff00%s|r"):format(FormatMemory(UpdateMemory())) or ""
+        local fpsString = E.db.nihilistzscheui.sysdt.showFPS
+                and ("%s: %s%d|r "):format(L.FPS, statusColors[fpsColor], fps)
+            or ""
+        local msString = E.db.nihilistzscheui.sysdt.showMS
+                and ("%s: %s%d|r "):format(L.MS, statusColors[latencyColor], latency)
+            or ""
+        local memString = E.db.nihilistzscheui.sysdt.showMemory
+                and ("|cffffff00%s|r"):format(FormatMemory(UpdateMemory()))
+            or ""
         self.text:SetText(join("", fpsString, msString, memString))
         int2 = 1
 
-        if enteredFrame then
-            OnEnter(self)
-        end
+        if enteredFrame then OnEnter(self) end
     end
 end
 

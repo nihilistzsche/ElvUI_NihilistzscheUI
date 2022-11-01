@@ -51,16 +51,23 @@ function VUF.CreateScreenFlash()
     f:SetAlpha(0)
 end
 
-function VUF:ActivateFrame(frame)
-    E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha)
+function VUF:PortraitWorkaround()
+    hooksecurefunc(E, "UIFrameFadeIn", function(_, frame)
+        if not VUF.db.hideOOC then return end
+        if frame.__nui__needsVUFPortraitFix then frame.Portrait:SetAlpha(math.min(VUF.db.alpha, 0.35)) end
+    end)
+    hooksecurefunc(E, "UIFrameFadeOut", function(_, frame)
+        if not VUF.db.hideOOC then return end
+        if frame.__nui__needsVUFPortraitFix then frame.Portrait:SetAlpha(VUF.db.alphaOOC) end
+    end)
 end
 
-function VUF:DeactivateFrame(frame)
-    E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC)
-end
+function VUF:ActivateFrame(frame) E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha) end
+
+function VUF:DeactivateFrame(frame) E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC) end
 
 function VUF:UpdateHideSetting()
-    if (self.db.hideOOC) then
+    if self.db.hideOOC then
         self:EnableHide()
     else
         self:DisableHide()
@@ -68,9 +75,7 @@ function VUF:UpdateHideSetting()
 end
 
 function VUF:UpdateHiddenStatus(frame, event)
-    if frame.unit == "target" or not self.db.hideOOC then
-        return
-    end
+    if frame.unit == "target" or not self.db.hideOOC then return end
 
     local combatEnded = event == "PLAYER_REGEN_ENABLED"
     local inCombat = event == "PLAYER_REGEN_DISABLED" or UnitAffectingCombat("player") or UnitAffectingCombat("pet")
@@ -92,18 +97,14 @@ function VUF.DisableFrame(f)
 end
 
 function VUF.EnableFrame(f, a, m)
-    if a == nil then
-        a = 1
-    end
-    if m == nil then
-        m = true
-    end
+    if a == nil then a = 1 end
+    if m == nil then m = true end
     f:Show()
     f:EnableMouse(m)
     f:SetAlpha(a)
 end
 
-local elv_units = {"player", "target", "pet", "pettarget", "targettarget", "focus", "focustarget"}
+local elv_units = { "player", "target", "pet", "pettarget", "targettarget", "focus", "focustarget" }
 
 function VUF.UpdateElvUFSetting()
     if InCombatLockdown() or UnitAffectingCombat("player") or UnitAffectingCombat("pet") then
@@ -118,9 +119,7 @@ function VUF.UpdateElvUFSetting()
     end
     for _, unit in pairs(elv_units) do
         E.db.unitframe.units[unit].enable = value
-        if not value and UF.units[unit] then
-            UF.units[unit]:Kill()
-        end
+        if not value and UF.units[unit] then UF.units[unit]:Kill() end
     end
 end
 
@@ -151,7 +150,7 @@ function VUF:Enable()
         end
     end
 
-    if (self.db.hideOOC) then
+    if self.db.hideOOC then
         self:EnableHide()
     else
         self:DisableHide()
@@ -194,84 +193,52 @@ VUF.units = {}
 
 VUF.RegisteredUnits = {}
 
-function VUF:RegisterUnit(unit)
-    tinsert(self.RegisteredUnits, unit)
-end
+function VUF:RegisterUnit(unit) tinsert(self.RegisteredUnits, unit) end
 
 function VUF:Initialize()
     NUI:RegisterDB(self, "vuf")
-    local ForUpdateAll = function(_self)
-        _self:UpdateAll()
-    end
+    local ForUpdateAll = function(_self) _self:UpdateAll() end
     self.ForUpdateAll = ForUpdateAll
 
     self.CreateWarningFrame()
     self.CreateScreenFlash()
 
-    oUF:RegisterStyle(
-        "NihilistzscheUI_VerticalUnitFrames",
-        function(frame, unit)
-            frame:SetFrameLevel(5)
-            VUF:ConstructVerticalUnitFrame(frame, unit)
-        end
-    )
+    oUF:RegisterStyle("NihilistzscheUI_VerticalUnitFrames", function(frame, unit)
+        frame:SetFrameLevel(5)
+        VUF:ConstructVerticalUnitFrame(frame, unit)
+    end)
 
     oUF:SetActiveStyle("NihilistzscheUI_VerticalUnitFrames")
 
     local function spawnUnit(unit)
         local stringTitle = E:StringTitle(unit)
-        if stringTitle:find("target") then
-            stringTitle = gsub(stringTitle, "target", "Target")
-        end
+        if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
         oUF:Spawn(unit, "NihilistzscheUF_" .. stringTitle)
     end
 
-    local needsManualCreate = {"player", "target"}
+    local needsManualCreate = { "player", "target" }
     for _, unit in ipairs(needsManualCreate) do
         spawnUnit(unit)
     end
 
     for _, unit in pairs(self.RegisteredUnits) do
-        if not tContains(needsManualCreate, unit) then
-            spawnUnit(unit)
-        end
+        if not tContains(needsManualCreate, unit) then spawnUnit(unit) end
     end
 
-    hooksecurefunc(
-        E,
-        "UpdateAll",
-        function()
-            self:UpdateAll()
-        end
-    )
-    hooksecurefunc(
-        UF,
-        "Update_AllFrames",
-        function()
-            self:UpdateAllFrames()
-        end
-    )
-    hooksecurefunc(
-        UF,
-        "CreateAndUpdateUF",
-        function(_, unit)
-            self:UpdateFrame(unit)
-        end
-    )
+    hooksecurefunc(E, "UpdateAll", function() self:UpdateAll() end)
+    hooksecurefunc(UF, "Update_AllFrames", function() self:UpdateAllFrames() end)
+    hooksecurefunc(UF, "CreateAndUpdateUF", function(_, unit) self:UpdateFrame(unit) end)
     if CastingBarFrame then
         CastingBarFrame:Hide()
-        CastingBarFrame.Show = function()
-        end
-        CastingBarFrame.SetShown = function()
-        end
+        CastingBarFrame.Show = function() end
+        CastingBarFrame.SetShown = function() end
     end
 
+    self:PortraitWorkaround()
     self:UpdateAll()
 
     self:RegisterEvent("UNIT_HEALTH")
-    if COMP.FCT then
-        self:RegisterEvent("PLAYER_TARGET_CHANGED")
-    end
+    if COMP.FCT then self:RegisterEvent("PLAYER_TARGET_CHANGED") end
     self.version = GetAddOnMetadata(addon, "Version")
 end
 

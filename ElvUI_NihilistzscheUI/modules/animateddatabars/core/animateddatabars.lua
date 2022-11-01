@@ -49,14 +49,10 @@ function ADB:CreateAnimatedBar(tbl, key)
     local holder = bar.holder
 
     holder:SetTemplate("Transparent")
-    if COMP.MERS then
-        holder:Styling()
-    end
-    if not holder.shadow then
-        holder:CreateShadow()
-    end
+    if COMP.MERS then holder:Styling() end
+    if not holder.shadow then holder:CreateShadow() end
     ES:RegisterFrameShadows(holder)
-    local color = {bar:GetStatusBarColor()}
+    local color = { bar:GetStatusBarColor() }
     local value = bar:GetValue()
     local min, max = bar:GetMinMaxValues()
     local level = tbl:GetLevel()
@@ -74,28 +70,14 @@ function ADB:CreateAnimatedBar(tbl, key)
     end
     animatedStatusBar:SetStatusBarColor(unpack(color))
     local orientation = db.orientation
-    if orientation == "AUTOMATIC" then
-        orientation = bar:GetOrientation()
-    end
+    if orientation == "AUTOMATIC" then orientation = bar:GetOrientation() end
     animatedStatusBar:SetOrientation(orientation)
     animatedStatusBar:SetAnimatedValues(value, min, max, level)
     animatedStatusBar:ProcessChangesInstantly()
-    if key == "Experience" then
-        animatedStatusBar:GetStatusBarTexture():SetDrawLayer("ARTWORK", 4)
-    end
+    if key == "Experience" then animatedStatusBar:GetStatusBarTexture():SetDrawLayer("ARTWORK", 4) end
     animatedStatusBar:EnableMouse(true)
-    animatedStatusBar:SetScript(
-        "OnEnter",
-        function()
-            (bar.holder:GetScript("OnEnter"))(bar.holder)
-        end
-    )
-    animatedStatusBar:SetScript(
-        "OnLeave",
-        function()
-            (bar.holder:GetScript("OnLeave"))(bar.holder)
-        end
-    )
+    animatedStatusBar:SetScript("OnEnter", function() (bar.holder:GetScript("OnEnter"))(bar.holder) end)
+    animatedStatusBar:SetScript("OnLeave", function() (bar.holder:GetScript("OnLeave"))(bar.holder) end)
     E:RegisterStatusBar(animatedStatusBar)
     bar.textFrame = CreateFrame("Frame", nil, animatedStatusBar)
     bar.textFrame:SetAllPoints()
@@ -106,32 +88,17 @@ function ADB:CreateAnimatedBar(tbl, key)
     bar.text:Point("CENTER", 0, 0)
     bar.animatedStatusBar = animatedStatusBar
     self:CreateTicks(holder)
-    hooksecurefunc(
-        DB,
-        key .. "Bar_Update",
-        function()
-            tbl:Update(bar)
-        end
-    )
-    C_Timer_After(
-        2,
-        function()
-            tbl:Update(bar)
-        end
-    )
+    hooksecurefunc(DB, key .. "Bar_Update", function() tbl:Update(bar) end)
+    C_Timer_After(2, function() tbl:Update(bar) end)
 end
 
 ADB.RegisteredDataBars = {}
 
-local prototype = {parent = ADB}
+local prototype = { parent = ADB }
 
-function prototype:GetParent()
-    return self.parent
-end
+function prototype:GetParent() return self.parent end
 
-function prototype:GetLevel()
-    return self.levelFunc()
-end
+function prototype:GetLevel() return self.levelFunc() end
 
 function prototype:Update(bar)
     local cur = self.curFunc()
@@ -142,27 +109,20 @@ function prototype:Update(bar)
 end
 
 function ADB:NewDataBar(curFunc, maxFunc, levelFunc)
-    if (curFunc) then
-        return Mixin(
-            {
-                curFunc = curFunc,
-                maxFunc = maxFunc,
-                levelFunc = levelFunc
-            },
-            prototype
-        )
+    if curFunc then
+        return Mixin({
+            curFunc = curFunc,
+            maxFunc = maxFunc,
+            levelFunc = levelFunc,
+        }, prototype)
     else
         return {
-            GetParent = function(_)
-                return self
-            end
+            GetParent = function(_) return self end,
         }
     end
 end
 
-function ADB:RegisterDataBar(tbl)
-    tinsert(self.RegisteredDataBars, tbl)
-end
+function ADB:RegisterDataBar(tbl) tinsert(self.RegisteredDataBars, tbl) end
 
 function ADB:InitializeDataBars()
     for _, tbl in pairs(self.RegisteredDataBars) do
@@ -172,9 +132,7 @@ end
 
 function ADB:Initialize()
     NUI:RegisterDB(self, "animateddatabars")
-    local ForUpdateAll = function(_self)
-        _self:UpdateTicks()
-    end
+    local ForUpdateAll = function(_self) _self:UpdateTicks() end
     self.ForUpdateAll = ForUpdateAll
 
     self:InitializeDataBars()

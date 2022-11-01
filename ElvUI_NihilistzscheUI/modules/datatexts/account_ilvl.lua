@@ -14,13 +14,9 @@ local tinsert = _G.tinsert
 local displayString = ""
 
 local function sortIlevels(entrya, entryb)
-    if entrya.faction ~= entryb.faction then
-        return entrya.faction > entryb.faction
-    end
+    if entrya.faction ~= entryb.faction then return entrya.faction > entryb.faction end
 
-    if entrya.ilvl == entryb.ilvl then
-        return true
-    end
+    if entrya.ilvl == entryb.ilvl then return true end
 
     return entrya.ilvl > entryb.ilvl
 end
@@ -35,28 +31,26 @@ end
 
 local SLEiconPath, iconPath, buildFactionIconString, buildClassIconString
 
-if (COMP.SLE) then
-    SLEiconPath = [[Interface\AddOns\ElvUI_SLE\media\textures\afk\factionlogo\]]
+if COMP.SLE then
+    SLEiconPath = [[Interface\AddOns\ElvUI_Shadow&Light\media\textures\afk\factionlogo\]]
 
-    buildFactionIconString = function(entry)
-        return "|T" .. SLEiconPath .. entry.faction .. ".blp:15:15:0:0:64:64:4:56:4:56|t"
-    end
+    buildFactionIconString =
+        function(entry) return "|T" .. SLEiconPath .. entry.faction .. ".blp:15:15:0:0:64:64:4:56:4:56|t" end
 end
 
 local function buildCharacterNameString(entry)
     if NUI.Private and not buildClassIconString then
         iconPath = [[Interface\AddOns\ElvUI_NihilistzscheUI_Private\media\textures\]]
-        buildClassIconString = function(_entry)
-            return "|T" .. iconPath .. _entry.class .. ".tga:15:15:0:0:64:64:4:56:4:56|t"
-        end
+        buildClassIconString =
+            function(_entry) return "|T" .. iconPath .. _entry.class .. ".tga:15:15:0:0:64:64:4:56:4:56|t" end
     end
     local classColors = entry.class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[entry.class]
     local color = E:RGBToHex(classColors.r, classColors.g, classColors.b)
-    if (COMP.SLE and NUI.Private) then
+    if COMP.SLE and NUI.Private then
         return format("%s %s%s|r %s", buildClassIconString(entry), color, entry.name, buildFactionIconString(entry))
-    elseif (NUI.Private) then
+    elseif NUI.Private then
         return format("%s %s%s|r", buildClassIconString(entry), color, entry.name)
-    elseif (COMP.SLE) then
+    elseif COMP.SLE then
         return format("%s%s|r %s", color, entry.name, buildFactionIconString(entry))
     else
         return format("%s%s|r", color, entry.name)
@@ -75,7 +69,7 @@ local function OnEnter(self)
     DT:SetupTooltip(self)
 
     local tbl = E.global.nihilistzscheui.accountilvl[E.myrealm]
-    if (not tbl) then
+    if not tbl then
         DT.tooltip:AddLine("No recorded ilevels?")
         DT.tooltip:Show()
         return
@@ -91,17 +85,11 @@ local function OnEnter(self)
 end
 
 local function addOrUpdateIlvlEntry()
-    if (not E.global.nihilistzscheui) then
-        E.global.nihilistzscheui = {}
-    end
+    if not E.global.nihilistzscheui then E.global.nihilistzscheui = {} end
 
-    if (not E.global.nihilistzscheui.accountilvl) then
-        E.global.nihilistzscheui.accountilvl = {}
-    end
+    if not E.global.nihilistzscheui.accountilvl then E.global.nihilistzscheui.accountilvl = {} end
 
-    if (not E.global.nihilistzscheui.accountilvl[E.myrealm]) then
-        E.global.nihilistzscheui.accountilvl[E.myrealm] = {}
-    end
+    if not E.global.nihilistzscheui.accountilvl[E.myrealm] then E.global.nihilistzscheui.accountilvl[E.myrealm] = {} end
 
     local name = E.myname
     local class = E.myclass
@@ -116,26 +104,22 @@ local function addOrUpdateIlvlEntry()
             break
         end
     end
-    if (not entry) then
-        entry = {name = name, class = class, faction = faction, ilvl = GetAverageItemLevel(), color = {r, g, b}}
+    if not entry then
+        entry = { name = name, class = class, faction = faction, ilvl = GetAverageItemLevel(), color = { r, g, b } }
         tinsert(E.global.nihilistzscheui.accountilvl[E.myrealm], entry)
     else
         entry.ilvl = GetAverageItemLevel()
-        entry.color = {r, g, b}
+        entry.color = { r, g, b }
     end
 
     return entry
 end
 
-local function UpdateDisplay(self)
-    self.text:SetText(displayString)
-end
+local function UpdateDisplay(self) self.text:SetText(displayString) end
 
 local function OnEvent(self)
     for _, v in pairs(E.global.nihilistzscheui.accountilvl[1] or {}) do
-        if (type(v) ~= "table") then
-            E.global.nihilistzscheui.accountilvl = {}
-        end
+        if type(v) ~= "table" then E.global.nihilistzscheui.accountilvl = {} end
     end
 
     local entry = addOrUpdateIlvlEntry()
@@ -157,24 +141,20 @@ end
 
 local function RmTrackedCharacter(msg)
     local name, realm
-    if (strfind(msg, "-")) then
+    if strfind(msg, "-") then
         name, realm = strmatch(msg, "(.+)-(.+)")
     else
         name = msg
     end
-    if (not realm) then
-        realm = E.myrealm
-    end
+    if not realm then realm = E.myrealm end
     local removeIndex = 0
     for i, entry in ipairs(E.global.nihilistzscheui.accountilvl[realm]) do
-        if (entry.name == name) then
+        if entry.name == name then
             removeIndex = i
             break
         end
     end
-    if (removeIndex ~= 0) then
-        tremove(E.global.nihilistzscheui.accountilvl[realm], removeIndex)
-    end
+    if removeIndex ~= 0 then tremove(E.global.nihilistzscheui.accountilvl[realm], removeIndex) end
 end
 
 _G.SLASH_RMILVLWATCH1 = "/rmilvlwatch"
@@ -185,7 +165,7 @@ E.valueColorUpdateFuncs[ValueColorUpdate] = true
 DT:RegisterDatatext(
     "NihilistzscheUI Account Item Level",
     "NihilistzscheUI",
-    {"PLAYER_ENTERING_WORLD", "PLAYER_EQUIPMENT_CHANGED", "PLAYER_AVG_ITEM_LEVEL_UPDATE"},
+    { "PLAYER_ENTERING_WORLD", "PLAYER_EQUIPMENT_CHANGED", "PLAYER_AVG_ITEM_LEVEL_UPDATE" },
     UpdateDisplay,
     OnEvent,
     nil,

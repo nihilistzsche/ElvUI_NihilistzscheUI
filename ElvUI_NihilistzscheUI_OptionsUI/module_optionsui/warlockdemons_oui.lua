@@ -1,18 +1,12 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local WD = NUI.WarlockDemons
-if not WD then
-    return
-end
+if not WD then return end
 local COMP = NUI.Compatibility
-if not COMP then
-    return
-end
+if not COMP then return end
 local NP = E.NamePlates
 
 function WD:GenerateOptions()
-    if E.myclass ~= "WARLOCK" or not COMP.ZP then
-        return nil
-    end
+    if E.myclass ~= "WARLOCK" or not COMP.ZP then return nil end
     local options = {
         type = "group",
         name = L["Warlock Demons"],
@@ -20,21 +14,19 @@ function WD:GenerateOptions()
             header = {
                 order = 1,
                 type = "header",
-                name = L["Demon Count"]
+                name = L["Demon Count"],
             },
             description = {
                 order = 2,
                 type = "description",
-                name = L["Timer bars and counts for demonology demons"]
+                name = L["Timer bars and counts for demonology demons"],
             },
             general = {
                 order = 3,
                 type = "group",
                 name = L.General,
                 guiInline = true,
-                get = function(info)
-                    return E.db.nihilistzscheui.warlockdemons[info[#info]]
-                end,
+                get = function(info) return E.db.nihilistzscheui.warlockdemons[info[#info]] end,
                 set = function(info, value)
                     E.db.nihilistzscheui.warlockdemons[info[#info]] = value
                     WD:UpdateAll()
@@ -44,7 +36,7 @@ function WD:GenerateOptions()
                         type = "toggle",
                         order = 1,
                         name = L.Enable,
-                        desc = L["Enable the demon count"]
+                        desc = L["Enable the demon count"],
                     },
                     resetsettings = {
                         type = "execute",
@@ -54,7 +46,7 @@ function WD:GenerateOptions()
                         func = function()
                             E:CopyTable(E.db.nihilistzscheui.warlockdemons, P.nihilistzscheui.warlockdemons)
                             WD:UpdateAll()
-                        end
+                        end,
                     },
                     width = {
                         type = "range",
@@ -63,7 +55,7 @@ function WD:GenerateOptions()
                         desc = L["Width of the bars"],
                         min = 10,
                         max = 500,
-                        step = 1
+                        step = 1,
                     },
                     height = {
                         type = "range",
@@ -72,7 +64,7 @@ function WD:GenerateOptions()
                         desc = L["Height of the bars"],
                         min = 5,
                         max = 100,
-                        step = 1
+                        step = 1,
                     },
                     spacing = {
                         type = "range",
@@ -81,21 +73,21 @@ function WD:GenerateOptions()
                         desc = L["Spacing between bars"],
                         min = 0,
                         max = 100,
-                        step = 1
+                        step = 1,
                     },
                     texture = {
                         type = "select",
                         dialogControl = "LSM30_Statusbar",
                         order = 6,
                         name = L["Statusbar Texture"],
-                        values = _G.AceGUIWidgetLSMlists.statusbar
+                        values = _G.AceGUIWidgetLSMlists.statusbar,
                     },
                     font = {
                         type = "select",
                         dialogControl = "LSM30_Font",
                         order = 7,
                         name = L.Font,
-                        values = _G.AceGUIWidgetLSMlists.font
+                        values = _G.AceGUIWidgetLSMlists.font,
                     },
                     fontSize = {
                         order = 8,
@@ -103,7 +95,7 @@ function WD:GenerateOptions()
                         type = "range",
                         min = 9,
                         max = 16,
-                        step = 1
+                        step = 1,
                     },
                     attachToNamePlate = {
                         order = 9,
@@ -112,9 +104,7 @@ function WD:GenerateOptions()
                         desc = "If this and Friendly Minion nameplates are enabled, attach the timer bar to the demon's nameplate rather than the header.",
                         --luacheck: pop
                         type = "toggle",
-                        disabled = function()
-                            return not NP.UpdatePlateGUID
-                        end
+                        disabled = function() return not NP.UpdatePlateGUID end,
                     },
                     grow = {
                         order = 10,
@@ -122,8 +112,8 @@ function WD:GenerateOptions()
                         name = "Growth Direction",
                         values = {
                             DOWN = "DOWN",
-                            UP = "UP"
-                        }
+                            UP = "UP",
+                        },
                     },
                     color = {
                         type = "color",
@@ -139,7 +129,7 @@ function WD:GenerateOptions()
                             E.db.nihilistzscheui.warlockdemons[info[#info]] = {}
                             local t = E.db.nihilistzscheui.warlockdemons[info[#info]]
                             t.r, t.g, t.b = r, g, b
-                        end
+                        end,
                     },
                     alpha = {
                         type = "range",
@@ -148,18 +138,18 @@ function WD:GenerateOptions()
                         desc = L["Alpha of bars"],
                         min = 0,
                         max = 1,
-                        step = 0.1
-                    }
-                }
-            }
-        }
+                        step = 0.1,
+                    },
+                },
+            },
+        },
     }
 
     local demons = {
         type = "group",
         guiInline = true,
         name = "Demons",
-        args = {}
+        args = {},
     }
 
     for k, v in pairs(self.demons) do
@@ -168,12 +158,8 @@ function WD:GenerateOptions()
             type = "toggle",
             desc = "Enable " .. k .. " tracking.",
             order = v.optionOrder,
-            get = function()
-                return E.db.nihilistzscheui.warlockdemons.demons[k].enable
-            end,
-            set = function(_, value)
-                E.db.nihilistzscheui.warlockdemons.demons[k].enable = value
-            end
+            get = function() return E.db.nihilistzscheui.warlockdemons.demons[k].enable end,
+            set = function(_, value) E.db.nihilistzscheui.warlockdemons.demons[k].enable = value end,
         }
     end
 
@@ -189,29 +175,32 @@ function WD:GenerateOptions()
             -- luacheck: push  no max line length
             if
                 not E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.demonologyWarlockDemonAboutToExpireNUI
-             then
+            then
                 local nlogo = [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo:12:12|t]]
-                E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.isDemonologyWarlockDemonNUI = {
-                    name = nlogo .. "Unit Is Demonology Warlock Demon",
-                    desc = "If enabled then the filter will only activate for units that are demonology warlock demons.  This filter is provided by NihilistzscheUI.",
-                    type = "toggle",
-                    order = 50,
-                    disabled = E.myclass ~= "WARLOCK"
-                }
-                E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.isNotDemonologyWarlockDemonNUI = {
-                    name = nlogo .. "Unit Is Not Demonology Warlock Demon",
-                    desc = "If enabled then the filter will only activate for units that are not demonology warlock demons.  This filter is provided by NihilistzscheUI.",
-                    type = "toggle",
-                    order = 51,
-                    disabled = E.myclass ~= "WARLOCK"
-                }
-                E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.demonologyWarlockDemonAboutToExpireNUI = {
-                    name = nlogo .. "Demonology Warlock Demon About to Expire",
-                    desc = "If enabled then the filter will only activate when the nameplate belongs to a wild imp with less than 3 energy or another demonlogy warlock demon with less than 5 seconds remaining.  This filter is provided by NihilistzscheUI.",
-                    type = "toggle",
-                    order = 52,
-                    disabled = E.myclass ~= "WARLOCK"
-                }
+                E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.isDemonologyWarlockDemonNUI =
+                    {
+                        name = nlogo .. "Unit Is Demonology Warlock Demon",
+                        desc = "If enabled then the filter will only activate for units that are demonology warlock demons.  This filter is provided by NihilistzscheUI.",
+                        type = "toggle",
+                        order = 50,
+                        disabled = E.myclass ~= "WARLOCK",
+                    }
+                E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.isNotDemonologyWarlockDemonNUI =
+                    {
+                        name = nlogo .. "Unit Is Not Demonology Warlock Demon",
+                        desc = "If enabled then the filter will only activate for units that are not demonology warlock demons.  This filter is provided by NihilistzscheUI.",
+                        type = "toggle",
+                        order = 51,
+                        disabled = E.myclass ~= "WARLOCK",
+                    }
+                E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args.demonologyWarlockDemonAboutToExpireNUI =
+                    {
+                        name = nlogo .. "Demonology Warlock Demon About to Expire",
+                        desc = "If enabled then the filter will only activate when the nameplate belongs to a wild imp with less than 3 energy or another demonlogy warlock demon with less than 5 seconds remaining.  This filter is provided by NihilistzscheUI.",
+                        type = "toggle",
+                        order = 52,
+                        disabled = E.myclass ~= "WARLOCK",
+                    }
             end
             --luacheck: pop
         end

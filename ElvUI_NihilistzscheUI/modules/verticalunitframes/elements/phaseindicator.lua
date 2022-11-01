@@ -16,9 +16,7 @@ end
 function VUF:PhaseIndicatorUpdate()
     local db = E.db.nihilistzscheui.vuf.units[self.__owner.unit]
 
-    if not db then
-        return
-    end
+    if not db then return end
 
     local phaseindicator = db.phaseindicator
 

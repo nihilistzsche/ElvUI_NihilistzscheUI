@@ -70,7 +70,7 @@ function VUF:ConstructCastbar(frame)
     local icon = button:CreateTexture(nil, "ARTWORK")
     icon:Point("TOPLEFT", button, 2, -2)
     icon:Point("BOTTOMRIGHT", button, -2, 2)
-    icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+    icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
     icon.bg = button
 
     --Set to castbar.Icon
@@ -102,9 +102,7 @@ function VUF:ConstructCastbar(frame)
     hcastbar.button:Size(26)
     hcastbar.button:SetTemplate("Default")
     hcastbar.button:SetFrameLevel(hcastbar:GetFrameLevel() + 2)
-    if BS then
-        BS:StyleButton(hcastbar.button)
-    end
+    if BS then BS:StyleButton(hcastbar.button) end
 
     hcastbar.Spark = hcastbar:CreateTexture(nil, "OVERLAY")
     hcastbar.Spark:SetBlendMode("ADD")
@@ -118,7 +116,7 @@ function VUF:ConstructCastbar(frame)
     hcastbar.Icon = hcastbar.button:CreateTexture(nil, "ARTWORK")
     hcastbar.Icon:Point("TOPLEFT", hcastbar.button, 2, -2)
     hcastbar.Icon:Point("BOTTOMRIGHT", hcastbar.button, -2, 2)
-    hcastbar.Icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+    hcastbar.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 
     hcastbar.button:SetPoint("BOTTOMLEFT", hcastbar, "BOTTOMLEFT")
 
@@ -129,42 +127,30 @@ function VUF:ConstructCastbar(frame)
     frame.HorizCastbar = hcastbar
 
     if frame.unit == "player" then
-        hcastbar:HookScript(
-            "OnShow",
-            function()
-                if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
-                    frame.casting = true
-                    VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_DISABLED")
-                end
+        hcastbar:HookScript("OnShow", function()
+            if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
+                frame.casting = true
+                VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_DISABLED")
             end
-        )
-        hcastbar:HookScript(
-            "OnHide",
-            function()
-                if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
-                    frame.casting = false
-                    VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_ENABLED")
-                end
+        end)
+        hcastbar:HookScript("OnHide", function()
+            if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
+                frame.casting = false
+                VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_ENABLED")
             end
-        )
-        vcastbar:HookScript(
-            "OnShow",
-            function()
-                if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
-                    frame.casting = true
-                    VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_DISABLED")
-                end
+        end)
+        vcastbar:HookScript("OnShow", function()
+            if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
+                frame.casting = true
+                VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_DISABLED")
             end
-        )
-        vcastbar:HookScript(
-            "OnHide",
-            function()
-                if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
-                    frame.casting = false
-                    VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_ENABLED")
-                end
+        end)
+        vcastbar:HookScript("OnHide", function()
+            if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
+                frame.casting = false
+                VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_ENABLED")
             end
-        )
+        end)
     end
 
     if (frame.unit ~= "player" and frame.unit ~= "target") or not self.db.units[frame.unit].horizCastbar then
@@ -176,9 +162,7 @@ end
 
 function VUF:CustomCastDelayText(duration)
     local db = VUF.db.units[self:GetParent().unit]
-    if not db then
-        return
-    end
+    if not db then return end
 
     if self.channeling then
         if db.castbar.format == "CURRENT" then
@@ -201,9 +185,7 @@ end
 
 function UF:CustomTimeText(duration)
     local db = VUF.db.units[self:GetParent().unit]
-    if not db then
-        return
-    end
+    if not db then return end
 
     if self.channeling then
         if db.castbar.format == "CURRENT" then
@@ -240,12 +222,10 @@ local updateSafeZone = function(self, c)
     sz:SetPoint("RIGHT")
 
     -- Guard against GetNetStats returning latencies of 0.
-    if (ms ~= 0) then
+    if ms ~= 0 then
         -- MADNESS!
         local safeZonePercent = (height / self.max) * (ms / 1e5)
-        if (safeZonePercent > 1) then
-            safeZonePercent = 1
-        end
+        if safeZonePercent > 1 then safeZonePercent = 1 end
         sz:SetHeight(height * safeZonePercent)
         sz:Show()
     else
@@ -267,9 +247,7 @@ end
 function VUF:SetCastTicks(frame, numTicks, extraTickRatio)
     extraTickRatio = extraTickRatio or 0
     self.HideTicks()
-    if numTicks and numTicks <= 0 then
-        return
-    end
+    if numTicks and numTicks <= 0 then return end
     local w = frame:GetOrientation() == "HORIZONTAL" and frame:GetWidth() or frame:GetHeight()
     local d = w / (numTicks + extraTickRatio)
     local color = VUF.db.units[frame:GetParent().unit].castbar.tickcolor
@@ -289,11 +267,9 @@ function VUF:SetCastTicks(frame, numTicks, extraTickRatio)
             end
         end
 
-        if (ms ~= 0) then
+        if ms ~= 0 then
             local perc = (w / frame.max) * (ms / 1e5)
-            if (perc > 1) then
-                perc = 1
-            end
+            if perc > 1 then perc = 1 end
 
             ticks[i]:SetWidth((w * perc) / (numTicks + extraTickRatio))
         else
@@ -311,13 +287,9 @@ end
 
 function VUF:PostCastStart(unit)
     local db = VUF.db.units[unit]
-    if not db or not db.castbar then
-        return
-    end
+    if not db or not db.castbar then return end
 
-    if unit == "vehicle" then
-        unit = "player"
-    end
+    if unit == "vehicle" then unit = "player" end
 
     local name = GetSpellInfo(self.spellID)
     if db.castbar.displayTarget and self.curTarget then
@@ -358,16 +330,12 @@ function VUF:PostCastStart(unit)
             local curHaste = UnitSpellHaste("player") * 0.01
             local firstTickInc = tickIncRate / 2
             local bonusTicks = 0
-            if curHaste >= firstTickInc then
-                bonusTicks = bonusTicks + 1
-            end
+            if curHaste >= firstTickInc then bonusTicks = bonusTicks + 1 end
 
             local x = tonumber(E:Round(firstTickInc + tickIncRate, 2))
             while curHaste >= x do
                 x = tonumber(E:Round(firstTickInc + (tickIncRate * bonusTicks), 2))
-                if curHaste >= x then
-                    bonusTicks = bonusTicks + 1
-                end
+                if curHaste >= x then bonusTicks = bonusTicks + 1 end
             end
 
             local baseTickSize = unitframe.ChannelTicksSize[name]
@@ -380,7 +348,7 @@ function VUF:PostCastStart(unit)
             local curHaste = UnitSpellHaste("player") * 0.01
             local baseTickSize = unitframe.ChannelTicksSize[name]
             local hastedTickSize = baseTickSize / (1 + curHaste)
-            local extraTick = self.max - hastedTickSize * (baseTicks)
+            local extraTick = self.max - hastedTickSize * baseTicks
             local extraTickRatio = extraTick / hastedTickSize
 
             VUF:SetCastTicks(self, baseTicks, extraTickRatio)
@@ -404,7 +372,7 @@ function VUF:PostCastStart(unit)
             t = _G.ElvUF.colors.reaction[UnitReaction(unit, "player")]
         end
 
-        if (t) then
+        if t then
             r, g, b = t[1], t[2], t[3]
         end
     end
@@ -426,9 +394,7 @@ function VUF:PostCastStart(unit)
 
     if self:GetOrientation() == "VERTICAL" then
         local sz = self.SafeZone
-        if sz then
-            updateSafeZone(self, true)
-        end
+        if sz then updateSafeZone(self, true) end
     end
 end
 
@@ -443,12 +409,8 @@ end
 
 function VUF:PostChannelUpdate(unit, name)
     local db = VUF.db.units[unit]
-    if not db then
-        return
-    end
-    if not (unit == "player" or unit == "vehicle") then
-        return
-    end
+    if not db then return end
+    if not (unit == "player" or unit == "vehicle") then return end
 
     if db.castbar.ticks then
         local unitframe = E.global.unitframe
@@ -459,16 +421,12 @@ function VUF:PostChannelUpdate(unit, name)
             local curHaste = UnitSpellHaste("player") * 0.01
             local firstTickInc = tickIncRate / 2
             local bonusTicks = 0
-            if curHaste >= firstTickInc then
-                bonusTicks = bonusTicks + 1
-            end
+            if curHaste >= firstTickInc then bonusTicks = bonusTicks + 1 end
 
             local x = tonumber(E:Round(firstTickInc + tickIncRate, 2))
             while curHaste >= x do
                 x = tonumber(E:Round(firstTickInc + (tickIncRate * bonusTicks), 2))
-                if curHaste >= x then
-                    bonusTicks = bonusTicks + 1
-                end
+                if curHaste >= x then bonusTicks = bonusTicks + 1 end
             end
 
             local baseTickSize = unitframe.ChannelTicksSize[name]
@@ -484,7 +442,7 @@ function VUF:PostChannelUpdate(unit, name)
             local curHaste = UnitSpellHaste("player") * 0.01
             local baseTickSize = unitframe.ChannelTicksSize[name]
             local hastedTickSize = baseTickSize / (1 + curHaste)
-            local extraTick = self.max - hastedTickSize * (baseTicks)
+            local extraTick = self.max - hastedTickSize * baseTicks
             if self.chainChannel then
                 self.extraTickRatio = extraTick / hastedTickSize
                 self.chainChannel = nil
@@ -502,34 +460,30 @@ function VUF:PostChannelUpdate(unit, name)
 
     if self:GetOrientation() == "VERTICAL" then
         local sz = self.SafeZone
-        if sz then
-            updateSafeZone(self, false)
-        end
+        if sz then updateSafeZone(self, false) end
     end
 end
 
 function VUF:CastbarUpdate(elapsed)
-    if (self.casting) then
+    if self.casting then
         local duration = self.duration + elapsed
-        if (duration >= self.max) then
+        if duration >= self.max then
             self.casting = nil
             self:Hide()
 
-            if (self.PostCastStop) then
-                self:PostCastStop(self.__owner.unit)
-            end
+            if self.PostCastStop then self:PostCastStop(self.__owner.unit) end
             return
         end
 
-        if (self.Time) then
-            if (self.delay ~= 0) then
-                if (self.CustomDelayText) then
+        if self.Time then
+            if self.delay ~= 0 then
+                if self.CustomDelayText then
                     self:CustomDelayText(duration)
                 else
                     self.Time:SetFormattedText("%.1f|cffff0000-%.1f|r", duration, self.delay)
                 end
             else
-                if (self.CustomTimeText) then
+                if self.CustomTimeText then
                     self:CustomTimeText(duration)
                 else
                     self.Time:SetFormattedText("%.1f", duration)
@@ -540,31 +494,29 @@ function VUF:CastbarUpdate(elapsed)
         self.duration = duration
         self:SetValue(duration)
 
-        if (self.Spark) then
+        if self.Spark then
             self.Spark:SetPoint("CENTER", self, "BOTTOM", 0, (duration / self.max) * self:GetHeight())
         end
-    elseif (self.channeling) then
+    elseif self.channeling then
         local duration = self.duration - elapsed
 
-        if (duration <= 0) then
+        if duration <= 0 then
             self.channeling = nil
             self:Hide()
 
-            if (self.PostChannelStop) then
-                self:PostChannelStop(self.__owner.unit)
-            end
+            if self.PostChannelStop then self:PostChannelStop(self.__owner.unit) end
             return
         end
 
-        if (self.Time) then
-            if (self.delay ~= 0) then
-                if (self.CustomDelayText) then
+        if self.Time then
+            if self.delay ~= 0 then
+                if self.CustomDelayText then
                     self:CustomDelayText(duration)
                 else
                     self.Time:SetFormattedText("%.1f|cffff0000-%.1f|r", duration, self.delay)
                 end
             else
-                if (self.CustomTimeText) then
+                if self.CustomTimeText then
                     self:CustomTimeText(duration)
                 else
                     self.Time:SetFormattedText("%.1f", duration)
@@ -574,7 +526,7 @@ function VUF:CastbarUpdate(elapsed)
 
         self.duration = duration
         self:SetValue(duration)
-        if (self.Spark) then
+        if self.Spark then
             self.Spark:SetPoint("CENTER", self, "BOTTOM", 0, (duration / self.max) * self:GetHeight())
         end
     else
@@ -600,9 +552,7 @@ function VUF:GetCastbar(frame)
         frame.Castbar = frame.HorizCastbar
     end
     frame:EnableElement("Castbar")
-    if frame.Castbar.ForceUpdate then
-        frame.Castbar:ForceUpdate()
-    end
+    if frame.Castbar.ForceUpdate then frame.Castbar:ForceUpdate() end
 end
 
 function VUF:CastbarOptions(unit)

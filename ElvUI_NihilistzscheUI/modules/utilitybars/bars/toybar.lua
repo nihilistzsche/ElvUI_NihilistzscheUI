@@ -12,11 +12,10 @@ local CreateFrame = _G.CreateFrame
 
 function TOYB.CreateBar()
     -- luacheck: no max line length
-    local bar =
-        NUB:CreateBar(
+    local bar = NUB:CreateBar(
         "NihilistzscheUI_ToyBar",
         "toybar",
-        {"BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 45},
+        { "BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 45 },
         "Toy Bar"
     )
 
@@ -28,16 +27,12 @@ end
 function TOYB.GetToys()
     local toys = {}
 
-    if (not C_ToyBox_HasFavorites()) then
-        return toys
-    end
+    if not C_ToyBox_HasFavorites() then return toys end
 
     for i = 1, C_ToyBox_GetNumToys() do
         local itemID = C_ToyBox_GetToyFromIndex(i)
 
-        if (C_ToyBox_GetIsFavorite(itemID)) then
-            tinsert(toys, itemID)
-        end
+        if C_ToyBox_GetIsFavorite(itemID) then tinsert(toys, itemID) end
     end
 
     return toys

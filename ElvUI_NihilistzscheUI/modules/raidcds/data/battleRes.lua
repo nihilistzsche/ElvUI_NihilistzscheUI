@@ -6,23 +6,23 @@ RCD.categories.battleRes = {
         -- Raise Ally
         class = "DEATHKNIGHT",
         cd = 600,
-        raid_battle_res = true
+        raid_battle_res = true,
     },
     [20484] = {
         -- Rebirth
         class = "DRUID",
         cd = 600,
-        raid_battle_res = true
+        raid_battle_res = true,
     },
     [20608] = {
         -- Reincarnation
         class = "SHAMAN",
-        cd = 1800
+        cd = 1800,
     },
     [20707] = {
         -- Soulstone
         class = "WARLOCK",
         cd = 600,
-        raid_battle_res = true
-    }
+        raid_battle_res = true,
+    },
 }

@@ -3,8 +3,8 @@ local _, _, _, _, G = _G.unpack(_G.ElvUI)
 G.nihilistzscheui = {
     installer = {
         font = "PT Sans Narrow",
-        texture = "Minimalist"
-    }
+        texture = "Minimalist",
+    },
 }
 G.nameplates.spellListDefault = {
     visibility = 3,
@@ -25,7 +25,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [108194] = {
             --Asphyxiate UH
@@ -35,7 +35,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [221562] = {
             --Asphyxiate Blood
@@ -45,7 +45,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [207171] = {
             --Winter is Coming
@@ -55,7 +55,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [206961] = {
             --Tremble Before Me
@@ -65,7 +65,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [207167] = {
             --Blinding Sleet
@@ -75,7 +75,7 @@ G.nameplates.spellListDefault = {
             text = 12,
             stackSize = 8,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [212540] = {
             --Flesh Hook (Pet)
@@ -85,7 +85,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [91807] = {
             --Shambling Rush (Pet)
@@ -95,7 +95,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [204085] = {
             --Deathchill
@@ -105,7 +105,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [233395] = {
             --Frozen Center
@@ -115,7 +115,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [212332] = {
             --Smash (Pet)
@@ -125,7 +125,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [212337] = {
             --Powerful Smash (Pet)
@@ -135,7 +135,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [91800] = {
             --Gnaw (Pet)
@@ -145,7 +145,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [91797] = {
             --Monstrous Blow (Pet)
@@ -155,7 +155,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [210141] = {
             --Zombie Explosion
@@ -165,7 +165,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Demon Hunter
         [207685] = {
@@ -176,7 +176,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [217832] = {
             --Imprison
@@ -186,7 +186,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [221527] = {
             --Imprison (Banished version)
@@ -196,7 +196,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [204490] = {
             --Sigil of Silence
@@ -206,7 +206,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [179057] = {
             --Chaos Nova
@@ -216,7 +216,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [211881] = {
             --Fel Eruption
@@ -226,7 +226,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [205630] = {
             --Illidan's Grasp
@@ -236,7 +236,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [208618] = {
             --Illidan's Grasp (Afterward)
@@ -246,7 +246,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [213491] = {
             --Demonic Trample (it's this one or the other)
@@ -256,7 +256,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [208645] = {
             --Demonic Trample
@@ -266,7 +266,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [200166] = {
             --Metamorphosis
@@ -276,7 +276,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Druid
         [81261] = {
@@ -287,7 +287,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [5211] = {
             --Mighty Bash
@@ -297,7 +297,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [163405] = {
             --Rake
@@ -307,7 +307,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [203123] = {
             --Maim
@@ -317,7 +317,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [202244] = {
             --Overrun
@@ -327,7 +327,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [99] = {
             --Incapacitating Roar
@@ -337,7 +337,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [33786] = {
             --Cyclone
@@ -347,7 +347,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [209753] = {
             --Cyclone Balance
@@ -357,7 +357,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [45334] = {
             --Immobilized
@@ -367,7 +367,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [102359] = {
             --Mass Entanglement
@@ -377,7 +377,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [339] = {
             --Entangling Roots
@@ -387,7 +387,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Hunter
         [202933] = {
@@ -398,7 +398,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [233022] = {
             --Spider Sting
@@ -408,7 +408,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [224729] = {
             --Bursting Shot
@@ -418,7 +418,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [213691] = {
             --Scatter Shot
@@ -428,7 +428,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [19386] = {
             --Wyvern Sting
@@ -438,7 +438,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [3355] = {
             --Freezing Trap
@@ -448,7 +448,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [203337] = {
             --Freezing Trap (Survival PvPT)
@@ -458,7 +458,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [209790] = {
             --Freezing Arrow
@@ -468,7 +468,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [24394] = {
             --Intimidation
@@ -478,7 +478,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [117526] = {
             --Binding Shot
@@ -488,7 +488,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [190927] = {
             --Harpoon
@@ -498,7 +498,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [201158] = {
             --Super Sticky Tar
@@ -508,7 +508,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [162480] = {
             --Steel Trap
@@ -518,7 +518,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [212638] = {
             --Tracker's Net
@@ -528,7 +528,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [200108] = {
             --Ranger's Net
@@ -538,7 +538,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Mage
         [61721] = {
@@ -549,7 +549,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [61305] = {
             --Black Cat (Poly)
@@ -559,7 +559,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [28272] = {
             --Pig (Poly)
@@ -569,7 +569,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [28271] = {
             --Turtle (Poly)
@@ -579,7 +579,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [126819] = {
             --Porcupine (Poly)
@@ -589,7 +589,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [161354] = {
             --Monkey (Poly)
@@ -599,7 +599,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [161353] = {
             --Polar bear (Poly)
@@ -609,7 +609,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [118] = {
             --Polymorph
@@ -619,7 +619,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [82691] = {
             --Ring of Frost
@@ -629,7 +629,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [31661] = {
             --Dragon's Breath
@@ -639,7 +639,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [122] = {
             --Frost Nova
@@ -649,7 +649,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [33395] = {
             --Freeze
@@ -659,7 +659,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [157997] = {
             --Ice Nova
@@ -669,7 +669,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [228600] = {
             --Glacial Spike
@@ -679,7 +679,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [198121] = {
             --Forstbite
@@ -689,7 +689,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [45438] = {
             --Iceblock
@@ -699,7 +699,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Monk
         [119381] = {
@@ -710,7 +710,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [202346] = {
             --Double Barrel
@@ -720,7 +720,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [114078] = {
             --Paralysis
@@ -730,7 +730,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [198909] = {
             --Song of Chi-Ji
@@ -740,7 +740,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [202274] = {
             --Incendiary Brew
@@ -750,7 +750,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [233759] = {
             --Grapple Weapon
@@ -760,7 +760,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [123407] = {
             --Spinning Fire Blossom
@@ -770,7 +770,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [116706] = {
             --Disable
@@ -780,7 +780,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [232055] = {
             --Fists of Fury
@@ -790,7 +790,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Paladin
         [853] = {
@@ -801,7 +801,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [20066] = {
             --Repentance
@@ -811,7 +811,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [105421] = {
             --Blinding Light
@@ -821,7 +821,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [31935] = {
             --Avenger's Shield
@@ -831,7 +831,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [217824] = {
             --Shield of Virtue
@@ -841,7 +841,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [205290] = {
             --Wake of Ashes
@@ -851,7 +851,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Priest
         [9484] = {
@@ -862,7 +862,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [200196] = {
             --Holy Word: Chastise
@@ -872,7 +872,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [200200] = {
             --Holy Word: Chastise
@@ -882,7 +882,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [226943] = {
             --Mind Bomb
@@ -892,7 +892,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [605] = {
             --Mind Control
@@ -902,7 +902,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [8122] = {
             --Psychic Scream
@@ -912,7 +912,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [15487] = {
             --Silence
@@ -922,7 +922,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [199683] = {
             --Last Word
@@ -932,7 +932,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Rogue
         [2094] = {
@@ -943,7 +943,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [6770] = {
             --Sap
@@ -953,7 +953,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [1776] = {
             --Gouge
@@ -963,7 +963,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [199743] = {
             --Parley
@@ -973,7 +973,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [1330] = {
             --Garrote - Silence
@@ -983,7 +983,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [207777] = {
             --Dismantle
@@ -993,7 +993,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [199804] = {
             --Between the Eyes
@@ -1003,7 +1003,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [408] = {
             --Kidney Shot
@@ -1013,7 +1013,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [1833] = {
             --Cheap Shot
@@ -1023,7 +1023,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [207736] = {
             --Shadowy Duel (Smoke effect)
@@ -1033,7 +1033,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [212182] = {
             --Smoke Bomb
@@ -1043,7 +1043,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Shaman
         [51514] = {
@@ -1054,7 +1054,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [211015] = {
             --Hex (Cockroach)
@@ -1064,7 +1064,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [211010] = {
             --Hex (Snake)
@@ -1074,7 +1074,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [211004] = {
             --Hex (Spider)
@@ -1084,7 +1084,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [210873] = {
             --Hex (Compy)
@@ -1094,7 +1094,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [196942] = {
             --Hex (Voodoo Totem)
@@ -1104,7 +1104,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [118905] = {
             --Static Charge
@@ -1114,7 +1114,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [77405] = {
             --Earthquake (Knocking down)
@@ -1124,7 +1124,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [118345] = {
             --Pulverize (Pet)
@@ -1134,7 +1134,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [204399] = {
             --Earthfury
@@ -1144,7 +1144,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [204437] = {
             --Lightning Lasso
@@ -1154,7 +1154,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [157375] = {
             --Gale Force
@@ -1164,7 +1164,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [64695] = {
             --Earthgrab
@@ -1174,7 +1174,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Warlock
         [710] = {
@@ -1185,7 +1185,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [6789] = {
             --Mortal Coil
@@ -1195,7 +1195,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [118699] = {
             --Fear
@@ -1205,7 +1205,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [5484] = {
             --Howl of Terror
@@ -1215,7 +1215,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [6358] = {
             --Seduction (Succub)
@@ -1225,7 +1225,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [171017] = {
             --Meteor Strike (Infernal)
@@ -1235,7 +1235,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [22703] = {
             --Infernal Awakening (Infernal CD)
@@ -1245,7 +1245,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [30283] = {
             --Shadowfury
@@ -1255,7 +1255,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [89766] = {
             --Axe Toss
@@ -1265,7 +1265,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [233582] = {
             --Entrenched in Flame
@@ -1275,7 +1275,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Warrior
         [5246] = {
@@ -1286,7 +1286,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [7922] = {
             --Warbringer
@@ -1296,7 +1296,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [132169] = {
             --Storm Bolt
@@ -1306,7 +1306,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [132168] = {
             --Shockwave
@@ -1316,7 +1316,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [199085] = {
             --Warpath
@@ -1326,7 +1326,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [105771] = {
             --Charge
@@ -1336,7 +1336,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [199042] = {
             --Thunderstruck
@@ -1346,7 +1346,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         --Racial
         [155145] = {
@@ -1357,7 +1357,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [20549] = {
             --War Stomp
@@ -1367,7 +1367,7 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
+            width = 40,
         },
         [107079] = {
             --Quaking Palm
@@ -1377,9 +1377,9 @@ G.nameplates.spellListDefault = {
             stackSize = 8,
             text = 12,
             visibility = 1,
-            width = 40
-        }
-    }
+            width = 40,
+        },
+    },
 }
 
 G.nameplates.spellList = {}

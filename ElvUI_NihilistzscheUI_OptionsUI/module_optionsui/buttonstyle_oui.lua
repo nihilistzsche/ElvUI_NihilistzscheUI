@@ -1,49 +1,43 @@
 local NUI, _, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local BS = NUI.ButtonStyle
-if not BS then
-  return
-end
+if not BS then return end
 
 function BS:GenerateOptions()
-  local options = {
-    type = "group",
-    name = L.ButtonStyle,
-    get = function(info)
-      return self.db[info[#info]]
-    end,
-    set = function(info, value)
-      self.db[info[#info]] = value
-      self:UpdateButtons()
-    end,
-    args = {
-      header = {
-        order = 1,
-        type = "header",
-        name = L["NihilistzschetUI ButtonStyle by Nihilistzsche"]
-      },
-      description = {
-        order = 2,
-        type = "description",
-        name = L[
-          "NihilistzschetUI ButtonStyle provides a style setting for ElvUI buttons similar to Masque or ButtonFacade\n"
-        ]
-      },
-      general = {
-        order = 3,
+    local options = {
         type = "group",
-        name = L.General,
-        guiInline = true,
+        name = L.ButtonStyle,
+        get = function(info) return self.db[info[#info]] end,
+        set = function(info, value)
+            self.db[info[#info]] = value
+            self:UpdateButtons()
+        end,
         args = {
-          enabled = {
-            type = "toggle",
-            order = 1,
-            name = L.Enable,
-            desc = L["Enable the button style."]
-          }
-        }
-      }
+            header = {
+                order = 1,
+                type = "header",
+                name = L["NihilistzschetUI ButtonStyle by Nihilistzsche"],
+            },
+            description = {
+                order = 2,
+                type = "description",
+                name = L["NihilistzschetUI ButtonStyle provides a style setting for ElvUI buttons similar to Masque or ButtonFacade\n"],
+            },
+            general = {
+                order = 3,
+                type = "group",
+                name = L.General,
+                guiInline = true,
+                args = {
+                    enabled = {
+                        type = "toggle",
+                        order = 1,
+                        name = L.Enable,
+                        desc = L["Enable the button style."],
+                    },
+                },
+            },
+        },
     }
-  }
 
-  return options
+    return options
 end

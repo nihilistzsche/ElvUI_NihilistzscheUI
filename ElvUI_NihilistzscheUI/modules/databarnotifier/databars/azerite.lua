@@ -1,12 +1,11 @@
-local NUI = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack(select(2, ...))
 
 local DBN = NUI.DataBarNotifier
 local COMP = NUI.Compatibility
 
 DBN.colors.azerite = "|cffe6cc80"
 
-local AZ =
-    DBN:NewNotifier(
+local AZ = DBN:NewNotifier(
     "Azerite",
     "Azerite XP",
     "axp",

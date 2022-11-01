@@ -1,0 +1,20 @@
+## Interface: 11403
+## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r
+## Author: Nihilistzsche
+## Version: 12.04
+## Notes: An external edit for ElvUI and ElvUI Shadow & Light
+## RequiredDeps: ElvUI
+## OptionalDeps: ElvUI_Shadow&Light, ElvUI_BenikUI, ElvUI_MerathilisUI
+## OptionalDeps: AddOnSkins_NihilistzschezschePrivate, ElvUI_CPU, zPets, Executive_Assistant, TotalRP3, ElvUI_DynamicStatusIcons
+## X-oUF: ElvUF
+## X-Curse-Project-ID: 690477
+## X-Tukui-ProjectID: 4
+## X-Tukui-ProjectFolders: ElvUI_NihilistzscheUI_Installer, ElvUI_NihilistzscheUI_OptionsUI, ElvUI_NihilistzscheUI
+
+settings\load_settings.xml
+locales\load_locales.xml
+libs\load_initial_libs.xml
+init.lua
+libs\load_libs.xml
+core\load_core.xml
+modules\load_modules.xml

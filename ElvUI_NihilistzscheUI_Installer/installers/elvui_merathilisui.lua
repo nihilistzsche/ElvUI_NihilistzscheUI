@@ -8,9 +8,7 @@ function NI.MerathilisUIGlobalSetup()
     local baseBlacklist = _G.ElvDB.profiles[baseProfileKey].mui.autoButtons.blackList
     for key, tbl in pairs(_G.ElvDB.profiles) do
         if key ~= baseProfileKey then
-            if tbl.mui and tbl.mui.autoButtons then
-                tbl.mui.autoButtons.blackList = E:CopyTable({}, baseBlacklist)
-            end
+            if tbl.mui and tbl.mui.autoButtons then tbl.mui.autoButtons.blackList = E:CopyTable({}, baseBlacklist) end
         end
     end
 end
@@ -23,43 +21,43 @@ function NI:MerathilisUISetup(isSpec)
     _G.MERDataPerChar = _G.ElvUI_MerathilisUI[1].Version
     self:EDB().mui.general = {
         splashScreen = false,
-        gmotd = false
+        gmotd = false,
     }
     self:EDB().mui.autoButtons = self:EDB().mui.autoButtons or {}
     self:EDB().mui.autoButtons.customList = {
         87216, -- [1]
-        144341 -- [2]
+        144341, -- [2]
     }
     self:EDB().mui.misc = {
         nameHover = false,
         mawThreatBar = {
             font = {
-                name = self.db.font
-            }
+                name = self.db.font,
+            },
         },
         lfgInfo = {
             line = {
-                tex = self.db.texture
-            }
-        }
+                tex = self.db.texture,
+            },
+        },
     }
     self:EDB().mui.raidmarkers = {
         enable = true,
-        backdrop = true
+        backdrop = true,
     }
     self:EDB().mui.raidBuffs = {
         enable = true,
-        class = true
+        class = true,
     }
 
     self:EDB().mui.bags = {
-        Enable = false
+        Enable = false,
     }
     self:EDB().mui.autoButtons.bar2 = {
-        include = "POTIONSL,FLASKSL,UTILITY,CUSTOM"
+        include = "POTIONSL,FLASKSL,UTILITY,CUSTOM",
     }
     self:EDB().mui.autoButtons.bar3 = {
-        include = "MAGEFOOD,FOODVENDOR,FOODSL"
+        include = "MAGEFOOD,FOODVENDOR,FOODSL",
     }
     self:EDB().mui.panels = {
         bottomPanel = false,
@@ -69,67 +67,67 @@ function NI:MerathilisUISetup(isSpec)
             topLeftExtraPanel = false,
             topRightExtraPanel = false,
             bottomLeftExtraPanel = false,
-            bottomRightExtraPanel = false
-        }
+            bottomRightExtraPanel = false,
+        },
     }
     self:EDB().mui.microBar = {
-        visibility = "show"
+        visibility = "show",
     }
     self:EDB().mui.chat = {
-        panelHeight = 180
+        panelHeight = 180,
     }
     self:EDB().mui.datatexts = {
-        [2] = {enable = false},
-        rightChatTabDatatextPanel = {enable = false}
+        [2] = { enable = false },
+        rightChatTabDatatextPanel = { enable = false },
     }
     self:EDB().mui.tooltip = {
         modelIcon = true,
         progressInfo = {
             raid = {
                 Nyalotha = false,
-                EternalPalace = false
-            }
-        }
+                EternalPalace = false,
+            },
+        },
     }
     self:EDB().mui.misc = {
         nameHover = false,
         mawThreatBar = {
             font = {
-                name = self.db.font
-            }
+                name = self.db.font,
+            },
         },
         lfgInfo = {
             line = {
-                tex = self.db.texture
-            }
-        }
+                tex = self.db.texture,
+            },
+        },
     }
     self:EDB().mui.raidmarkers = {
         enable = true,
-        backdrop = true
+        backdrop = true,
     }
     self:EDB().mui.raidBuffs = {
         enable = true,
-        class = true
+        class = true,
     }
     self:EDB().mui.blizzard = {
         objectiveTracker = {
             info = {
-                name = self.db.font
-            }
-        }
+                name = self.db.font,
+            },
+        },
     }
     if not isSpec then
         self:EPRV().muiSkins = {
             blizzard = {
-                merchant = false
-            }
+                merchant = false,
+            },
         }
         self:EPRV().mui = self:EPRV().mui or {}
         self:EPRV().mui.skins = {
             embed = {
-                enable = false
-            }
+                enable = false,
+            },
         }
     end
     self.SaveMoverPosition("MER_RaidBuffReminderMover", "TOPLEFT", E.UIParent, "TOPLEFT", 238, -141)
@@ -145,16 +143,14 @@ function NI:MerathilisUISetup(isSpec)
     self.SaveMoverPosition("AutoButtonBar3Mover", "TOP", "AutoButtonBar2Mover", "BOTTOM", 0, -4)
     self.SaveMoverPosition("SpellFeedback", "BOTTOM", UIParent, "BOTTOM", 0, 320)
 
-    if (COMP.LCP) then
+    if COMP.LCP then
         self:EDB().mui.locPanel = {
-            enable = false
+            enable = false,
         }
         self.SaveMoverPosition("MicroBarAnchor", "TOP", "LocationPlusPanel", "BOTTOM", 0, -2)
     end
 end
 
-if (COMP.MERS) then
-    NI:SaveInstallTable(_G.ElvUI_MerathilisUI[1])
-end
+if COMP.MERS then NI:SaveInstallTable(_G.ElvUI_MerathilisUI[1]) end
 
 NI:RegisterAddOnInstaller("ElvUI_MerathilisUI", NI.MerathilisUISetup, true)

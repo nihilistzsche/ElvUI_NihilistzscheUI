@@ -22,7 +22,7 @@ RCD.barCache = {}
 function RCD:CreateBar(spell_id, guid)
     local category = self.reverse_mappings[spell_id]
 
-    if (self.barCache[category] and self.barCache[category][spell_id] and self.barCache[category][spell_id][guid]) then
+    if self.barCache[category] and self.barCache[category][spell_id] and self.barCache[category][spell_id][guid] then
         local bar = self.barCache[category][spell_id][guid]
         bar:SetLabel(UnitName(self.cached_players[guid].unit))
         NUI.ResetCandyBarLabelDurationAnchors(bar)
@@ -32,9 +32,7 @@ function RCD:CreateBar(spell_id, guid)
 
     bar:SetParent(self:GetHolder(category))
     bar.candyBarBackdrop:SetTemplate("Transparent")
-    if (COMP.MERS) then
-        bar:Styling()
-    end
+    if COMP.MERS then bar:Styling() end
 
     local class = self.cached_players[guid].unitInfo.class
     local classColor = class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[class]
@@ -52,37 +50,32 @@ function RCD:CreateBar(spell_id, guid)
         id = spell_id,
         guid = guid,
         duration = duration,
-        raidBattleRes = self.categories[category][spell_id].raid_battle_res
+        raidBattleRes = self.categories[category][spell_id].raid_battle_res,
     }
     bar:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    bar:SetScript(
-        "OnEvent",
-        function(_self, _, ...)
-            local unit, _, _spell_id = ...
-            if (UnitGUID(unit) == _self.info.guid and _spell_id == _self.info.id) then
-                if (IsInRaid() and _self.info.raidBattleRes) then
-                    local currentCharges, _, _, cooldownDuration = GetSpellCharges(_spell_id)
-                    if (currentCharges == 0) then
-                        _self:SetDuration(cooldownDuration)
-                        _self:Start()
-                        _self.loopProtect = false
-                        return
-                    else
-                        _self.candyBarDuration:SetText(("%d RDY"):format(currentCharges))
-                    end
+    bar:SetScript("OnEvent", function(_self, _, ...)
+        local unit, _, _spell_id = ...
+        if UnitGUID(unit) == _self.info.guid and _spell_id == _self.info.id then
+            if IsInRaid() and _self.info.raidBattleRes then
+                local currentCharges, _, _, cooldownDuration = GetSpellCharges(_spell_id)
+                if currentCharges == 0 then
+                    _self:SetDuration(cooldownDuration)
+                    _self:Start()
+                    _self.loopProtect = false
+                    return
+                else
+                    _self.candyBarDuration:SetText(("%d RDY"):format(currentCharges))
                 end
-                _self:Start()
-                _self.loopProtect = nil
             end
+            _self:Start()
+            _self.loopProtect = nil
         end
-    )
-    if (not bar.cdyStop) then
-        bar.cdyStop = bar.Stop
-    end
+    end)
+    if not bar.cdyStop then bar.cdyStop = bar.Stop end
     bar.Stop = function(_self)
         _self.updater:Stop()
         _self.candyBarDuration:SetText("READY")
-        if (not _self.loopProtect) then
+        if not _self.loopProtect then
             _self.loopProtect = true
             _self.remaining = _self.info.duration
             _self:Start()
@@ -95,14 +88,11 @@ function RCD:CreateBar(spell_id, guid)
     bar.loopProtect = false
     bar.candyBarDuration:SetText("READY")
 
-    bar:SetScript(
-        "OnEnter",
-        function(_self)
-            GameTooltip:SetOwner(_self, "ANCHOR_RIGHT")
-            GameTooltip:SetSpellByID(spell_id)
-            GameTooltip:Show()
-        end
-    )
+    bar:SetScript("OnEnter", function(_self)
+        GameTooltip:SetOwner(_self, "ANCHOR_RIGHT")
+        GameTooltip:SetSpellByID(spell_id)
+        GameTooltip:Show()
+    end)
 
     NUI.ResetCandyBarLabelDurationAnchors(bar)
 
@@ -115,22 +105,16 @@ function RCD:CreateBar(spell_id, guid)
     return bar
 end
 
-function RCD:GetHolder(category)
-    return self.holders[category]
-end
+function RCD:GetHolder(category) return self.holders[category] end
 
 function RCD:CreateHolder(category, defaultPoint)
     local holder = CreateFrame("Frame", "NihilistzscheUIRaidCDs_" .. category, E.UIParent, "BackdropTemplate")
     holder:SetSize(self.db.width, self.db.height)
     holder:CreateBackdrop("Transparent")
 
-    if (COMP.MERS) then
-        holder:Styling()
-    end
+    if COMP.MERS then holder:Styling() end
 
-    if (COMP.BUI) then
-        holder:BuiStyle("Outside")
-    end
+    if COMP.BUI then holder:BuiStyle("Outside") end
 
     local fs = holder:CreateFontString(nil, "OVERLAY")
     fs:FontTemplate(LSM:Fetch("font", self.db.font), self.db.fontSize, "THINOUTLINE")
@@ -157,7 +141,7 @@ function RCD:CreateHolder(category, defaultPoint)
         nil,
         nil,
         nil,
-        "ALL,RAID,NIHILISTUI"
+        "ALL,RAID,NIHILISTZSCHEUI"
     )
 
     self.holders[category] = holder
@@ -171,7 +155,7 @@ function RCD:PositionAllBars()
 end
 
 function RCD:PositionBars(category)
-    if (not self.bars[category] or #self.bars[category] == 0) then
+    if not self.bars[category] or #self.bars[category] == 0 then
         self.holders[category]:SetAlpha(0)
         self.holders[category].Container:SetHeight(self.db.height)
         return
@@ -179,27 +163,17 @@ function RCD:PositionBars(category)
 
     self.holders[category]:SetAlpha(1)
     local function SortBars(barA, barB)
-        if (not barA.info.spell_id) then
-            return barB.info.spell_id ~= nil
-        end
+        if not barA.info.spell_id then return barB.info.spell_id ~= nil end
 
-        if barA.info.spell_id ~= barB.info.spell_id then
-            return barA.info.spell_id < barB.info.spell_id
-        end
+        if barA.info.spell_id ~= barB.info.spell_id then return barA.info.spell_id < barB.info.spell_id end
 
-        if (not barA.info.guid) then
-            return barB.info.guid ~= nil
-        end
+        if not barA.info.guid then return barB.info.guid ~= nil end
 
         local server_idA, player_idA = select(2, strsplit("-", barA.info.guid))
         local server_idB, player_idB = select(2, strsplit("-", barB.info.guid))
-        if (player_idA ~= player_idB) then
-            return player_idA < player_idB
-        end
+        if player_idA ~= player_idB then return player_idA < player_idB end
 
-        if server_idA == server_idB then
-            return false
-        end
+        if server_idA == server_idB then return false end
 
         return server_idA < server_idB
     end
@@ -230,7 +204,7 @@ function RCD:Hide()
 end
 
 function RCD:Show()
-    if (self.db.onlyInCombat and not UnitAffectingCombat("player") and not UnitAffectingCombat("pet")) then
+    if self.db.onlyInCombat and not UnitAffectingCombat("player") and not UnitAffectingCombat("pet") then
         self:Hide()
         return
     end

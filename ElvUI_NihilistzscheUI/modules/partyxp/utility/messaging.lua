@@ -24,18 +24,16 @@ function PXP.Message(sender)
     local rested = GetXPExhaustion()
     local level = UnitLevel("player")
 
-    if level == GetMaxLevelForPlayerExpansion() then
-        return
-    end
+    if level == GetMaxLevelForPlayerExpansion() then return end
 
     local message
     if IsXPUserDisabled() then
-        message = ("[DISABLED]")
+        message = "[DISABLED]"
     else
         message = ("[l:%dc:%dm:%dr:%d]"):format(level, current, max, rested)
     end
 
-    if (sender) then
+    if sender then
         C_ChatInfo_SendAddonMessage("PXP", message, "WHISPER", sender)
     else
         C_ChatInfo_SendAddonMessage(
@@ -49,9 +47,7 @@ end
 function PXP.QXPMessage(val)
     local level = UnitLevel("player")
 
-    if level == GetMaxLevelForPlayerExpansion() or IsXPUserDisabled() then
-        return
-    end
+    if level == GetMaxLevelForPlayerExpansion() or IsXPUserDisabled() then return end
 
     local message = ("[qxp:%d]"):format(val)
 
