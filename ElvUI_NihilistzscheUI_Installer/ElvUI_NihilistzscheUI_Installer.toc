@@ -1,7 +1,7 @@
 ## Interface: 100000
 ## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r |cffff2020Installer|r
 ## Author: Nihilistzsche
-## Version: 12.04
+## Version: 12.05
 ## Notes: The installer files for ElvUI_NihilistzscheUI.
 ## SavedVariables: NUIIDB
 ## RequiredDeps: ElvUI_NihilistzscheUI
