@@ -48,7 +48,16 @@ function NM:Initialize()
         end
     end)
     if COMP.IsAddOnEnabled("Forward") and _G.MovePad then
-        E.FrameLocks[_G.MovePad] = true;
+        E.FrameLocks[_G.MovePad] = true
+        E:CreateMover(
+            _G.MovePad,
+            "NUIForwardMovePadMover",
+            "Forward Move Pad",
+            nil,
+            nil,
+            nil,
+            "ALL,SOLO,NIHILISTZSCHEUI"
+        )
     end
 end
 

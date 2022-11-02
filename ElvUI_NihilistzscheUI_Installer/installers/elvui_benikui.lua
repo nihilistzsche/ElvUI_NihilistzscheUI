@@ -80,9 +80,6 @@ function NI:BenikUISetup(isSpec)
             font = self.db.font,
         },
     }
-    self:EDB().datatexts.panels.BuiMiddleDTPanel = {
-        ["enable"] = false,
-    }
     self.SaveMoverPosition("RequestStopButton", "TOP", E.UIParent, "TOP", 0, -315)
     self.SaveMoverPosition(
         "ProfessionsMover",

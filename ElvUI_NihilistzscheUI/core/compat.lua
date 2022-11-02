@@ -41,11 +41,13 @@ COMP.WP = COMP.IsAddOnEnabled("WoWPro")
 COMP.FCT = COMP.IsAddOnEnabled("ElvUI_FCT")
 COMP.TT = COMP.IsAddOnEnabled("ElvUI_TinkerToolbox")
 COMP.DSI = COMP.IsAddOnEnabled("ElvUI_DynamicStatusIcons")
+COMP.PR = COMP.IsAddOnEnabled("ParagonReputation")
 
 function COMP.Print(addon, feature)
     if
-        (E.private.nihilistzscheui.comp and E.private.nihilistzscheui.comp[addon] and
-            E.private.nihilistzscheui.comp[addon][feature])
+        E.private.nihilistzscheui.comp
+        and E.private.nihilistzscheui.comp[addon]
+        and E.private.nihilistzscheui.comp[addon][feature]
     then
         return
     end
@@ -57,30 +59,19 @@ end
 
 function COMP:SLECompatibility()
     local SLE = _G["ElvUI_Shadow&Light"][1]
-    if (Disable(E.private.sle.module.shadows)) then
-        self.Print(SLE.Title, "shadows")
-    end
+    if Disable(E.private.sle.module.shadows) then self.Print(SLE.Title, "shadows") end
 end
 
 function COMP:BenikUICompatibility()
     local BUI = _G.ElvUI_BenikUI[1]
 
     local changedDatabar = false
-    if (Disable(E.db.benikui.databars.experience)) then
-        changedDatabar = true
-    end
-    if (Disable(E.db.benikui.databars.reputation)) then
-        changedDatabar = true
-    end
-    if (Disable(E.db.benikui.databars.azerite)) then
-        changedDatabar = true
-    end
-    if (Disable(E.db.benikui.databars.honor)) then
-        changedDatabar = true
-    end
-    if (changedDatabar) then
-        self.Print(BUI.Title, "Databars")
-    end
+    if Disable(E.db.benikui.databars.experience) then changedDatabar = true end
+    if Disable(E.db.benikui.databars.reputation) then changedDatabar = true end
+    if Disable(E.db.benikui.databars.azerite) then changedDatabar = true end
+    if Disable(E.db.benikui.databars.honor) then changedDatabar = true end
+    if changedDatabar then self.Print(BUI.Title, "Databars") end
+    if Disable(E.db.datatexts.panels.BuiMiddleDTPanel) then self.Print(BUI.Title, "Middle Datatext Panel") end
 end
 
 function COMP:MerathilisUICompatibility()

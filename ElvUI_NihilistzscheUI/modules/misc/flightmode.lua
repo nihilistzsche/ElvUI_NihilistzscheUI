@@ -31,6 +31,7 @@ function NFM:SetFlightMode(status)
             end
             _G.RightChatDataPanel:Hide()
         end
+        if COMP.IsAddOnEnabled("Forward") and _G.MovePad  then _G.MovePad:Hide() end
     elseif self.NUIInFlightMode then
         self.NUIInFlightMode = false
         if E.private.chat.enable then
@@ -53,6 +54,7 @@ function NFM:SetFlightMode(status)
             LO:RepositionChatDataPanels()
             LO:ToggleChatPanels()
         end
+        if COMP.IsAddOnEnabled("Forward") and _G.MovePad then _G.MovePad:Show() end
     end
     VUF:UpdateMouseSetting()
 end

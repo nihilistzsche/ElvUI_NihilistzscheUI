@@ -35,6 +35,9 @@ function VUF:PLAYER_ENTERING_WORLD()
             self:PLAYER_REGEN_DISABLED()
         else
             self:PLAYER_REGEN_ENABLED()
+            for _, f in pairs(self.units) do
+                if f.unit ~= "target" then f.Portrait:SetAlpha(0) end
+            end
         end
     end
 end

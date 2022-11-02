@@ -200,6 +200,7 @@ function VUF:Initialize()
     local ForUpdateAll = function(_self) _self:UpdateAll() end
     self.ForUpdateAll = ForUpdateAll
 
+    self:PortraitWorkaround()
     self.CreateWarningFrame()
     self.CreateScreenFlash()
 
@@ -234,7 +235,6 @@ function VUF:Initialize()
         CastingBarFrame.SetShown = function() end
     end
 
-    self:PortraitWorkaround()
     self:UpdateAll()
 
     self:RegisterEvent("UNIT_HEALTH")

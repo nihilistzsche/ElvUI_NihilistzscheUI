@@ -63,10 +63,10 @@ function REP:Update(bar)
         end
     end
 
-    if isParagon and COMP.MERS then
-        local colorDB = E.db.mui.misc.paragon.paragonColor
-        bar.animatedStatusBar:SetStatusBarColor(colorDB.r, colorDB.g, colorDB.b)
-        bar.animatedStatusBar:SetAnimatedTextureColors(colorDB.r, colorDB.g, colorDB.b)
+    if isParagon and COMP.PR then
+        local colorDB = _G.ParagonReputationDB.value
+        bar.animatedStatusBar:SetStatusBarColor(unpack(colorDB))
+        bar.animatedStatusBar:SetAnimatedTextureColors(unpack(colorDB))
     else
         local color = FACTION_BAR_COLORS[reaction] or FACTION_BAR_COLORS[1]
         bar.animatedStatusBar:SetStatusBarColor(color.r, color.g, color.b)
