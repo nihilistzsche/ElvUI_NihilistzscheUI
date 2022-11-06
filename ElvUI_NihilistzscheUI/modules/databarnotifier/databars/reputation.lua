@@ -154,9 +154,9 @@ function REP:Notify()
 
                 if not skipMessage then
                     local color, basecolor
-                    if isParagon and COMP.MERS then
-                        local colorDB = E.db.mui.misc.paragon.paragonColor
-                        color = E:RGBToHex(colorDB.r, colorDB.g, colorDB.b)
+                    if isParagon and COMP.PR then
+                        local r, g, b = unpack(_G.ParagonReputationDB.value)
+                        color = E:RGBToHex(r, g, b)
                         basecolor = color
                     else
                         local _color = FACTION_BAR_COLORS[nextstandingID] or FACTION_BAR_COLORS[1]
