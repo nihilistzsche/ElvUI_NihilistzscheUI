@@ -10,7 +10,7 @@ DBN.colors = {
     resume = "|r",
 }
 
-function DBN:InitRegisteredNotifiers()
+function DBN:InitializeRegisteredNotifiers()
     for _, t in pairs(self.RegisteredNotifiers) do
         t:Initialize(self)
     end
@@ -18,7 +18,7 @@ end
 
 function DBN:Initialize()
     NUI:RegisterDB(self, "databarnotifier")
-    self:InitRegisteredNotifiers()
+    self:InitializeRegisteredNotifiers()
 end
 
 local prototype = { parent = DBN }
