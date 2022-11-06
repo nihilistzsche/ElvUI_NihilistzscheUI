@@ -227,7 +227,7 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
 
     frame:CreateBackdrop("Transparent")
     frame:SetParent(_G.ElvUF_Parent)
-
+    E.FrameLocks[frame] = true
     if ES then
         frame:CreateShadow()
         ES:RegisterFrameShadows(frame)
