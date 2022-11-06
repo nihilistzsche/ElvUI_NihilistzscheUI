@@ -1,3 +1,16 @@
+12.06:
+- MerathilisUI removed paragon reputation support, and has suggested moving to ParagonReputation, so
+  paragon reputation color will now be obtained from that addon instead.
+- Readded a mover for the OldGodWhispers addon.
+- Fixed an issue where VUF unit frames could appear during pet battles.
+- Installer updates to MerathilisUI, mMediaTag, NihilistzscheUI, ParagonReputation, and ProjectAzilroka
+
+12.05:
+- Fix remaing DF issues.
+
+12.04:
+- Preliminary DF update, some minor issues remain.
+
 12.03:
 - 9.2.7 update and synced to the latest ElvUI version.
 - This will be the last Shadowlands version, with an update for the prepatch coming around Thursday next week.

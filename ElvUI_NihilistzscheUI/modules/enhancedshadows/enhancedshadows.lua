@@ -181,6 +181,11 @@ function ES:ElvUIShadows()
             MERS.raidManagerHeader:CreateShadow()
             ES:RegisterFrameShadows(MERS.raidManagerHeader)
         end
+        local frame = _G[MERS.Title .. "KeyFeedback"]
+        if frame then
+            frame.mirror:CreateShadow()
+            ES:RegisterFrameShadows(frame.mirror)
+        end
     end
 
     if COMP.BUI then
