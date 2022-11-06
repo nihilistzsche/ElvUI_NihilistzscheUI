@@ -80,6 +80,7 @@ function NI:SetupSpecProfiles()
                 seenRole[role] = true
             end
         end
+        _G.ElvDB.namespaces["LibDualSpec-1.0"].char = _G.ElvDB.namespaces["LibDualSpec-1.0"].char or {}
         _G.ElvDB.namespaces["LibDualSpec-1.0"].char[self.baseProfile] = { enabled = true }
         for i, role in ipairs(tbl) do
             _G.ElvDB.namespaces["LibDualSpec-1.0"].char[self.baseProfile][i] = self.currentLocalizedClass

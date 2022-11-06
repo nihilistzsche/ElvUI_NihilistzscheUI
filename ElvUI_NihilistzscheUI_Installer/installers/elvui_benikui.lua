@@ -14,7 +14,7 @@ function NI:BenikUISetup(isSpec)
         splashScreen = false,
         benikuiStyle = true,
     }
-    self:EDB().benikuiDatabars = {
+    self:EDB().benikui.databars = {
         threat = {
             buiStyle = true,
             notifiers = {
@@ -61,7 +61,7 @@ function NI:BenikUISetup(isSpec)
         [2] = { enable = false },
     }
 
-    self:EDB().dashboards = {
+    self:EDB().benikui.dashboards = {
         dashFont = {
             dbfont = self.db.font,
         },

@@ -57,6 +57,9 @@ function NI:InstallForClass(class)
 end
 
 function NI:SetupForCharacters()
+    if _G.ElvDB.namespaces and _G.ElvDB.namespaces["LibDualSpec-1.0"] then
+        wipe(_G.ElvDB.namespaces["LibDualSpec-1.0"])
+    end
     for s, l in pairs(_G.ElvDB.class) do
         for n, c in pairs(l) do
             self.currentClass = c
