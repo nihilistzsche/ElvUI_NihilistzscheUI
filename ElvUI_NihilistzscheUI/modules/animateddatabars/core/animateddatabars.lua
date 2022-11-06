@@ -87,6 +87,8 @@ function ADB:CreateAnimatedBar(tbl, key)
     bar.text:FontTemplate(LSM:Fetch("font", db.font), db.fontSize, "THINOUTLINE")
     bar.text:Point("CENTER", 0, 0)
     bar.animatedStatusBar = animatedStatusBar
+    bar.barTexture = animatedStatusBar:GetStatusBarTexture()
+    if key == "Reputation" then bar.Reward:SetParent(bar.animatedStatusBar) end
     self:CreateTicks(holder)
     hooksecurefunc(DB, key .. "Bar_Update", function() tbl:Update(bar) end)
     C_Timer_After(2, function() tbl:Update(bar) end)
