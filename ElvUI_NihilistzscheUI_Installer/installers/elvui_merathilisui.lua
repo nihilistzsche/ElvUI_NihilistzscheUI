@@ -102,6 +102,9 @@ function NI:MerathilisUISetup(isSpec)
             },
         },
     }
+    self:EDB().mui.smb = {
+        enable = false,
+    }
     self:EDB().mui.raidmarkers = {
         enable = true,
         backdrop = true,
@@ -141,7 +144,7 @@ function NI:MerathilisUISetup(isSpec)
     self.SaveMoverPosition("AutoButtonBar1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -398, 334)
     self.SaveMoverPosition("AutoButtonBar2Mover", "TOP", "AutoButtonBar1Mover", "BOTTOM", 0, -4)
     self.SaveMoverPosition("AutoButtonBar3Mover", "TOP", "AutoButtonBar2Mover", "BOTTOM", 0, -4)
-    self.SaveMoverPosition("SpellFeedback", "BOTTOM", UIParent, "BOTTOM", 0, 320)
+    self.SaveMoverPosition("SpellFeedback", "BOTTOM", UIParent, "BOTTOM", 0, 415)
 
     if COMP.LCP then
         self:EDB().mui.locPanel = {

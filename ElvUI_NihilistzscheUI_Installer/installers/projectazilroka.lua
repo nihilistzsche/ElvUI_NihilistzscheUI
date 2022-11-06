@@ -15,7 +15,31 @@ function NI:ProjectAzilrokaSetup(isSpec)
                 [264173] = true,
             },
         }
+        local classReminder = {
+            WARLOCK = {
+                ["Inquisitor's Gaze"] = {
+                    ["strictFilter"] = true,
+                    ["combat"] = true,
+                    ["enable"] = true,
+                    ["filterType"] = "SPELL",
+                    ["negateGroup"] = {},
+                    ["spellGroup"] = {
+                        [388068] = true,
+                    },
+                    ["personal"] = true,
+                    ["size"] = 50,
+                },
+            },
+        }
         local whitelist = classWhitelist[self.currentClass] or {}
+        local reminder = {
+            ["Enable"] = false,
+        }
+        if classReminder[self.currentClass] then
+            reminder["Enable"] = true
+            reminder["Filters"] = {}
+            reminder["Filters"][self.currentClass] = classReminder[self.currentClass]
+        end
         self:SetProfile(_G.ProjectAzilrokaDB, {
             cooldown = {
                 fonts = {
@@ -71,7 +95,7 @@ function NI:ProjectAzilrokaSetup(isSpec)
             EnhancedShadows = Disable(),
             ItemCooldowns = Disable(),
             MouseoverAuras = Disable(),
-            AuraReminder = Disable(),
+            AuraReminder = reminder,
             iFilger = {
                 Enable = true,
                 Enhancements = Disable(),

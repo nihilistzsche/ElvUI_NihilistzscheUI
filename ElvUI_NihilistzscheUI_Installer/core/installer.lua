@@ -10,6 +10,7 @@ local RAID_CLASS_COLORS, pairs, unpack, format, ReloadUI, print =
     _G.RAID_CLASS_COLORS, _G.pairs, _G.unpack, _G.format, _G.ReloadUI, _G.print
 local tinsert = _G.tinsert
 local C_Timer_After = _G.C_Timer.After
+local wipe = _G.wipe
 
 NUIIDB = {}
 

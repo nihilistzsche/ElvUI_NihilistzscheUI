@@ -35,7 +35,7 @@ NI.ClassMountFavorites = {
     },
 }
 
-function NI:GlobalNameplateSetup()
+function NI:NihilistzscheUIGlobalNameplateSetup()
     local classes = {}
     _G.FillLocalizedClassList(classes, false)
     E.global.nameplates.filters.Active_BattlePet_PBN = {
@@ -168,7 +168,7 @@ function NI:GlobalNameplateSetup()
     end
 end
 
-NI:RegisterGlobalAddOnInstaller("ElvUI_NihilistzscheUI", NI.GlobalNameplateSetup)
+NI:RegisterGlobalAddOnInstaller("ElvUI_NihilistzscheUI", NI.NihilistzscheUIGlobalNameplateSetup)
 
 function NI:NihilistzscheUISetup(isSpec)
     local filterClassName = self.currentLocalizedClass
@@ -385,7 +385,8 @@ function NI:NihilistzscheUISetup(isSpec)
     )
     self.SaveMoverPosition("NihilistzscheUF_Player AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", -310, 424)
     self.SaveMoverPosition("NihilistzscheUF_Target AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", 310, 424)
-    self.SaveMoverPosition("NihilistzscheUF_Player Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 371)
-    self.SaveMoverPosition("NihilistzscheUF_Target Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 346)
+    self.SaveMoverPosition("NihilistzscheUF_Player Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 370)
+    self.SaveMoverPosition("NihilistzscheUF_Target Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 315)
+
     self.SaveMoverPosition("AoE CCMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
 end

@@ -452,8 +452,10 @@ function NI.BaseElvUISetup()
     SetCVar("cameraDistanceMaxZoomFactor", 2.6)
     SetCVar("showQuestTrackingTooltips", 1)
     SetCVar("fstack_preferParentKeys", 0) --Add back the frame names via fstack!
-
+    SetCVar("minimapTrackingShowAll", 1)
     NP:CVarReset()
+
+    SetCVar("nameplateMaxDistance", 100)
 
     --_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:SetValue("SHIFT")
     --_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:RefreshValue()
@@ -465,4 +467,15 @@ function NI.BaseElvUISetup()
         NUIIDB.uiScaleSet = true
     end
     E:PixelScaleChanged()
+
+    if
+        type(NI.ClassSpecProfiles[E.myclass]) == "table" and not NUIIDB.reloadedThisClass
+        or not NUIIDB.reloadedThisClass[E.myclass]
+    then
+        C_Timer.After(2, function()
+            NUIIDB.reloadedThisClass = NUIIDB.reloadedThisClass or {}
+            NUIIDB.reloadedThisClass[E.myclass] = true
+            ReloadUI()
+        end)
+    end
 end

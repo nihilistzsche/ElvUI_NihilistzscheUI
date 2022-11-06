@@ -4,7 +4,7 @@ local NI = NUI.Installer
 
 function NI:ParagonReputationSetup()
     _G.ParagonReputationDB = {
-        value = { { 0.9, 0.8, 0.6 } },
+        value = { 0.9, 0.8, 0.6 },
     }
 end
 
