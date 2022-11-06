@@ -59,6 +59,18 @@ function NM:Initialize()
             "ALL,SOLO,NIHILISTZSCHEUI"
         )
     end
+    if COMP.IsAddOnEnabled("OldGodWhispers") then
+        if not _G.DragFrame then LoadAddOn("OldGodWhispers") end
+        E:CreateMover(
+            _G.DragFrame,
+            "OldGodWhispersDragFrameMover",
+            "Old God Whispers Drag Frame",
+            nil,
+            nil,
+            nil,
+            "ALL,SOLO,NIHILISTZSCHEUI"
+        )
+    end
 end
 
 NUI:RegisterModule(NM:GetName())
