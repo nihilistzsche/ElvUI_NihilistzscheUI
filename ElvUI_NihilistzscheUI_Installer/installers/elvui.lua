@@ -339,6 +339,9 @@ function NI:NameplateSetup()
                 },
                 title = {
                     enable = true,
+                    yOffset = -14,
+                    font = self.db.font,
+                    position = "CENTER",
                 },
                 nameOnly = false,
             },
