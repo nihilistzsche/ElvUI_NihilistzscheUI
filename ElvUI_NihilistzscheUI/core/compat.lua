@@ -42,6 +42,7 @@ COMP.FCT = COMP.IsAddOnEnabled("ElvUI_FCT")
 COMP.TT = COMP.IsAddOnEnabled("ElvUI_TinkerToolbox")
 COMP.DSI = COMP.IsAddOnEnabled("ElvUI_DynamicStatusIcons")
 COMP.PR = COMP.IsAddOnEnabled("ParagonReputation")
+COMP.OPIE = COMP.IsAddOnEnabled("OPie")
 
 function COMP.Print(addon, feature)
     if
@@ -77,24 +78,18 @@ end
 function COMP:MerathilisUICompatibility()
     local MER = _G.ElvUI_MerathilisUI[1]
 
-    if (Disable(E.db.mui.actionbars.specBar)) then
-        self.Print(MER.Title, "SpecBar")
-    end
+    if Disable(E.db.mui.actionbars.specBar) then self.Print(MER.Title, "SpecBar") end
 
-    if (Disable(E.db.mui.actionbars.equipBar)) then
-        self.Print(MER.Title, "EquipBar")
-    end
+    if Disable(E.db.mui.actionbars.equipBar) then self.Print(MER.Title, "EquipBar") end
 
-    if (E.db.mui.cooldowns and Disable(E.db.mui.cooldowns.raid)) then
-        self.Print(MER.Title, "RaidCDs")
-    end
+    if E.db.mui.cooldowns and Disable(E.db.mui.cooldowns.raid) then self.Print(MER.Title, "RaidCDs") end
 
     --[[if (Disable(E.db.mui['NameplateAuras'])) then
 		self.Print(MER.Title, "Nameplate Auras");
 	end]]
-    if (E.db.mui.talents and Disable(E.db.mui.talents.talentManager)) then
-        self.Print(MER.Title, "TalentManager")
-    end
+    if E.db.mui.talents and Disable(E.db.mui.talents.talentManager) then self.Print(MER.Title, "TalentManager") end
+
+    if COMP.OPIE then hooksecurefunc(MER, "FixGame", function(_self) _self:UnregisterEvent("CVAR_UPDATE") end) end
 end
 
 COMP.CompatibilityFunctions = {}
