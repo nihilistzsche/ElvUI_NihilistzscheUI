@@ -23,8 +23,8 @@ function VUF:ConstructDebuffs(frame)
     debuffs.initialAnchor = "TOPRIGHT"
     debuffs["growth-y"] = "UP"
     debuffs["growth-x"] = "LEFT"
-    debuffs.PostCreateIcon = self.PostCreateAura
-    debuffs.PostUpdateIcon = self.PostUpdateAura
+    debuffs.PostCreateButton = self.PostCreateAura
+    debuffs.PostUpdateButton = self.PostUpdateAura
     debuffs.CustomFilter = UF.AuraFilter
     debuffs.type = "debuffs"
 
@@ -45,8 +45,8 @@ function VUF:ConstructBuffs(frame)
 
     buffs.spacing = 2
     buffs.initialAnchor = "TOPLEFT"
-    buffs.PostCreateIcon = self.PostCreateAura
-    buffs.PostUpdateIcon = self.PostUpdateAura
+    buffs.PostCreateButton = self.PostCreateAura
+    buffs.PostUpdateButton = self.PostUpdateAura
     buffs.CustomFilter = UF.AuraFilter
     buffs.type = "buffs"
 
@@ -106,29 +106,28 @@ function VUF:PostCreateAura(button)
     button.remaining:FontTemplate(LSM:Fetch("font", E.db.general.font), 12, "THINOUTLINE")
     button.remaining:Point("CENTER", 1, 0)
 
-    button.cd.noOCC = true -- hide OmniCC CDs, because we  create our own cd with CreateAuraTimer()
-    button.cd.noCooldownCount = true -- hide CDC CDs, because we create our own cd with CreateAuraTimer()
+    button.Cooldown.noOCC = true -- hide OmniCC CDs, because we  create our own cd with CreateAuraTimer()
+    button.Cooldown.noCooldownCount = true -- hide CDC CDs, because we create our own cd with CreateAuraTimer()
 
-    button.cd:SetReverse()
-    button.icon:Point("TOPLEFT", 2, -2)
-    button.icon:Point("BOTTOMRIGHT", -2, 2)
-    button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-    button.icon:SetDrawLayer("ARTWORK")
+    button.Cooldown:SetReverse()
+    button.Icon:Point("TOPLEFT", 2, -2)
+    button.Icon:Point("BOTTOMRIGHT", -2, 2)
+    button.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+    button.Icon:SetDrawLayer("ARTWORK")
 
-    button.count:Point("BOTTOMRIGHT", 3, 3)
-    button.count:SetJustifyH("RIGHT")
-    button.count:SetFont(LSM:Fetch("font", E.db.general.font), 9, "THICKOUTLINE")
-    button.count:SetTextColor(0.84, 0.75, 0.65)
+    button.Count:Point("BOTTOMRIGHT", 3, 3)
+    button.Count:SetJustifyH("RIGHT")
+    button.Count:SetFont(LSM:Fetch("font", E.db.general.font), 9, "THICKOUTLINE")
+    button.Count:SetTextColor(0.84, 0.75, 0.65)
 
-    button.overlayFrame = CreateFrame("frame", nil, button, nil)
-    button.cd:SetFrameLevel(button:GetFrameLevel() + 1)
-    button.cd:ClearAllPoints()
-    button.cd:Point("TOPLEFT", button, "TOPLEFT", 2, -2)
-    button.cd:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
-    button.overlayFrame:SetFrameLevel(button.cd:GetFrameLevel() + 1)
-    button.overlay:SetParent(button.overlayFrame)
-    button.count:SetParent(button.overlayFrame)
-    button.remaining:SetParent(button.overlayFrame)
+    button.OverlayFrame = CreateFrame("frame", nil, button, nil)
+    button.Cooldown:SetFrameLevel(button:GetFrameLevel() + 1)
+    button.Cooldown:ClearAllPoints()
+    button.Cooldown:Point("TOPLEFT", button, "TOPLEFT", 2, -2)
+    button.Cooldown:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
+    button.OverlayFrame:SetFrameLevel(button.Cooldown:GetFrameLevel() + 1)
+    button.Overlay:SetParent(button.OverlayFrame)
+    button.Count:SetParent(button.OverlayFrame)
 
     button.Glow = CreateFrame("Frame", nil, button, "BackdropTemplate")
     button.Glow:Point("TOPLEFT", button, "TOPLEFT", -3, 3)
@@ -160,11 +159,11 @@ function VUF:PostUpdateAura(unit, icon, index, _, _, _, duration)
     if icon then
         if icon.filter == "HARMFUL" then
             if not UnitIsFriend("player", unit) and icon.owner ~= "player" and icon.owner ~= "vehicle" then
-                icon.icon:SetDesaturated(true)
+                icon.Icon:SetDesaturated(true)
                 icon:SetBackdropBorderColor(unpack(E.media.bordercolor))
             else
                 local color = DebuffTypeColor[dtype] or DebuffTypeColor.none
-                icon.icon:SetDesaturated(false)
+                icon.Icon:SetDesaturated(false)
                 icon:SetBackdropBorderColor(color.r * 0.8, color.g * 0.8, color.b * 0.8)
             end
         else
@@ -186,7 +185,7 @@ function VUF:PostUpdateAura(unit, icon, index, _, _, _, duration)
             icon.remaining:Hide()
         end
 
-        icon.cd:Hide()
+        icon.Cooldown:Hide()
 
         icon.duration = duration
         icon.timeLeft = expirationTime

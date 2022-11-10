@@ -55,12 +55,12 @@ function ENA:PostUpdateAura(unit, button)
 
         if width > height then
             local aspect = height / width
-            button.icon:SetTexCoord(0.07, 0.93, (0.5 - (aspect / 2)) + 0.07, (0.5 + (aspect / 2)) - 0.07)
+            button.Icon:SetTexCoord(0.07, 0.93, (0.5 - (aspect / 2)) + 0.07, (0.5 + (aspect / 2)) - 0.07)
         elseif height > width then
             local aspect = width / height
-            button.icon:SetTexCoord((0.5 - (aspect / 2)) + 0.07, (0.5 + (aspect / 2)) - 0.07, 0.07, 0.93)
+            button.Icon:SetTexCoord((0.5 - (aspect / 2)) + 0.07, (0.5 + (aspect / 2)) - 0.07, 0.07, 0.93)
         else
-            button.icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+            button.Icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
         end
 
         button:SetWidth(width)
@@ -76,7 +76,7 @@ function ENA:PostUpdateAura(unit, button)
             stackSize = E.global.nameplates.spellListDefault.stackSize
         end
 
-        button.count:FontTemplate(nil, stackSize, "OUTLINE")
+        button.Count:FontTemplate(nil, stackSize, "OUTLINE")
 
         if ENA.db.ccDebuffCasterInfo.enable and ccSpell and ccSpell ~= "" and button.caster then
             if CCDebuffTextNeedsUpdate(button, ENA.db.ccDebuffCasterInfo) then
@@ -107,7 +107,7 @@ function ENA:Construct_Auras(nameplate)
 end
 
 --Credits: Merathilis
-function ENA:Construct_AuraIcon(button)
+function ENA:Construct_AuraButton(button)
     -- Creates an own font element for caster name
     if not button.cc_name then
         button.cc_name = button:CreateFontString("OVERLAY")
@@ -192,7 +192,7 @@ function ENA:Initialize()
     NUI:RegisterDB(self, "enhancednameplateauras")
     hooksecurefunc(NP, "Construct_Auras", ENA.Construct_Auras)
     hooksecurefunc(UF, "PostUpdateAura", ENA.PostUpdateAura)
-    hooksecurefunc(NP, "Construct_AuraIcon", ENA.Construct_AuraIcon)
+    hooksecurefunc(NP, "Construct_AuraIcon", ENA.Construct_AuraButton)
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
