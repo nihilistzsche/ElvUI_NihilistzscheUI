@@ -288,7 +288,12 @@ end
 function TB:HookCurrencyButtons()
     local count = 0
     for _, button in pairs(TokenFrame.ScrollBox.ScrollTarget) do
-        if not button.isHeader and not button.nui_utibar_hooked then
+        if
+            type(button) == "table"
+            and not button.isHeader
+            and button.RegisterForClicks
+            and not button.nui_utibar_hooked
+        then
             button:RegisterForClicks("AnyUp")
             button:HookScript("OnDoubleClick", function(_, mouseButton)
                 if mouseButton == "LeftButton" then
@@ -342,6 +347,16 @@ local function GetNumberOfTokenFrameButtons()
     return count
 end
 
+local function AddTrackWatch(msg)
+    msg = msg:gsub("\124", "\124\124")
+    local id, type = NUI.GetID(msg)
+    if not id or type == nil then
+        print("Usage: /tbadd [item or currency link]")
+        return
+    end
+    TB:AddWatch(type, id)
+end
+
 function TB:Initialize()
     NUB:InjectScripts(self)
 
@@ -390,6 +405,9 @@ function TB:Initialize()
             self.hookedCurrency = self:HookCurrencyButtons()
         end
     end)
+
+    _G.SLASH_TBADD1 = "/tbadd"
+    _G.SlashCmdList.TBADD = AddTrackWatch
 end
 
 NUB:RegisterUtilityBar(TB)

@@ -282,3 +282,12 @@ end
 function NUI.ExecIf(condition, func)
     if condition then func() end
 end
+
+function NUI.GetID(ID)
+    if not ID then return nil end
+    if strfind(ID, "item:") then
+        return tonumber(strmatch(ID, "\124\124Hitem:(%d+)")), true
+    elseif strfind(ID, "currency:") then
+        return tonumber(strmatch(ID, "\124\124Hcurrency:(%d+)")), false
+    end
+end

@@ -314,19 +314,11 @@ function FB:UpdateAndNotify(item, id, count)
     _G.ElvDB.farmBar[FB.myname].count[table][id] = count
 end
 
-function FB.GetID(ID)
-    if not ID then return nil end
-    if strfind(ID, "item:") then
-        return tonumber(strmatch(ID, "\124\124Hitem:(%d+)")), true
-    elseif strfind(ID, "currency:") then
-        return tonumber(strmatch(ID, "\124\124Hcurrency:(%d+)")), false
-    end
-end
 
 local function AddFarmWatch(msg)
     msg = msg:gsub("\124", "\124\124")
     local link, target = strmatch(msg, "(.+) (%d+)$")
-    local id, type = FB.GetID(link)
+    local id, type = NUI.GetID(link)
     if not id or type == nil or not target then
         print("Usage: /fbadd [item or currency link] [targetAmount]")
         return
