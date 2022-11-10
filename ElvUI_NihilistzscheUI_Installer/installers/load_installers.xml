@@ -19,6 +19,7 @@
     <Script file="elvui_pdbc.lua" />
     <Script file="elvui_shadowandlight.lua" />
     <Script file="elvui_mmediatag.lua" />
+    <Script file="elvui_dynamicstatusicons.lua" />
     <Script file="opie_elvui.lua" />
     <Script file="kaliels_tracker.lua" />
     <Script file="pettracker.lua" />

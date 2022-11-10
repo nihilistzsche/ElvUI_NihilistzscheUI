@@ -454,6 +454,7 @@ function NI.BaseElvUISetup()
     SetCVar("showQuestTrackingTooltips", 1)
     SetCVar("fstack_preferParentKeys", 0) --Add back the frame names via fstack!
     SetCVar("minimapTrackingShowAll", 1)
+    SetCVar("ActionButtonUseKeyDown", 0)
     NP:CVarReset()
 
     SetCVar("nameplateMaxDistance", 100)

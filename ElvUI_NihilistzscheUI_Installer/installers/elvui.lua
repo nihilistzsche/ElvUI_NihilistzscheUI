@@ -167,6 +167,7 @@ function NI:ElvUIHealerSetup()
 end
 
 function NI:NameplateSetup()
+    local needsPetFilterClasses = { "DEATHKNIGHT", "MAGE", "HUNTER", "WARLOCK" }
     local filterClassName = self.currentLocalizedClass
     local nameFormat = "[namecolor][name]"
     if not NUI.Lulupeep and COMP.TT then
@@ -450,7 +451,7 @@ function NI:NameplateSetup()
         displayStyle = "BLIZZARD",
         loadDistance = 100,
     }
-    if needsPetFilter then
+    if needsPetFilterClasses[E.myclass] then
         self:EDB().nameplates.filters["My_Pet_" .. filterClassName] = {
             triggers = {
                 enable = true,
@@ -480,9 +481,8 @@ function NI:GlobalNameplateSetup()
     _G.FillLocalizedClassList(classes, false)
     classes = tFilter(classes, function(k, _) return k ~= "Adventurer" end)
     for c, filterClassName in pairs(classes) do
-        local needsPetFilter = tContains(needsPetFilterClasses, c)
         self.classColor = E:ClassColor(c, true)
-        if needsPetFilter then
+        if needsPetFilterClasses[E.myclass] then
             E.global.nameplates.filters["My_Pet_" .. filterClassName] = {
                 actions = {
                     color = {
