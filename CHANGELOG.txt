@@ -1,3 +1,6 @@
+12.07:
+- Various bug fixes and the return of the dynamicstatusicons installer.
+
 12.06:
 - MerathilisUI removed paragon reputation support, and has suggested moving to ParagonReputation, so
   paragon reputation color will now be obtained from that addon instead.
