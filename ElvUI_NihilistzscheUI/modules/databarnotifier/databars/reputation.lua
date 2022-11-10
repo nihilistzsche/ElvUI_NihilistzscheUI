@@ -82,15 +82,17 @@ function REP:Notify()
     for factionIndex = 1, GetNumFactions() do
         local name, _, standingID, barMin, barMax, barValue, _, _, isHeader, _, hasRep, _, _, factionID =
             GetFactionInfo(factionIndex)
-        local friendInfo = C_GossipInfo_GetFriendshipReputation(factionID)
-        local friendID, friendTextLevel = friendInfo.friendshipFactionID, friendInfo.text
+        local success, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, _factionID)
+        local friendID, friendRep
+        if success then
+            friendID, friendRep = data.friendshipFactionID, data.standingd
+        end
         local isParagon = false
         local hasParagonReward = false
         if factionID and C_Reputation_IsFactionParagon(factionID) then
             local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
             barMin, barMax = 0, threshold
             barValue = currentValue % threshold
-            if hasRewardPending then barValue = barValue + threshold end
             isParagon = true
             hasParagonReward = hasRewardPending
         end
@@ -105,7 +107,7 @@ function REP:Notify()
                     standingID ~= self.values[name].Standing
                     or hasParagonReward ~= self.values[name].HasParagonReward
                 then
-                    local newfaction = friendID and friendTextLevel or _G["FACTION_STANDING_LABEL" .. standingID]
+                    local newfaction = friendID and friendRep or _G["FACTION_STANDING_LABEL" .. standingID]
 
                     local newstandingtext
 

@@ -18,11 +18,8 @@ local STANDING = _G.STANDING
 local REPUTATION = _G.REPUTATION
 local format = _G.format
 local xpcall = _G.xpcall
-local geterrorhandler = _G.geterrorhandler
 
 function REP.GetLevel() return 0 end
-
-local function errorhandler(_) return end
 
 -- luacheck: no self
 function REP:Update(bar)
@@ -47,7 +44,7 @@ function REP:Update(bar)
     for i = 1, numFactions do
         local factionName, _, standingID, _, _, _, _, _, _, _, _, _, _, _factionID = GetFactionInfo(i)
         if _factionID then
-            local success, data = xpcall(C_GossipInfo_GetFriendshipReputation, errorhandler, _factionID)
+            local success, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, _factionID)
             local friendID, friendRep, friendThreshold, nextFriendThreshold
             if success then
                 friendID, friendRep, friendThreshold, nextFriendThreshold =

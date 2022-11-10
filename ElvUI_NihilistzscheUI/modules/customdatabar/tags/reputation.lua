@@ -22,7 +22,7 @@ function CDB.RegisterRepTags()
 
     local function GetFriendshipInfo(factionID)
         local data = C_GossipInfo_GetFriendshipReputation(factionID)
-        if data.friendshipFactionID == 0 then
+        if not data or data.friendshipFactionID == 0 then
             return false
         else
             return true, data.text
