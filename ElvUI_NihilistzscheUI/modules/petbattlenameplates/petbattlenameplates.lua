@@ -6,8 +6,8 @@ local UF = E.UnitFrames
 local BattlePetBreedID = _G.IsAddOnLoaded("BattlePetBreedID")
 local COMP = NUI.Compatibility
 
-local LE_BATTLE_PET_ALLY = _G.LE_BATTLE_PET_ALLY
-local LE_BATTLE_PET_ENEMY = _G.LE_BATTLE_PET_ENEMY
+local Enum_BattlePetOwner_Ally = _G.Enum.BattlePetOwner.Ally
+local Enum_BattlePetOwner_Enemy = _G.Enum.BattlePetOwner.Enemy
 local SetCVar = _G.SetCVar
 local GetCVar = _G.GetCVar
 local C_PetBattles_GetAuraInfo = _G.C_PetBattles.GetAuraInfo
@@ -66,12 +66,12 @@ function PBN:UpdatePlateGUID()
     PBN.lowestIDValue = math.min(PBN.lowestIDValue or 4340000000000, lowestIDValue)
     if oldIDNumber and PBN.lowestIDValue >= oldIDNumber then return end
 
-    local myPets = C_PetBattles_GetNumPets(LE_BATTLE_PET_ALLY)
-    local theirPets = C_PetBattles_GetNumPets(LE_BATTLE_PET_ENEMY)
+    local myPets = C_PetBattles_GetNumPets(Enum_BattlePetOwner_Ally)
+    local theirPets = C_PetBattles_GetNumPets(Enum_BattlePetOwner_Enemy)
     local guidID
     wipe(PBN.myPets)
     for i = 1, myPets do
-        local pet = { petOwner = LE_BATTLE_PET_ALLY, petIndex = i }
+        local pet = { petOwner = Enum_BattlePetOwner_Ally, petIndex = i }
         guidID = PBN.lowestIDValue + (i - 1)
         pet.GUID = string.format("ClientActor-6-0-%d", guidID)
         PBN:UpdateNamePlate(pet)
@@ -80,7 +80,7 @@ function PBN:UpdatePlateGUID()
 
     wipe(PBN.theirPets)
     for i = 1, theirPets do
-        local pet = { petOwner = LE_BATTLE_PET_ENEMY, petIndex = i }
+        local pet = { petOwner = Enum_BattlePetOwner_Enemy, petIndex = i }
         guidID = PBN.lowestIDValue + (i + (myPets - 1))
         pet.GUID = string.format("ClientActor-6-0-%d", guidID)
         PBN:UpdateNamePlate(pet)
@@ -184,7 +184,7 @@ function PBN:NamePlate_UpdateXP(pet, np)
     local xp, maxXP = C_PetBattles_GetXP(pet.petOwner, pet.petIndex)
     local level = C_PetBattles_GetLevel(pet.petOwner, pet.petIndex)
     local powerShown = false
-    if pet.petOwner == LE_BATTLE_PET_ALLY and level < 25 then
+    if pet.petOwner == Enum_BattlePetOwner_Ally and level < 25 then
         np.Power:SetMinMaxValues(0, maxXP)
         np.Power:SetValue(xp)
         np.Power:SetStatusBarColor(0.24, 0.54, 0.78)
@@ -462,8 +462,8 @@ function PBN.StyleFilterCustomCheck(frame, _, trigger)
         local petInfo = frame.pbouf_petinfo
         if not petInfo then return false end
         if
-            trigger.isAllyBattlePetPBN and petInfo.petOwner == LE_BATTLE_PET_ALLY
-            or trigger.isEnemyBattlePetPBN and petInfo.petOwner == LE_BATTLE_PET_ENEMY
+            trigger.isAllyBattlePetPBN and petInfo.petOwner == Enum_BattlePetOwner_Ally
+            or trigger.isEnemyBattlePetPBN and petInfo.petOwner == Enum_BattlePetOwner_Enemy
         then
             passed = true
         else
