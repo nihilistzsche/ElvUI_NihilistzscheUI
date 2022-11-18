@@ -15,6 +15,7 @@ local UnitIsPlayer = _G.UnitIsPlayer
 local UnitClass = _G.UnitClass
 local UnitReaction = _G.UnitReaction
 local UnitCanAttack = _G.UnitCanAttack
+local AuraUtil_FindAuraByName = _G.AuraUtil_FindAuraByName
 
 -- Castbar for units it is enabled on
 -- For player/target castbar can be (and defaults) to horizontal mode.
@@ -291,7 +292,12 @@ function VUF:SetCastTicks(frame, numTicks, extraTickRatio)
     end
 end
 
+VUF.HarshDisciplineID = 373183
+
 function VUF:PostCastStart(unit)
+    if E.myclass == "PRIEST" and not VUF.HarshDisciplineName then
+        VUF.HarshDisciplineName = GetSpellInfo(VUF.HarshDisciplineID)
+    end
     local db = VUF.db.units[unit]
     if not db or not db.castbar then return end
 
@@ -337,7 +343,12 @@ function VUF:PostCastStart(unit)
             local firstTickInc = tickIncRate / 2
             local bonusTicks = 0
             if curHaste >= firstTickInc then bonusTicks = bonusTicks + 1 end
-
+            if
+                E.myclass == "PRIEST"
+                and AuraUtil_FindAuraByName(VUF.HarshDisciplineName, "player", "HELPFUL") ~= nil
+            then
+                bonusTicks = bonusTicks + 3
+            end
             local x = tonumber(E:Round(firstTickInc + tickIncRate, 2))
             while curHaste >= x do
                 x = tonumber(E:Round(firstTickInc + (tickIncRate * bonusTicks), 2))
