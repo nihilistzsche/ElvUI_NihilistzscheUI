@@ -15,7 +15,7 @@ local HN =
 
 function HN:Initialize()
     if COMP.SLE then
-        local Icon = [[Interface\AddOns\ElvUI_Shadow&Light\media\textures\]] .. E.myfaction
+        local Icon = [[Interface\AddOns\ElvUI_SLE\media\textures\]] .. E.myfaction
         self.textureMarkup = "|T" .. Icon .. ":12|t"
     end
     self:ScanXP()

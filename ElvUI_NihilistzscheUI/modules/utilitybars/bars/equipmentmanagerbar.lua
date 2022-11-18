@@ -129,7 +129,7 @@ function EM:CreateButtonHook(button)
 
     button.SetTooltip = function(_self)
         if not _self.data then return nil end
-        local ret = GameTooltip:SetEquipmentSet(_self.data)
+        local ret = GameTooltip:SetEquipmentSet(C_EquipmentSet_GetEquipmentSetID(_self.data))
         GameTooltip:Show()
         return ret
     end

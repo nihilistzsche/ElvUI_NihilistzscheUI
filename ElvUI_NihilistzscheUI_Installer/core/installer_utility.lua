@@ -52,6 +52,7 @@ NI.ClassSpecProfiles = {
     DEATHKNIGHT = { "Tank", "MeleeDPS", "MeleeDPS" },
     DEMONHUNTER = { "MeleeDPS", "Tank" },
     DRUID = { "CasterDPS", "MeleeDPS", "Tank", "Healer" },
+    EVOKER = { "CasterDPS", "Healer" },
     HUNTER = "MeleeDPS",
     MAGE = "CasterDPS",
     MONK = { "Tank", "Healer", "MeleeDPS" },
@@ -61,7 +62,6 @@ NI.ClassSpecProfiles = {
     SHAMAN = { "CasterDPS", "MeleeDPS", "Healer" },
     WARLOCK = "CasterDPS",
     WARRIOR = { "MeleeDPS", "MeleeDPS", "Tank" },
-    EVOKER = { "CasterDPS", "Healer" }
 }
 
 function NI:SetupSpecProfiles()

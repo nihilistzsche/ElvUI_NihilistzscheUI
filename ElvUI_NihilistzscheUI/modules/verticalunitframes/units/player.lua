@@ -32,6 +32,9 @@ VUF.PlayerFrameClassSpecific = {
     SHAMAN = {
         AdditionalPower = true,
     },
+    EVOKER = {
+        ClassPower = "ConstructEssence",
+    }
 }
 
 local EntropicEmbraceSpellID = 256374

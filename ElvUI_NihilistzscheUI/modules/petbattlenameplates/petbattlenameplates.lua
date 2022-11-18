@@ -261,9 +261,9 @@ function PBN.NamePlate_UpdateAuras(pet, np)
             DebuffIndex = DebuffIndex + 1
         end
         if not f then return end
-        f[ix].icon:SetTexture(icon)
-        f[ix].count:SetText(turnsRemaining > 0 and turnsRemaining or "")
-        f[ix].cd:Hide()
+        f[ix].Icon:SetTexture(icon)
+        f[ix].Count:SetText(turnsRemaining > 0 and turnsRemaining or "")
+        f[ix].Cooldown:Hide()
         f[ix].__nui_pbn_shown = true
         f[ix]:EnableMouse(true)
         f[ix]:Show()

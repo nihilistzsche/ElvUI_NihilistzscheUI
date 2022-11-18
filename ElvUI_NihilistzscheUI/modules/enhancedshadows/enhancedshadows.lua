@@ -465,7 +465,7 @@ function ES:Initialize()
             f(EPB.holder.BandageButton)
         end)
     end
-    hooksecurefunc(E, "ToggleOptionsUI", function(_)
+    hooksecurefunc(E, "ToggleOptions", function(_)
         local win = _:Config_GetWindow()
         if win and not win.shadow then
             win:CreateShadow()

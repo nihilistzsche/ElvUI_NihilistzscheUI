@@ -9,6 +9,8 @@ local Enum_PowerType_Chi = _G.Enum.PowerType.Chi
 local Enum_PowerType_ComboPoints = _G.Enum.PowerType.ComboPoints
 local Enum_PowerType_HolyPower = _G.Enum.PowerType.HolyPower
 local Enum_PowerType_SoulShards = _G.Enum.PowerType.SoulShards
+local Enum_PowerType_Essence = _G.Enum.PowerType.Essence
+
 local GetSpecialization = _G.GetSpecialization
 local SPEC_PALADIN_RETRIBUTION = _G.SPEC_PALADIN_RETRIBUTION
 
@@ -113,6 +115,10 @@ function VUF:ConstructComboPoints(frame)
     return bars
 end
 
+-- Essence for evokers
+function VUF:ConstructEssence(frame) return self:ConstructSubBars(frame, "classbars", "essence", 6) end
+
+
 -- This function is only responsible for updating bar sizes for class bar children
 -- textures work normally as does parent size
 function VUF:UpdateClassBar(frame, element)
@@ -174,6 +180,12 @@ function VUF:UpdateClassBar(frame, element)
             numPoints = 4
             maxPoints = 4
         end
+
+        if E.myclass == "EVOKER" then
+            curPoints = UnitPower('player', Enum_PowerType_Essence)
+            numPoints = UnitPowerMax('player', Enum_PowerType_Essence)
+            maxPoints = 6
+        end
     end
 
     local totalspacing = (config.spacesettings.offset * 2) + (config.spacesettings.spacing * numPoints) - numPoints
@@ -215,6 +227,7 @@ function VUF:UpdateClassBar(frame, element)
             and E.myclass ~= "DRUID"
             and E.myclass ~= "DEATHKNIGHT"
             and E.myclass ~= "ROGUE"
+            and E.myclass ~= "EVOKER"
         then
             frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors[frame.ClassBar]))
 
@@ -232,7 +245,8 @@ function VUF:UpdateClassBar(frame, element)
                 if E.myclass == "ROGUE" and chargedIndex and chargedIndex == i then
                     r, g, b = unpack(ElvUF.colors.chargedComboPoint)
                 end
-                frame[e][i]:SetStatusBarColor(r, g, b)
+            elseif E.myclass == "EVOKER" then
+                frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors.ClassBars[E.myclass][i]))
             elseif E.myclass ~= "DEATHKNIGHT" then
                 frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors[frame.ClassBar]))
             end

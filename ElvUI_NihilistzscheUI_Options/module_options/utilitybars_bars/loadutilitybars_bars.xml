@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="baitbar_options.lua"/>
+	<Script file="equipmentmanagerbar_options.lua"/>
+	<Script file="engineertoybar_options.lua"/>
+	<Script file="farmbar_options.lua"/>
+	<Script file="portalbar_options.lua"/>
+	<Script file="professionbar_options.lua"/>
+	<Script file="raidprepbar_options.lua"/>
+	<Script file="specswitchbar_options.lua"/>
+	<Script file="toolsofthetradebar_options.lua"/>
+	<Script file="toybar_options.lua"/>
+	<Script file="trackerbar_options.lua"/>
+</Ui>

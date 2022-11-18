@@ -27,7 +27,7 @@ function NM.HookAFK()
 end
 
 if COMP.SLE and NUI.Private then
-    local SLE = _G["ElvUI_Shadow&Light"][1]
+    local SLE = _G["ElvUI_SLE"][1]
     local SSS = SLE.Screensaver or SLE:GetModule("Screensaver")
 
     local function Setup()

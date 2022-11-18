@@ -336,7 +336,7 @@ function NI:NihilistzscheUISetup(isSpec)
             end
         end
     end
-    if not NUI.Lulupeep and COMP.CT then
+    if not NUI.Lulupeep and COMP.TT then
         self:EDB().nihilistzscheui.vuf.units.player.health = {
             value = { tag = "[healthcolor][health:current-percent][nui-absorbs]" },
         }

@@ -415,7 +415,7 @@ function NI:SLELuluSetup()
         },
     }
 end
-if COMP.SLE then NI:SaveInstallTable(_G["ElvUI_Shadow&Light"][1]) end
+if COMP.SLE then NI:SaveInstallTable(_G["ElvUI_SLE"][1]) end
 
-NI:RegisterAddOnInstaller("ElvUI_Shadow&Light", NI.SLESetup, true)
-NI:RegisterGlobalAddOnInstaller("ElvUI_Shadow&Light", NI.GlobalSLESetup)
+NI:RegisterAddOnInstaller("ElvUI_SLE", NI.SLESetup, true)
+NI:RegisterGlobalAddOnInstaller("ElvUI_SLE", NI.GlobalSLESetup)

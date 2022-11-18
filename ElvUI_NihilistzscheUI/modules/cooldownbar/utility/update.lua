@@ -3,9 +3,9 @@ local CB = NUI.CooldownBar
 
 local GetInventoryItemCooldown = _G.GetInventoryItemCooldown
 local GetInventoryItemID = _G.GetInventoryItemID
-local GetContainerNumSlots = _G.GetContainerNumSlots
-local GetContainerItemID = _G.GetContainerItemID
-local GetContainerItemCooldown = _G.GetContainerItemCooldown
+local GetContainerNumSlots = _G.C_Container.GetContainerNumSlots
+local GetContainerItemID = _G.C_Container.GetContainerItemID
+local GetContainerItemCooldown = _G.C_Container.GetContainerItemCooldown
 local GetItemCooldown = _G.GetItemCooldown
 local C_ToyBox_GetNumToys = _G.C_ToyBox.GetNumToys
 local C_ToyBox_GetToyFromIndex = _G.C_ToyBox.GetToyFromIndex

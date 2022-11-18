@@ -1,6 +1,6 @@
 local NUI, E, L = _G.unpack(select(2, ...))
 local COMP = NUI.Compatibility
-local SLE = COMP.SLE and _G["ElvUI_Shadow&Light"][1]
+local SLE = COMP.SLE and _G["ElvUI_SLE"][1]
 local lib = _G.LibStub("LibElv-GameMenu-1.0")
 
 local tinsert = _G.tinsert
@@ -122,10 +122,10 @@ function NUI.ClickGameMenu()
     if InCombatLockdown() then return end
     ACD = ACD or E.Libs.AceConfigDialog
     if not ACD then
-        if not IsAddOnLoaded("ElvUI_OptionsUI") then LoadAddOn("ElvUI_OptionsUI") end
+        if not IsAddOnLoaded("ElvUI_Options") then LoadAddOn("ElvUI_Options") end
         ACD = E.Libs.AceConfigDialog
     end
-    E:ToggleOptionsUI()
+    E:ToggleOptions()
     ACD:SelectGroup("ElvUI", "NihilistzschetUI")
     HideUIPanel(_G.GameMenuFrame)
 end

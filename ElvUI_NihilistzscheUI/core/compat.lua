@@ -19,7 +19,7 @@ end
 
 COMP.BUI = COMP.IsAddOnEnabled("ElvUI_BenikUI")
 COMP.MERS = COMP.IsAddOnEnabled("ElvUI_MerathilisUI")
-COMP.SLE = COMP.IsAddOnEnabled("ElvUI_Shadow&Light")
+COMP.SLE = COMP.IsAddOnEnabled("ElvUI_SLE")
 COMP.LCP = COMP.IsAddOnEnabled("ElvUI_LocPlus")
 COMP.WQT = COMP.IsAddOnEnabled("WorldQuestTracker")
 COMP.PA = COMP.IsAddOnEnabled("ProjectAzilroka")
@@ -59,7 +59,7 @@ function COMP.Print(addon, feature)
 end
 
 function COMP:SLECompatibility()
-    local SLE = _G["ElvUI_Shadow&Light"][1]
+    local SLE = _G["ElvUI_SLE"][1]
     if Disable(E.private.sle.module.shadows) then self.Print(SLE.Title, "shadows") end
 end
 

@@ -39,7 +39,7 @@ function NCFG.GenerateOptions()
         .. " (|cfffe7b2cElvUI|r"
         .. format(": |cff99ff33%s|r", E.version)
     if COMP.SLE then
-        local SLE = _G["ElvUI_Shadow&Light"][1]
+        local SLE = _G["ElvUI_SLE"][1]
         name = name .. ", " .. (SLE.Title or "|cff9482c9Shadow & Light|r") .. format(": |cff99ff33%s|r", SLE.version)
     end
     if COMP.BUI then
@@ -104,7 +104,7 @@ function NCFG.GenerateOptions()
                 desc = "Run the installation process.",
                 func = function()
                     NI:Install()
-                    E:ToggleOptionsUI()
+                    E:ToggleOptions()
                 end,
             },
             InstallerFont = {

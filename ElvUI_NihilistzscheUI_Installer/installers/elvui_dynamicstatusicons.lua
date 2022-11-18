@@ -51,19 +51,22 @@ local installTier = {
         ["name"] = "Warrior",
         ["tier"] = 2,
     },
-}
-
-NI.DynamicStatusTargetIcons = {
-    ["Alliance"] = "Legionaire",
-    ["Horde"] = "KnightCaptain",
+    ["EVOKER"] = "SoD - Pepe - Cloth (LFR)"
 }
 
 function NI:DynamicStatusIconsSetup()
     local installTemplate = installTier[self.currentClass]
-    self:EDB().unitframe.units.player.DynamicStatusIcons = {
-        ["iconpack"] = string.format("Classes - Pepe - %s (Tier %d)", installTemplate.name, installTemplate.tier),
-        ["color"] = self:Color(),
-    }
+    if type(installTemplate) == "string" then
+        self:EDB().unitframe.units.player.DynamicStatusIcons = {
+            ["iconpack"] = installTemplate,
+            ["color"] = self:Color(),
+        }
+    else
+        self:EDB().unitframe.units.player.DynamicStatusIcons = {
+            ["iconpack"] = string.format("Classes - Pepe - %s (Tier %d)", installTemplate.name, installTemplate.tier),
+            ["color"] = self:Color(),
+        }
+    end
     self:EDB().unitframe.units.target.DynamicStatusIcons = {
         ["iconpack"] = "Battle Pets - Murloc - KnightCaptain Murky",
         ["color"] = self:IColor()

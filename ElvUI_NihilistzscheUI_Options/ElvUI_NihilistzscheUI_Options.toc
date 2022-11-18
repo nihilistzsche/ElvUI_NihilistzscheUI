@@ -1,0 +1,11 @@
+## Interface: 100000
+## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r |cff1784d1Options|r
+## Author: Nihilistzsche
+## Version: 12.07
+## Notes: Configuration for ElvUI_NihilistzscheUI
+## RequiredDeps: ElvUI_NihilistzscheUI, ElvUI_Options, ElvUI_NihilistzscheUI_Installer
+## LoadOnDemand: 1
+## LoadWith: ElvUI_Options
+
+module_options\load_module_options.xml
+core_options\load_core_options.xml

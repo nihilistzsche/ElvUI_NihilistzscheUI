@@ -14,11 +14,11 @@ local function OnEvent(self) self.text:SetText(displayString) end
 
 local ACD
 local function Click()
-    E:ToggleOptionsUI()
+    E:ToggleOptions()
 
     ACD = ACD or E.Libs.AceConfigDialog
     if not ACD then
-        if not IsAddOnLoaded("ElvUI_OptionsUI") then LoadAddOn("ElvUI_OptionsUI") end
+        if not IsAddOnLoaded("ElvUI_Options") then LoadAddOn("ElvUI_Options") end
         ACD = E.Libs.AceConfigDialog
     end
     if ACD then ACD:SelectGroup("ElvUI", "NihilistzscheUI") end
@@ -35,7 +35,7 @@ local function OnEnter(self)
     DT.tooltip:AddLine(" ")
 
     if COMP.SLE then
-        local SLE = _G["ElvUI_Shadow&Light"][1]
+        local SLE = _G["ElvUI_SLE"][1]
         DT.tooltip:AddLine(
             (SLE.Title or L.SLE_AUTHOR_INFO) .. GAME_VERSION_LABEL .. format(": |cff99ff33%s|r", SLE.version)
         )
@@ -95,7 +95,7 @@ local function ValueColorUpdate()
         .. format(": |cff99ff33%s|r", E.version)
     if COMP.SLE then
         name = name .. ", |cff9482c9S&L|r"
-        name = name .. format(": |cff99ff33%s|r", _G["ElvUI_Shadow&Light"][1].version)
+        name = name .. format(": |cff99ff33%s|r", _G["ElvUI_SLE"][1].version)
     end
     if COMP.BUI then
         local BUI = _G.ElvUI_BenikUI[1]

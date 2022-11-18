@@ -484,8 +484,8 @@ function lib:AskWhoNext()
             WhoFrameEditBox:SetText(args.query)
             self.Quiet = false
 
-            if args.whotoui then
-                self.hooked.SetWhoToUi(args.whotoui)
+            if args.whotoptions then
+                self.hooked.SetWhoToUi(args.whotoptions)
             else
                 self.hooked.SetWhoToUi(args.gui and true or false)
             end
@@ -914,7 +914,7 @@ end -- if
 
 function lib.hook.SendWho(self, msg)
     dbg("SendWho: " .. msg)
-    lib.AskWho(self, {query = msg, queue = lib.WHOLIB_QUEUE_USER, whotoui = lib.SetWhoToUIState, flags = 0})
+    lib.AskWho(self, {query = msg, queue = lib.WHOLIB_QUEUE_USER, whotoptions = lib.SetWhoToUIState, flags = 0})
 end
 
 function lib.hook.WhoFrameEditBox_OnEnterPressed(self)

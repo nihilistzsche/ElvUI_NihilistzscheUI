@@ -24,7 +24,7 @@ function PRB.CreateBar()
 end
 
 if COMP.SLE then
-    local EM = _G["ElvUI_Shadow&Light"][1].EquipManager or _G["ElvUI_Shadow&Light"][1]:GetModule("EquipManager")
+    local EM = _G["ElvUI_SLE"][1].EquipManager or _G["ElvUI_SLE"][1]:GetModule("EquipManager")
 
     function PRB.PLAYER_ENTERING_WORLD()
         EM.lock = false

@@ -73,7 +73,7 @@ I would like to personally apologize to each and every one of you for the sorry 
 - Fixed ButtonStyle when MerathilisUI is not present.
 
 10.03:
-- Moved back to the original ElvUI_NihilistUI/ElvUI_NihilistUI_OptionsUI setup. The other way is too much work to maintain. A future version will include plans laid out for stopping disabled modules from using memory but this release was too important to get out now.
+- Moved back to the original ElvUI_NihilistUI/ElvUI_NihilistUI_Options setup. The other way is too much work to maintain. A future version will include plans laid out for stopping disabled modules from using memory but this release was too important to get out now.
 - The RaidCD default anchors have been moved.
 - WarlockDemons uses a new method to detect when it can attach to nameplates making it more reliable.
 - Readded latency to the VUF castbars.
