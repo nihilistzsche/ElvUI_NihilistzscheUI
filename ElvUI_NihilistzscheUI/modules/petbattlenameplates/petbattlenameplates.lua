@@ -15,34 +15,34 @@ local C_PetBattles_GetAbilityInfoByID = _G.C_PetBattles.GetAbilityInfoByID
 local C_PetBattles_IsInBattle = _G.C_PetBattles.IsInBattle
 local C_PetBattles_GetActivePet = _G.C_PetBattles.GetActivePet
 local C_PetBattles_GetNumPets = _G.C_PetBattles.GetNumPets
+local C_Timer_After = _G.C_Timer.After
 local wipe = _G.wipe
 local tinsert = _G.tinsert
 local UnitGUID = _G.UnitGUID
 local hooksecurefunc = _G.hooksecurefunc
 
-function PBN:CheckFriendlyNPCNameVisibility(event)
-    if (self.oldFriendlyNPCVisibility or self.oldNameplateOccludedAlphaMult) and event == "PET_BATTLE_CLOSE" then
-        if self.oldNameplateOccludedAlphaMult then
-            SetCVar("nameplateOccludedAlphaMult", self.oldNameplateOccludedAlphaMult)
-            self.oldNameplateOccludedAlphaMult = nil
-        end
-        if self.oldFriendlyNPCVisibility then
-            SetCVar("nameplateShowFriendlyNPCs", self.oldFriendlyNPCVisibility)
-            self.oldFriendlyNPCVisibility = nil
-        end
-    elseif
-        (not self.oldFriendlyNPCVisibility or not self.oldNameplateOccludedAlphaMult)
-        and event == "PET_BATTLE_OPENING_START"
-    then
-        if not self.oldFriendlyNPCVisibility then
-            self.oldFriendlyNPCVisibility = GetCVar("nameplatesShowFriendlyNPCs")
-            SetCVar("nameplateShowFriendlyNPCs", self.db.enable and 1 or 0)
-        end
-        if not self.oldNameplateOccludedAlphaMult then
-            self.oldNameplateOccludedAlphaMult = GetCVar("nameplateOccludedAlphaMult")
-            SetCVar("nameplateOccludedAlphaMult", 1)
+PBN.CVarCache = {}
+
+function PBN:PET_BATTLE_CLOSE()
+    for cvar, value in next, self.CVarCache do
+        SetCVar(cvar, value)
+    end
+    wipe(self.CVarCache)
+end
+
+function PBN:PET_BATTLE_OPENING_START()
+    local function CacheCVarAndSet(cvar, newValue, firstValue)
+        if not self.CVarCache[cvar] then self.CVarCache[cvar] = GetCVar(cvar) end
+        if firstValue then
+            SetCVar(cvar, firstValue)
+            C_Timer_After(1, function() SetCVar(cvar, newValue) end)
+        else
+            SetCVar(cvar, newValue)
         end
     end
+    CacheCVarAndSet("nameplateShowFriendlyNPCs", self.db.enable and "1" or "0", "0")
+    CacheCVarAndSet("nameplateShowAll", self.db.enable and "1" or "0", "0")
+    CacheCVarAndSet("nameplateOccludedAlphaMult", "1")
 end
 
 PBN.seenGUIDs = {}
@@ -485,7 +485,7 @@ function PBN.StyleFilterCustomCheck(frame, _, trigger)
 end
 
 function PBN:Update(event)
-    self:CheckFriendlyNPCNameVisibility(event)
+    if self[event] then self[event](self) end
     if event == "PET_BATTLE_CLOSE" and not C_PetBattles_IsInBattle() then
         self:ResetNameplates()
     else
