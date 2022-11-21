@@ -142,7 +142,6 @@ end
 function NUB.CreateButton(bar)
     local button = LAB:CreateButton(#bar.buttons + 1, format(bar:GetName() .. "Button%d", #bar.buttons + 1), bar, nil)
     button:SetFrameLevel(bar:GetFrameLevel() + 2)
-    Mixin(button, BackdropTemplateMixin)
     button:SetTemplate("Transparent")
     button.cooldown = CreateFrame("Cooldown", nil, button, "CooldownFrameTemplate")
     button.cooldown:SetAllPoints(button)

@@ -259,7 +259,7 @@ function TB:HookElvUIBags()
             if not self.hookedBags[bagID] then
                 for slotID = 1, GetContainerNumSlots(bagID) do
                     local button = bagFrame.Bags[bagID][slotID]
-                    button:RegisterForClicks("AnyUp")
+                    button:RegisterForClicks("AnyUp", "AnyDown")
                     button:HookScript("OnDoubleClick", function(_, mouseButton)
                         if mouseButton == "LeftButton" then self:AddWatch(true, GetContainerItemID(bagID, slotID)) end
                         ClearCursor()
@@ -273,7 +273,7 @@ function TB:HookElvUIBags()
     if _G.ElvUIReagentBankFrameItem1 and not self.hookedBags[REAGENTBANK_CONTAINER] then
         for slotID = 1, 98 do
             local button = _G["ElvUIReagentBankFrameItem" .. slotID]
-            button:RegisterForClicks("AnyUp")
+            button:RegisterForClicks("AnyUp", "AnyDown")
             button:HookScript("OnDoubleClick", function(_, mouseButton)
                 if mouseButton == "LeftButton" then
                     self:AddWatch(true, GetContainerItemID(REAGENTBANK_CONTAINER, slotID))
@@ -294,7 +294,7 @@ function TB:HookCurrencyButtons()
             and button.RegisterForClicks
             and not button.nui_utibar_hooked
         then
-            button:RegisterForClicks("AnyUp")
+            button:RegisterForClicks("AnyUp", "AnyDown")
             button:HookScript("OnDoubleClick", function(_, mouseButton)
                 if mouseButton == "LeftButton" then
                     local offset = HybridScrollFrame_GetOffset(TokenFrameContainer)
