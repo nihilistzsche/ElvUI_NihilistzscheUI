@@ -189,7 +189,7 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
     if not self.db.units then return end
     self.units[unit] = frame
     self.units[unit].elements = {}
-    frame:RegisterForClicks("AnyUp")
+    frame:RegisterForClicks("AnyUp", "AnyDown")
     frame:SetScript("OnEnter", function(_self)
         UnitFrame_OnEnter(_self)
         if
