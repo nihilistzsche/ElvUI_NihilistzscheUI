@@ -343,12 +343,6 @@ function VUF:PostCastStart(unit)
             local firstTickInc = tickIncRate / 2
             local bonusTicks = 0
             if curHaste >= firstTickInc then bonusTicks = bonusTicks + 1 end
-            if
-                E.myclass == "PRIEST"
-                and AuraUtil_FindAuraByName(VUF.HarshDisciplineName, "player", "HELPFUL") ~= nil
-            then
-                bonusTicks = bonusTicks + 3
-            end
             local x = tonumber(E:Round(firstTickInc + tickIncRate, 2))
             while curHaste >= x do
                 x = tonumber(E:Round(firstTickInc + (tickIncRate * bonusTicks), 2))
