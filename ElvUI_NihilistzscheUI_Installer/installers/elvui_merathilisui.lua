@@ -11,6 +11,10 @@ function NI.MerathilisUIGlobalSetup()
             if tbl.mui and tbl.mui.autoButtons then tbl.mui.autoButtons.blackList = E:CopyTable({}, baseBlacklist) end
         end
     end
+
+    E.global.mui = E.global.mui or {}
+    E.global.mui.core = E.global.mui.core or {}
+    E.global.mui.core.fixCVAR = false
 end
 
 NI:RegisterGlobalAddOnInstaller("ElvUI_MerathilisUI", NI.MerathilisUIGlobalSetup)
@@ -48,6 +52,9 @@ function NI:MerathilisUISetup(isSpec)
     self:EDB().mui.raidBuffs = {
         enable = true,
         class = true,
+    }
+    self:EDB().mui.merchant = {
+        enable = false,
     }
 
     self:EDB().mui.bags = {

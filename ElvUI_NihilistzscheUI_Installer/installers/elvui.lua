@@ -39,9 +39,10 @@ function NI:ElvUINonHealerSetup()
         },
     }
 
-    self.SaveMoverPosition("ElvUF_RaidMover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
+    self.SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
+    self.SaveMoverPosition("ElvUF_Raid2Mover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
+    self.SaveMoverPosition("ElvUF_Raid3Mover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
     self.SaveMoverPosition("ElvUF_RaidpetMover", "BOTTOMLEFT", "ElvUF_RaidMover", "BOTTOMRIGHT", 4, 0)
-    self.SaveMoverPosition("ElvUF_Raid40Mover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
     self.SaveMoverPosition("ElvUF_PartyMover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
     self.SaveMoverPosition("ElvUF_TankMover", "BOTTOMLEFT", "ElvUF_RaidMover", "TOPLEFT", 50, 80)
     self.SaveMoverPosition("ElvUF_AssistMover", "TOP", "ElvUF_TankMover", "BOTTOM", 0, -4)
@@ -158,10 +159,11 @@ function NI:ElvUIHealerSetup()
         },
     }
 
-    self.SaveMoverPosition("ElvUF_Raid40Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 442, 343)
-    self.SaveMoverPosition("ElvUF_RaidMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 465, 343)
-    self.SaveMoverPosition("ElvUF_PartyMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 466, 559)
+    self.SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 465, 343)
+    self.SaveMoverPosition("ElvUF_Raid2Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 465, 343)
+    self.SaveMoverPosition("ElvUF_Raid3Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 442, 343)
     self.SaveMoverPosition("ElvUF_RaidpetMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 208, 341)
+    self.SaveMoverPosition("ElvUF_PartyMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 466, 559)
     self.SaveMoverPosition("ElvUF_TankMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 141, 669)
     self.SaveMoverPosition("ElvUF_AssistMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 138, 341)
 end
@@ -998,7 +1000,9 @@ function NI:ElvUISetup(role, isSpec)
         }
     end
     local bar7enabled = true
-    if self.currentClass == "DRUID" or self.currentClass == "ROGUE" then bar7enabled = false end
+    if self.currentClass == "DRUID" or self.currentClass == "ROGUE" or self.currentClass == "EVOKER" then
+        bar7enabled = false
+    end
     self:EDB().actionbar = {
         font = self.db.font,
         ["bar1"] = {
@@ -1050,6 +1054,11 @@ function NI:ElvUISetup(role, isSpec)
             mouseover = true,
             point = "BOTTOM",
         },
+        equippedItem = true,
+        useRangeColorText = true,
+        desaturateOnCooldown = true,
+        chargeCooldown = true,
+        useDrawSwipeOnCharges = true,
     }
 
     self:EDB().epa = {
@@ -1151,7 +1160,7 @@ function NI:ElvUISetup(role, isSpec)
     self.SaveMoverPosition("ElvUF_PetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 150)
     self.SaveMoverPosition("ElvUF_BodyGuardMover", "TOP", E.UIParent, "TOP", -331, -332)
     self.SaveMoverPosition("ElvUF_PlayerCastbarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 42)
-    self.SaveMoverPosition("BossHeaderMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 182)
+    self.SaveMoverPosition("BossHeaderMover", "TOP", E.UIParent, "TOP", 0, -220)
     self.SaveMoverPosition("ArenaHeaderMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -413, 375)
     self.SaveMoverPosition("BNETMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -4, 226)
     self.SaveMoverPosition("DurabilityFrameMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -372, -310)
@@ -1187,6 +1196,7 @@ function NI:ElvUISetup(role, isSpec)
     self.SaveMoverPosition("TalkingHeadFrameMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 263)
     self.SaveMoverPosition("TopCenterContainerMover", "TOP", E.UIParent, "TOP", 0, -170)
     self.SaveMoverPosition("MirrorTimer1Mover", "TOP", E.UIParent, "TOP", 0, -110)
+    self.SaveMoverPosition("PowerBarContainerMover", "TOP", E.UIParent, "TOP", 0, -110)
 
     self.SaveMoverPosition("VOICECHAT", "TOPRIGHT", E.UIParent, "TOPRIGHT", -504, -68)
 

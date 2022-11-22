@@ -389,4 +389,5 @@ function NI:NihilistzscheUISetup(isSpec)
     self.SaveMoverPosition("NihilistzscheUF_Target Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 315)
 
     self.SaveMoverPosition("AoE CCMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
+    if NUI.Private then self.SaveMoverPosition("PrimalStormsMover", "TOPLEFT", E.UIParent, "TOPLEFT", 255, -272) end
 end
