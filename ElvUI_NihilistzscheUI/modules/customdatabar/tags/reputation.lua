@@ -25,7 +25,7 @@ function CDB.RegisterRepTags()
         if not data or data.friendshipFactionID == 0 then
             return false
         else
-            return true, data.text
+            return true, data
         end
     end
 
@@ -39,12 +39,12 @@ function CDB.RegisterRepTags()
 
     NT:RegisterTag("rep:standing", function()
         local name, reaction, _, _, _, factionID = GetWatchedFactionInfo()
-        local isFriend, friendTextLevel = GetFriendshipInfo(factionID)
+        local isFriend, friendData = GetFriendshipInfo(factionID)
         if not name then return "" end
 
         if not isFriend and GetParagonInfo(factionID) then return "Paragon" end
 
-        return isFriend and friendTextLevel or _G["FACTION_STANDING_LABEL" .. reaction]
+        return isFriend and friendData.text or _G["FACTION_STANDING_LABEL" .. reaction]
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:current", function()
@@ -57,6 +57,10 @@ function CDB.RegisterRepTags()
             min, max, value = pmin, pmax, pvalue
         end
 
+        local isFriend, data = GetFriendshipInfo(factionID)
+        if isFriend then
+            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
+        end
         return CDB:GetFormattedText("CURRENT", value - min, max - min)
     end, "UPDATE_FACTION")
 
@@ -69,7 +73,10 @@ function CDB.RegisterRepTags()
         if isParagon then
             min, max, value = pmin, pmax, pvalue
         end
-
+        local isFriend, data = GetFriendshipInfo(factionID)
+        if isFriend then
+            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
+        end
         return CDB:GetFormattedText("TONEXT", value - min, max - min)
     end, "UPDATE_FACTION")
 
@@ -82,7 +89,10 @@ function CDB.RegisterRepTags()
         if isParagon then
             min, max, value = pmin, pmax, pvalue
         end
-
+        local isFriend, data = GetFriendshipInfo(factionID)
+        if isFriend then
+            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
+        end
         return CDB:GetFormattedText("CURRENT_PERCENT", value - min, max - min)
     end, "UPDATE_FACTION")
 
@@ -95,7 +105,10 @@ function CDB.RegisterRepTags()
         if isParagon then
             min, max, value = pmin, pmax, pvalue
         end
-
+        local isFriend, data = GetFriendshipInfo(factionID)
+        if isFriend then
+            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
+        end
         return CDB:GetFormattedText("CURRENT_MAX", value - min, max - min)
     end, "UPDATE_FACTION")
 
@@ -108,7 +121,10 @@ function CDB.RegisterRepTags()
         if isParagon then
             min, max, value = pmin, pmax, pvalue
         end
-
+        local isFriend, data = GetFriendshipInfo(factionID)
+        if isFriend then
+            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
+        end
         return CDB:GetFormattedText("CURRENT_MAX_PERCENT", value - min, max - min)
     end, "UPDATE_FACTION")
 end
