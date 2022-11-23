@@ -300,6 +300,7 @@ function NI:NihilistzscheUISetup(isSpec)
     }
     local aurabars = {
         size = {
+            width = 116,
             halfBar = true,
         },
     }
