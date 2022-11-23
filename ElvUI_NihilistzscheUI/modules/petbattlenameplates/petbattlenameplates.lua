@@ -489,6 +489,7 @@ function PBN:Update(event)
     if event == "PET_BATTLE_CLOSE" and not C_PetBattles_IsInBattle() then
         self:ResetNameplates()
     else
+        PBN.UpdatePlateGUID(NP)
         for _, tbl in pairs({ self.myPets, self.theirPets }) do
             for _, pet in ipairs(tbl) do
                 self:UpdateNamePlate(pet)
