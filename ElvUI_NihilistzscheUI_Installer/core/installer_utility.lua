@@ -438,27 +438,8 @@ function NI.BaseElvUISetup()
 
         if E.db.LeftChatPanelFaded then _G.LeftChatToggleButton:Click() end
     end
-    -- SetCVars
-    SetCVar("statusTextDisplay", "BOTH")
-    SetCVar("screenshotQuality", 10)
-    SetCVar("chatMouseScroll", 1)
-    SetCVar("chatStyle", "classic")
-    SetCVar("WholeChatWindowClickable", 0)
-    SetCVar("showTutorials", 0)
-    SetCVar("UberTooltips", 1)
-    SetCVar("threatWarning", 3)
-    SetCVar("alwaysShowActionBars", 1)
-    SetCVar("lockActionBars", 1)
-    SetCVar("SpamFilter", 0)
-    SetCVar("cameraDistanceMaxZoomFactor", 2.6)
-    SetCVar("showQuestTrackingTooltips", 1)
-    SetCVar("fstack_preferParentKeys", 0) --Add back the frame names via fstack!
-    SetCVar("minimapTrackingShowAll", 1)
-    SetCVar("ActionButtonUseKeyDown", 0)
-    if E.myclass == "EVOKER" then SetCVar("empowerTapControls", 1) end
-    NP:CVarReset()
+    if NUI.Private then NUI.Private.SetCVars() end
 
-    SetCVar("nameplateMaxDistance", 100)
 
     --_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:SetValue("SHIFT")
     --_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:RefreshValue()
