@@ -18,7 +18,7 @@ function ES:GenerateOptions()
                 desc = L["Enable the enhanced shadows."],
                 set = function(info, value)
                     self.db[info[#info]] = value
-                    E:StaticPopup_Show("CONFIG_RL")
+        self:UpdateShadows()
                 end,
             },
             shadowcolor = {

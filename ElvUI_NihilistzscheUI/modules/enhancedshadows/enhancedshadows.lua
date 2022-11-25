@@ -307,7 +307,11 @@ function ES:UpdateShadow(shadow)
     end
     shadow:SetBackdropColor(r, g, b, 0)
     shadow:SetBackdropBorderColor(r, g, b, 0.9)
-    shadow:Show()
+    if E.db.nihilistzscheui.enhancedshadows.enabled then
+        shadow:Show()
+    else
+        shadow:Hide()
+    end
 end
 
 function ES:UpdateMERShadows()
@@ -357,8 +361,6 @@ end
 
 function ES:Initialize()
     NUI:RegisterDB(self, "enhancedshadows")
-    if not self.db.enabled then return end
-    self.enable_state = self.db.enabled
     local ForUpdateAll = function(_self)
         if _self.db.enabled ~= _self.enable_state then E:StaticPopup_Show("CONFIG_RL") end
     end
@@ -475,6 +477,7 @@ function ES:Initialize()
     end)
 
     ES:SkinAlerts()
+    ES:UpdateShadows()
 end
 
 NUI:RegisterModule(ES:GetName())
