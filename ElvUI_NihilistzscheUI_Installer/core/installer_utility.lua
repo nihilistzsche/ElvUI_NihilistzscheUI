@@ -455,6 +455,7 @@ function NI.BaseElvUISetup()
     SetCVar("fstack_preferParentKeys", 0) --Add back the frame names via fstack!
     SetCVar("minimapTrackingShowAll", 1)
     SetCVar("ActionButtonUseKeyDown", 0)
+    if E.myclass == "EVOKER" then SetCVar("empowerTapControls", 1) end
     NP:CVarReset()
 
     SetCVar("nameplateMaxDistance", 100)
