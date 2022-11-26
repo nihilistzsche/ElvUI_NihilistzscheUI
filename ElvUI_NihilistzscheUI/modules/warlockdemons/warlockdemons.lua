@@ -136,21 +136,9 @@ local function stopBar(bar)
     bar.paused = nil
 end
 
-function WD:CreateRemoveFunc()
-    if not self.RemoveBarByIndex then
-        local bars = self.activeBars
-        self.RemoveBarByIndex = function(index) tremove(bars, index) end
-    end
-    return self.RemoveBarByIndex
-end
+function WD.RemoveBarByIndex(index) tremove(WD.activeBars, index) end
 
-function WD:CreateAddFunc()
-    if not self.AddBar then
-        local bars = self.activeBars
-        self.AddBar = function(bar) tinsert(bars, bar) end
-    end
-    return self.AddBar
-end
+function WD.AddBar(bar) tinsert(WD.activeBars, bar) end
 
 function WD:UpdateBars(isDemonicTyrant)
     if self.updating then return end
@@ -409,7 +397,7 @@ function WD:OnDespawn(petGUID)
     for i, b in ipairs(self.activeBars) do
         if b.petGUID == petGUID then
             b:Stop()
-            self:RemoveBar(i)
+            self.RemoveBarByIndex(i)
             local np = NP.PlateGUID[petGUID]
             if np then
                 NP:StyleFilterUpdate(np, "FAKE_WDForceUpdate")
@@ -445,10 +433,7 @@ function WD.StyleFilterCustomCheck(frame, _, trigger)
             local petName = GetPetName(guid)
             local barIndex = FindInTableIf(WD.activeBars, function(b) return b.petGUID == guid end)
             if not barIndex then return false end
-            if
-                (petName:find("Imp") and (_G.zPets.GetPetEnergy(guid) < 3))
-                or WD.activeBars[barIndex].remaining < 5
-            then
+            if (petName:find("Imp") and (_G.zPets.GetPetEnergy(guid) < 3)) or WD.activeBars[barIndex].remaining < 5 then
                 passed = true
             else
                 return false
@@ -466,9 +451,6 @@ function WD:Initialize()
 
     self.activeBars = {}
     self.attachedNPs = {}
-
-    self:CreateRemoveFunc()
-    self:CreateAddFunc()
 
     self.demons = {
         ["Wild Imp"] = { icon = GetSpellTexture(205145), priority = 4, optionOrder = 2 },
