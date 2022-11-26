@@ -17,7 +17,7 @@ jobs:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
       - name: Format code
-        uses: JohnnyMorganz/stylua-action@v1
+        uses: JohnnyMorganz/stylua-action@v1.1.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: latest # NOTE: we recommend pinning to a specific version in case of formatting changes
