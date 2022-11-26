@@ -34,7 +34,7 @@ VUF.PlayerFrameClassSpecific = {
     },
     EVOKER = {
         ClassPower = "ConstructEssence",
-    }
+    },
 }
 
 local EntropicEmbraceSpellID = 256374
@@ -125,7 +125,15 @@ function VUF:ConstructPlayerFrame(frame, unit)
     end
 
     frame:Point("RIGHT", E.UIParent, "CENTER", -275, 0) --Set to default position
-    E:CreateMover(frame, frame:GetName() .. "Mover", "Player Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
+    E:CreateMover(
+        frame,
+        frame:GetName() .. "Mover",
+        "Player Vertical Unit Frame",
+        nil,
+        nil,
+        nil,
+        "ALL,SOLO,NIHILISTZSCHEUI"
+    )
 end
 
 VUF:RegisterUnit("player")

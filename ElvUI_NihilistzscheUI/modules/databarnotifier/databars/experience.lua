@@ -11,9 +11,7 @@ local XP = DBN:NewNotifier("XP", "XP", "xp", DBN.colors.yellow, NUI.CPW(UnitXP),
 
 function XP:Initialize()
     if COMP.SLE then
-        if not DB then
-            DB = _G["ElvUI_SLE"][1].DataBars or _G["ElvUI_SLE"][1]:GetModule("DataBars")
-        end
+        if not DB then DB = _G["ElvUI_SLE"][1].DataBars or _G["ElvUI_SLE"][1]:GetModule("DataBars") end
         local XPIcon = DB.Icons.XP
         self.textureMarkup = "|T" .. XPIcon .. ":12|t"
     end

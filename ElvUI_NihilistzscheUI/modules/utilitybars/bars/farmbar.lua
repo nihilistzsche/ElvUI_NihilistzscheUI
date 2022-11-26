@@ -314,7 +314,6 @@ function FB:UpdateAndNotify(item, id, count)
     _G.ElvDB.farmBar[FB.myname].count[table][id] = count
 end
 
-
 local function AddFarmWatch(msg)
     msg = msg:gsub("\124", "\124\124")
     local link, target = strmatch(msg, "(.+) (%d+)$")

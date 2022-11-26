@@ -18,7 +18,7 @@ NUI.Libs = {
     GI = LibStub("LibGroupInSpecT-1.1"),
     CandyBar = LibStub("LibCandyBar-3.0"),
     PT = LibStub("LibPeriodicTable-3.1"),
-    FL = LibStub("LibFishing-1.0-NUI")
+    FL = LibStub("LibFishing-1.0-NUI"),
 }
 
 engine[1] = NUI
@@ -93,19 +93,15 @@ NUI.RegisteredModules = {}
 function NUI:RegisterModule(name)
     if self.initialized then
         local module = self:GetModule(name)
-        if (module and module.Initialize) then
+        if module and module.Initialize then
             module:Initialize()
-            if (ElvUI_CPU) then
-                ElvUI_CPU:RegisterPluginModule("ElvUI_NihilistzschetUI", name, module)
-            end
+            if ElvUI_CPU then ElvUI_CPU:RegisterPluginModule("ElvUI_NihilistzschetUI", name, module) end
         end
     end
     self.RegisteredModules[#self.RegisteredModules + 1] = name
 end
 
-function NUI:GetRegisteredModules()
-    return self.RegisteredModules
-end
+function NUI:GetRegisteredModules() return self.RegisteredModules end
 
 function NUI:ADDON_LOADED(addonName)
     if addonName == "ElvUI_CPU" then
@@ -117,17 +113,13 @@ function NUI:ADDON_LOADED(addonName)
 end
 
 function NUI:DebugPrint(...)
-    if self.Debug then
-        print(...)
-    end
+    if self.Debug then print(...) end
 end
 
 function NUI:InitializeModules()
     for _, moduleName in pairs(NUI.RegisteredModules) do
         local module = self:GetModule(moduleName)
-        if module.Initialize then
-            module:Initialize()
-        end
+        if module.Initialize then module:Initialize() end
     end
 end
 
@@ -145,9 +137,7 @@ function NUI:Initialize()
     self:AddMoverCategories()
     self:InitializeModules()
 
-    if self.Compatibility.DEV then
-        self:RegisterEvent("ADDON_LOADED")
-    end
+    if self.Compatibility.DEV then self:RegisterEvent("ADDON_LOADED") end
 
     self:SetupProfileCallbacks()
 end

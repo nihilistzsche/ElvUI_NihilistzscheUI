@@ -29,7 +29,15 @@ function VUF:ConstructFocusFrame(frame, unit)
     end
 
     frame:Point("TOP", E.UIParent, "TOP", 300, -250)
-    E:CreateMover(frame, frame:GetName() .. "Mover", "Focus Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
+    E:CreateMover(
+        frame,
+        frame:GetName() .. "Mover",
+        "Focus Vertical Unit Frame",
+        nil,
+        nil,
+        nil,
+        "ALL,SOLO,NIHILISTZSCHEUI"
+    )
 end
 
 VUF:RegisterUnit("focus")

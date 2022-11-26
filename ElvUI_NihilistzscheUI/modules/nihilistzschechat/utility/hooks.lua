@@ -159,8 +159,7 @@ function NC:SetUpHooks()
                         (
                             (chatType == "WHISPER_INFORM" or chatType == "BN_WHISPER_INFORM")
                             and GetCVar("whisperMode") == "popout_and_inline"
-                        )
-                        or not chatFrame.isNihilistzscheChatFrame
+                        ) or not chatFrame.isNihilistzscheChatFrame
                     then
                         FCFManager_StopFlashOnDedicatedWindows(chatGroup, chatTarget)
                     end

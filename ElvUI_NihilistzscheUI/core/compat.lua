@@ -6,7 +6,7 @@ local hooksecurefunc = _G.hooksecurefunc
 
 local function Disable(tbl, key)
     key = key or "enable"
-    if (tbl[key]) then
+    if tbl[key] then
         tbl[key] = false
         return true
     end
@@ -94,9 +94,7 @@ end
 
 COMP.CompatibilityFunctions = {}
 
-function COMP:RegisterCompatibilityFunction(addonName, compatFunc)
-    self.CompatibilityFunctions[addonName] = compatFunc
-end
+function COMP:RegisterCompatibilityFunction(addonName, compatFunc) self.CompatibilityFunctions[addonName] = compatFunc end
 
 COMP:RegisterCompatibilityFunction("SLE", "SLECompatibility")
 COMP:RegisterCompatibilityFunction("BUI", "BenikUICompatibility")
@@ -104,21 +102,12 @@ COMP:RegisterCompatibilityFunction("MERS", "MerathilisUICompatibility")
 
 function COMP:RunCompatibilityFunctions()
     for key, compatFunc in pairs(COMP.CompatibilityFunctions) do
-        if (COMP[key]) then
-            self[compatFunc](self)
-        end
+        if COMP[key] then self[compatFunc](self) end
     end
 end
 
-hooksecurefunc(
-    E,
-    "CheckIncompatible",
-    function()
-        COMP:RunCompatibilityFunctions()
-    end
-)
+hooksecurefunc(E, "CheckIncompatible", function() COMP:RunCompatibilityFunctions() end)
 
-function COMP.Initialize()
-end
+function COMP.Initialize() end
 
 NUI:RegisterModule(COMP:GetName())

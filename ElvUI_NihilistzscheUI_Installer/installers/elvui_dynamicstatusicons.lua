@@ -51,7 +51,7 @@ local installTier = {
         ["name"] = "Warrior",
         ["tier"] = 2,
     },
-    ["EVOKER"] = "SoD - Pepe - Cloth (LFR)"
+    ["EVOKER"] = "SoD - Pepe - Cloth (LFR)",
 }
 
 function NI:DynamicStatusIconsSetup()
@@ -69,7 +69,7 @@ function NI:DynamicStatusIconsSetup()
     end
     self:EDB().unitframe.units.target.DynamicStatusIcons = {
         ["iconpack"] = "Battle Pets - Murloc - KnightCaptain Murky",
-        ["color"] = self:IColor()
+        ["color"] = self:IColor(),
     }
 end
 

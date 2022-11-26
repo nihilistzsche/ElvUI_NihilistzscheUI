@@ -206,11 +206,17 @@ end
 
 function NI.AreInstalledAddOnsEqual(installedAddOnSetA, installedAddOnSetB)
     for _, installedAddOn in ipairs(installedAddOnSetA) do
-        if not tContains(installedAddOnSetB, installedAddOn) then print("Missing ",installedAddOn, " from B set.") return false end
+        if not tContains(installedAddOnSetB, installedAddOn) then
+            print("Missing ", installedAddOn, " from B set.")
+            return false
+        end
     end
 
     for _, installedAddOn in ipairs(installedAddOnSetB) do
-        if not tContains(installedAddOnSetA, installedAddOn) then print("Missing ", installedAddOn, " from a set.")return false end
+        if not tContains(installedAddOnSetA, installedAddOn) then
+            print("Missing ", installedAddOn, " from a set.")
+            return false
+        end
     end
 
     return true
@@ -221,7 +227,10 @@ function NI:ShouldInstall()
 
     local tbl = _G.NUIIDB.installInfo
 
-    if not tbl then print("No install info table.") return true end
+    if not tbl then
+        print("No install info table.")
+        return true
+    end
 
     local currentInstalledAddOnSet = self:GetInstalledAddOnSet()
 
@@ -439,7 +448,6 @@ function NI.BaseElvUISetup()
         if E.db.LeftChatPanelFaded then _G.LeftChatToggleButton:Click() end
     end
     if NUI.Private then NUI.Private.SetCVars() end
-
 
     --_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:SetValue("SHIFT")
     --_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:RefreshValue()

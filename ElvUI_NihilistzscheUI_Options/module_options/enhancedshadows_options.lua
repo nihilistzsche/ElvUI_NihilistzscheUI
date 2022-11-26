@@ -18,7 +18,7 @@ function ES:GenerateOptions()
                 desc = L["Enable the enhanced shadows."],
                 set = function(info, value)
                     self.db[info[#info]] = value
-        self:UpdateShadows()
+                    self:UpdateShadows()
                 end,
             },
             shadowcolor = {

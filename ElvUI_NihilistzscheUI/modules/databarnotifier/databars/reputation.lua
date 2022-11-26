@@ -41,9 +41,7 @@ end
 
 function REP:Initialize()
     if COMP.SLE then
-        if not DB then
-            DB = _G["ElvUI_SLE"][1].DataBars or _G["ElvUI_SLE"][1]:GetModule("DataBars")
-        end
+        if not DB then DB = _G["ElvUI_SLE"][1].DataBars or _G["ElvUI_SLE"][1]:GetModule("DataBars") end
         local Icon = DB.Icons.Rep
         self.textureMarkup = "|T" .. Icon .. ":12|t"
     end

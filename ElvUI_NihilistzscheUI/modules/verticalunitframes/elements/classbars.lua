@@ -118,7 +118,6 @@ end
 -- Essence for evokers
 function VUF:ConstructEssence(frame) return self:ConstructSubBars(frame, "classbars", "essence", 6) end
 
-
 -- This function is only responsible for updating bar sizes for class bar children
 -- textures work normally as does parent size
 function VUF:UpdateClassBar(frame, element)
@@ -182,8 +181,8 @@ function VUF:UpdateClassBar(frame, element)
         end
 
         if E.myclass == "EVOKER" then
-            curPoints = UnitPower('player', Enum_PowerType_Essence)
-            numPoints = UnitPowerMax('player', Enum_PowerType_Essence)
+            curPoints = UnitPower("player", Enum_PowerType_Essence)
+            numPoints = UnitPowerMax("player", Enum_PowerType_Essence)
             maxPoints = 6
         end
     end
