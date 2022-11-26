@@ -71,6 +71,8 @@ end
 function WD.AttachBarToNamePlate(bar, guid)
     local np = NP.PlateGUID[guid]
     assert(np)
+    bar:SetParent(nil)
+    bar:ClearAllPoints()
     bar:SetParent(np)
     local yOffset = -4
     if _G.zPets.GetPetName(guid):find("Imp") then yOffset = -8 end
