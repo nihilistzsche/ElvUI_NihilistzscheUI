@@ -397,9 +397,7 @@ function WD:OnDespawn(petGUID)
             b:Stop()
             self.RemoveBarByIndex(i)
             local np = NP.PlateGUID[petGUID]
-            if np then
-                NP:StyleFilterUpdate(np, "FAKE_WDForceUpdate")
-            end
+            if np then NP:StyleFilterUpdate(np, "FAKE_WDForceUpdate") end
             break
         end
     end
