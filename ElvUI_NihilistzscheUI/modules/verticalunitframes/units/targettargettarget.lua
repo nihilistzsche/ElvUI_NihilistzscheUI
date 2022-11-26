@@ -23,15 +23,9 @@ function VUF:ConstructTargetTargetTargetFrame(frame, unit)
     end
 
     frame:Point("TOP", _G.NihilistzscheUF_TargetTarget, "BOTTOM", 0, -50)
-    E:CreateMover(
-        frame,
-        frame:GetName() .. "Mover",
-        "Target Target Target Vertical Unit Frame",
-        nil,
-        nil,
-        nil,
-        "ALL,SOLO,NIHILISTZSCHEUI"
-    )
+    -- stylua: ignore start
+    E:CreateMover(frame, frame:GetName() .. "Mover", "Target Target Target Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
+    -- stylua: ignore end
 end
 
 VUF:RegisterUnit("targettargettarget")

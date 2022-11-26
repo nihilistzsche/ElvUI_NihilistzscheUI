@@ -29,15 +29,9 @@ function VUF:ConstructFocusFrame(frame, unit)
     end
 
     frame:Point("TOP", E.UIParent, "TOP", 300, -250)
-    E:CreateMover(
-        frame,
-        frame:GetName() .. "Mover",
-        "Focus Vertical Unit Frame",
-        nil,
-        nil,
-        nil,
-        "ALL,SOLO,NIHILISTZSCHEUI"
-    )
+    -- stylua: ignore start
+    E:CreateMover(frame, frame:GetName() .. "Mover", "Focus Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
+    -- stylua: ignore end
 end
 
 VUF:RegisterUnit("focus")

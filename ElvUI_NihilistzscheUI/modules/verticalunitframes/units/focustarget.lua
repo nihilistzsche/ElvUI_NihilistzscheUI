@@ -23,15 +23,9 @@ function VUF:ConstructFocusTargetFrame(frame, unit)
     end
 
     frame:Point("BOTTOMLEFT", _G.NihilistzscheUF_Focus, "BOTTOMRIGHT", 110, 0)
-    E:CreateMover(
-        frame,
-        frame:GetName() .. "Mover",
-        "Focus Target Vertical Unit Frame",
-        nil,
-        nil,
-        nil,
-        "ALL,SOLO,NIHILISTZSCHEUI"
-    )
+    -- stylua: ignore start
+    E:CreateMover(frame, frame:GetName() .. "Mover", "Focus Target Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
+    -- stylua: ignore end
 end
 
 VUF:RegisterUnit("focustarget")

@@ -32,15 +32,9 @@ function VUF:ConstructPetFrame(frame, unit)
     end
 
     frame:Point("BOTTOMRIGHT", _G.NihilistzscheUF_Player, "BOTTOMLEFT", -150, 0)
-    E:CreateMover(
-        frame,
-        frame:GetName() .. "Mover",
-        "Pet Vertical Unit Frame",
-        nil,
-        nil,
-        nil,
-        "ALL,SOLO,NIHILISTZSCHEUI"
-    )
+    -- stylua: ignore start
+    E:CreateMover(frame, frame:GetName() .. "Mover", "Pet Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
+    -- stylua: ignore end
 end
 
 VUF:RegisterUnit("pet")

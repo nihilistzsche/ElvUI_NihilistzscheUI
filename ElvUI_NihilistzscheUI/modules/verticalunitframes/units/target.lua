@@ -32,15 +32,9 @@ function VUF:ConstructTargetFrame(frame, unit)
     frame.OnFirstUpdateFinish = function() frame:SetAlpha(self.db.alpha) end
 
     frame:Point("LEFT", E.UIParent, "CENTER", 275, 0) --Set to default position
-    E:CreateMover(
-        frame,
-        frame:GetName() .. "Mover",
-        "Target Vertical Unit Frame",
-        nil,
-        nil,
-        nil,
-        "ALL,SOLO,NIHILISTZSCHEUI"
-    )
+    -- stylua: ignore start
+    E:CreateMover(frame, frame:GetName() .. "Mover", "Target Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
+    -- stylua: ignore end
 end
 
 VUF:RegisterUnit("target")

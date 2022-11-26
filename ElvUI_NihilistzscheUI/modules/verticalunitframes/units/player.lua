@@ -125,15 +125,9 @@ function VUF:ConstructPlayerFrame(frame, unit)
     end
 
     frame:Point("RIGHT", E.UIParent, "CENTER", -275, 0) --Set to default position
-    E:CreateMover(
-        frame,
-        frame:GetName() .. "Mover",
-        "Player Vertical Unit Frame",
-        nil,
-        nil,
-        nil,
-        "ALL,SOLO,NIHILISTZSCHEUI"
-    )
+    -- stylua: ignore start
+    E:CreateMover(frame, frame:GetName() .. "Mover", "Player Vertical Unit Frame", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
+    -- stylua: ignore end
 end
 
 VUF:RegisterUnit("player")
