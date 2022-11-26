@@ -79,14 +79,10 @@ function WD.AttachBarToNamePlate(bar, guid)
     bar:SetPoint("TOPLEFT", np.Castbar, "BOTTOMLEFT", 0, yOffset)
     bar:SetPoint("TOPRIGHT", np.Castbar, "BOTTOMRIGHT", 0, yOffset)
     bar:Show()
-    np.wasDemon = true
     WD.attachedNPs[np] = true
 end
 
 function WD.UpdatePlateGUID()
-    for np in pairs(WD.attachedNPs) do
-        np.wasDemon = nil
-    end
     for guid, bar in pairs(WD.activeNamePlateGUIDs) do
         if NP.PlateGUID[guid] then
             WD.AttachBarToNamePlate(bar, guid)
@@ -403,7 +399,6 @@ function WD:OnDespawn(petGUID)
             local np = NP.PlateGUID[petGUID]
             if np then
                 NP:StyleFilterUpdate(np, "FAKE_WDForceUpdate")
-                np.wasDemon = nil
             end
             break
         end
