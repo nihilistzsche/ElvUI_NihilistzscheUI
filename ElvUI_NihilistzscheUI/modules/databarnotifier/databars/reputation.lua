@@ -26,7 +26,6 @@ function REP:ScanFactions()
             if isParagon then
                 local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
                 barValue = currentValue % threshold
-                if hasRewardPending then barValue = barValue + threshold end
                 hasParagonReward = hasRewardPending
             end
             self.values[name] = {
