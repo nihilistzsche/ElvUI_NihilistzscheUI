@@ -231,6 +231,7 @@ function WD:UpdateBars(isDemonicTyrant)
             if not b.running then b:Start() end
         end
         self.header:Size(self.db.width, self.db.height)
+        self.header.Container:SetHeight(0)
     end
 
     if #bars > 0 then
