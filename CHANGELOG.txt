@@ -1,3 +1,6 @@
+12.09:
+- Updated the reputation modules for the customdatabar tags and databarnotifier modules to accomidate Major Factions in Dragonflight.
+
 12.07:
 - Various bug fixes and the return of the dynamicstatusicons installer.
 
