@@ -143,15 +143,11 @@ function NI:MerathilisUISetup(isSpec)
     self.SaveMoverPosition("MER_RaidBuffReminderMover", "TOPLEFT", E.UIParent, "TOPLEFT", 238, -141)
     self.SaveMoverPosition("MER_RaidManager", "TOPRIGHT", E.UIParent, "TOPRIGHT", -179, -190)
     self.SaveMoverPosition("Notification Mover", "TOP", E.UIParent, "TOP", 0, -120)
-    if NUI.Private then
-        self.SaveMoverPosition("mUI_RaidMarkerBarAnchor", "TOPRIGHT", E.UIParent, "TOPRIGHT", -179, -166)
-    else
-        self.SaveMoverPosition("mUI_RaidMarkerBarAnchor", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -4, 313)
-    end
+    self.SaveMoverPosition("MER_RaidMarkersBarAnchor", "BOTTORMIGHT", E.UIParent, "BOTTOMRIGHT", 0, 396)
     self.SaveMoverPosition("AutoButtonBar1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -398, 334)
     self.SaveMoverPosition("AutoButtonBar2Mover", "TOP", "AutoButtonBar1Mover", "BOTTOM", 0, -4)
     self.SaveMoverPosition("AutoButtonBar3Mover", "TOP", "AutoButtonBar2Mover", "BOTTOM", 0, -4)
-    self.SaveMoverPosition("SpellFeedback", "BOTTOM", UIParent, "BOTTOM", 0, 415)
+    self.SaveMoverPosition("SpellFeedback", "BOTTOM", E.UIParent, "BOTTOM", 0, 415)
 
     if COMP.LCP then
         self:EDB().mui.locPanel = {

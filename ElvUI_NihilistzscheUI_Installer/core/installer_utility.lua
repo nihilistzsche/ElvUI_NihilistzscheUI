@@ -294,14 +294,19 @@ NI.savedPluginTables = {}
 
 function NI:SaveInstallTable(tbl)
     if not self.savedPluginTables[tbl] then
-        self.savedPluginTables[tbl] = tbl.installTable
-        tbl.installTable = nil
+        if tbl.InstallerData then
+            tbl.savedPluginTables[tbl] = { tbl.InstallerData, "InstallerData" }
+            tbl.InstallerData = nil
+        else
+            self.savedPluginTables[tbl] = { tbl.installTable, "installTable" }
+            tbl.installTable = nil
+        end
     end
 end
 
 function NI:RestoreSavedInstallers()
     for tbl, install in pairs(self.savedPluginTables) do
-        tbl.installTable = install
+        tbl[install[2]] = install[1]
     end
     wipe(self.savedPluginTables)
 end

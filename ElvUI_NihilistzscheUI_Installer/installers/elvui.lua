@@ -933,7 +933,7 @@ function NI:ElvUISetup(role, isSpec)
     }
     self:EDB().datatexts.panels.DTB2_NihilistzscheUILL = {
         enable = true,
-        "DungeonTools",
+        "MythicDungeonTools",
         "QuickJoin",
         "Improved System",
     }
@@ -952,7 +952,7 @@ function NI:ElvUISetup(role, isSpec)
     self:EDB().datatexts.panels.NUI_DataPanel_1 = {
         enable = true,
         "NihilistzscheUI Account Item Level",
-        "War Mode",
+        "WarMode",
         "Broker_TimeToExecute_kill",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_2 = {
