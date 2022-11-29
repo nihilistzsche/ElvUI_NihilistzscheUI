@@ -10,9 +10,13 @@ local GetNumFactions = _G.GetNumFactions
 local GetFactionInfo = _G.GetFactionInfo
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
+local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
 local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
-local FACTION_BAR_COLORS = _G.FACTION_BAR_COLORS
+local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
+local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
 
+local FACTION_BAR_COLORS = _G.FACTION_BAR_COLORS
+local RENOWN_LEVEL_LABEL = _G.RENOWN_LEVEL_LABEL
 local standingmax = 8
 local standingmin = 1
 
@@ -23,16 +27,25 @@ function REP:ScanFactions()
         if name and not isHeader or hasRep then
             local hasParagonReward = false
             local isParagon = C_Reputation_IsFactionParagon(factionID)
+            local isMajorFaction = C_Reputation_IsMajorFaction(factionID)
             if isParagon then
                 local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
                 barValue = currentValue % threshold
                 hasParagonReward = hasRewardPending
+            elseif isMajorFaction then
+                local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+                local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+                standingID = majorFactionData.renownlevel
+                barValue = isCapped and majorFactionData.renownLevelThreshold
+                    or majorFactionData.renownReputationEarned
+                    or 0
             end
             self.values[name] = {
                 Standing = isParagon and 999 or standingID,
                 Value = barValue,
                 HasParagonReward = hasParagonReward,
                 WasParagon = isParagon,
+                isMajorFaction = isMajorFaction,
             }
         end
     end
@@ -86,6 +99,8 @@ function REP:Notify()
         end
         local isParagon = false
         local hasParagonReward = false
+        local isMajorFaction = false
+
         if factionID and C_Reputation_IsFactionParagon(factionID) then
             local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
             barMin, barMax = 0, threshold
@@ -93,7 +108,16 @@ function REP:Notify()
             isParagon = true
             hasParagonReward = hasRewardPending
         end
-
+        if factionID and C_Reputation_IsMajorFaction(factionID) then
+            local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+            local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+            standingID = majorFactionData.renownlevel
+            barMin, barMax = 0, majorFactionData.renownLevelThreshold
+            barValue = isCapped and majorFactionData.renownLevelThreshold
+                or majorFactionData.renownReputationEarned
+                or 0
+            isMajorFaction = true
+        end
         if isParagon then standingID = 999 end
 
         if (not isHeader or hasRep) and self.values[name] then
@@ -111,6 +135,9 @@ function REP:Notify()
                     if isParagon and self.values[name].WasParagon then
                         newstandingtext = self:GenText({ "You have received a", "reward coffer", "from", name })
                         skipMessage = true
+                    elseif isMajorFaction then
+                        newstandingtext =
+                            self:GenText({ "New standing with", name, "is", RENOWN_LEVEL_LABEL .. standingID })
                     else
                         if isParagon then newfaction = "Paragon" end
                         newstandingtext = self:GenText({ "New standing with", name, "is", newfaction })
@@ -124,6 +151,9 @@ function REP:Notify()
                     remaining = barMax - barValue
                     if friendID then
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
+                    elseif isMajorFaction then
+                        nextStanding = RENOWN_LEVEL_LABEL .. standingID + 1
+                        nextstandingID = standingID + 1
                     else
                         if standingID < standingmax then
                             nextstanding = _G["FACTION_STANDING_LABEL" .. standingID + 1]
@@ -138,6 +168,9 @@ function REP:Notify()
                     remaining = barValue - barMin
                     if friendID then
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
+                    elseif isMajorFaction then
+                        nextstanding = RENOWN_LEVEL_LABEL .. standingID - 1
+                        nextstandingID = standingID - 1
                     else
                         if standingID > standingmin then
                             nextstanding = _G["FACTION_STANDING_LABEL" .. standingID - 1]
@@ -181,6 +214,7 @@ function REP:Notify()
                 self.values[name].Standing = isParagon and 999 or standingID
                 self.values[name].HasParagonReward = hasParagonReward
                 self.values[name].WasParagon = isParagon
+                self.values[name].isMajorFaction = isMajorFaction
             end
         end
     end
