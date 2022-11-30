@@ -125,7 +125,11 @@ local masterRidingSpellID = 90265
 local dragonridingSpellID = 376777
 
 _G.SummonFavoriteMount = function()
-    if select(4, UnitPosition("player")) == DRAGON_ISLES_ID and IsSpellKnown(dragonridingSpellID) and db.favDragonridingMount then
+    if
+        select(4, UnitPosition("player")) == DRAGON_ISLES_ID
+        and IsSpellKnown(dragonridingSpellID)
+        and db.favDragonridingMount
+    then
         C_MountJournal_SummonByID(db.favDragonridingMount)
         return
     end
