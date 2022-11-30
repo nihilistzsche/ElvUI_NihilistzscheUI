@@ -92,7 +92,7 @@ function REP:Notify()
     for factionIndex = 1, GetNumFactions() do
         local name, _, standingID, barMin, barMax, barValue, _, _, isHeader, _, hasRep, _, _, factionID =
             GetFactionInfo(factionIndex)
-        local success, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, _factionID)
+        local success, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
         local friendID, friendRep
         if success then
             friendID, friendRep = data.friendshipFactionID, data.standingd
