@@ -38,6 +38,12 @@ local hexColor = "|cff00ff96"
 
 local DRAGON_ISLES_ID = 2444
 local RENEWED_PROTO_DRAKE_ID = 1589
+local dragonriding_mounts = {
+    [1563] = true, -- Classic Drake
+    [1589] = true, -- Renewed Proto-Drake
+    [1590] = true, -- Velocidrake
+    [1591] = true, -- Wylderdrake
+}
 
 local db = {}
 
@@ -68,6 +74,14 @@ local function ModifiedClick(_, id)
     local name, _, _, _, _ = C_MountJournal_GetMountInfoByID(id)
     if not IsShiftKeyDown() and not IsControlKeyDown() and not IsAltKeyDown() then
         C_MountJournal_SummonByID(id)
+    elseif IsShiftKeyDown() and IsControlKeyDown() and not IsAltKeyDown() and dragonriding_mounts[id] then
+        db.favDragonridingMount = id
+        DEFAULT_CHAT_FRAME:AddMessage(
+            (L["%sMounts:|r %s added as dragonriding favorite."]):format(hexColor, name),
+            1,
+            1,
+            1
+        )
     elseif IsShiftKeyDown() and not IsControlKeyDown() and not IsAltKeyDown() then
         db.specFavs[specID].favFlyer = id
         DEFAULT_CHAT_FRAME:AddMessage(
@@ -111,8 +125,8 @@ local masterRidingSpellID = 90265
 local dragonridingSpellID = 376777
 
 _G.SummonFavoriteMount = function()
-    if select(4, UnitPosition("player")) == DRAGON_ISLES_ID and IsSpellKnown(dragonridingSpellID) then
-        C_MountJournal_SummonByID(RENEWED_PROTO_DRAKE_ID)
+    if select(4, UnitPosition("player")) == DRAGON_ISLES_ID and IsSpellKnown(dragonridingSpellID) and db.favDragonridingMount then
+        C_MountJournal_SummonByID(db.favDragonridingMount)
         return
     end
     local specID = GetSpecializationInfo(GetSpecialization())
