@@ -93,9 +93,9 @@ function REP:Notify()
         local name, _, standingID, barMin, barMax, barValue, _, _, isHeader, _, hasRep, _, _, factionID =
             GetFactionInfo(factionIndex)
         local success, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
-        local friendID, friendRep
+        local friendID, friendRep, friendTextLevel
         if success then
-            friendID, friendRep = data.friendshipFactionID, data.standingd
+            friendID, friendRep, friendTextLevel = data.friendshipFactionID, data.standing, data.text
         end
         local isParagon = false
         local hasParagonReward = false
