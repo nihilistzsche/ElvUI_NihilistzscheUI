@@ -36,6 +36,9 @@ local menu = {}
 local displayString = ""
 local hexColor = "|cff00ff96"
 
+local DRAGON_ISLES_ID = 2444
+local RENEWED_PROTO_DRAKE_ID = 1589
+
 local db = {}
 
 local function GetCurrentMount()
@@ -105,8 +108,13 @@ local specialMounts = { 522 } -- Sky Golem
 local expertRidingSpellID = 34090
 local artisanRidingSpellID = 34091
 local masterRidingSpellID = 90265
+local dragonridingSpellID = 376777
 
 _G.SummonFavoriteMount = function()
+    if select(4, UnitPosition("player")) == DRAGON_ISLES_ID and IsSpellKnown(dragonridingSpellID) then
+        C_MountJournal_SummonByID(RENEWED_PROTO_DRAKE_ID)
+        return
+    end
     local specID = GetSpecializationInfo(GetSpecialization())
     local isSpellKnown = IsSpellKnown(expertRidingSpellID)
         or IsSpellKnown(artisanRidingSpellID)
