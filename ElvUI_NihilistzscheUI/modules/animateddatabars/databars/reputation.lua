@@ -19,10 +19,10 @@ local REPUTATION = _G.REPUTATION
 local format = _G.format
 local xpcall = _G.xpcall
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
-local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
 local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
 local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
 local BLUE_FONT_COLOR = _G.BLUE_FONT_COLOR
+local RENOWN_LEVEL_LABEL = _G.RENOWN_LEVEL_LABEL
 
 function REP.GetLevel() return 0 end
 
@@ -120,6 +120,14 @@ function REP:OnEnter()
         value = currentValue % threshold
         if hasRewardPending then value = value + threshold end
         standing = "Paragon"
+    end
+
+    if C_Reputation_IsMajorFaction(factionID) then
+        local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+        local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+        min, max = 0, majorFactionData.renownLevelThreshold
+        value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
+        standing = RENOWN_LEVEL_LABEL .. majorFactionData.renownLevel
     end
 
     local data = C_GossipInfo_GetFriendshipReputation(factionID)
