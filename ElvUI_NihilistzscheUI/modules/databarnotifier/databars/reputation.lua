@@ -192,7 +192,7 @@ function REP:Notify()
                         color = E:RGBToHex(r, g, b)
                         basecolor = color
                     elseif isMajorFaction then
-                        color = E:RGBTohex(BLUE_FONT_COLOR.r, BLUE_FONT_COLOR.g, BLUE_FONT_COLOR.b)
+                        color = E:RGBToHex(BLUE_FONT_COLOR.r, BLUE_FONT_COLOR.g, BLUE_FONT_COLOR.b)
                         basecolor = color
                     else
                         local _color = FACTION_BAR_COLORS[nextstandingID] or FACTION_BAR_COLORS[1]
