@@ -70,6 +70,7 @@ NUI.SpecialChatIcons = {
         Tokashami = true,
         Millop = true,
         Aeondalew = true,
+        Fenistrasza = true,
     },
 }
 
