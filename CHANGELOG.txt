@@ -1,3 +1,9 @@
+12.10:
+- The mounts datatext has been updated with a new favorite dragonriding mount option, that will be summoned
+  if you are on the Dragon Isles, know the dragondriding spell, and have a favorite dragonriding mount selected.
+- Some more major faction work on the various reputation modules.
+- Fixed a long-standing bug with the warlock demons that should hopefully fix the "ghost" bars that show up.
+
 12.09:
 - Updated the reputation modules for the customdatabar tags and databarnotifier modules to accomidate Major Factions in Dragonflight.
 
