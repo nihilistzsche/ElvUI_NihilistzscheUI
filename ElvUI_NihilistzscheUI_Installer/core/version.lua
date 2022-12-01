@@ -1,7 +1,7 @@
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
 
-local installVersion = { 12.082, 9 }
+local installVersion = { 12.10, 1 }
 local lulupeepInstallVersion = { 11.03, 1 }
 
 function NI.GetInstallInfo(idx)

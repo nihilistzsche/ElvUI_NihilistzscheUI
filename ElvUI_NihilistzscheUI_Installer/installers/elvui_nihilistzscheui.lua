@@ -338,9 +338,11 @@ function NI:NihilistzscheUISetup(isSpec)
         end
     end
     if not NUI.Lulupeep and COMP.TT then
-        self:EDB().nihilistzscheui.vuf.units.player.health = {
-            value = { tag = "[healthcolor][health:current-percent][nui-absorbs]" },
-        }
+        for unit, tbl in pairs(P.nihilistzscheui.vuf.units) do
+            self:EDB().nihilistzscheui.vuf.units[unit].health = {
+                value = { tag = "[healthcolor][health:current-percent][nui-absorbs]" },
+            }
+        end
     end
     if not isSpec and NUI.Private then
         self:EPRV().nihilistzscheui = self:EPRV().nihilistzscheui or {}
@@ -351,7 +353,7 @@ function NI:NihilistzscheUISetup(isSpec)
             self:EPRV().nihilistzscheui.mounts = self:EPRV().nihilistzscheui.mounts or {}
         end
         self:EPRV().nihilistzscheui.mounts.favAlt = 460
-        self.EPRV().nihilistzscheui.mounts.favDragonridingMount = 1589
+        self:EPRV().nihilistzscheui.mounts.favDragonridingMount = 1589
     end
 
     self.SaveMoverPosition("NihilistzscheUI_SpecSwitchBarMover", "BOTTOMRIGHT", _G.RightChatPanel, "BOTTOMLEFT", -4, 0)
