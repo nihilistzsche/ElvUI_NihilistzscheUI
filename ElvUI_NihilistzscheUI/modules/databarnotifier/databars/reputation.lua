@@ -154,7 +154,6 @@ function REP:Notify()
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
                     elseif isMajorFaction then
                         nextstanding = RENOWN_LEVEL_LABEL .. standingID + 1
-                        nextstandingID = standingID + 1
                     else
                         if standingID < standingmax then
                             nextstanding = _G["FACTION_STANDING_LABEL" .. standingID + 1]
@@ -171,7 +170,6 @@ function REP:Notify()
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
                     elseif isMajorFaction then
                         nextstanding = RENOWN_LEVEL_LABEL .. standingID - 1
-                        nextstandingID = standingID - 1
                     else
                         if standingID > standingmin then
                             nextstanding = _G["FACTION_STANDING_LABEL" .. standingID - 1]
