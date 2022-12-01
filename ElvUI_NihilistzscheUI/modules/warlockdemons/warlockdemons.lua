@@ -71,6 +71,10 @@ end
 function WD.AttachBarToNamePlate(bar, guid)
     local np = NP.PlateGUID[guid]
     assert(np)
+    if not np:IsVisible() then
+        bar:Hide()
+        return
+    end
     bar:SetParent(nil)
     bar:ClearAllPoints()
     bar:SetParent(np)
