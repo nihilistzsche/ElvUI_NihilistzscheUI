@@ -35,9 +35,8 @@ local menu = {}
 
 local displayString = ""
 local hexColor = "|cff00ff96"
+local DRAGON_ISLES_CONTINENT_ID = 1978
 
-local DRAGON_ISLES_ID = 2444
-local RENEWED_PROTO_DRAKE_ID = 1589
 local dragonriding_mounts = {
     [1563] = true, -- Classic Drake
     [1589] = true, -- Renewed Proto-Drake
@@ -126,7 +125,7 @@ local dragonridingSpellID = 376777
 
 _G.SummonFavoriteMount = function()
     if
-        select(4, UnitPosition("player")) == DRAGON_ISLES_ID
+        E.MapInfo.continentMapID == DRAGON_ISLES_CONTINENT_ID
         and IsSpellKnown(dragonridingSpellID)
         and db.favDragonridingMount
     then
