@@ -206,6 +206,18 @@ local function AddFavorites(self, level)
         UIDropDownMenu_AddButton(menu, level)
     end
 
+    if db.favDragonridingMount ~= nil then
+        local name, _, icon, active, _ = C_MountJournal_GetMountInfoByID(db.favDragonridingMount)
+        menu.text = ("Dragonriding: %s"):format(name)
+        menu.icon = icon
+        menu.colorCode = active == 1 and hexColor or "|cffffffff"
+        menu.func = ModifiedClick
+        menu.arg1 = db.favDragonridingMount
+        menu.hasArrow = false
+        menu.notCheckable = true
+        UIDropDownMenu_AddButton(menu, level)
+    end
+
     AddSpecialMounts(self, level)
 end
 
