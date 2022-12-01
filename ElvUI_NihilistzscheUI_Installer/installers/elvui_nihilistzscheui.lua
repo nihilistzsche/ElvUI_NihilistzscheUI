@@ -342,7 +342,7 @@ function NI:NihilistzscheUISetup(isSpec)
             value = { tag = "[healthcolor][health:current-percent][nui-absorbs]" },
         }
     end
-    if not isSpec then
+    if not isSpec and NUI.Private then
         self:EPRV().nihilistzscheui = self:EPRV().nihilistzscheui or {}
         if self.ClassMountFavorites[self.currentClass] then
             self:EPRV().nihilistzscheui.mounts = { specFavs = {} }
@@ -351,7 +351,9 @@ function NI:NihilistzscheUISetup(isSpec)
             self:EPRV().nihilistzscheui.mounts = self:EPRV().nihilistzscheui.mounts or {}
         end
         self:EPRV().nihilistzscheui.mounts.favAlt = 460
+        self.EPRV().nihilistzscheui.mounts.favDragonridingMount = 1589
     end
+
     self.SaveMoverPosition("NihilistzscheUI_SpecSwitchBarMover", "BOTTOMRIGHT", _G.RightChatPanel, "BOTTOMLEFT", -4, 0)
     if COMP.IsAddOnEnabled("OldGodWhispers") then
         self.SaveMoverPosition("OldGodWhispersDragFrameMover", "BOTTOM", "NihilistzscheUI_SpecSwitchBar", "TOP", 0, 4)
