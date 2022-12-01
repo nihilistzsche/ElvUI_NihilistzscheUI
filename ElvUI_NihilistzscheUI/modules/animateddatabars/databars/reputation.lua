@@ -18,6 +18,11 @@ local STANDING = _G.STANDING
 local REPUTATION = _G.REPUTATION
 local format = _G.format
 local xpcall = _G.xpcall
+local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
+local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
+local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
+local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
+local BLUE_FONT_COLOR = _G.BLUE_FONT_COLOR
 
 function REP.GetLevel() return 0 end
 
@@ -27,6 +32,7 @@ function REP:Update(bar)
     local name, reaction, min, max, value, factionID = GetWatchedFactionInfo()
     local isParagon = false
     local showReward = false
+    local isMajorFaction = false
     if C_Reputation_IsFactionParagon(factionID) then
         local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
         min, max = 0, threshold
@@ -36,6 +42,13 @@ function REP:Update(bar)
             showReward = true
         end
         isParagon = true
+    end
+    if C_Reputation_IsMajorFaction(factionID) then
+        local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+        local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+        min, max = 0, majorFactionData.renownLevelThreshold
+        value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
+        isMajorFaction = true
     end
     local numFactions = GetNumFactions()
 
@@ -76,6 +89,10 @@ function REP:Update(bar)
         bar.animatedStatusBar:SetStatusBarColor(r, g, b)
         bar.animatedStatusBar:SetAnimatedTextureColors(r, g, b)
         bar.Reward:SetShown(showReward)
+    elseif isMajorFaction then
+        local color = BLUE_FONT_COLOR
+        bar.animatedStatusBar:SetStatusBarColor(color.r, color.g, color.b)
+        bar.animatedStatusBar:SetAnimatedTextureColors(color.r, color.g, color.b)
     else
         local color = FACTION_BAR_COLORS[reaction] or FACTION_BAR_COLORS[1]
         bar.animatedStatusBar:SetStatusBarColor(color.r, color.g, color.b)

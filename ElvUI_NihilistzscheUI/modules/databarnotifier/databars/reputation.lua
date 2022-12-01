@@ -17,6 +17,7 @@ local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
 
 local FACTION_BAR_COLORS = _G.FACTION_BAR_COLORS
 local RENOWN_LEVEL_LABEL = _G.RENOWN_LEVEL_LABEL
+local BLUE_FONT_COLOR = _G.BLUE_FONT_COLOR
 local standingmax = 8
 local standingmin = 1
 
@@ -152,7 +153,7 @@ function REP:Notify()
                     if friendID then
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
                     elseif isMajorFaction then
-                        nextStanding = RENOWN_LEVEL_LABEL .. standingID + 1
+                        nextstanding = RENOWN_LEVEL_LABEL .. standingID + 1
                         nextstandingID = standingID + 1
                     else
                         if standingID < standingmax then
@@ -189,6 +190,9 @@ function REP:Notify()
                     if isParagon and COMP.PR then
                         local r, g, b = unpack(_G.ParagonReputationDB.value)
                         color = E:RGBToHex(r, g, b)
+                        basecolor = color
+                    elseif isMajorFaction then
+                        color = E:RGBTohex(BLUE_FONT_COLOR.r, BLUE_FONT_COLOR.g, BLUE_FONT_COLOR.b)
                         basecolor = color
                     else
                         local _color = FACTION_BAR_COLORS[nextstandingID] or FACTION_BAR_COLORS[1]
