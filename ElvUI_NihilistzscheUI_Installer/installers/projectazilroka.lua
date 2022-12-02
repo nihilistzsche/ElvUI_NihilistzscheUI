@@ -13,6 +13,7 @@ function NI:ProjectAzilrokaSetup(isSpec)
             WARLOCK = {
                 [205146] = true,
                 [264173] = true,
+                [267218] = true,
             },
         }
         local classReminder = {
