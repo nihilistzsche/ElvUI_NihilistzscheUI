@@ -112,7 +112,7 @@ function REP:Notify()
         if factionID and C_Reputation_IsMajorFaction(factionID) then
             local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
             local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
-            standingID = majorFactionData.renownlevel
+            standingID = majorFactionData.renownLevel
             barMin, barMax = 0, majorFactionData.renownLevelThreshold
             barValue = isCapped and majorFactionData.renownLevelThreshold
                 or majorFactionData.renownReputationEarned
@@ -150,7 +150,7 @@ function REP:Notify()
                 nextstandingID = standingID
                 if diff > 0 or isParagon then
                     remaining = barMax - barValue
-                    if friendID then
+                    if friendID and not isMajorFaction then
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
                     elseif isMajorFaction then
                         nextstanding = RENOWN_LEVEL_LABEL .. standingID + 1
@@ -166,7 +166,7 @@ function REP:Notify()
                     end
                 else
                     remaining = barValue - barMin
-                    if friendID then
+                    if friendID and not isMajorFaction then
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
                     elseif isMajorFaction then
                         nextstanding = RENOWN_LEVEL_LABEL .. standingID - 1
