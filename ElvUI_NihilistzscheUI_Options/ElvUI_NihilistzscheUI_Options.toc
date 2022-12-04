@@ -1,7 +1,7 @@
 ## Interface: 100002
 ## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r |cff1784d1Options|r
 ## Author: Nihilistzsche
-## Version: 12.10
+## Version: 12.11
 ## Notes: Configuration for ElvUI_NihilistzscheUI
 ## RequiredDeps: ElvUI_NihilistzscheUI, ElvUI_Options, ElvUI_NihilistzscheUI_Installer
 ## LoadOnDemand: 1
