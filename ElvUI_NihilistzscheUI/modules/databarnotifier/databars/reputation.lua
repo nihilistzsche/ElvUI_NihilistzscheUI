@@ -150,7 +150,7 @@ function REP:Notify()
                 nextstandingID = standingID
                 if diff > 0 or isParagon then
                     remaining = barMax - barValue
-                    if friendID and not isMajorFaction then
+                    if friendID and friendID ~= 0 then
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
                     elseif isMajorFaction then
                         nextstanding = RENOWN_LEVEL_LABEL .. standingID + 1
@@ -166,7 +166,7 @@ function REP:Notify()
                     end
                 else
                     remaining = barValue - barMin
-                    if friendID and not isMajorFaction then
+                    if friendID and friendID ~= 0 then
                         nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
                     elseif isMajorFaction then
                         nextstanding = RENOWN_LEVEL_LABEL .. standingID - 1
