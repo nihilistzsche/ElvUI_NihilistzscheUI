@@ -204,9 +204,21 @@ PBAS.PetTamers = {
     [173372] = { valid = true }, -- Glitterdust
     [173376] = { valid = true }, -- Nightfang
     [173377] = { valid = true }, -- Faryl
-    [173381] = { valid = true }, -- Rascal,
+    [173381] = { valid = true }, -- Rascal
     -- Eye of Azshara
     [179694] = { valid = true }, -- Trainer Iris Greedsway
+    -- The Waking Shore
+    [189376] = { valid = true }, -- Swog
+    [196264] = { valid = true }, -- Haniko
+    -- The Ohn'ahran Plains
+    [197102] = { valid = true }, -- Bakhushek
+    [197447] = { valid = true }, -- Stormamu
+    -- The Azure Span
+    [196069] = { valid = true }, -- Patchu
+    [197417] = { valid = true }, -- Arcantus
+    -- Thaldraszus
+    [197336] = { valid = true }, -- Enyobon
+    [197350] = { valid = true }, -- Setimothes
 }
 
 function PBAS.TAS_OnClick()
