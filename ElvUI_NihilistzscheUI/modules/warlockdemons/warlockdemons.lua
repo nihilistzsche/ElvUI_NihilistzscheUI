@@ -21,6 +21,7 @@ local UnitName = _G.UnitName
 local UnitIsFriend = _G.UnitIsFriend
 local FindInTableIf = _G.FindInTableIf
 local tinsert = _G.tinsert
+local InPetBattle = _G.C_PetBattles.IsInBattle
 local GetPetName
 
 WD.activeNamePlateGUIDs = {}
@@ -71,7 +72,7 @@ end
 function WD.AttachBarToNamePlate(bar, guid)
     local np = NP.PlateGUID[guid]
     assert(np)
-    if not np:IsVisible() then
+    if not np:IsVisible() or InPetBattle() then
         bar:Hide()
         return
     end
