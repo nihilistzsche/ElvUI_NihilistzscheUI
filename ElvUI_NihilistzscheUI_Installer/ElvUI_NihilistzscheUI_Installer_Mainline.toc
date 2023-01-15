@@ -1,7 +1,7 @@
 ## Interface: 100002
 ## Title: |cff1784d1ElvUI|r |cffff2020NihilistzscheUI|r |cffff2020Installer|r
 ## Author: Nihilistzsche
-## Version: 12.11
+## Version: 12.99
 ## Notes: The installer files for ElvUI_NihilistzscheUI.
 ## SavedVariables: NUIIDB
 ## RequiredDeps: ElvUI_NihilistzscheUI
