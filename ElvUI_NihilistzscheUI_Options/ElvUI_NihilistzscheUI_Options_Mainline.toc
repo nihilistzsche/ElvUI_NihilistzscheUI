@@ -1,5 +1,5 @@
 ## Interface: 100002
-## Title: |cfffe7b2cElvUI|r |cffff2020NihilistzscheUI|r |cff1784d1Options|r
+## Title: |cff1784d1ElvUI|r |cffff2020NihilistzscheUI|r |cff1784d1Options|r
 ## Author: Nihilistzsche
 ## Version: 12.11
 ## Notes: Configuration for ElvUI_NihilistzscheUI
