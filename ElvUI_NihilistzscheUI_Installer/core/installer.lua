@@ -86,6 +86,7 @@ function NI:Run()
     self:SaveInstallerVersion()
     self:SaveInstallerDetails()
     NUIIDB.installInfo.installedAddons = self:GetInstalledAddOnSet()
+    if E.global.nihilistzscheui.specReloaded then wipe(E.global.nihilistzscheui.specReloaded) end
 end
 
 function NI:PrintMoverDiscrepancies()
@@ -169,9 +170,10 @@ tryInstall = function()
         C_Timer_After(1, tryInstall)
         return
     end
-    if _G.ElvUIInstallFrame then _G.ElvUIInstallFrame:Hide() end
+    if E.InstallFrame then E.InstallFrame:Hide() end
     E.private.install_complete = E.version
     local PI = E.PluginInstaller
+    wipe(PI.Installs)
     PI:Queue(NI.installTable)
     PI:RunInstall()
 end
@@ -196,5 +198,3 @@ function NI:Initialize()
         self:RestoreSavedInstallers()
     end
 end
-
-E.Libs.EP:HookInitialize(NI, NI.Initialize)

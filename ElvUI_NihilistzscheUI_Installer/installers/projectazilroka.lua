@@ -14,6 +14,7 @@ function NI:ProjectAzilrokaSetup(isSpec)
                 [205146] = true,
                 [264173] = true,
                 [267218] = true,
+                [387437] = true,
             },
         }
         local classReminder = {

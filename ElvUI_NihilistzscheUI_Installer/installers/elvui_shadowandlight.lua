@@ -300,7 +300,7 @@ function NI:SLESetup(isSpec)
         self:EPRV().sle.professions = {
             fishing = {
                 EasyCast = true,
-                CastButton = "Shift",
+                IgnorePole = true,
             },
         }
         self:EPRV().sle.skins = self:EPRV().sle.skins or {}

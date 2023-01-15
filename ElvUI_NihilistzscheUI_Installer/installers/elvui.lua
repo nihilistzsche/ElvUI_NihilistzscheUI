@@ -718,7 +718,8 @@ function NI:ElvUISetup(role, isSpec)
             orientation = "HORIZONTAL",
             height = 24,
             width = 410,
-            textSize = 9,
+            fontSize = 10,
+            fontOutline = "MONOCHROMEOUTLINE",
             font = self.db.font,
             questCurrentZoneOnly = true,
             questCompletedOnly = true,
@@ -731,7 +732,8 @@ function NI:ElvUISetup(role, isSpec)
             orientation = "HORIZONTAL",
             height = 24,
             width = 410,
-            textSize = 9,
+            fontSize = 10,
+            fontOutline = "MONOCHROMEOUTLINE",
             font = self.db.font,
             tag = "[rep:name]: [rep:standing] ([rep:current-max-percent])",
         },
@@ -740,7 +742,8 @@ function NI:ElvUISetup(role, isSpec)
             orientation = "HORIZONTAL",
             height = 24,
             width = 410,
-            textSize = 9,
+            fontSize = 10,
+            fontOutline = "MONOCHROMEOUTLINE",
             font = self.db.font,
             tag = "[azerite:name] Level: [azerite:level] (XP: [azerite:current] / [azerite:max], [azerite:percent])",
         },
@@ -749,7 +752,8 @@ function NI:ElvUISetup(role, isSpec)
             orientation = "HORIZONTAL",
             height = 24,
             width = 410,
-            textSize = 9,
+            fontSize = 10,
+            fontOutline = "MONOCHROMEOUTLINE",
             font = self.db.font,
             tag = "[name] Honor Level [honor:level] XP: [honor:current]/[honor:max] ([honor:percent])",
             hideBelowMaxLevel = true,
@@ -903,7 +907,7 @@ function NI:ElvUISetup(role, isSpec)
         },
     }
     local LeftMiniPanelDT = "Time"
-    if COMP.MERS then LeftMiniPanelDT = "Altoholic" end
+    if COMP.MERS then LeftMiniPanelDT = "LDB_Altoholic" end
 
     self:EDB().datatexts = {
         font = self.db.font,
@@ -933,33 +937,33 @@ function NI:ElvUISetup(role, isSpec)
     }
     self:EDB().datatexts.panels.DTB2_NihilistzscheUILL = {
         enable = true,
-        "MythicDungeonTools",
+        "LDB_MythicDungeonTools",
         "QuickJoin",
         "Improved System",
     }
     self:EDB().datatexts.panels.DTB2_NihilistzscheUILR = {
         enable = true,
-        "FamilyFamiliarHelper",
-        "Rematch",
-        "tdBattlePetScript",
+        "LDB_FamilyFamiliarHelper",
+        "LDB_Rematch",
+        "LDB_tdBattlePetScript",
     }
     self:EDB().datatexts.panels.DTB2_NihilistzscheUIUL = {
         enable = true,
-        "Rarity",
+        "LDB_Rarity",
     }
     local NUI_DataPanel_6_LeftDT = "Quick Join"
     if NUI.Private then NUI_DataPanel_6_LeftDT = "NihilistzscheUI Dungeon/Raid Difficulty" end
     self:EDB().datatexts.panels.NUI_DataPanel_1 = {
         enable = true,
         "NihilistzscheUI Account Item Level",
-        "WarMode",
-        "Broker_TimeToExecute_kill",
+        NUI.Private and "NihilistzscheUI Heirloom Upgrade Cost" or "LDB_WarMode",
+        "LDB_Broker_TimeToExecute_kill",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_2 = {
         enable = true,
-        "Locked Out",
-        "LegionInvasionTimer",
-        "BFAInvasionTimer",
+        "LDB_Locked Out",
+        "LDB_LegionInvasionTimer",
+        "LDB_BFAInvasionTimer",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_3 = {
         enable = true,
@@ -973,9 +977,9 @@ function NI:ElvUISetup(role, isSpec)
     }
     self:EDB().datatexts.panels.NUI_DataPanel_5 = {
         enable = true,
-        "NihilistzscheUI Azerite Powers",
-        "DungeonHelper",
-        "LDB-WoWToken",
+        NUI.Private and "NihilistzscheUI Heritage Armor Tracker" or "NihilistzscheUI Azerite Powers",
+        "LDB_DungeonHelper",
+        "LDB_LDB-WoWToken",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_6 = {
         enable = true,
@@ -990,7 +994,7 @@ function NI:ElvUISetup(role, isSpec)
     self:EDB().datatexts.panels.NUI_DataPanel_8 = {
         enable = true,
         self.DataTextsByRole[role],
-        "BtWQuests",
+        "LDB_BtWQuests",
         "ClassTactics Talent Manager",
     }
     if NUI.Private then
