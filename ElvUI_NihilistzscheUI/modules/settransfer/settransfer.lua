@@ -1,4 +1,5 @@
 local NUI, E, L, V, P, G = _G.unpack(select(2, ...))
+if E.Classic then return end
 local ST = NUI.SetTransfer
 local B = E.Bags
 local S = E.Skins
@@ -11,8 +12,8 @@ local C_Item_GetItemLink = _G.C_Item.GetItemLink
 local DEFAULT_CHAT_FRAME = _G.DEFAULT_CHAT_FRAME
 local ItemLocation = _G.ItemLocation
 local Item = _G.Item
-local UseContainerItem = _G.UseContainerItem
-local GetContainerNumSlots = _G.GetContainerNumSlots
+local UseContainerItem = _G.C_Container and _G.C_Container.UseContainerItem or _G.UseContainerItem
+local GetContainerNumSlots = _G.C_Container and _G.C_Container.GetContainerNumSlots or _G.GetContainerNumSlots
 local tContains = _G.tContains
 local UIDropDownMenu_AddButton = _G.UIDropDownMenu_AddButton
 local ToggleDropDownMenu = _G.ToggleDropDownMenu

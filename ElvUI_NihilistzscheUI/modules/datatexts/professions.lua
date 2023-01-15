@@ -170,11 +170,10 @@ local function OnEnter(self)
     DT.tooltip:Show()
 end
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(_, hex)
     displayString = join("", "%s: ", hex, "%d/", hex, "%d|r")
     tooltipString = join("", hex, "%d/", hex, "%d|r")
 end
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
 NUI:RegisterModule(PDT:GetName())
 DT:RegisterDatatext(
@@ -184,5 +183,9 @@ DT:RegisterDatatext(
     OnEvent,
     nil,
     Click,
-    OnEnter
+    OnEnter,
+    nil,
+    nil,
+    nil,
+    ValueColorUpdate
 )

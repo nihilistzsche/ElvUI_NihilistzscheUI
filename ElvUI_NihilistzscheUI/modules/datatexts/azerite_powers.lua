@@ -1,4 +1,5 @@
 local _, E = _G.unpack(select(2, ...)) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+if not E.Retail then return end
 local DT = E.DataTexts
 
 local Item = _G.Item
@@ -105,7 +106,7 @@ end
 
 local _hex
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(_, hex)
     _hex = hex
     local azeriteLocation = C_AzeriteItem_FindActiveAzeriteItem()
     if not azeriteLocation then
@@ -148,8 +149,6 @@ local function OnEvent(self)
     UpdateDisplay(self)
 end
 
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
 DT:RegisterDatatext(
     "NihilistzscheUI Azerite Powers",
     "NihilistzscheUI",
@@ -157,5 +156,9 @@ DT:RegisterDatatext(
     UpdateDisplay,
     OnEvent,
     nil,
-    OnEnter
+    OnEnter,
+    nil,
+    nil,
+    nil,
+    ValueColorUpdate
 )

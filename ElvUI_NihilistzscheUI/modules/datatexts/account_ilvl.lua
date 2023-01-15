@@ -160,8 +160,6 @@ end
 _G.SLASH_RMILVLWATCH1 = "/rmilvlwatch"
 _G.SlashCmdList.RMILVLWATCH = RmTrackedCharacter
 
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
 DT:RegisterDatatext(
     "NihilistzscheUI Account Item Level",
     "NihilistzscheUI",
@@ -169,5 +167,9 @@ DT:RegisterDatatext(
     UpdateDisplay,
     OnEvent,
     nil,
-    OnEnter
+    OnEnter,
+    nil,
+    nil,
+    nil,
+    ValueColorUpdate
 )

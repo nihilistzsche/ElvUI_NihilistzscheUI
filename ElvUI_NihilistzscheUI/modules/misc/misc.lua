@@ -3,7 +3,6 @@ local NUI, E = _G.unpack(select(2, ...))
 local AB = E.ActionBars
 local COMP = NUI.Compatibility
 local NM = NUI.Misc
-
 local hooksecurefunc = _G.hooksecurefunc
 local LoadAddOn = _G.LoadAddOn
 local GetNumSpecializations = _G.GetNumSpecializations
@@ -71,6 +70,7 @@ function NM:Initialize()
             "ALL,SOLO,NIHILISTZSCHEUI"
         )
     end
+    if COMP.PAWN and COMP.IMMERSION then self:HookImmersionRewards() end
 end
 
 NUI:RegisterModule(NM:GetName())

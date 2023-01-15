@@ -1,5 +1,5 @@
 local NUI, E = _G.unpack(select(2, ...))
-
+if not E.Retail then return end
 local SSB = NUI.UtilityBars.SpecSwitchBar
 local NUB = NUI.UtilityBars
 

@@ -30,31 +30,33 @@ function CDB:GenerateOptions()
         end,
     }
 
-    E.Options.args.databars.args.azerite.args.textFormat = nil
-    E.Options.args.databars.args.azerite.args.tag = {
-        type = "input",
-        width = "full",
-        name = L["Text Format"],
-        desc = L.TEXT_FORMAT_DESC,
-        order = 4,
-        get = function() return E.db.databars.azerite.tag end,
-        set = function(_, value)
-            E.db.databars.azerite.tag = value
-            self:UpdateTag("azerite")
-        end,
-    }
+    if E.Retail then
+        E.Options.args.databars.args.azerite.args.textFormat = nil
+        E.Options.args.databars.args.azerite.args.tag = {
+            type = "input",
+            width = "full",
+            name = L["Text Format"],
+            desc = L.TEXT_FORMAT_DESC,
+            order = 4,
+            get = function() return E.db.databars.azerite.tag end,
+            set = function(_, value)
+                E.db.databars.azerite.tag = value
+                self:UpdateTag("azerite")
+            end,
+        }
 
-    E.Options.args.databars.args.honor.args.textFormat = nil
-    E.Options.args.databars.args.honor.args.tag = {
-        type = "input",
-        width = "full",
-        name = L["Text Format"],
-        desc = L.TEXT_FORMAT_DESC,
-        order = 6,
-        get = function() return E.db.databars.honor.tag end,
-        set = function(_, value)
-            E.db.databars.honor.tag = value
-            self:UpdateTag("honor")
-        end,
-    }
+        E.Options.args.databars.args.honor.args.textFormat = nil
+        E.Options.args.databars.args.honor.args.tag = {
+            type = "input",
+            width = "full",
+            name = L["Text Format"],
+            desc = L.TEXT_FORMAT_DESC,
+            order = 6,
+            get = function() return E.db.databars.honor.tag end,
+            set = function(_, value)
+                E.db.databars.honor.tag = value
+                self:UpdateTag("honor")
+            end,
+        }
+    end
 end

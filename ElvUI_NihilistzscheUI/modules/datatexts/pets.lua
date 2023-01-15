@@ -316,7 +316,6 @@ local function ValueColorUpdate(hex)
     displayString = join("", hex, "%s|r")
     hexColor = hex
 end
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
 F:SetScript("OnEvent", function(self)
@@ -333,5 +332,9 @@ DT:RegisterDatatext(
     UpdateDisplay,
     OnUpdate,
     OnClick,
-    OnEnter
+    OnEnter,
+    nil,
+    nil,
+    nil,
+    ValueColorUpdate
 )

@@ -33,7 +33,7 @@ local GameTooltip = _G.GameTooltip
 local UnitAffectingCombat = _G.UnitAffectingCombat
 
 function NUB.ActivateBar(bar)
-    if bar:IsVisible() then E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), bar.db.alpha) end
+    if bar:IsVisible() then E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), bar.db.alpha or 1) end
 end
 
 function NUB.DeactivateBar(bar) E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), 0) end
@@ -183,7 +183,12 @@ function NUB.CreateButtons(bar, num)
     end
 end
 
+NUB.PausedConfigs = {}
 local function GenericButtonUpdate(bar, button, ...)
+    if NUB.updatesPaused then
+        tinsert(NUB.PausedConfigs, { GenericButtonUpdate, bar, button, { ... } })
+        return
+    end
     local size = E:Scale(bar.db.buttonsize)
     button:Size(size)
 
@@ -613,7 +618,28 @@ function NUB:RegisterEventHandler(mod, frame)
     frame:SetScript("OnEvent", function(_, event) self.HandleEvent(mod, frame, event) end)
 end
 
+function NUB:PauseUpdates() self.updatesPaused = true end
+
+function NUB:ResumeUpdates()
+    self.updatesPaused = false
+    for _, updateInfo in next, self.PausedConfigs do
+        local func, bar, button, other = unpack(updateInfo)
+        func(bar, button, unpack(other))
+    end
+    wipe(self.PausedConfigs)
+end
+
+function NUB:AddProfileCallbacks()
+    E.data.RegisterCallback(self, "OnProfileCopied", "PauseUpdates")
+    E.data.RegisterCallback(self, "OnProfileChanged", "PauseUpdates")
+end
+
+function NUB:UpdateAll() self:ResumeUpdates() end
+
 function NUB:Initialize()
+    self:AddProfileCallbacks()
+    local ForUpdateAll = function(_self) _self:UpdateAll() end
+    self.ForUpdateAll = ForUpdateAll
     self:RegisterEvent("PLAYER_REGEN_DISABLED")
     self:RegisterEvent("PLAYER_REGEN_ENABLED")
 end

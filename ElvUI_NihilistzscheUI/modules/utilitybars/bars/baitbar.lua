@@ -1,5 +1,5 @@
 local NUI, E = _G.unpack(select(2, ...)) --Inport: Engine, Locales, ProfileDB, GlobalDB
-
+if not E.Retail then return end
 local BB = NUI.UtilityBars.BaitBar
 local NUB = NUI.UtilityBars
 local FL = NUI.Libs.FL

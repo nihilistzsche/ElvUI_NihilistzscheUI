@@ -1,4 +1,5 @@
 local NUI, E = _G.unpack(select(2, ...))
+if not E.Retail then return end
 local ADB = NUI.AnimatedDataBars
 
 local UnitHonor = _G.UnitHonor

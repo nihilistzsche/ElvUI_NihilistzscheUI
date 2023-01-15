@@ -11,6 +11,7 @@ local LSM = E.Libs.LSM
 local NP = E.NamePlates
 local UF = E.UnitFrames
 local DT = E.DataTexts
+local B = E.Bags
 --local DB = E.DataBars
 local Border, LastSize
 
@@ -22,6 +23,8 @@ local tinsert = _G.tinsert
 local NUM_STANCE_SLOTS = _G.NUM_STANCE_SLOTS
 local hooksecurefunc = _G.hooksecurefunc
 local C_Timer_After = _G.C_Timer.After
+local IsInInstance = _G.IsInInstance
+local IsInRaid = _G.IsInRaid
 
 if not IsAddOnLoaded("Blizzard_TalentUI") then LoadAddOn("Blizzard_TalentUI") end
 
@@ -250,9 +253,9 @@ function ES:SkinAlerts()
     end
 end
 
-function ES:UpdateShadows()
+function ES:UpdateShadows(hide)
     for frame, _ in pairs(ES.shadows) do
-        self:UpdateShadow(frame)
+        self:UpdateShadow(frame, hide)
     end
 end
 
@@ -281,7 +284,7 @@ function ES:RegisterShadow(shadow)
     self:UpdateShadow(shadow)
 end
 
-function ES:UpdateShadow(shadow)
+function ES:UpdateShadow(shadow, hide)
     local ShadowColor = E.db.nihilistzscheui
         and E.db.nihilistzscheui.enhancedshadows
         and E.db.nihilistzscheui.enhancedshadows.shadowcolor
@@ -307,11 +310,7 @@ function ES:UpdateShadow(shadow)
     end
     shadow:SetBackdropColor(r, g, b, 0)
     shadow:SetBackdropBorderColor(r, g, b, 0.9)
-    if E.db.nihilistzscheui.enhancedshadows.enabled then
-        shadow:Show()
-    else
-        shadow:Hide()
-    end
+    shadow:SetShown(E.db.nihilistzscheui.enhancedshadows.enabled and not hide)
 end
 
 function ES:UpdateMERShadows()
@@ -357,6 +356,14 @@ function ES:EPBHook()
             frame.enhanced = true
         end
     end)
+end
+
+function ES:PLAYER_REGEN_DISABLED()
+    if IsInInstance() and IsInRaid() then self:UpdateShadows(true) end
+end
+
+function ES:PLAYER_REGEN_ENABLED()
+    if IsInInstance() and IsInRaid() then self:UpdateShadows() end
 end
 
 function ES:Initialize()
@@ -419,7 +426,6 @@ function ES:Initialize()
     end
 
     UF:Update_AllFrames()
-
     if COMP.IF then
         LoadAddOn("InFlight")
         _G.InFlight:CreateBar()
@@ -469,13 +475,14 @@ function ES:Initialize()
     end
     hooksecurefunc(E, "ToggleOptions", function(_)
         local win = _:Config_GetWindow()
-        if win and not win.shadow then
-            win:CreateShadow()
-        elseif win then
-            ES:RegisterFrameShadows(win)
-        end
+        if win and not win.shadow then win:CreateShadow() end
+        if win then ES:RegisterFrameShadows(win) end
     end)
 
+    ES:RegisterEvent("PLAYER_REGEN_DISABLED")
+    ES:RegisterEvent("PLAYER_REGEN_ENABLED")
+    hooksecurefunc(B, "OpenBank", function(_) ES:UpdateShadows(true) end)
+    hooksecurefunc(B, "CloseBank", function(_) ES:UpdateShadows() end)
     ES:SkinAlerts()
     ES:UpdateShadows()
 end

@@ -1482,6 +1482,7 @@ NP.warlockdemons = {
         ["Ur'zul"] = { enable = true },
         ["Fel Lord"] = { enable = true },
         Observer = { enable = true },
+        ["Pit Lord"] = { enable = true },
     },
 }
 NP.databarnotifier = {

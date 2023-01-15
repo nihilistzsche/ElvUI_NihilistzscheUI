@@ -88,7 +88,7 @@ RPB.DataKeys = {
     },
     {
         key = "NihilistzscheUI.RaidPrep.ShadowlandsFood",
-        red = { 50, 60, true },
+        red = { 50, 60, true, true },
     },
     {
         key = "NihilistzscheUI.RaidPrep.ShadowlandsOils",
@@ -101,6 +101,14 @@ RPB.DataKeys = {
     {
         key = "NihilistzscheUI.RaidPrep.ShadowlandsFlasks",
         req = { 50, 60, false, true },
+    },
+    {
+        key = "NihilistzscheUI.RaidPrep.DragonflightFood",
+        req = { 60, 70, true, true },
+    },
+    {
+        key = "NihilistzscheUI.RaidPrep.DragonflightFlasks",
+        req = { 60, 70, false, true },
     },
     {
         key = "NihilistzscheUI.RaidPrep.PermanentFlasks",
@@ -178,6 +186,8 @@ function RPB.AddNihilistzscheUIData()
         ["NihilistzscheUI.RaidPrep.ShadowlandsOils"] = "171285,171286",
         ["NihilistzscheUI.RaidPrep.ShadowlandsFood"] = "172040,172041,172043,172044,172045,172048,172049,172050,172051,172060,172061,172062,172063,172068,172069",
         ["NihilistzscheUI.RaidPrep.PermanentFlasks"] = "118922,147707",
+        ["NihilistzscheUI.RaidPrep.DragonflightFood"] = "197772,197774,197775,197776,197777,197778,197779,197780,197781,197782,197783,197784,197785,197786,197787,197788,197789,197790,197791,197792,197793,197794,197795",
+        ["NihilistzscheUI.RaidPrep.DragonflightFlasks"] = "191318,191319,191320,191321,191322,191323,191324,191325,191326,191327,191328,191329,191330,191331,191332,191333,191334,191335,191336,191337,191338,191339,191340,191341,191342,191343,191344,191345,191346,191347,191348,191349,191350,191354,191355,191356,191357,191358,191359,195580,197720,197721,197722",
         ["NihilistzscheUI.RaidPrep.FishingFood"] = "34832",
     })
 end

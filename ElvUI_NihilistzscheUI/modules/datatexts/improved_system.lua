@@ -312,7 +312,17 @@ end
 local function ValueColorUpdate(hex)
     freedString = join("", hex, "ElvUI|r", " ", L["Garbage Collection Freed"], " ", "|cff00ff00%s|r")
 end
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
 NUI:RegisterModule(ISD:GetName())
-DT:RegisterDatatext("Improved System", "NihilistzscheUI", nil, nil, Update, Click, OnEnter, OnLeave)
+DT:RegisterDatatext(
+    "Improved System",
+    "NihilistzscheUI",
+    nil,
+    nil,
+    Update,
+    Click,
+    OnEnter,
+    OnLeave,
+    nil,
+    nil,
+    ValueColorUpdate
+)

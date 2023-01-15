@@ -94,18 +94,20 @@ function CDB:Initialize()
 
     self.RegisterExperienceTags()
     self.RegisterRepTags()
-    self.RegisterAzeriteTags()
-    self.RegisterHonorTags()
 
     self:RegisterDataBar("experience", DB.StatusBars.Experience)
     self:RegisterDataBar("reputation", DB.StatusBars.Reputation)
-    self:RegisterDataBar("azerite", DB.StatusBars.Azerite)
-    self:RegisterDataBar("honor", DB.StatusBars.Honor)
 
     self:UpdateTag("experience")
     self:UpdateTag("reputation")
-    self:UpdateTag("azerite")
-    self:UpdateTag("honor")
+    if E.Retail then
+        self.RegisterAzeriteTags()
+        self.RegisterHonorTags()
+        self:RegisterDataBar("azerite", DB.StatusBars.Azerite)
+        self:RegisterDataBar("honor", DB.StatusBars.Honor)
+        self:UpdateTag("azerite")
+        self:UpdateTag("honor")
+    end
 end
 
 NUI:RegisterModule(CDB:GetName())

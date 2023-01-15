@@ -24,7 +24,7 @@ local IsShiftKeyDown = _G.IsShiftKeyDown
 local DEFAULT_CHAT_FRAME = _G.DEFAULT_CHAT_FRAME
 local MountJournal_Pickup = _G.MountJournal_Pickup
 local UIDropDownMenu_AddButton = _G.UIDropDownMenu_AddButton
-local CopyTable = _G.CopyTable
+local IsInInstance = _G.IsInInstance
 local IsFlyableArea = _G.IsFlyableArea
 local ToggleDropDownMenu = _G.ToggleDropDownMenu
 local ToggleCollectionsJournal = _G.ToggleCollectionsJournal
@@ -36,6 +36,7 @@ local menu = {}
 local displayString = ""
 local hexColor = "|cff00ff96"
 local DRAGON_ISLES_CONTINENT_ID = 1978
+local NOKHUD_OFFENSIVE_MAP_ID = 2093
 
 local dragonriding_mounts = {
     [1563] = true, -- Classic Drake
@@ -118,25 +119,48 @@ end
 
 local specialMounts = { 522 } -- Sky Golem
 
+local apprenticeRidingSpellID = 33388
+local journeymanRidingSpelID = 33391
 local expertRidingSpellID = 34090
 local artisanRidingSpellID = 34091
 local masterRidingSpellID = 90265
 local dragonridingSpellID = 376777
+local chaufferredMounts = {
+    ["Horde"] = 678,
+    ["Alliance"] = 379,
+}
+local function AnyRidingSkillKnown(flyingOnly)
+    local toCheck = { expertRidingSpellID, artisanRidingSpellID, masterRidingSpellID }
+    if not flyingOnly then
+        tinsert(toCheck, 1, apprenticeRidingSpellID)
+        tinsert(toCheck, 2, journeymanRidingSpelID)
+    end
+    for _, spellID in next, toCheck do
+        if IsSpellKnown(spellID) then return true end
+    end
+    return false
+end
 
 _G.SummonFavoriteMount = function()
+    local level = UnitLevel("player")
+    if level < 10 or not AnyRidingSkillKnown() and E.myfaction ~= "Neutral" then
+        local mountID = chaufferredMounts[E.myfaction]
+        if select(11, C_MountJournal_GetMountInfoByID(mountID)) then
+            C_MountJournal_SummonByID(chaufferredMounts[E.myfaction])
+        end
+        return
+    end
     if
         E.MapInfo.continentMapID == DRAGON_ISLES_CONTINENT_ID
         and IsSpellKnown(dragonridingSpellID)
         and db.favDragonridingMount
+        and (not IsInInstance() or E.MapInfo.mapID == NOKHUD_OFFENSIVE_MAP_ID)
     then
         C_MountJournal_SummonByID(db.favDragonridingMount)
         return
     end
     local specID = GetSpecializationInfo(GetSpecialization())
-    local isSpellKnown = IsSpellKnown(expertRidingSpellID)
-        or IsSpellKnown(artisanRidingSpellID)
-        or IsSpellKnown(masterRidingSpellID)
-    if (isSpellKnown and IsFlyableArea()) and db.specFavs[specID] and db.specFavs[specID].favFlyer then
+    if (AnyRidingSkillKnown(true) and IsFlyableArea()) and db.specFavs[specID] and db.specFavs[specID].favFlyer then
         C_MountJournal_SummonByID(db.specFavs[specID].favFlyer)
     elseif db.specFavs[specID] and db.specFavs[specID].favGround then
         C_MountJournal_SummonByID(db.specFavs[specID].favGround)
@@ -383,11 +407,10 @@ local function MigrateMounts()
     end
 end
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(_, hex)
     displayString = join("", hex, "%s|r")
     hexColor = hex
 end
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
 _G.SLASH_MCF1 = "/mcf"
 _G.SlashCmdList.MCF = ClearFavorites
@@ -408,5 +431,9 @@ DT:RegisterDatatext(
     UpdateDisplay,
     OnUpdate,
     OnClick,
-    OnEnter
+    OnEnter,
+    nil,
+    nil,
+    nil,
+    ValueColorUpdate
 )

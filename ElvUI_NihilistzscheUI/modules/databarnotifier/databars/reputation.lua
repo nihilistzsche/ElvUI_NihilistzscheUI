@@ -129,7 +129,8 @@ function REP:Notify()
                     standingID ~= self.values[name].Standing
                     or hasParagonReward ~= self.values[name].HasParagonReward
                 then
-                    local newfaction = friendID and friendRep or _G["FACTION_STANDING_LABEL" .. standingID]
+                    local newfaction = friendID and friendID ~= 0 and friendRep
+                        or _G["FACTION_STANDING_LABEL" .. standingID]
 
                     local newstandingtext
 

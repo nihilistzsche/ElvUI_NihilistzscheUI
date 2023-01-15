@@ -1,5 +1,7 @@
 local NUI, E = _G.unpack(select(2, ...))
 local VUF = NUI.VerticalUnitFrames
+local UF = E.UnitFrames
+local hooksecurefunc = _G.hooksecurefunc
 
 local CreateFrame = _G.CreateFrame
 
@@ -10,6 +12,10 @@ function VUF:ConstructPortrait(frame)
 
     portrait.PostUpdate = self.PortraitUpdate
 
+    -- https://github.com/Stanzilla/WoWUIBugs/issues/295
+    -- since this seems to be forced on models because of a bug
+    portrait:SetIgnoreParentAlpha(true) -- lets handle it ourselves
+    hooksecurefunc(frame, "SetAlpha", UF.ModelAlphaFix)
     return portrait
 end
 
@@ -19,13 +25,9 @@ function VUF:PortraitUpdate(unit, event, shouldUpdate)
 
     if not db then return end
 
-    local portrait = db.portrait
-    if portrait.enabled then
-        self:SetAlpha(0)
-        self:SetAlpha(0.35)
-    end
-
     if shouldUpdate or (event == "ElvUI_UpdateAllElements" and self:IsObjectType("Model")) then
+        local portrait = db.portrait
+
         local rotation = portrait.rotation or 0
         local camDistanceScale = portrait.camDistanceScale or 1
         local xOffset, yOffset = (portrait.xOffset or 0), (portrait.yOffset or 0)

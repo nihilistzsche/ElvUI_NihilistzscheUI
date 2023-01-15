@@ -1,5 +1,5 @@
 local NUI, E = _G.unpack(select(2, ...))
-
+if not E.Retail then return end
 local PBN = NUI.PetBattleNameplates
 local NP = E.NamePlates
 local UF = E.UnitFrames
@@ -164,13 +164,15 @@ function PBN:NamePlate_UpdateHealth(pet, np)
     local maxHealth = C_PetBattles_GetMaxHealth(pet.petOwner, pet.petIndex)
     if np.__nui_pbn_cutawayEnabled then
         local h = np.Cutaway.Health
-        if not h.FadeObject or not h.FadeObject.__nui_pbn_fadeobject then
-            h.FadeObject = {
+        if not h.__nui_pbn_fadeobject then
+            h.__nui_pbn_fadeobject = {
                 finishedFuncKeep = true,
                 finishedArg1 = h,
                 finishedFunc = closureFunc,
                 __nui_pbn_fadeobject = true,
             }
+            h.__orig_fadeobject = h.FadeObject
+            h.FadeObject = h.__nui_pbn_fadeoject
         end
         if health <= (self.LastSeenHealthValueForNP[np] or 1) then startFunc(h) end
     end
@@ -220,64 +222,6 @@ function PBN.PostUpdateAura(_, button)
     if button.__nui_pbn_shown then button:Show() end
 end
 
-function PBN.NamePlate_UpdateAuras(pet, np)
-    local hasSomething = false
-    for i = 1, 12 do
-        local auraID = C_PetBattles_GetAuraInfo(pet.petOwner, pet.petIndex, i)
-        if auraID then
-            hasSomething = true
-            break
-        end
-    end
-    for i = 1, 5 do
-        if np.Buffs_[i] then
-            np.Buffs_[i].__nui_pbn_shown = nil
-            np.Buffs_[i]:Hide()
-        end
-        if np.Debuffs_[i] then
-            np.Debuffs_[i].__nui_pbn_shown = nil
-            np.Debuffs_[i]:Hide()
-        end
-    end
-    if not hasSomething then return end
-    np.Buffs_.forceCreate = true
-    np.Debuffs_.forceCreate = true
-    np.Buffs_:ForceUpdate()
-    np.Debuffs_:ForceUpdate()
-    local BuffIndex, DebuffIndex = 1, 1
-    local MaxAuraCount = 5
-    for i = 1, 12 do
-        local auraID, _, turnsRemaining, isBuff = C_PetBattles_GetAuraInfo(pet.petOwner, pet.petIndex, i)
-        if not auraID then return end
-        local _, _, icon = C_PetBattles_GetAbilityInfoByID(auraID)
-        local f, ix
-        if isBuff and BuffIndex <= MaxAuraCount then
-            f = np.Buffs_
-            ix = BuffIndex
-            BuffIndex = BuffIndex + 1
-        elseif DebuffIndex <= MaxAuraCount then
-            f = np.Debuffs_
-            ix = DebuffIndex
-            DebuffIndex = DebuffIndex + 1
-        end
-        if not f then return end
-        f[ix].Icon:SetTexture(icon)
-        f[ix].Count:SetText(turnsRemaining > 0 and turnsRemaining or "")
-        f[ix].Cooldown:Hide()
-        f[ix].__nui_pbn_shown = true
-        f[ix]:EnableMouse(true)
-        f[ix]:Show()
-        if not f[ix].__nui_pbn_hide_Hooked then
-            local origHide = f[ix].Hide
-            f[ix].Hide = function(s)
-                if s.__nui_pbn_shown then return end
-                origHide(s)
-            end
-            f[ix].__nui_pbn_hide_Hooked = true
-        end
-    end
-end
-
 function PBN:NameplateHealthOverride(_, unit)
     if not unit or self.unit ~= unit then return end
     local info = self.pbouf_petinfo
@@ -323,6 +267,36 @@ function PBN:GetHealthMax()
     return C_PetBattles_GetMaxHealth(info.petOwner, info.petIndex)
 end
 
+function PBN:ConstructBuffs(frame, petOwner, petIndex)
+    local buffs = CreateFrame("Frame", nil, frame)
+    buffs.size = 26
+    buffs.num = 5
+    buffs.numRow = 9
+    buffs.spacing = 2
+    buffs.PostCreateIcon = self.PostCreateAura
+    return buffs
+end
+
+function PBN:ConstructDebuffs(frame, petOwner, petIndex)
+    local debuffs = CreateFrame("Frame", nil, frame)
+    debuffs.size = 26
+    debuffs.num = 5
+    debuffs.spacing = 2
+    debuffs.isDebuff = true
+    debuffs.PostCreateIcon = self.PostCreateAura
+    return debuffs
+end
+
+function PBN:PostCreateAura(button)
+    button:SetTemplate()
+
+    local Font, FontSize, FontFlag = PA.LSM:Fetch("font", EPB.db["Font"]), EPB.db["FontSize"], EPB.db["FontFlag"]
+    button.turnsRemaining:SetFont(Font, FontSize, FontFlag)
+    button.icon:SetTexCoord(unpack(E.TexCoords))
+    button.icon:SetInside()
+    button:SetBackdropBorderColor(unpack(self.isDebuff and { 1, 0, 0 } or { 0, 1, 0 }))
+end
+
 function PBN:InitNameplate(np)
     if np.__nui_pbn_init then return end
 
@@ -334,8 +308,29 @@ function PBN:InitNameplate(np)
     if np:IsElementEnabled("Cutaway") then np:DisableElement("Cutaway") end
     if not np.Cutaway.Health.GetHealthMax then np.Cutaway.Health.GetHealthMax = PBN.GetHealthMax end
     if not np.Health.Override then np.Health.Override = self.NameplateHealthOverride end
-
+    if not np.PBBuffs then
+        np.PBBuffs = self:ConstructBuffs(np, np.pbouf_petinfo.petOwner, np.pbouf_petinfo.petIndex)
+    end
+    if not np.PBDebuffs then
+        np.PBDebuffs = self:ConstructDebuffs(np, np.pbouf_petinfo.petOwner, np.pbouf_petinfo.petIndex)
+    end
     np.__nui_pbn_init = true
+end
+
+function PBN:Configure_Auras(frame, element, db)
+    local petInfo = frame.pbouf_petinfo
+    if not petInfo then return end
+    if not element.isDebuff then
+        element.initialAnchor = petInfo.petOwner == Enum_BattlePetOwner_Ally and "TOPLEFT" or "TOPRIGHT"
+        element["growth-y"] = "DOWN"
+        element["growth-x"] = petInfo.petOwner == Enum_BattlePetOwner_Ally and "RIGHT" or "LEFT"
+    else
+        element.initialAnchor = petInfo.petOwner == Enum_BattlePetOwner_Ally and "TOPRIGHT" or "TOPLEFT"
+        element["growth-y"] = "DOWN"
+        element["growth-x"] = petInfo.petOwner == Enum_BattlePetOwner_Ally and "LEFT" or "RIGHT"
+    end
+    NP:Configure_Auras(frame, element, db)
+    element.num = 5
 end
 
 function PBN:UpdateNamePlate(pet)
@@ -354,7 +349,8 @@ function PBN:UpdateNamePlate(pet)
     -- Breed Info uses the nameplates title field
     self:NamePlate_UpdateBreedInfo(pet, np, powerShown)
 
-    self.NamePlate_UpdateAuras(pet, np)
+    PBN:Configure_Auras(np, np.PBBuffs, NP:PlateDB(np).buffs)
+    PBN:Configure_Auras(np, np.PBDebuffs, NP:PlateDB(np).debuffs)
 
     NP:StyleFilterUpdate(np, "FAKE_PBNForceUpdate")
 
@@ -362,19 +358,7 @@ function PBN:UpdateNamePlate(pet)
 end
 
 function PBN:ResetNameplates()
-    local function reset(element)
-        for i = 1, 5 do
-            if element[i] then
-                element[i].__nui_pbn_shown = nil
-                element[i]:EnableMouse(false)
-            end
-        end
-    end
     for np in pairs(self.handledNameplates) do
-        np.Buffs_.forceCreate = false
-        np.Debuffs_.forceCreate = false
-        reset(np.Buffs_)
-        reset(np.Debuffs_)
         if np.__nui_pbn_questIconEnabled then np:EnableElement("QuestIcons") end
         np.__nui_pbn_questIconEnabled = nil
         if np.__nui_pbn_faderEnabled then np:EnableElement("Fader") end
@@ -383,7 +367,7 @@ function PBN:ResetNameplates()
         np.__nui_pbn_cutawayEnabled = nil
         np.Health.Override = nil
         local h = np.Cutaway.Health
-        if h.FadeObject and h.FadeObject.__nui_pbn_fadeobject then h.FadeObject = nil end
+        if h.FadeObject and h.FadeObject.__nui_pbn_fadeobject then h.FadeObject = h.__orig_fadeobject end
         h.GetHealthMax = nil
         if np.Power.Text.__nui_Show then np.Power.Text.Show = np.Power.Text.__nui_Show end
         np.pbouf_petinfo = nil
@@ -537,7 +521,7 @@ function PBN:Initialize()
     end
 
     self.db = E.db.nihilistzscheui.petbattlenameplates
-    hooksecurefunc(NP, "UpdatePlateGUID", PBN.UpdatePlateGUID)
+    hooksecurefunc(NP, "UpdatePlateGUID", self.UpdatePlateGUID)
     self:InitializeNPHooks()
 end
 

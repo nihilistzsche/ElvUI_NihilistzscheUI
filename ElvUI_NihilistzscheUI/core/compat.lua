@@ -43,6 +43,9 @@ COMP.TT = COMP.IsAddOnEnabled("ElvUI_TinkerToolbox")
 COMP.DSI = COMP.IsAddOnEnabled("ElvUI_DynamicStatusIcons")
 COMP.PR = COMP.IsAddOnEnabled("ParagonReputation")
 COMP.OPIE = COMP.IsAddOnEnabled("OPie")
+COMP.PAWN = COMP.IsAddOnEnabled("Pawn")
+COMP.IMMERSION = COMP.IsAddOnEnabled("Immersion")
+COMP.SCRAP = COMP.IsAddOnEnabled("Scrap")
 
 function COMP.Print(addon, feature)
     if
@@ -108,6 +111,9 @@ end
 
 hooksecurefunc(E, "CheckIncompatible", function() COMP:RunCompatibilityFunctions() end)
 
-function COMP.Initialize() end
+function COMP.Initialize()
+    -- Workfround for blizzard bug: See https://github.com/Stanzilla/WoWUIBugs/issues/343
+    _G.ITEM_INVENTORY_BANK_BAG_OFFSET = 5
+end
 
 NUI:RegisterModule(COMP:GetName())

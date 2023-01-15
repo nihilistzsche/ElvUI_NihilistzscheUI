@@ -110,7 +110,6 @@ local function ValueColorUpdate()
     name = name .. ")"
     displayString = name
 end
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
 DT:RegisterDatatext(
     "NihilistzscheUI Version",
@@ -119,5 +118,9 @@ DT:RegisterDatatext(
     OnEvent,
     nil,
     Click,
-    OnEnter
+    OnEnter,
+    nil,
+    nil,
+    nil,
+    ValueColorUpdate
 )

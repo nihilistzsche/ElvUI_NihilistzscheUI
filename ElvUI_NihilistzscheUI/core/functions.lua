@@ -35,9 +35,7 @@ local C_QuestLog_IsComplete = _G.C_QuestLog.IsComplete
 local GetNumQuestLeaderBoards = _G.GetNumQuestLeaderBoards
 
 function NUI:SetupProfileCallbacks()
-    E.data.RegisterCallback(self, "OnProfileChanged", "UpdateAll")
-    E.data.RegisterCallback(self, "OnProfileCopied", "UpdateAll")
-    E.data.RegisterCallback(self, "OnProfileReset", "UpdateAll")
+    hooksecurefunc(E, "UpdateEnd", function() self:UpdateAll() end)
 end
 
 function NUI:AddMoverCategories()
@@ -70,7 +68,17 @@ NUI.SpecialChatIcons = {
         Tokashami = true,
         Millop = true,
         Aeondalew = true,
-        Fenistrasza = true,
+        Nenistrasza = true,
+        Apgix = true,
+        Irgrii = true,
+        Mayain = true,
+        Nilala = true,
+        Senanah = true,
+        Aibheas = true,
+        Felyndae = true,
+        Marittie = true,
+        Shanisami = true,
+        Tasibyl = true,
     },
 }
 
@@ -97,6 +105,20 @@ function NUI.InvertTable(t)
         u[v] = k
     end
     return u
+end
+
+function NUI.SplitTable(tbl, bucket_size)
+    local buckets = {}
+    local current_bucket = {}
+    for _, v in ipairs(tbl) do
+        table.insert(current_bucket, v)
+        if #current_bucket == bucket_size then
+            table.insert(buckets, current_bucket)
+            current_bucket = {}
+        end
+    end
+    if #current_bucket > 0 then table.insert(buckets, current_bucket) end
+    return buckets
 end
 
 local nihilistzscheui_chat_icon =
@@ -239,7 +261,7 @@ function NUI:RegisterDB(tbl, path)
     NUI.RegisteredDBs[tbl] = path
 end
 
-function NUI:GetCurrentQuestXP() return NUI.currentQuestXP end
+function NUI:GetCurrentQuestXP() return self.currentQuestXP end
 
 function NUI.CustomQuestXPWatcher(questXP) NUI.currentQuestXP = questXP end
 

@@ -69,13 +69,13 @@ function WD:ShouldAttachToNamePlate()
         and not self.nameplatesForbidden
 end
 
-function WD.AttachBarToNamePlate(bar, guid)
+function WD:AttachBarToNamePlate(bar, guid)
     local np = NP.PlateGUID[guid]
-    assert(np)
-    if not np:IsVisible() or InPetBattle() then
+    if not np or not np:IsVisible() then
         bar:Hide()
         return
     end
+    self.activeNamePlateGUIDs[guid] = bar -- Otherwise well attach when we find one.
     bar:SetParent(nil)
     bar:ClearAllPoints()
     bar:SetParent(np)
@@ -84,29 +84,13 @@ function WD.AttachBarToNamePlate(bar, guid)
     bar:SetPoint("TOPLEFT", np.Castbar, "BOTTOMLEFT", 0, yOffset)
     bar:SetPoint("TOPRIGHT", np.Castbar, "BOTTOMRIGHT", 0, yOffset)
     bar:Show()
-    WD.attachedNPs[np] = true
-end
-
-function WD.UpdatePlateGUID()
-    for guid, bar in pairs(WD.activeNamePlateGUIDs) do
-        if NP.PlateGUID[guid] then
-            WD.AttachBarToNamePlate(bar, guid)
-        else
-            bar:Hide()
-            WD.activeNamePlateGUIDs[guid] = nil
-        end
-    end
+    self.attachedNPs[np] = true
 end
 
 function WD:CreateBar(icon, duration, guid)
     local bar = CandyBar:New(LSM:Fetch("statusbar", self.db.texture), self.db.width, self.db.height)
-    if self:ShouldAttachToNamePlate() then
-        self.activeNamePlateGUIDs[guid] = bar
-        if NP.PlateGUID[guid] then self.AttachBarToNamePlate(bar, guid) end -- Otherwise well attach when we find one.
-    else
-        bar:SetParent(self.header.Container)
-        bar:SetFrameLevel(self.header.Container:GetFrameLevel() + 1)
-    end
+    bar:SetParent(self.header.Container)
+    bar:SetFrameLevel(self.header.Container:GetFrameLevel() + 1)
     bar:SetIcon(icon)
     bar.candyBarBackdrop:SetTemplate("Transparent")
     if COMP.MERS then bar:Styling() end
@@ -234,6 +218,7 @@ function WD:UpdateBars(isDemonicTyrant)
     else
         for _, b in ipairs(bars) do
             if not b.running then b:Start() end
+            self:AttachBarToNamePlate(b, b.petGUID)
         end
         self.header:Size(self.db.width, self.db.height)
         self.header.Container:SetHeight(0)
@@ -284,6 +269,10 @@ function WD:NAME_PLATE_UNIT_ADDED(_, unitID)
         self:UpdateNameplateForbiddenFlag(false)
         self:UpdateBars()
     end
+end
+
+function WD:NAME_PLATE_UNIT_REMOVED(_, unitID)
+    if UnitIsFriend("player", unitID) and not self.nameplatesForbidden then self:UpdateBars() end
 end
 
 function WD:FORBIDDEN_NAME_PLATE_UNIT_ADDED()
@@ -482,14 +471,13 @@ function WD:Initialize()
 
     GetPetName = _G.zPets.GetPetName
 
-    if NP.UpdatePlateGUID then hooksecurefunc(NP, "UpdatePlateGUID", self.UpdatePlateGUID) end
-
     self:InitializeNPHooks()
 
     self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
     self:RegisterEvent("FORBIDDEN_NAME_PLATE_UNIT_ADDED")
     self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+    self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
     self:CheckEnabled()
 end
 

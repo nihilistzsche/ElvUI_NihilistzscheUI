@@ -12,6 +12,7 @@ local LibStub = _G.LibStub
 local GetAddOnMetadata = _G.GetAddOnMetadata
 local ElvUI_CPU = _G.ElvUI_CPU
 local hooksecurefunc = _G.hooksecurefunc
+local geterrorhandler = _G.geterrorhandler
 
 NUI.Libs = {
     NT = LibStub("LibNihilistzscheUITags-1.0"),
@@ -37,7 +38,6 @@ NUI.ShortTitle = "|cffff2020NihiUI|r"
 
 NUI.AnimatedDataBars = NUI:NewModule("AnimatedDataBars")
 NUI.AutoLog = NUI:NewModule("AutoLog", "AceEvent-3.0")
-NUI.BagEquipmentSetIcon = NUI:NewModule("BagEquipmentSetIcon")
 NUI.ButtonStyle = NUI:NewModule("ButtonStyle")
 NUI.Compatibility = NUI:NewModule("Compatibility")
 NUI.CooldownBar = NUI:NewModule("CooldownBar", "AceTimer-3.0", "AceEvent-3.0")
@@ -45,7 +45,6 @@ NUI.CustomDataBar = NUI:NewModule("CustomDataBar", "AceTimer-3.0", "AceEvent-3.0
 NUI.DataBarNotifier = NUI:NewModule("DataBarNotifier", "AceTimer-3.0", "AceEvent-3.0")
 NUI.EnhancedNameplateAuras = NUI:NewModule("EnhancedNameplateAuras", "AceEvent-3.0")
 NUI.EnhancedShadows = NUI:NewModule("EnhancedShadows", "AceEvent-3.0")
-NUI.HiddenArtifactTracker = NUI:NewModule("HiddenArtifactTracker", "AceEvent-3.0")
 NUI.InvertedShadows = NUI:NewModule("InvertedShadows")
 NUI.KalielsTrackerMover = NUI:NewModule("KalielsTrackerMover")
 NUI.Migration = NUI:NewModule("Migration")
@@ -53,39 +52,48 @@ NUI.Misc = NUI:NewModule("Misc")
 NUI.Misc.BetterReputationColors = NUI:NewModule("BetterReputationColors")
 NUI.Misc.CardinalPoints = NUI:NewModule("CardinalPoints")
 NUI.Misc.FlightMode = NUI:NewModule("FlightMode")
+NUI.Misc.QuestNpcIcons = NUI:NewModule("QuestNPCIcons", "AceEvent-3.0")
 NUI.Misc.Threat = NUI:NewModule("Threat")
 NUI.NihilistzscheChat = NUI:NewModule("NihilistzscheChat", "AceEvent-3.0")
 NUI.NihilistzscheUIAddOnSkinExtension = NUI:NewModule("NihilistzscheUIAddOnSkinExtension")
 NUI.NihilistzscheUIMedia = NUI:NewModule("NihilistzscheUIMedia")
 NUI.PartyXP = NUI:NewModule("PartyXP", "AceTimer-3.0", "AceEvent-3.0")
-NUI.PetBattleAutoStart = NUI:NewModule("PetBattleAutoStart", "AceEvent-3.0")
-NUI.PetBattleNameplates = NUI:NewModule("PetBattleNameplates", "AceEvent-3.0")
-NUI.PetBattleVerticalUnitFrames = NUI:NewModule("PetBattleVerticalUnitFrames", "AceHook-3.0", "AceEvent-3.0")
-NUI.RaidCDs = NUI:NewModule("RaidCDs", "AceEvent-3.0")
-NUI.SetTransfer = NUI:NewModule("SetTransfer", "AceHook-3.0", "AceEvent-3.0")
 NUI.DataTexts = {}
 NUI.DataTexts.ImprovedSystemDataText = NUI:NewModule("ImprovedSystemDataText")
 NUI.DataTexts.ProfessionsDataText = NUI:NewModule("ProfessionsDataText")
 NUI.DataTexts.TitlesDT = NUI:NewModule("TitlesDT")
+NUI.SpecProfileLoaded = NUI:NewModule("SpecProfileLoaded", "AceEvent-3.0")
 NUI.UtilityBars = NUI:NewModule("UtilityBars", "AceEvent-3.0")
-NUI.UtilityBars.BaitBar = NUI:NewModule("BaitBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
-NUI.UtilityBars.EngineerToyBar = NUI:NewModule("EngineerToyBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
-NUI.UtilityBars.EquipmentManagerBar =
-    NUI:NewModule("EquipmentManagerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.FarmBar = NUI:NewModule("FarmBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
-NUI.UtilityBars.ToolsOfTheTradeBar = NUI:NewModule("ToolsOfTheTradeBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
-NUI.UtilityBars.ToyBar = NUI:NewModule("ToyBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.TrackerBar = NUI:NewModule("TrackerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.PortalBar = NUI:NewModule("PortalBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.ProfessionBar = NUI:NewModule("ProfessionBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.RaidPrepBar = NUI:NewModule("RaidPrepBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
-NUI.UtilityBars.SpecSwitchBar = NUI:NewModule("SpecSwitchBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.VerticalUnitFrames = NUI:NewModule("VerticalUnitFrames", "AceTimer-3.0", "AceEvent-3.0")
-NUI.WarlockDemons = NUI:NewModule("WarlockDemons", "AceEvent-3.0")
 
+if E.Retail or E.Wrath then
+    NUI.SetTransfer = NUI:NewModule("SetTransfer", "AceHook-3.0", "AceEvent-3.0")
+    NUI.UtilityBars.EquipmentManagerBar =
+        NUI:NewModule("EquipmentManagerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+end
+
+if E.Retail then
+    NUI.HiddenArtifactTracker = NUI:NewModule("HiddenArtifactTracker", "AceEvent-3.0")
+    NUI.PetBattleAutoStart = NUI:NewModule("PetBattleAutoStart", "AceEvent-3.0")
+    NUI.PetBattleNameplates = NUI:NewModule("PetBattleNameplates", "AceEvent-3.0")
+    NUI.PetBattleVerticalUnitFrames = NUI:NewModule("PetBattleVerticalUnitFrames", "AceHook-3.0", "AceEvent-3.0")
+    NUI.RaidCDs = NUI:NewModule("RaidCDs", "AceEvent-3.0")
+    NUI.UtilityBars.BaitBar = NUI:NewModule("BaitBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+    NUI.UtilityBars.EngineerToyBar = NUI:NewModule("EngineerToyBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+    NUI.UtilityBars.ToolsOfTheTradeBar =
+        NUI:NewModule("ToolsOfTheTradeBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+    NUI.UtilityBars.ToyBar = NUI:NewModule("ToyBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+    NUI.UtilityBars.SpecSwitchBar = NUI:NewModule("SpecSwitchBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+    NUI.WarlockDemons = NUI:NewModule("WarlockDemons", "AceEvent-3.0")
+end
 local pairs, IsAddOnLoaded = pairs, _G.IsAddOnLoaded
 
-_G.BINDING_HEADER_NIHILISTUI = "|cffff2020NihilistzscheUI|r"
+_G.BINDING_HEADER_NIHILISTZSCHEUI = "|cffff2020NihilistzscheUI|r"
 
 -- GLOBALS: ElvDB, LibStub
 
@@ -94,7 +102,7 @@ function NUI:RegisterModule(name)
     if self.initialized then
         local module = self:GetModule(name)
         if module and module.Initialize then
-            module:Initialize()
+            xpcall(function() module:Initialize() end, geterrorhandler())
             if ElvUI_CPU then ElvUI_CPU:RegisterPluginModule("ElvUI_NihilistzschetUI", name, module) end
         end
     end
@@ -117,9 +125,9 @@ function NUI:DebugPrint(...)
 end
 
 function NUI:InitializeModules()
-    for _, moduleName in pairs(NUI.RegisteredModules) do
+    for _, moduleName in next, self.RegisteredModules do
         local module = self:GetModule(moduleName)
-        if module.Initialize then module:Initialize() end
+        if module.Initialize then xpcall(function() module:Initialize() end, geterrorhandler()) end
     end
 end
 
@@ -136,7 +144,8 @@ function NUI:Initialize()
 
     self:AddMoverCategories()
     self:InitializeModules()
-
+    NUI.Installer:Initialize()
+    NUI.SpecProfileLoaded:CheckReload()
     if self.Compatibility.DEV then self:RegisterEvent("ADDON_LOADED") end
 
     self:SetupProfileCallbacks()

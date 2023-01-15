@@ -1,4 +1,5 @@
 local NUI, E = _G.unpack(select(2, ...)) --Inport: Engine, Locales, ProfileDB, GlobalDB
+if E.Classic then return end
 local VUF = NUI.VerticalUnitFrames
 
 function VUF:ConstructFocusFrame(frame, unit)

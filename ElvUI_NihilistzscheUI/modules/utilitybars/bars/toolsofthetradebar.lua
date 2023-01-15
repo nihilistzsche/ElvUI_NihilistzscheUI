@@ -1,4 +1,5 @@
 local NUI, E = _G.unpack(select(2, ...)) --Inport: Engine, Locales, ProfileDB, GlobalDB
+if not E.Retail then return end
 local TOTTB = NUI.UtilityBars.ToolsOfTheTradeBar
 local NUB = NUI.UtilityBars
 

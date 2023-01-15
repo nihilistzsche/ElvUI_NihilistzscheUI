@@ -1,4 +1,5 @@
-local NUI = _G.unpack(select(2, ...)) --Inport: Engine, Locales, ProfileDB, GlobalDB
+local NUI, E = _G.unpack(select(2, ...)) --Inport: Engine, Locales, ProfileDB, GlobalDB
+if not E.Retail then return end
 local CDB = NUI.CustomDataBar
 local NT = NUI.Libs.NT
 

@@ -198,11 +198,10 @@ end
 
 local function Click(self) ToggleDropDownMenu(1, nil, Frame, self, 0, 0) end
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(_, hex)
     displayString = join("", "%s:", " ", hex, "%d|r")
     noTitles = join("", hex, "%s|r")
 end
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
 NUI:RegisterModule(TDT:GetName())
-DT:RegisterDatatext("Titles", "NihilistzscheUI", nil, nil, Update, Click, OnEnter)
+DT:RegisterDatatext("Titles", "NihilistzscheUI", nil, nil, Update, Click, OnEnter, nil, nil, nil, ValueColorUpdate)
