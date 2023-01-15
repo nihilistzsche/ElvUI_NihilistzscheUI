@@ -308,7 +308,9 @@ function ENA.GenerateOptions()
                 type = "group",
                 name = "CC Debuff Caster Name",
                 get = function(info) return E.db.nihilistzscheui.enhancednameplateauras.ccDebuffCasterInfo[info[#info]] end,
-                set = function(info, value) E.db.nihilistzscheui.enhancednameplateauras.ccDebuffCasterInfo[info[#info]] = value end,
+                set = function(info, value)
+                    E.db.nihilistzscheui.enhancednameplateauras.ccDebuffCasterInfo[info[#info]] = value
+                end,
                 args = {
                     enable = {
                         type = "toggle",
@@ -330,7 +332,9 @@ function ENA.GenerateOptions()
                             t.r, t.g, t.b = r, g, b
                             E.db.nihilistzscheui.enhancednameplateauras.ccDebuffCasterInfo[info[#info]] = t
                         end,
-                        disabled = function() return E.db.nihilistzscheui.enhancednameplateauras.ccDebuffCasterInfo.classColor end,
+                        disabled = function()
+                            return E.db.nihilistzscheui.enhancednameplateauras.ccDebuffCasterInfo.classColor
+                        end,
                     },
                     classColor = {
                         type = "toggle",

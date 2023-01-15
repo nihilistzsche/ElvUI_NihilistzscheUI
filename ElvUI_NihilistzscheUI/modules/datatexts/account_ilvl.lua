@@ -34,15 +34,17 @@ local SLEiconPath, iconPath, buildFactionIconString, buildClassIconString
 if COMP.SLE then
     SLEiconPath = [[Interface\AddOns\ElvUI_SLE\media\textures\afk\factionlogo\]]
 
-    buildFactionIconString =
-        function(entry) return "|T" .. SLEiconPath .. entry.faction .. ".blp:15:15:0:0:64:64:4:56:4:56|t" end
+    buildFactionIconString = function(entry)
+        return "|T" .. SLEiconPath .. entry.faction .. ".blp:15:15:0:0:64:64:4:56:4:56|t"
+    end
 end
 
 local function buildCharacterNameString(entry)
     if NUI.Private and not buildClassIconString then
         iconPath = [[Interface\AddOns\ElvUI_NihilistzscheUI_Private\media\textures\]]
-        buildClassIconString =
-            function(_entry) return "|T" .. iconPath .. _entry.class .. ".tga:15:15:0:0:64:64:4:56:4:56|t" end
+        buildClassIconString = function(_entry)
+            return "|T" .. iconPath .. _entry.class .. ".tga:15:15:0:0:64:64:4:56:4:56|t"
+        end
     end
     local classColors = entry.class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[entry.class]
     local color = E:RGBToHex(classColors.r, classColors.g, classColors.b)

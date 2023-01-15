@@ -35,7 +35,9 @@ function DBN.GenerateOptions()
                         order = 2,
                         name = L["Reset Settings"],
                         desc = L["Reset the settings of this addon to their defaults."],
-                        func = function() E:CopyTable(E.db.nihilistzscheui.databarnotifier, P.nihilistzscheui.databarnotifier) end,
+                        func = function()
+                            E:CopyTable(E.db.nihilistzscheui.databarnotifier, P.nihilistzscheui.databarnotifier)
+                        end,
                     },
                 },
             },
