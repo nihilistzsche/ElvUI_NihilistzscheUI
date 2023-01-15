@@ -1,8 +1,8 @@
 <Bindings>
-<Binding name="Summon Favorite Mount" category="BINDING_HEADER_NIHILISTZSCHEUI">
+<Binding category="BINDING_HEADER_NIHILISTZSCHEUI" name="Summon Favorite Mount">
         SummonFavoriteMount();
     </Binding>
-<Binding name="Summon Sky Golem" category="BINDING_HEADER_NIHILISTZSCHEUI">
+<Binding category="BINDING_HEADER_NIHILISTZSCHEUI" name="Summon Sky Golem">
         SummonSkyGolem();
     </Binding>
 </Bindings>
