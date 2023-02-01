@@ -309,7 +309,7 @@ local function Click(self, button)
     end
 end
 
-local function ValueColorUpdate(hex)
+local function ValueColorUpdate(_, hex)
     freedString = join("", hex, "ElvUI|r", " ", L["Garbage Collection Freed"], " ", "|cff00ff00%s|r")
 end
 NUI:RegisterModule(ISD:GetName())
