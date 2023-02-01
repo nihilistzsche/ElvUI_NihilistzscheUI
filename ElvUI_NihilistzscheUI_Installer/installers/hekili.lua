@@ -64,6 +64,21 @@ function NI:HekiliSetup()
         ["enabled"] = true,
     }
     self:SetProfile(_G.HekiliDB, {
+        ["toggles"] = {
+            ["potions"] = {
+                ["value"] = true,
+            },
+            ["cooldowns"] = {
+                ["value"] = true,
+                ["override"] = true,
+            },
+            ["defensives"] = {
+                ["value"] = true,
+            },
+            ["interrupts"] = {
+                ["value"] = true,
+            },
+        },
         ["minimapIcon"] = true,
         ["notifications"] = {
             ["enabled"] = true,
