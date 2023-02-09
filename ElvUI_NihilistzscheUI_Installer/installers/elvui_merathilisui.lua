@@ -138,6 +138,9 @@ function NI:MerathilisUISetup(isSpec)
             embed = {
                 enable = false,
             },
+            addonSkins = {
+                wa = false,
+            },
         }
     end
     self.SaveMoverPosition("MER_RaidBuffReminderMover", "TOPLEFT", E.UIParent, "TOPLEFT", 238, -141)
