@@ -7,6 +7,5 @@
     <Script file="threat.lua"/>
     <Script file="flightmode.lua"/>
     <Script file="pawn_quest_reward.lua"/>
-    <Script file="quest_npc_icons.lua"/>
 	<Script file="spec_profile_loaded.lua"/>
 </Ui>
