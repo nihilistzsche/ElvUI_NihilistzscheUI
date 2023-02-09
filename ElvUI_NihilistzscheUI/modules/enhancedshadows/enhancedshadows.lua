@@ -4,9 +4,7 @@ local COMP = NUI.Compatibility
 
 if COMP.PA then _G.ProjectAzilroka.ES = ES end
 if COMP.AS then _G.AddOnSkins.ES = ES end
-
 _G.EnhancedShadows = ES
-
 local LSM = E.Libs.LSM
 local NP = E.NamePlates
 local UF = E.UnitFrames
@@ -23,9 +21,7 @@ local tinsert = _G.tinsert
 local NUM_STANCE_SLOTS = _G.NUM_STANCE_SLOTS
 local hooksecurefunc = _G.hooksecurefunc
 local C_Timer_After = _G.C_Timer.After
-local IsInInstance = _G.IsInInstance
-local IsInRaid = _G.IsInRaid
-
+local GetNumGroupMembers = _G.GetNumGroupMembers
 if not IsAddOnLoaded("Blizzard_TalentUI") then LoadAddOn("Blizzard_TalentUI") end
 
 ES.AddOnFrames = {
@@ -358,13 +354,8 @@ function ES:EPBHook()
     end)
 end
 
-function ES:PLAYER_REGEN_DISABLED()
-    if IsInInstance() and IsInRaid() then self:UpdateShadows(true) end
-end
-
-function ES:PLAYER_REGEN_ENABLED()
-    if IsInInstance() and IsInRaid() then self:UpdateShadows() end
-end
+function ES:GROUP_ROSTER_UPDATE() self:UpdateShadows(GetNumGroupMembers() > 20) end
+ES.PLAYER_ENTERING_WORLD = ES.GROUP_ROSTER_UPDATE
 
 function ES:Initialize()
     NUI:RegisterDB(self, "enhancedshadows")
@@ -479,8 +470,8 @@ function ES:Initialize()
         if win then ES:RegisterFrameShadows(win) end
     end)
 
-    ES:RegisterEvent("PLAYER_REGEN_DISABLED")
-    ES:RegisterEvent("PLAYER_REGEN_ENABLED")
+    ES:RegisterEvent("GROUP_ROSTER_UPDATE")
+    ES:RegisterEvent("PLAYER_ENTERING_WORLD")
     hooksecurefunc(B, "OpenBank", function(_) ES:UpdateShadows(true) end)
     hooksecurefunc(B, "CloseBank", function(_) ES:UpdateShadows() end)
     ES:SkinAlerts()
