@@ -10,30 +10,30 @@ function NI:KalielSetup()
 
     if COMP.WQT and GetAddOnMetadata("!KalielsTracker", "X-WQTSupport") then
         modulesOrder = {
-            nil, -- [1]
+            nil,
             "KT_CAMPAIGN_QUEST_TRACKER_MODULE",
-            "KT_MONTHLY_ACTIVITIES_TRACKER_MODULE", -- [2]
-            "KT_WORLD_QUEST_TRACKER_MODULE", -- [3]
-            "KT_BONUS_OBJECTIVE_TRACKER_MODULE", -- [4]
-            "WORLDQUESTTRACKER_TRACKER_MODULE", -- [5]
-            "KT_AUTO_QUEST_POPUP_TRACKER_MODULE", -- [6]
-            "KT_QUEST_TRACKER_MODULE", -- [7]
-            "QUECHO_TRACKER_MODULE", -- [8]
-            "PETTRACKER_TRACKER_MODULE", -- [9]
-            "KT_ACHIEVEMENT_TRACKER_MODULE", -- [10]
+            "KT_WORLD_QUEST_TRACKER_MODULE",
+            "KT_BONUS_OBJECTIVE_TRACKER_MODULE",
+            "WORLDQUESTTRACKER_TRACKER_MODULE",
+            "KT_AUTO_QUEST_POPUP_TRACKER_MODULE",
+            "KT_QUEST_TRACKER_MODULE",
+            "QUECHO_TRACKER_MODULE",
+            "KT_MONTHLY_ACTIVITIES_TRACKER_MODULE",
+            "PETTRACKER_TRACKER_MODULE",
+            "KT_ACHIEVEMENT_TRACKER_MODULE",
         }
     else
         modulesOrder = {
-            nil, -- [1]
-            "KT_CAMPAIGN_QUEST_TRACKER_MODULE", -- [2]
-            "KT_MONTHLY_ACTIVITIES_TRACKER_MODULE", -- [3]
-            "KT_WORLD_QUEST_TRACKER_MODULE", -- [4]
-            "KT_BONUS_OBJECTIVE_TRACKER_MODULE", --[5]
-            "KT_AUTO_QUEST_POPUP_TRACKER_MODULE", --[6]
-            "KT_QUEST_TRACKER_MODULE", --[7]
-            nil, --[8]
-            "PETTRACKER_TRACKER_MODULE", --[9]
-            "KT_ACHIEVEMENT_TRACKER_MODULE", -- [10]
+            nil,
+            "KT_CAMPAIGN_QUEST_TRACKER_MODULE",
+            "KT_WORLD_QUEST_TRACKER_MODULE",
+            "KT_BONUS_OBJECTIVE_TRACKER_MODULE",
+            "KT_AUTO_QUEST_POPUP_TRACKER_MODULE",
+            "KT_QUEST_TRACKER_MODULE",
+            nil,
+            "KT_MONTHLY_ACTIVITIES_TRACKER_MODULE",
+            "PETTRACKER_TRACKER_MODULE",
+            "KT_ACHIEVEMENT_TRACKER_MODULE",
         }
     end
     self:SetProfile(_G.KalielsTrackerDB, {
@@ -62,7 +62,7 @@ function NI:KalielSetup()
         collapseInInstance = false,
         hdrBtnColorShare = true,
         soundQuest = false,
-        modulesOrder = modulesOrder,
+        modulesOrder = E:CopyTable({}, modulesOrder),
     })
 
     self.SaveMoverPosition("NUIKalielsTrackerMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -82, -335)
