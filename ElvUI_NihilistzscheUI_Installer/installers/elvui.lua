@@ -1115,9 +1115,9 @@ function NI:ElvUISetup(role, isSpec)
             },
         }
 
-        if not COMP.BAGGINS then self:EPRV().bags = {
-            enable = true,
-        } end
+        self:EPRV().bags = {
+            enable = not COMP.ADIBAGS and not COMP.BAGGINS,
+        }
 
         SetCVar("autoLootDefault", "1")
         SetCVar("movieSubtitle", "1")
