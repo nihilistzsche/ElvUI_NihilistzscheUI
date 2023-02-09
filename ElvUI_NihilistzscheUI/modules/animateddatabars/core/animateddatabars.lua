@@ -8,7 +8,7 @@ local LSM = E.Libs.LSM
 
 local CreateFrame = _G.CreateFrame
 local tinsert = _G.tinsert
-local tremove = _G.tremove
+local unpack = _G.unpack
 local hooksecurefunc = _G.hooksecurefunc
 local Mixin = _G.Mixin
 local C_Timer_After = _G.C_Timer.After
@@ -64,9 +64,9 @@ function ADB:CreateAnimatedBar(tbl, key)
     animatedStatusBar:SetInside()
     animatedStatusBar:SetStatusBarTexture(E.media.normTex)
     local oldSSBC = animatedStatusBar.SetStatusBarColor
-    animatedStatusBar.SetStatusBarColor = function(self, ...)
-        oldSSBC(self, ...)
-        self:SetAnimatedTextureColors(...)
+    animatedStatusBar.SetStatusBarColor = function(_self, ...)
+        oldSSBC(_self, ...)
+        _self:SetAnimatedTextureColors(...)
     end
     animatedStatusBar:SetStatusBarColor(unpack(color))
     local orientation = db.orientation
