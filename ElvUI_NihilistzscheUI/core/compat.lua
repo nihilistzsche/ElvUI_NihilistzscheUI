@@ -113,6 +113,16 @@ end
 
 hooksecurefunc(E, "CheckIncompatible", function() COMP:RunCompatibilityFunctions() end)
 
+function COMP:FixBagSlotClicks(frame, bagID, slotID)
+    local bag = frame.Bags[bagID]
+    local slot = bag and bag[slotID]
+    if not slot or slot.__nuiFixed then return end
+    slot:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+    slot.__nuiFixed = true
+end
+
+hooksecurefunc(B, "UpdateSlot", COMP.FixBagSlotClicks)
+
 function COMP.Initialize()
     -- Workfround for blizzard bug: See https://github.com/Stanzilla/WoWUIBugs/issues/343
     _G.ITEM_INVENTORY_BANK_BAG_OFFSET = 5
