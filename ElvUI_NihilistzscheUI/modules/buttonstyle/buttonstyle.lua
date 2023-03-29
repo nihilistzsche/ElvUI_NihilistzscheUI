@@ -71,6 +71,13 @@ function BS:Initialize()
     hooksecurefunc(AB, "StyleButton", BS.StyleButton)
     hooksecurefunc(A, "UpdateAura", BS.StyleAura)
 
+    if E.Retail then
+        hooksecurefunc(AB, "ExtraButtons_BossAlpha", BS.StyleButton)
+        hooksecurefunc(AB, "ExtraButtons_ZoneAlpha", function(_)
+            local f = _G.ZoneAbilityFrame
+            BS:StyleButton(f)
+        end)
+    end
     hooksecurefunc("PetBattleFrame_UpdateActionBarLayout", function()
         local bf = _G.PetBattleFrame.BottomFrame
         if not bf.TurnTimer.SkipButton.shadow then

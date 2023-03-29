@@ -8,7 +8,6 @@ local NP = E.NamePlates
 local UF = E.UnitFrames
 local DT = E.DataTexts
 local B = E.Bags
-local AB = E.ActionBars
 --local DB = E.DataBars
 local Border, LastSize
 
