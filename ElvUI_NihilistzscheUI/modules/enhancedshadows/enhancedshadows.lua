@@ -356,6 +356,9 @@ function ES:GROUP_ROSTER_UPDATE() self:UpdateShadows(GetNumGroupMembers() > 20) 
 ES.PLAYER_ENTERING_WORLD = ES.GROUP_ROSTER_UPDATE
 
 function ES:Initialize()
+    if COMP.PA then _G.ProjectAzilroka.ES = ES end
+    if COMP.AS then _G.AddOnSkins.ES = ES end
+
     NUI:RegisterDB(self, "enhancedshadows")
     local ForUpdateAll = function(_self)
         if _self.db.enabled ~= _self.enable_state then E:StaticPopup_Show("CONFIG_RL") end
@@ -467,7 +470,6 @@ function ES:Initialize()
         if win and not win.shadow then win:CreateShadow() end
         if win then ES:RegisterFrameShadows(win) end
     end)
-
     ES:RegisterEvent("GROUP_ROSTER_UPDATE")
     ES:RegisterEvent("PLAYER_ENTERING_WORLD")
     hooksecurefunc(B, "OpenBank", function(_) ES:UpdateShadows(true) end)
