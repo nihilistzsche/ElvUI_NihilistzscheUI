@@ -210,15 +210,19 @@ PBAS.PetTamers = {
     -- The Waking Shore
     [189376] = { valid = true }, -- Swog
     [196264] = { valid = true }, -- Haniko
+    [201802] = { valid = true, useFirst = true }, -- Excavtor Morgrum Emberflint
     -- The Ohn'ahran Plains
     [197102] = { valid = true }, -- Bakhushek
-    [197447] = { valid = true }, -- Stormamu
+    [197447] = { valid = true }, -- Stormamo
+    [201878] = { valid = true, useFirst = true }, -- Vikshi Thunderpawu
     -- The Azure Span
     [196069] = { valid = true }, -- Patchu
     [197417] = { valid = true }, -- Arcantus
+    [201899] = { valid = true, useFirst = true }, -- Ixal Whitemoon
     -- Thaldraszus
     [197336] = { valid = true }, -- Enyobon
     [197350] = { valid = true }, -- Setimothes
+    [202458] = { valid = true, useFirst = true }, -- Stargazer Xenoth
 }
 
 function PBAS.TAS_OnClick()
@@ -281,6 +285,8 @@ function PBAS:AutoTrainerStart(event)
                         -- Determine gossip battle option
                         local battleOption
                         if #options == 1 then
+                            battleOption = options[1].gossipOptionID
+                        elseif self.PetTamers[tamerID].useFirst then
                             battleOption = options[1].gossipOptionID
                         else
                             for i = #options, 1, -1 do
