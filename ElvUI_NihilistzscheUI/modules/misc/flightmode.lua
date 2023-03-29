@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local COMP = NUI.Compatibility
 local VUF = NUI.VerticalUnitFrames
 local LO = E.Layout

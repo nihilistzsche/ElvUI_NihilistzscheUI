@@ -1,4 +1,4 @@
-local NUI, E, _, _, P = _G.unpack(select(2, ...)) --Inport: Engine, Locales, ProfileDB, GlobalDB
+local NUI, E, _, _, P = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
 
 local VUF = NUI.VerticalUnitFrames
 local UF = E.UnitFrames

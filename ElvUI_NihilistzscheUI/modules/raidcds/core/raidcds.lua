@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 -- Todo: Investigate classic specific raidcds
 if not E.Retail then return end
 local RCD = NUI.RaidCDs

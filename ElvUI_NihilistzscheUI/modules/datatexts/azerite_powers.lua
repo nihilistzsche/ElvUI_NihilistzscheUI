@@ -1,4 +1,4 @@
-local _, E = _G.unpack(select(2, ...)) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local _, E = _G.unpack((select(2, ...))) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 if not E.Retail then return end
 local DT = E.DataTexts
 

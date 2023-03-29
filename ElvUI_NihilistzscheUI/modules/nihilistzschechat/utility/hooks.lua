@@ -1,4 +1,4 @@
-local NUI, E, L, V, P, G = _G.unpack(select(2, ...))
+local NUI, E, L, V, P, G = _G.unpack((select(2, ...)))
 local NC = NUI.NihilistzscheChat
 
 function NC:SetUpHooks()
@@ -136,7 +136,7 @@ function NC:SetUpHooks()
                 (chatGroup == "BN_WHISPER" or chatGroup == "WHISPER")
                 and (GetCVar("whisperMode") == "popout" or GetCVar("whisperMode") == "popout_and_inline")
             then
-                local chatTarget = tostring(select(2, ...))
+                local chatTarget = tostring((select(2, ...)))
 
                 if FCFManager_GetNumDedicatedFrames(chatGroup, chatTarget) == 0 then
                     local chatFrame = FCF_OpenTemporaryWindow(chatGroup, chatTarget)

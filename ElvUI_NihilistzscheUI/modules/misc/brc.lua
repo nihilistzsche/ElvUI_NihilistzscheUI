@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 
 local BRC = NUI.Misc.BetterReputationColors
 local COMP = NUI.Compatibility

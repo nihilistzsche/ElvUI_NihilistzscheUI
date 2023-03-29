@@ -1,4 +1,4 @@
-local NUI, _, L = _G.unpack(select(2, ...))
+local NUI, _, L = _G.unpack((select(2, ...)))
 local ADB = NUI.AnimatedDataBars
 
 local UnitXP = _G.UnitXP

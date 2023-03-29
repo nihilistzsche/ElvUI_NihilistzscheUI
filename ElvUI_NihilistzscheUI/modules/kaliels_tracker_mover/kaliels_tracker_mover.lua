@@ -1,4 +1,4 @@
-local NUI, E = unpack(select(2, ...))
+local NUI, E = unpack((select(2, ...)))
 local COMP = NUI.Compatibility
 local KTM = NUI.KalielsTrackerMover
 

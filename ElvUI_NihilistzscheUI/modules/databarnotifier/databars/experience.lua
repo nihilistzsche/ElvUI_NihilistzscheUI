@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 
 local UnitXP = _G.UnitXP
 local UnitXPMax = _G.UnitXPMax

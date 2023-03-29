@@ -1,15 +1,14 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local ES = NUI.EnhancedShadows
 local COMP = NUI.Compatibility
 
-if COMP.PA then _G.ProjectAzilroka.ES = ES end
-if COMP.AS then _G.AddOnSkins.ES = ES end
 _G.EnhancedShadows = ES
 local LSM = E.Libs.LSM
 local NP = E.NamePlates
 local UF = E.UnitFrames
 local DT = E.DataTexts
 local B = E.Bags
+local AB = E.ActionBars
 --local DB = E.DataBars
 local Border, LastSize
 

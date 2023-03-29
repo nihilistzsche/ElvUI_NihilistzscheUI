@@ -1,4 +1,4 @@
-local NUI, E, L = _G.unpack(select(2, ...))
+local NUI, E, L = _G.unpack((select(2, ...)))
 local DT = E.DataTexts
 
 local COMP = NUI.Compatibility

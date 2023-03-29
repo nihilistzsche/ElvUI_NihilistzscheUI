@@ -1,4 +1,4 @@
-local NUI, E, L, V, P, G = _G.unpack(select(2, ...))
+local NUI, E, L, V, P, G = _G.unpack((select(2, ...)))
 local NC = NUI.NihilistzscheChat
 local LSM = E.Libs.LSM
 local LW = NUI.Libs.LibWho

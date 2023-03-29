@@ -1,4 +1,4 @@
-local NUI, E = unpack(select(2, ...))
+local NUI, E = unpack((select(2, ...)))
 local B = E:GetModule("Bags")
 
 local BESI = NUI.BagEquipmentSetIcon

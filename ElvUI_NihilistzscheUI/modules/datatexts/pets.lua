@@ -1,4 +1,4 @@
-local _, E, L = _G.unpack(select(2, ...))
+local _, E, L = _G.unpack((select(2, ...)))
 local DT = E.DataTexts
 
 local CreateFrame = _G.CreateFrame

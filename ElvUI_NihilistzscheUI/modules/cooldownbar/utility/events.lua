@@ -1,4 +1,4 @@
-local NUI = _G.unpack(select(2, ...))
+local NUI = _G.unpack((select(2, ...)))
 local CB = NUI.CooldownBar
 
 local C_Timer_After = _G.C_Timer.After

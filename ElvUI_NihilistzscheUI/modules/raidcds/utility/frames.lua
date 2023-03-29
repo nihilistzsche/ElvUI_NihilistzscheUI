@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local RCD = NUI.RaidCDs
 local LSM = E.Libs.LSM
 local CandyBar = NUI.Libs.CandyBar

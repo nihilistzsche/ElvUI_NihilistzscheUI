@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 if E.Classic then return end
 
 local EM = NUI.UtilityBars.EquipmentManagerBar

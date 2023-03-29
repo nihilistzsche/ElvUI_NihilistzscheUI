@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 
 local AB = E.ActionBars
 local COMP = NUI.Compatibility

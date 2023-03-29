@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local VUF = NUI.VerticalUnitFrames
 local UF = E.UnitFrames
 local hooksecurefunc = _G.hooksecurefunc

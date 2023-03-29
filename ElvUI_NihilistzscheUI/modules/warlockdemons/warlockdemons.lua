@@ -1,4 +1,4 @@
-local NUI, E, L = _G.unpack(select(2, ...))
+local NUI, E, L = _G.unpack((select(2, ...)))
 
 local WD = NUI.WarlockDemons
 local CandyBar = NUI.Libs.CandyBar

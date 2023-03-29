@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local NC = NUI.NihilistzscheChat
 
 NUI.Libs.LibWho = _G.LibStub("LibWho-2.0")

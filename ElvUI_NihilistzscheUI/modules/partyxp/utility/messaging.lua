@@ -1,4 +1,4 @@
-local NUI = _G.unpack(select(2, ...))
+local NUI = _G.unpack((select(2, ...)))
 local PXP = NUI.PartyXP
 
 local C_ChatInfo_RegisterAddonMessagePrefix = _G.C_ChatInfo.RegisterAddonMessagePrefix

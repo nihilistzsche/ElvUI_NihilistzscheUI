@@ -1,4 +1,4 @@
-local NUI, E, L = _G.unpack(select(2, ...))
+local NUI, E, L = _G.unpack((select(2, ...)))
 local COMP = NUI.Compatibility
 local SLE = COMP.SLE and _G["ElvUI_SLE"][1]
 local lib = _G.LibStub("LibElv-GameMenu-1.0")

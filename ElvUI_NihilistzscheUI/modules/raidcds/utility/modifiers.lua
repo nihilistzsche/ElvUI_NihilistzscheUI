@@ -1,4 +1,4 @@
-local NUI = _G.unpack(select(2, ...))
+local NUI = _G.unpack((select(2, ...)))
 local RCD = NUI.RaidCDs
 
 local GetTalentInfoByID = _G.GetTalentInfoByID

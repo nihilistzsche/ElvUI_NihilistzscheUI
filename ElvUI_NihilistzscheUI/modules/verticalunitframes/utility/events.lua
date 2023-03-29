@@ -1,4 +1,4 @@
-local NUI = _G.unpack(select(2, ...)) --Inport: Engine, Locales, ProfileDB, GlobalDB
+local NUI = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local VUF = NUI.VerticalUnitFrames
 local COMP = NUI.Compatibility
 local InCombatLockdown = _G.InCombatLockdown

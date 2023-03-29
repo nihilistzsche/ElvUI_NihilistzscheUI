@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local ES = NUI.EnhancedShadows
 local BS = NUI.ButtonStyle
 local AB = E.ActionBars

@@ -6,7 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 
 local AL = NUI.AutoLog
 

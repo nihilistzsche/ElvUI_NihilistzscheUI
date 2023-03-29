@@ -1,5 +1,6 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local COMP = NUI.Compatibility
+local B = E.Bags
 
 local GetAddOnEnableState = _G.GetAddOnEnableState
 local hooksecurefunc = _G.hooksecurefunc

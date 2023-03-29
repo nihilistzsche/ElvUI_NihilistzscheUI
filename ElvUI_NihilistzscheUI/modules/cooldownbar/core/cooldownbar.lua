@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local CB = NUI.CooldownBar
 
 local tinsert = _G.tinsert

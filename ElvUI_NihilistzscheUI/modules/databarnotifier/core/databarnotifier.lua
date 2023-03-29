@@ -1,4 +1,4 @@
-local NUI = _G.unpack(select(2, ...))
+local NUI = _G.unpack((select(2, ...)))
 local DBN = NUI.DataBarNotifier
 
 local Mixin = _G.Mixin

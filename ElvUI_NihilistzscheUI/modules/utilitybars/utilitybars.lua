@@ -1,4 +1,4 @@
-local NUI, E, L = _G.unpack(select(2, ...))
+local NUI, E, L = _G.unpack((select(2, ...)))
 
 local AB = E.ActionBars
 

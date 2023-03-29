@@ -1,4 +1,4 @@
-local NUI = _G.unpack(select(2, ...))
+local NUI = _G.unpack((select(2, ...)))
 local VUF = NUI.VerticalUnitFrames
 
 -- Name element

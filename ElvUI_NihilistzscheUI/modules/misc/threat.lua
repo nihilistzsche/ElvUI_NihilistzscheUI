@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local NT = NUI.Misc.Threat
 local DB = E.DataBars
 local hooksecurefunc = _G.hooksecurefunc

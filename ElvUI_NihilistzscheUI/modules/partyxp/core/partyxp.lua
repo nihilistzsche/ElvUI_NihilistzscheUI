@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack(select(2, ...))
+local NUI, E = _G.unpack((select(2, ...)))
 local PXP = NUI.PartyXP
 local LSM = E.Libs.LSM
 

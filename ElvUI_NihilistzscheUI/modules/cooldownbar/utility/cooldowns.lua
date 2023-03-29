@@ -1,4 +1,4 @@
-local NUI = _G.unpack(select(2, ...))
+local NUI = _G.unpack((select(2, ...)))
 local CB = NUI.CooldownBar
 
 local GetSpellCooldown = _G.GetSpellCooldown

@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 -- ElvUI Professions Datatext By Lockslap
 -------------------------------------------------------------------------------
-local NUI, E, L = _G.unpack(select(2, ...)) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local NUI, E, L = _G.unpack((select(2, ...))) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E.DataTexts
 
 local PDT = NUI.DataTexts.ProfessionsDataText
