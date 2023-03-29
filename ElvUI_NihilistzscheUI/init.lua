@@ -62,7 +62,6 @@ NUI.DataTexts = {}
 NUI.DataTexts.ImprovedSystemDataText = NUI:NewModule("ImprovedSystemDataText")
 NUI.DataTexts.ProfessionsDataText = NUI:NewModule("ProfessionsDataText")
 NUI.DataTexts.TitlesDT = NUI:NewModule("TitlesDT")
-NUI.SpecProfileLoaded = NUI:NewModule("SpecProfileLoaded", "AceEvent-3.0")
 NUI.UtilityBars = NUI:NewModule("UtilityBars", "AceEvent-3.0")
 NUI.UtilityBars.FarmBar = NUI:NewModule("FarmBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.TrackerBar = NUI:NewModule("TrackerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
@@ -143,12 +142,10 @@ function NUI:Initialize()
     CH:AddPluginIcons(self.GetChatIcon)
 
     self:AddMoverCategories()
+    self:SetupProfileCallbacks()
     self:InitializeModules()
     NUI.Installer:Initialize()
-    NUI.SpecProfileLoaded:CheckReload()
     if self.Compatibility.DEV then self:RegisterEvent("ADDON_LOADED") end
-
-    self:SetupProfileCallbacks()
 end
 
 E.Libs.EP:HookInitialize(NUI, NUI.Initialize)
