@@ -4,22 +4,51 @@ local COMP = NUI.Compatibility
 
 local tFilter = _G.tFilter
 
+NI.ClassMountIDs = {
+    DEATHKNIGHT = 866,
+    DEMONHUNTER = 866,
+    HUNTER = 865,
+    MAGE = 860,
+    MONK = 864,
+    PALADIN = 885,
+    PRIEST = 861,
+    ROGUE = 884,
+    SHAMAN = 888,
+    WARRIOR = 867,
+}
+
+NI.SpecIDs = {
+    DEATHKNIGHT = { 250, 251, 252 },
+    DEMONHUNTER = { 577, 581 },
+    -- DRUID = { 102, 103, 104, 105 }, # Not Set
+    -- EVOKER = { 1467, 1468 }, # Manually filled
+    HUNTER = { 253, 254, 255 },
+    MAGE = { 62, 63, 64 },
+    MONK = { 268, 270, 269 },
+    PALADIN = { 65, 66, 70 },
+    PRIEST = { 256, 257, 258 },
+    ROGUE = { 259, 260, 61 },
+    SHAMAN = { 262, 263, 264 },
+    -- WARLOCK = { 265, 266, 267 }, # Manually filled
+    WARRIOR = { 71, 72, 73 },
+}
+
 NI.ClassMountFavorites = {
-    PRIEST = {
-        [256] = {
-            favFlyer = 861,
-            favGround = 861,
+    EVOKER = {
+        [1467] = {
+            favFlyer = 262,
+            favGround = 496,
         },
-        [257] = {
-            favFlyer = 861,
-            favGround = 861,
-        },
-        [258] = {
-            favFlyer = 861,
-            favGround = 861,
+        [1468] = {
+            favFlyer = 262,
+            favGround = 496,
         },
     },
     WARLOCK = {
+        [265] = {
+            favFlyer = 931,
+            favGround = 931,
+        },
         [266] = {
             favFlyer = 898,
             favGround = 898,
@@ -28,12 +57,17 @@ NI.ClassMountFavorites = {
             favFlyer = 930,
             favGround = 930,
         },
-        [265] = {
-            favFlyer = 931,
-            favGround = 931,
-        },
     },
 }
+
+local function BuildClassFavorites(class)
+    if NI.ClassMountFavorites[class] or not NI.SpecIDs[class] or not NI.ClassMountIDs[class] then return end
+    local mountID = NI.ClassMountIDs[class]
+    for _, specID in next, NI.SpecIDs[class] do
+        NI.ClassMountFavorites[class] = NI.ClassMountFavorites[class] or {}
+        NI.ClassMountFavorites[class][specID] = { favFlyer = mountID, favGround = mountID }
+    end
+end
 
 function NI:NihilistzscheUIGlobalNameplateSetup()
     local classes = {}
@@ -344,7 +378,8 @@ function NI:NihilistzscheUISetup(isSpec)
             }
         end
     end
-    if not isSpec and NUI.Private then
+    if not isSpec and NUI.Private and not NUI.Lulupeep then
+        BuildClassFavorites(self.currentClass)
         self:EPRV().nihilistzscheui = self:EPRV().nihilistzscheui or {}
         if self.ClassMountFavorites[self.currentClass] then
             self:EPRV().nihilistzscheui.mounts = { specFavs = {} }

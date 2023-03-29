@@ -26,7 +26,7 @@ function NI.TinkerToolboxsSetup()
     }
 
     E.global.CustomTags = E.global.CustomTags or {}
-    E.global.CuvstomVars = E.global.CustomVars or {}
+    E.global.CustomVars = E.global.CustomVars or {}
     E.global.CustomVars.utf8sub = "string.utf8sub"
     E.global.CustomVars.utf8len = "string.utf8len"
     E.global.CustomTags["name:health:classcolors"] = {

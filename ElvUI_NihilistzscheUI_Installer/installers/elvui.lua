@@ -1063,6 +1063,12 @@ function NI:ElvUISetup(role, isSpec)
         desaturateOnCooldown = true,
         chargeCooldown = true,
         useDrawSwipeOnCharges = true,
+        extraActionButton = {
+            clean = true,
+        },
+        zoneActionButton = {
+            clean = true,
+        },
     }
 
     self:EDB().epa = {
@@ -1156,7 +1162,7 @@ function NI:ElvUISetup(role, isSpec)
     self.SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_3", "TOP", 0, 2)
     self.SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 415, 0)
     self.SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 227)
-
+    self.SaveMoverPosition("ZoneAbility", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -474, 190)
     -- Unit Frames
     self.SaveMoverPosition("ElvUF_PlayerMover", "BOTTOM", E.UIParent, "BOTTOM", -278, 110)
     self.SaveMoverPosition("ElvUF_TargetTargetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 110)
@@ -1172,7 +1178,6 @@ function NI:ElvUISetup(role, isSpec)
     self.SaveMoverPosition("GMMover", "TOPLEFT", E.UIParent, "TOPLEFT", 4, -341)
     self.SaveMoverPosition("BuffsMover", "TOP", E.UIParent, "TOP", -317, -303)
     self.SaveMoverPosition("DebuffsMover", "TOP", E.UIParent, "TOP", -317, -399)
-    self.SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 195)
     self.SaveMoverPosition("FlareMover", "TOP", E.UIParent, "TOP", 0, -511)
     self.SaveMoverPosition("MicrobarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
     self.SaveMoverPosition("VehicleSeatMover", "TOPLEFT", E.UIParent, "TOPLEFT", 490, -45)
@@ -1183,7 +1188,6 @@ function NI:ElvUISetup(role, isSpec)
     self.SaveMoverPosition("ReputationBarMover", "BOTTOM", "ExperienceBarMover", "TOP", 0, 4)
     self.SaveMoverPosition("AzeriteBarMover", "BOTTOM", "ReputationBarMover", "TOP", 0, 4)
 
-    self.SaveMoverPosition("ZoneAbility", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -453, 194)
     self.SaveMoverPosition("RightChatMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -4, 0)
     self.SaveMoverPosition("Dashboard", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -22)
     self.SaveMoverPosition("FarmToolAnchor", "TOPLEFT", E.UIParent, "TOPLEFT", 41, -512)
