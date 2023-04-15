@@ -127,7 +127,7 @@ local masterRidingSpellID = 90265
 local dragonridingSpellID = 376777
 local chaufferredMounts = {
     ["Horde"] = 678,
-    ["Alliance"] = 379,
+    ["Alliance"] = 679,
 }
 local function AnyRidingSkillKnown(flyingOnly)
     local toCheck = { expertRidingSpellID, artisanRidingSpellID, masterRidingSpellID }
