@@ -44,6 +44,26 @@ function CDB.RegisterRepTags()
         return false
     end
 
+    local function GetFactionValues()
+        local name, _, min, max, value, factionID = GetWatchedFactionInfo()
+        if not factionID then return end
+        local isParagon, pmin, pmax, pvalue = GetParagonInfo(factionID)
+        if isParagon then
+            min, max, value = pmin, pmax, pvalue
+        end
+
+        local isMajorFaction, mmin, mmax, mvalue = GetMajorFactionInfo(factionID)
+        if isMajorFaction then
+            min, max, value = mmin, mmax, mvalue
+        end
+        local isFriend, data = GetFriendshipInfo(factionID)
+        if isFriend and not isParagon then
+            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
+        end
+
+        return name, min, max, value
+    end
+
     NT:RegisterTag("rep:name", function()
         local name = GetWatchedFactionInfo()
 
@@ -57,7 +77,7 @@ function CDB.RegisterRepTags()
         local isFriend, friendData = GetFriendshipInfo(factionID)
         if not name then return "" end
 
-        if not isFriend and GetParagonInfo(factionID) then return "Paragon" end
+        if GetParagonInfo(factionID) then return "Paragon" end
         if not isFriend and C_Reputation_IsMajorFaction(factionID) then
             local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
             return RENOWN_LEVEL_LABEL .. majorFactionData.renownLevel
@@ -66,103 +86,42 @@ function CDB.RegisterRepTags()
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:current", function()
-        local name, _, min, max, value, factionID = GetWatchedFactionInfo()
+        local name, min, max, value = GetFactionValues()
 
         if not name then return "" end
 
-        local isParagon, pmin, pmax, pvalue = GetParagonInfo(factionID)
-        if isParagon then
-            min, max, value = pmin, pmax, pvalue
-        end
-
-        local isMajorFaction, mmin, mmax, mvalue = GetMajorFactionInfo(factionID)
-        if isMajorFaction then
-            min, max, value = mmin, mmax, mvalue
-        end
-        local isFriend, data = GetFriendshipInfo(factionID)
-        if isFriend then
-            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
-        end
         return CDB:GetFormattedText("CURRENT", value - min, max - min)
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:tonext", function()
-        local name, _, min, max, value, factionID = GetWatchedFactionInfo()
+        local name, min, max, value = GetFactionValues()
 
         if not name then return "" end
 
-        local isParagon, pmin, pmax, pvalue = GetParagonInfo(factionID)
-        if isParagon then
-            min, max, value = pmin, pmax, pvalue
-        end
-        local isMajorFaction, mmin, mmax, mvalue = GetMajorFactionInfo(factionID)
-        if isMajorFaction then
-            min, max, value = mmin, mmax, mvalue
-        end
-        local isFriend, data = GetFriendshipInfo(factionID)
-        if isFriend then
-            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
-        end
         return CDB:GetFormattedText("TONEXT", value - min, max - min)
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:current-percent", function()
-        local name, _, min, max, value, factionID = GetWatchedFactionInfo()
+        local name, min, max, value = GetFactionValues()
 
         if not name then return "" end
 
-        local isParagon, pmin, pmax, pvalue = GetParagonInfo(factionID)
-        if isParagon then
-            min, max, value = pmin, pmax, pvalue
-        end
-        local isMajorFaction, mmin, mmax, mvalue = GetMajorFactionInfo(factionID)
-        if isMajorFaction then
-            min, max, value = mmin, mmax, mvalue
-        end
-        local isFriend, data = GetFriendshipInfo(factionID)
-        if isFriend then
-            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
-        end
         return CDB:GetFormattedText("CURRENT_PERCENT", value - min, max - min)
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:current-max", function()
-        local name, _, min, max, value, factionID = GetWatchedFactionInfo()
+        local name, min, max, value = GetFactionValues()
 
         if not name then return "" end
 
-        local isParagon, pmin, pmax, pvalue = GetParagonInfo(factionID)
-        if isParagon then
-            min, max, value = pmin, pmax, pvalue
-        end
-        local isMajorFaction, mmin, mmax, mvalue = GetMajorFactionInfo(factionID)
-        if isMajorFaction then
-            min, max, value = mmin, mmax, mvalue
-        end
-        local isFriend, data = GetFriendshipInfo(factionID)
-        if isFriend then
-            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
-        end
         return CDB:GetFormattedText("CURRENT_MAX", value - min, max - min)
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:current-max-percent", function()
-        local name, _, min, max, value, factionID = GetWatchedFactionInfo()
+        local name, min, max, value = GetFactionValues()
 
         if not name then return "" end
 
-        local isParagon, pmin, pmax, pvalue = GetParagonInfo(factionID)
-        if isParagon then
-            min, max, value = pmin, pmax, pvalue
-        end
-        local isMajorFaction, mmin, mmax, mvalue = GetMajorFactionInfo(factionID)
-        if isMajorFaction then
-            min, max, value = mmin, mmax, mvalue
-        end
-        local isFriend, data = GetFriendshipInfo(factionID)
-        if isFriend then
-            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
-        end
         return CDB:GetFormattedText("CURRENT_MAX_PERCENT", value - min, max - min)
     end, "UPDATE_FACTION")
 end

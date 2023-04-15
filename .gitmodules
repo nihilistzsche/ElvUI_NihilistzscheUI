@@ -4,3 +4,6 @@
 [submodule "ElvUI_NihilistzscheUI_Lulupeep"]
 	path = ElvUI_NihilistzscheUI_Lulupeep
 	url = git@github.com:nihilistzsche/ElvUI_NihilistzscheUI_Lulupeep
+[submodule "ElvUI_NihilistzscheUI_Debug"]
+	path = ElvUI_NihilistzscheUI_Debug
+	url = ./ElvUI_NihilistzscheUI_Debug
