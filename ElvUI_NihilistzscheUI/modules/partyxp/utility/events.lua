@@ -40,8 +40,6 @@ function PXP:CHAT_MSG_ADDON(_, ...)
     end
 
     local guid = self.GetPartyMemberGUIDFromName(sender)
-
-    print(prefix, sender, message)
     if prefix == "PXP" then
         if message == "[DISABLED]" and self:GetDataForPartyMember(guid) and self.GetPartyMemberIndex(sender) then
             self:UpdateData(guid, "disabled", true)
