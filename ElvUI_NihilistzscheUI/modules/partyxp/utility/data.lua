@@ -4,6 +4,7 @@ local PXP = NUI.PartyXP
 function PXP:InitData() self.data = {} end
 
 function PXP:UpdateData(guid, ...)
+    NUI:DebugPrint(guid, ...)
     local data = self.data[guid]
     if not data then
         data = {}

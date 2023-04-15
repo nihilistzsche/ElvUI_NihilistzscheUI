@@ -109,7 +109,7 @@ function PXP.GetPartyMemberGUIDFromName(name)
     else
         n = name
     end
-    if r == E.myrealm then r = "" end
+    if r == E.myrealm:gsub(" ", "") then r = nil end
     for i = 1, GetNumGroupMembers() do
         local _n, _r = UnitName("party" .. i)
         if n == _n and r == _r then return UnitGUID("party" .. i) end
@@ -125,7 +125,7 @@ function PXP.GetPartyMemberIndex(name)
     else
         n = name
     end
-    if r == E.myrealm then r = "" end
+    if r == E.myrealm then r = nil end
     for i = 1, GetNumGroupMembers() do
         local _n, _r = UnitName("party" .. i)
         if n == _n and r == _r then return "party" .. i end
