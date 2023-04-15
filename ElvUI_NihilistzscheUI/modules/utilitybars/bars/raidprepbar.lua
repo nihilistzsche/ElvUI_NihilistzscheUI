@@ -176,7 +176,7 @@ function RPB.CreateButtons(bar)
                     if type(k) == "number" then checkAndAdd(k, v) end
                 end
             else
-                print("No db found for " .. info.key)
+                NUI:DebugPrint("No db found for " .. info.key)
             end
         end
     end
