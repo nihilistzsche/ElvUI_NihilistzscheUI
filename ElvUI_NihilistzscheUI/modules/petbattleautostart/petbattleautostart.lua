@@ -208,20 +208,20 @@ PBAS.PetTamers = {
     -- Eye of Azshara
     [179694] = { valid = true }, -- Trainer Iris Greedsway
     -- The Waking Shore
-    [189376] = { valid = true }, -- Swog
+    [189376] = { valid = true, useFirst = true }, -- Swog
     [196264] = { valid = true }, -- Haniko
     [201802] = { valid = true, useFirst = true }, -- Excavtor Morgrum Emberflint
     -- The Ohn'ahran Plains
     [197102] = { valid = true }, -- Bakhushek
-    [197447] = { valid = true }, -- Stormamo
+    [197447] = { valid = true, useFirst = true }, -- Stormamo
     [201878] = { valid = true, useFirst = true }, -- Vikshi Thunderpawu
     -- The Azure Span
-    [196069] = { valid = true }, -- Patchu
-    [197417] = { valid = true }, -- Arcantus
+    [196069] = { valid = true, useFirst = true }, -- Patchu
+    [197417] = { valid = true, useFirst = true }, -- Arcantus
     [201899] = { valid = true, useFirst = true }, -- Ixal Whitemoon
     -- Thaldraszus
-    [197336] = { valid = true }, -- Enyobon
-    [197350] = { valid = true }, -- Setimothes
+    [197336] = { valid = true, useFirst = true }, -- Enyobon
+    [197350] = { valid = true, useFirst = true }, -- Setimothes
     [202458] = { valid = true, useFirst = true }, -- Stargazer Xenoth
 }
 
