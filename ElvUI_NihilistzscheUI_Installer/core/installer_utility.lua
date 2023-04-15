@@ -464,15 +464,4 @@ function NI.BaseElvUISetup()
         NUIIDB.uiScaleSet = true
     end
     E:PixelScaleChanged()
-
-    if
-        type(NI.ClassSpecProfiles[E.myclass]) == "table" and not NUIIDB.reloadedThisClass
-        or not NUIIDB.reloadedThisClass[E.myclass]
-    then
-        C_Timer.After(2, function()
-            NUIIDB.reloadedThisClass = NUIIDB.reloadedThisClass or {}
-            NUIIDB.reloadedThisClass[E.myclass] = true
-            ReloadUI()
-        end)
-    end
 end

@@ -1004,7 +1004,12 @@ function NI:ElvUISetup(role, isSpec)
         }
     end
     local bar7enabled = true
-    if self.currentClass == "DRUID" or self.currentClass == "ROGUE" or self.currentClass == "EVOKER" then
+    if
+        self.currentClass == "DRUID"
+        or self.currentClass == "ROGUE"
+        or self.currentClass == "EVOKER"
+        or (isSpec and self.currentClass == "PRIEST" and role == "CasterDPS")
+    then
         bar7enabled = false
     end
     self:EDB().actionbar = {
@@ -1159,7 +1164,7 @@ function NI:ElvUISetup(role, isSpec)
     self.SaveMoverPosition("ElvAB_5", "LEFT", "ElvAB_1", "RIGHT", 2, 0)
     self.SaveMoverPosition("ElvAB_6", "BOTTOM", "ElvAB_5", "TOP", 0, 2)
     self.SaveMoverPosition("ElvAB_7", "BOTTOM", "ElvAB_3", "TOP", 0, 2)
-    self.SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_3", "TOP", 0, 2)
+    self.SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_3", "TOP", 0, 16)
     self.SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 415, 0)
     self.SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 227)
     self.SaveMoverPosition("ZoneAbility", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -474, 190)
@@ -1243,6 +1248,7 @@ function NI:ElvUILuluSetup()
             width = 415,
         },
         honor = {
+            enable = false,
             maxleveltag = "[mouseover][honor:maxlevel]",
             height = 35,
             orientation = "HORIZONTAL",
@@ -1253,16 +1259,34 @@ function NI:ElvUILuluSetup()
     self:EDB().general = {
         stickyFrames = false,
         font = self.db.font,
+        fontSize = 14,
         bottomPanel = false,
         backdropfadecolor = {
             r = 0.054,
             g = 0.054,
             b = 0.054,
         },
+        altPowerBar = {
+            font = self.db.font,
+        },
+        fontStyle = "NONE",
+        minimap = {
+            timeFont = self.db.font,
+            icons = {
+                queueStatus = {
+                    font = self.db.font,
+                    fontSize = 14,
+                    fontOutline = "NONE",
+                },
+            },
+        },
         valuecolor = {
             r = 0.09,
             g = 0.513,
             b = 0.819,
+        },
+        lootRoll = {
+            nameFont = self.db.font,
         },
         vendorGrays = true,
         interruptAnnounce = "SAY",
@@ -1348,6 +1372,16 @@ function NI:ElvUILuluSetup()
             font = self.db.font,
         },
         font = self.db.font,
+    }
+    self:EDB().minimap = {
+        instance = {
+            font = self.db.font,
+            fontSize = 14,
+        },
+        mapIcons = {
+            iconmouseover = true,
+            iconsize = 24,
+        },
     }
     self:EDB().unitframe = {
         fontSize = 12,
@@ -1506,12 +1540,19 @@ function NI:ElvUILuluSetup()
         },
     }
     self:EDB().bags = {
-        countFontSize = 12,
+        countFontSize = 14,
         countFont = self.db.font,
         itemLevelFont = self.db.font,
         itemLevelFontOutline = "",
-        itemLevelFontSize = 12,
+        itemLevelFontSize = 14,
         ignoreItems = "",
+        cooldowns = {
+            fonts = {
+                enable = true,
+                font = self.db.font,
+                fontOutline = "NONE",
+            },
+        },
         strata = "DIALOG",
     }
     self:EDB().chat = {
