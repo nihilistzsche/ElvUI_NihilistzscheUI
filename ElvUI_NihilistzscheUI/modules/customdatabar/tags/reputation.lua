@@ -16,7 +16,7 @@ function CDB.RegisterRepTags()
             local min, max = 0, threshold
             local value = currentValue % threshold
             if hasRewardPending then value = value + threshold end
-            return true, min, max, value
+            return true, min or 0, max or 0, value
         end
 
         return false
@@ -58,7 +58,7 @@ function CDB.RegisterRepTags()
         end
         local isFriend, data = GetFriendshipInfo(factionID)
         if isFriend and not isParagon then
-            min, max, value = data.reactionThreshold, data.nextThreshold, data.standing
+            min, max, value = data.reactionThreshold or min, data.nextThreshold or max, data.standing or value
         end
 
         return name, min, max, value
@@ -74,9 +74,9 @@ function CDB.RegisterRepTags()
 
     NT:RegisterTag("rep:standing", function()
         local name, reaction, _, _, _, factionID = GetWatchedFactionInfo()
-        local isFriend, friendData = GetFriendshipInfo(factionID)
         if not name then return "" end
 
+        local isFriend, friendData = GetFriendshipInfo(factionID)
         if GetParagonInfo(factionID) then return "Paragon" end
         if not isFriend and C_Reputation_IsMajorFaction(factionID) then
             local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
