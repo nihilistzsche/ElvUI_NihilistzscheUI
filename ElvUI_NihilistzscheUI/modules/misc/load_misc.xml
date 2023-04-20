@@ -6,5 +6,4 @@
     <Script file="brc.lua"/>
     <Script file="threat.lua"/>
     <Script file="flightmode.lua"/>
-    <Script file="pawn_quest_reward.lua"/>
 </Ui>
