@@ -29,10 +29,13 @@ function REP:ScanFactions()
             local hasParagonReward = false
             local isParagon = C_Reputation_IsFactionParagon(factionID)
             local isMajorFaction = C_Reputation_IsMajorFaction(factionID)
+            local isFriend, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
             if isParagon then
                 local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
                 barValue = currentValue % threshold
                 hasParagonReward = hasRewardPending
+            elseif isFriend then
+                barValue = data.standing
             elseif isMajorFaction then
                 local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
                 local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
@@ -93,11 +96,9 @@ function REP:Notify()
     for factionIndex = 1, GetNumFactions() do
         local name, _, standingID, barMin, barMax, barValue, _, _, isHeader, _, hasRep, _, _, factionID =
             GetFactionInfo(factionIndex)
-        local success, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
+        local isFriend, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
         local friendID, friendRep, friendTextLevel
-        if success then
-            friendID, friendRep, friendTextLevel = data.friendshipFactionID, data.standing, data.text
-        end
+
         local isParagon = false
         local hasParagonReward = false
         local isMajorFaction = false
@@ -118,6 +119,12 @@ function REP:Notify()
                 or majorFactionData.renownReputationEarned
                 or 0
             isMajorFaction = true
+        end
+        if isFriend then
+            if not isParagon then
+                barMin, barMax, barValue = data.reactionThreshold, data.nextThreshold, data.standing
+            end
+            friendID, friendRep, friendTextLevel = data.friendshipFactionID, data.standing, data.text
         end
         if isParagon then standingID = 999 end
 
