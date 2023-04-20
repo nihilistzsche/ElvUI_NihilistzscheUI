@@ -82,7 +82,7 @@ function CDB.RegisterRepTags()
             local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
             return RENOWN_LEVEL_LABEL .. majorFactionData.renownLevel
         end
-        return isFriend and friendData.text or _G["FACTION_STANDING_LABEL" .. reaction]
+        return isFriend and friendData.reaction or _G["FACTION_STANDING_LABEL" .. reaction]
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:current", function()

@@ -124,7 +124,7 @@ function REP:Notify()
             if not isParagon then
                 barMin, barMax, barValue = data.reactionThreshold, data.nextThreshold, data.standing
             end
-            friendID, friendRep, friendTextLevel = data.friendshipFactionID, data.standing, data.text
+            friendID, friendRep, friendTextLevel = data.friendshipFactionID, data.standing, data.reaction
         end
         if isParagon then standingID = 999 end
 
