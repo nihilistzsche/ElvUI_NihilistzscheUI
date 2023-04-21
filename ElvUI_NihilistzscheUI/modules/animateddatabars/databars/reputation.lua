@@ -68,13 +68,14 @@ function REP:Update(bar)
                     -- do something different for friendships
                     local rankData = C_GossipInfo_GetFriendshipReputationRanks(friendID)
                     level = rankData.currentLevel
+                    local offset = 8 - rankData.maxLevel
                     if nextFriendThreshold then
                         min, max, value = friendThreshold, nextFriendThreshold, friendRep
                     else
                         -- max rank, make it look like a full bar
                         min, max, value = 0, 1, 1
                     end
-                    reaction = friendRep
+                    reaction = level + offset
                     ID = friendID
                 else
                     ID = standingID
