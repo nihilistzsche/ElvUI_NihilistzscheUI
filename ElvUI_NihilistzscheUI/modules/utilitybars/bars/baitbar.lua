@@ -9,6 +9,8 @@ local PT = NUI.Libs.PT
 local GetItemCount = _G.GetItemCount
 local RegisterStateDriver = _G.RegisterStateDriver
 local CreateFrame = _G.CreateFrame
+local GetSpellInfo = _G.GetSpellInfo
+local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
 
 function BB.AddBaits()
     -- luacheck: no max line length
@@ -32,12 +34,18 @@ function BB.UpdateButtonHook(button) button.texture:SetDesaturated(GetItemCount(
 local DRAENOR_MAP_ID = 572
 local BROKEN_ISLES_MAP_ID = 619
 local SHADOWLANDS_MAP_ID = 1550
+local FISHING_BUFF_ID = 394009
 
 function BB.IsInDraenor() return E.MapInfo.continentMapID == DRAENOR_MAP_ID end
 
 function BB.IsInBrokenIsles() return E.MapInfo.continentMapID == BROKEN_ISLES_MAP_ID end
 
 function BB.IsInShadowlands() return E.MapInfo.continentMapID == SHADOWLANDS_MAP_ID end
+
+function BB.HasFishingBuff()
+    if not BB.FishingBuffName then BB.FishingBuffName = GetSpellInfo(FISHING_BUFF_ID) end
+    return AuraUtil_FindAuraByName(BB.FishingBuffName, "player", "HELPFUL") ~= nil
+end
 
 function BB:UpdateBar(bar)
     local inBaitZone = false
@@ -92,8 +100,8 @@ function BB:UpdateBar(bar)
         end
     end
 
+    bar.forceHide = (not BB.HasFishingBuff() and not FL:IsFishingPole()) or not inBaitZone
     NUB.UpdateBar(self, bar, "ELVUIBAR23BINDBUTTON")
-    if not FL:IsFishingPole() or not inBaitZone then RegisterStateDriver(bar, "visibility", "hide") end
 end
 
 function BB:Initialize()
