@@ -158,6 +158,15 @@ NP.utilitybars = {
         vertical = false,
         buttonsPerRow = 11,
     },
+    bobberbar = {
+        enabled = true,
+        mouseover = false,
+        spacing = 2,
+        buttonsize = 32,
+        alpha = 1,
+        buttonsPerRow = 7,
+        vertical = false,
+    },
     equipmentManagerBar = {
         enabled = true,
         mouseover = false,

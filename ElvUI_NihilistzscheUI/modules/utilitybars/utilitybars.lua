@@ -334,7 +334,7 @@ function NUB.UpdateBarMultRow(tbl, bar, bindButtons)
 end
 
 function NUB.UpdateHorizBar(tbl, bar, bindButtons)
-    if not bar.db.enabled then
+    if not bar.db.enabled or bar.forceHide then
         RegisterStateDriver(bar, "visibility", "hide")
         return
     else
@@ -405,7 +405,7 @@ function NUB.UpdateHorizBar(tbl, bar, bindButtons)
 end
 
 function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
-    if not bar.db.enabled then
+    if not bar.db.enabled or bar.forceHide then
         RegisterStateDriver(bar, "visibility", "hide")
         return
     else
@@ -489,7 +489,7 @@ function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
 end
 
 function NUB.UpdateVertBar(tbl, bar, bindButtons)
-    if not bar.db.enabled then
+    if not bar.db.enabled or bar.forceHide  then
         RegisterStateDriver(bar, "visibility", "hide")
         return
     else

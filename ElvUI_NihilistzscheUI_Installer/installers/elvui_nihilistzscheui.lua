@@ -407,6 +407,7 @@ function NI:NihilistzscheUISetup(isSpec)
     self.SaveMoverPosition("NihilistzscheUI_ToyBarMover", "BOTTOM", E.UIParent, "BOTTOM", 307, 95)
     self.SaveMoverPosition("NihilistzscheUI_TrackerBarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
     self.SaveMoverPosition("NihilistzscheUI_PortalBarMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -180, -30)
+    self.SaveMoverPosition("NihilistzscheUI_BobberBarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 195, -352)
     self.SaveMoverPosition(
         "NihilistzscheUI_ProfessionBarMover",
         "TOPRIGHT",

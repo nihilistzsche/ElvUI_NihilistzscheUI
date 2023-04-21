@@ -10,4 +10,5 @@
     <Script file="raidprepbar.lua"/>
     <Script file="toolsofthetradebar.lua"/>
     <Script file="engineertoybar.lua"/>
+    <Script file="bobberbar.lua"/>
 </Ui>

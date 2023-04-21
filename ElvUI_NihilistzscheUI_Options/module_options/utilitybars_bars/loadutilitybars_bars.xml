@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="baitbar_options.lua"/>
+    <Script file="bobberbar_options.lua"/>
 	<Script file="equipmentmanagerbar_options.lua"/>
 	<Script file="engineertoybar_options.lua"/>
 	<Script file="farmbar_options.lua"/>

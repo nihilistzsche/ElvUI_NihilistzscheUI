@@ -83,6 +83,7 @@ if E.Retail then
     NUI.PetBattleVerticalUnitFrames = NUI:NewModule("PetBattleVerticalUnitFrames", "AceHook-3.0", "AceEvent-3.0")
     NUI.RaidCDs = NUI:NewModule("RaidCDs", "AceEvent-3.0")
     NUI.UtilityBars.BaitBar = NUI:NewModule("BaitBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+    NUI.UtilityBars.BobberBar = NUI:NewModule("BobberBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
     NUI.UtilityBars.EngineerToyBar = NUI:NewModule("EngineerToyBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
     NUI.UtilityBars.ToolsOfTheTradeBar =
         NUI:NewModule("ToolsOfTheTradeBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
