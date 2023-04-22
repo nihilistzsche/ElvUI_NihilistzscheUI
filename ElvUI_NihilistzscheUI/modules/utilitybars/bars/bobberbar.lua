@@ -2,12 +2,11 @@ local NUI, E = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB,
 if not E.Retail then return end
 local BOBB = NUI.UtilityBars.BobberBar
 local NUB = NUI.UtilityBars
+local FL = NUI.Libs.FL
 
-local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
 local PlayerHasToy = _G.PlayerHasToy
 local tinsert = _G.tinsert
 local CreateFrame = _G.CreateFrame
-local GetSpellInfo = _G.GetSpellInfo
 
 function BOBB.CreateBar()
     -- luacheck: no max line length
@@ -48,8 +47,6 @@ function BOBB:GetToys()
     return toys
 end
 
-local FISHING_BUFF_ID = 394009
-
 function BOBB:UpdateBar(bar)
     local toys = self:GetToys()
 
@@ -62,9 +59,8 @@ function BOBB:UpdateBar(bar)
         NUB.UpdateButtonAsToy(bar, button, toy)
     end
 
-    if not BOBB.FishingBuffName then BOBB.FishingBuffName = GetSpellInfo(FISHING_BUFF_ID) end
-    bar.forceHide = not AuraUtil_FindAuraByName(BOBB.FishingBuffName, "player", "HELPFUL") ~= nil
-    NUB.UpdateBar(self, bar, "ELVUIBAR30BINDBUTTON")
+    bar.forceHide = (not NUI:HasFishingBuff() and not FL:IsFishingPole())
+    NUB.UpdateBar(self, bar, "ELVUIBAR32BINDBUTTON")
 end
 
 function BOBB:Initialize()

@@ -18,21 +18,15 @@ local LE_PET_JOURNAL_FILTER_COLLECTED = _G.LE_PET_JOURNAL_FILTER_COLLECTED
 local LE_PET_JOURNAL_FILTER_NOT_COLLECTED = _G.LE_PET_JOURNAL_FILTER_NOT_COLLECTED
 local UnitAffectingCombat = _G.UnitAffectingCombat
 local wipe = _G.wipe
-local UnitLevel = _G.UnitLevel
-local C_PvP_IsWarModeDesired = _G.C_PvP.IsWarModeDesired
-local C_PvP_GetWarModeRewardBonus = _G.C_PvP.GetWarModeRewardBonus
 local C_AzeriteItem_FindActiveAzeriteItem = _G.C_AzeriteItem.FindActiveAzeriteItem
 local C_AzeriteItem_GetAzeriteItemXPInfo = _G.C_AzeriteItem.GetAzeriteItemXPInfo
 local C_AzeriteItem_GetPowerLevel = _G.C_AzeriteItem.GetPowerLevel
-local GetQuestLogRewardXP = _G.GetQuestLogRewardXP
-local C_QuestLog_GetSelectedQuest = _G.C_QuestLog.GetSelectedQuest
-local C_QuestLog_GetNumQuestLogEntries = _G.C_QuestLog.GetNumQuestLogEntries
-local C_QuestLog_ReadyForTurnIn = _G.C_QuestLog.ReadyForTurnIn
-local C_QuestLog_GetInfo = _G.C_QuestLog.GetInfo
-local GetQuestUiMapID = _G.GetQuestUiMapID
-local C_QuestLog_SetSelectedQuest = _G.C_QuestLog.SetSelectedQuest
-local C_QuestLog_IsComplete = _G.C_QuestLog.IsComplete
-local GetNumQuestLeaderBoards = _G.GetNumQuestLeaderBoards
+local hooksecurefunc = _G.hooksecurefunc
+local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
+local unpack = _G.unpack
+local GetSpellInfo = _G.GetSpellInfo
+local strfind = _G.strfind
+local strmatch = _G.strmatch
 
 function NUI:SetupProfileCallbacks()
     hooksecurefunc(E, "UpdateEnd", function() self:UpdateAll() end)
@@ -313,4 +307,11 @@ function NUI.GetID(ID)
     elseif strfind(ID, "currency:") then
         return tonumber(strmatch(ID, "\124\124Hcurrency:(%d+)")), false
     end
+end
+
+local FISHING_BUFF_ID = 394009
+function NUI:HasFishingBuff()
+    if not E.Retail then return false end
+    if not self.FishingBuffName then self.FishingBuffName = GetSpellInfo(FISHING_BUFF_ID) end
+    return AuraUtil_FindAuraByName(self.FishingBuffName, "player", "HELPFUL") ~= nil
 end

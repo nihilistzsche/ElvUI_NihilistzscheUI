@@ -334,7 +334,7 @@ function NUB.UpdateBarMultRow(tbl, bar, bindButtons)
 end
 
 function NUB.UpdateHorizBar(tbl, bar, bindButtons)
-    if not bar.db.enabled or bar.forceHide then
+    if not bar.db.enabled then
         RegisterStateDriver(bar, "visibility", "hide")
         return
     else
@@ -390,7 +390,7 @@ function NUB.UpdateHorizBar(tbl, bar, bindButtons)
         + ((size * (buttonsPerRow * mult)) + ((spacing * (buttonsPerRow - 1) * mult) + (spacing * mult)))
     local barHeight = size * numRows + spacing * numRows + spacing
     bar:Size(barWidth, barHeight)
-    if shownButtons == 0 then
+    if shownButtons == 0 or bar.forceHide then
         RegisterStateDriver(bar, "visibility", "hide")
     else
         RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
@@ -405,7 +405,7 @@ function NUB.UpdateHorizBar(tbl, bar, bindButtons)
 end
 
 function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
-    if not bar.db.enabled or bar.forceHide then
+    if not bar.db.enabled then
         RegisterStateDriver(bar, "visibility", "hide")
         return
     else
@@ -474,7 +474,7 @@ function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
         + ((size * (buttonsPerRow * mult)) + ((spacing * (buttonsPerRow - 1) * mult) + (spacing * mult)))
     local barHeight = max((spacing * ((numRows * 2) - 1)), spacing * 2) + (size * numRows)
     bar:Size(barWidth, barHeight)
-    if not seenButton then
+    if not seenButton or bar.forceHide then
         RegisterStateDriver(bar, "visibility", "hide")
     else
         RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
@@ -489,7 +489,7 @@ function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
 end
 
 function NUB.UpdateVertBar(tbl, bar, bindButtons)
-    if not bar.db.enabled or bar.forceHide  then
+    if not bar.db.enabled then
         RegisterStateDriver(bar, "visibility", "hide")
         return
     else
@@ -545,7 +545,7 @@ function NUB.UpdateVertBar(tbl, bar, bindButtons)
     local barHeight = spacing
         + ((size * (buttonsPerRow * mult)) + ((spacing * (buttonsPerRow - 1) * mult) + (spacing * mult)))
     bar:Size(barWidth, barHeight)
-    if shownButtons == 0 then
+    if shownButtons == 0 or bar.forceHide then
         RegisterStateDriver(bar, "visibility", "hide")
     else
         RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
