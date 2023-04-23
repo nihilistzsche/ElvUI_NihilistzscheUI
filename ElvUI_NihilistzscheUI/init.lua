@@ -91,7 +91,7 @@ if E.Retail then
     NUI.UtilityBars.SpecSwitchBar = NUI:NewModule("SpecSwitchBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
     NUI.WarlockDemons = NUI:NewModule("WarlockDemons", "AceEvent-3.0")
 end
-local pairs, IsAddOnLoaded = pairs, _G.IsAddOnLoaded
+local pairs = pairs
 
 _G.BINDING_HEADER_NIHILISTZSCHEUI = "|cffff2020NihilistzscheUI|r"
 
