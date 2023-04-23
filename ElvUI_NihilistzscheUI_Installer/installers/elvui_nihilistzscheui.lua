@@ -282,6 +282,9 @@ function NI:NihilistzscheUISetup(isSpec)
         baitBar = {
             mouseover = not NUI.Lulupeep,
         },
+        bobberbar = {
+            mouseover = not NUI.Lulupeep,
+        },
         equipmentManagerBar = {
             mouseover = not NUI.Lulupeep,
         },

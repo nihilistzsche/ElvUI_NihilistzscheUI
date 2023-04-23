@@ -413,7 +413,9 @@ function NI.BaseElvUISetup()
 
     ChatFrame_AddChannel(_G.ChatFrame1, GENERAL)
     ChatFrame_RemoveChannel(_G.ChatFrame1, TRADE)
+    ChatFrame_RemoveChannel(_G.ChatFrame1, "Services")
     ChatFrame_AddChannel(_G.ChatFrame3, TRADE)
+    ChatFrame_AddChannel(_G.ChatFrame3, "Services")
 
     -- set the chat groups names in class color to enabled for all chat groups which players names appear
     chatGroup = {

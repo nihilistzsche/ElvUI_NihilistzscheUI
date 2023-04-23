@@ -31,6 +31,14 @@ function NI:MerathilisUISetup(isSpec)
     self:EDB().mui.autoButtons.customList = {
         87216, -- [1]
         144341, -- [2]
+        167698, -- [3]
+        141975, -- [4]
+        146964, -- [5]
+        146965, -- [6]
+        146966, -- [7]
+        146967, -- [8]
+        146968, -- [9]
+        146969, -- [10]
     }
     self:EDB().mui.misc = {
         nameHover = false,
