@@ -12,6 +12,7 @@ local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
 local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
+local C_GossipInfo_GetFriendshipReputationRanks = _G.C_GossipInfo.GetFriendshipReputationRanks
 local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
 local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
 
@@ -36,6 +37,8 @@ function REP:ScanFactions()
                 hasParagonReward = hasRewardPending
             elseif isFriend then
                 barValue = data.standing
+                local rankData = C_GossipInfo_GetFriendshipReputationRanks(factionID)
+                standingID = rankData.currentLevel
             elseif isMajorFaction then
                 local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
                 local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
@@ -97,8 +100,7 @@ function REP:Notify()
         local name, _, standingID, barMin, barMax, barValue, _, _, isHeader, _, hasRep, _, _, factionID =
             GetFactionInfo(factionIndex)
         local isFriend, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
-        local friendID, friendRep, friendTextLevel
-
+        local friendID, friendRep
         local isParagon = false
         local hasParagonReward = false
         local isMajorFaction = false
@@ -120,11 +122,13 @@ function REP:Notify()
                 or 0
             isMajorFaction = true
         end
-        if isFriend then
-            if not isParagon then
+        if isFriend and not isParagon then
+            local rankData = C_GossipInfo_GetFriendshipReputationRanks(factionID)
+            if rankData.currentLevel < rankData.maxLevel then
                 barMin, barMax, barValue = data.reactionThreshold, data.nextThreshold, data.standing
             end
-            friendID, friendRep, friendTextLevel = data.friendshipFactionID, data.standing, data.reaction
+            standingID = rankData.curretnLevel
+            friendID, friendRep = data.friendshipFactionID, data.reaction
         end
         if isParagon then standingID = 999 end
 
@@ -159,7 +163,7 @@ function REP:Notify()
                 if diff > 0 or isParagon then
                     remaining = barMax - barValue
                     if friendID and friendID ~= 0 then
-                        nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
+                        nextstanding = ("next rank (current rank: %s)"):format(friendRep)
                     elseif isMajorFaction then
                         nextstanding = RENOWN_LEVEL_LABEL .. standingID + 1
                     else
@@ -175,7 +179,7 @@ function REP:Notify()
                 else
                     remaining = barValue - barMin
                     if friendID and friendID ~= 0 then
-                        nextstanding = ("next rank (current rank: %s)"):format(friendTextLevel)
+                        nextstanding = ("next rank (current rank: %s)"):format(friendRep)
                     elseif isMajorFaction then
                         nextstanding = RENOWN_LEVEL_LABEL .. standingID - 1
                     else

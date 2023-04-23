@@ -58,7 +58,7 @@ function CDB.RegisterRepTags()
         end
         local isFriend, data = GetFriendshipInfo(factionID)
         if isFriend and not isParagon then
-            min, max, value = data.reactionThreshold or min, data.nextThreshold or max, data.standing or value
+            min, max, value = data.reactionThreshold, data.nextThreshold or true, data.standing
         end
 
         return name, min, max, value
@@ -90,6 +90,7 @@ function CDB.RegisterRepTags()
 
         if not name then return "" end
 
+        if type(max) == "boolean" then return "MAX" end
         return CDB:GetFormattedText("CURRENT", value - min, max - min)
     end, "UPDATE_FACTION")
 
@@ -98,6 +99,7 @@ function CDB.RegisterRepTags()
 
         if not name then return "" end
 
+        if type(max) == "boolean" then return "MAX" end
         return CDB:GetFormattedText("TONEXT", value - min, max - min)
     end, "UPDATE_FACTION")
 
@@ -106,6 +108,7 @@ function CDB.RegisterRepTags()
 
         if not name then return "" end
 
+        if type(max) == "boolean" then return "MAX" end
         return CDB:GetFormattedText("CURRENT_PERCENT", value - min, max - min)
     end, "UPDATE_FACTION")
 
@@ -114,6 +117,7 @@ function CDB.RegisterRepTags()
 
         if not name then return "" end
 
+        if type(max) == "boolean" then return "MAX" end
         return CDB:GetFormattedText("CURRENT_MAX", value - min, max - min)
     end, "UPDATE_FACTION")
 
@@ -122,6 +126,7 @@ function CDB.RegisterRepTags()
 
         if not name then return "" end
 
+        if type(max) == "boolean" then return "MAX" end
         return CDB:GetFormattedText("CURRENT_MAX_PERCENT", value - min, max - min)
     end, "UPDATE_FACTION")
 end
