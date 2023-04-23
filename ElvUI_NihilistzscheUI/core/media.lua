@@ -138,6 +138,13 @@ function MD:AddFonts()
         "Xpaider Pixel Explosion 01",
         [[Interface\AddOns\ElvUI_NihilistzscheUI\media\fonts\XPAIDERP.TTF]]
     )
+    for _, weight in pairs({ "Bold", "Medium", "Regular" }) do
+        self:Register(
+            "font",
+            "Fira Mono " .. weight,
+            [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\fonts\FiraMono-]] .. weight .. ".ttf"
+        )
+    end
 end
 
 MD.registry = {}
