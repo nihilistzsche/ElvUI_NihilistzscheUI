@@ -104,6 +104,7 @@ function REP:Notify()
         local isParagon = false
         local hasParagonReward = false
         local isMajorFaction = false
+        local rankData
 
         if factionID and C_Reputation_IsFactionParagon(factionID) then
             local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
@@ -123,7 +124,7 @@ function REP:Notify()
             isMajorFaction = true
         end
         if isFriend and not isParagon then
-            local rankData = C_GossipInfo_GetFriendshipReputationRanks(factionID)
+            rankData = C_GossipInfo_GetFriendshipReputationRanks(factionID)
             if rankData.currentLevel < rankData.maxLevel then
                 barMin, barMax, barValue = data.reactionThreshold, data.nextThreshold, data.standing
             end
@@ -200,6 +201,11 @@ function REP:Notify()
                     if isParagon and COMP.PR then
                         local r, g, b = unpack(_G.ParagonReputationDB.value)
                         color = E:RGBToHex(r, g, b)
+                        basecolor = color
+                    elseif isFriend then
+                        local offset = standingmax - rankData.maxLevel
+                        local _color = FACTION_BAR_COLORS[standingID + offset]
+                        color = E:RGBToHex(_color.r, _color.g, _color.b)
                         basecolor = color
                     elseif isMajorFaction then
                         color = E:RGBToHex(BLUE_FONT_COLOR.r, BLUE_FONT_COLOR.g, BLUE_FONT_COLOR.b)
