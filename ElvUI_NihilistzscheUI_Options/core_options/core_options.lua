@@ -193,6 +193,8 @@ function NCFG.GenerateOptions()
             order = order + 1
         end
     end
+
+    NUI.OptionsLoaded = true
 end
 
 function NCFG:Initialize() EP:RegisterPlugin("ElvUI_NihilistzscheUI", self.GenerateOptions) end

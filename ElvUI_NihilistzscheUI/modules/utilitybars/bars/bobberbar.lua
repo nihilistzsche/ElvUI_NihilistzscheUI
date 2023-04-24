@@ -61,7 +61,7 @@ function BOBB:UpdateBar(bar)
 
     bar.forceHide = (not NUI:HasFishingBuff() and not FL:IsFishingPole())
     NUB.UpdateBar(self, bar, "ELVUIBAR32BINDBUTTON")
-    if E.Options then
+    if NUI.OptionsLoaded then
         E.Options.args.NihilistzscheUI.args.modules.args.UtilityBars.args.BobberBar.args.bobbers =
             self:GenerateUtilityBarOptions(true)
     end
