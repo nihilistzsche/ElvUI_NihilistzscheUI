@@ -41,7 +41,7 @@ function BOBB:GetToys()
     local toys = {}
 
     for itemID in next, self.Bobbers do
-        if PlayerHasToy(itemID) then tinsert(toys, itemID) end
+        if PlayerHasToy(itemID) and self.bar.db.bobbers[itemID].enable then tinsert(toys, itemID) end
     end
 
     return toys
@@ -61,6 +61,10 @@ function BOBB:UpdateBar(bar)
 
     bar.forceHide = (not NUI:HasFishingBuff() and not FL:IsFishingPole())
     NUB.UpdateBar(self, bar, "ELVUIBAR32BINDBUTTON")
+    if E.Options then
+        E.Options.args.NihilistzscheUI.args.modules.args.UtilityBars.args.BobberBar.args.bobbers =
+            self:GenerateUtilityBarOptions(true)
+    end
 end
 
 function BOBB:Initialize()

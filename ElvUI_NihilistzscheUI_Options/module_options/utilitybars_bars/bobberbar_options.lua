@@ -1,7 +1,9 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local BOBB = NUI.UtilityBars.BobberBar
-
-function BOBB:GenerateUtilityBarOptions()
+local C_ToyBox_GetToyInfo = _G.C_ToyBox.GetToyInfo
+local tinsert = _G.tinsert
+local PlayerHasToy = _G.PlayerHasToy
+function BOBB:GenerateUtilityBarOptions(onlyBobbers)
     local options = {
         type = "group",
         name = L["Bobber Bar"],
@@ -92,6 +94,34 @@ function BOBB:GenerateUtilityBarOptions()
             },
         },
     }
+
+    local bobbers = {
+        type = "group",
+        guiInline = true,
+        name = "Bobbers",
+        args = {},
+    }
+
+    local bobberIDs = {}
+    for k in next, self.Bobbers do
+        tinsert(bobberIDs, k)
+    end
+    table.sort(bobberIDs)
+    local textureMarkup = [[|T%d:12:12:0:0:64:64:4:56:4:56|t]]
+    for i, k in ipairs(bobberIDs) do
+        local _, bobberName, texture = C_ToyBox_GetToyInfo(k)
+        bobbers.args[tostring(k)] = {
+            name = textureMarkup:format(texture) .. (bobberName or ""),
+            type = "toggle",
+            desc = "Enable the button for " .. (bobberName or ""),
+            order = i,
+            get = function() return E.db.nihilistzscheui.utilitybars.bobberbar.bobbers[tonumber(k)].enable end,
+            set = function(_, value) E.db.nihilistzscheui.utilitybars.bobberbar.bobbers[tonumber(k)].enable = value end,
+            disabled = function() return not PlayerHasToy(k) end,
+        }
+    end
+    if onlyBobbers then return bobbers end
+    options.args.bobbers = bobbers
 
     return options
 end
