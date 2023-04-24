@@ -181,8 +181,8 @@ function WD:UpdateBars(isDemonicTyrant)
         end
 
         table.sort(bars, function(a, b)
-            local aName = GetPetName(a.petGUID)
-            local bName = GetPetName(b.petGUID)
+            local aName = a and GetPetName(a.petGUID)
+            local bName = b and GetPetName(b.petGUID)
             if not aName then
                 return bName ~= nil
             elseif not bName then
