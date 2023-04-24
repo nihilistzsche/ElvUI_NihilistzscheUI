@@ -152,9 +152,10 @@ function WD:GenerateOptions()
         args = {},
     }
 
+    local textureMarkup = [[|T%d:12:12:0:0:64:64:4:56:4:56|t]]
     for k, v in pairs(self.demons) do
         demons.args[k] = {
-            name = k,
+            name = textureMarkup:format(v.icon) .. k,
             type = "toggle",
             desc = "Enable " .. k .. " tracking.",
             order = v.optionOrder,

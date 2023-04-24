@@ -460,7 +460,7 @@ function WD:Initialize()
         ["Fel Lord"] = { icon = GetSpellTexture(212459), priority = 18, optionOrder = 24 },
         Observer = { icon = GetSpellTexture(201996), priority = 19, optionOrder = 25 },
         ["Imp Gang Boss"] = { icon = GetSpellTexture(387445), priority = 3, optionsOrder = 26 },
-        ["Soulkeeper"] = { icon = GetSpellTexture(386244), priority = 2, optionsOrder = 27 },
+        Soulkeeper = { icon = GetSpellTexture(386244), priority = 2, optionsOrder = 27 },
         ["Pit Lord"] = { icon = GetSpellTexture(138787), priority = 1, optionsOrder = 28 },
     }
 

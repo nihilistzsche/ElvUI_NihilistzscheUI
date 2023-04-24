@@ -1507,9 +1507,12 @@ NP.warlockdemons = {
         ["Ur'zul"] = { enable = true },
         ["Fel Lord"] = { enable = true },
         Observer = { enable = true },
+        ["Imp Gang Boss"] = { enable = true },
+        Soulkeeper = { enable = true },
         ["Pit Lord"] = { enable = true },
     },
 }
+
 NP.databarnotifier = {
     enabled = true,
     xpchatframe = "3",
