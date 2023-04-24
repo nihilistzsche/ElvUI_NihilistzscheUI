@@ -127,7 +127,7 @@ function REP:Notify()
             if rankData.currentLevel < rankData.maxLevel then
                 barMin, barMax, barValue = data.reactionThreshold, data.nextThreshold, data.standing
             end
-            standingID = rankData.curretnLevel
+            standingID = rankData.currentLevel
             friendID, friendRep = data.friendshipFactionID, data.reaction
         end
         if isParagon then standingID = 999 end
