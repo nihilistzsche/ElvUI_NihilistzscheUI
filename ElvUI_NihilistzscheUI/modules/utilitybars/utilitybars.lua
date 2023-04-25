@@ -611,7 +611,11 @@ function NUB.HandleEvent(mod, frame, event)
 
     if event == "PLAYER_REGEN_ENABLED" then frame:UnregisterEvent(event) end
 
-    mod:UpdateBar(mod.bar)
+    if not mod.updateLock then
+        mod.updateLock = true
+        mod:UpdateBar(mod.bar)
+        mod.updateLock = false
+    end
 end
 
 function NUB:RegisterEventHandler(mod, frame)
