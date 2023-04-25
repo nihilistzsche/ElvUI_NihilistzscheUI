@@ -152,7 +152,7 @@ function NUI:Initialize()
     ticker = C_Timer.NewTicker(1, function()
         local now = time()
         if now - base > 30 then
-            LoadAddOn("zz_NihilistzscheUI_Delayed_Modules")
+            LoadAddOn("ElvUI_NihilistzscheUI_Delayed_Modules")
             ticker:Cancel()
         end
     end)
