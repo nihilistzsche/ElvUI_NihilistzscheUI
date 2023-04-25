@@ -1,7 +1,6 @@
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 
 local NI = NUI.Installer
-local EP = E.Libs.EP
 
 function NI:PDBCSetup(isSpec)
     self:EDB().EPDBC = {
