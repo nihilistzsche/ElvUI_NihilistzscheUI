@@ -116,7 +116,10 @@ function BOBB:GenerateUtilityBarOptions(onlyBobbers)
             desc = "Enable the button for " .. (bobberName or ""),
             order = i,
             get = function() return E.db.nihilistzscheui.utilitybars.bobberbar.bobbers[tonumber(k)].enable end,
-            set = function(_, value) E.db.nihilistzscheui.utilitybars.bobberbar.bobbers[tonumber(k)].enable = value end,
+            set = function(_, value)
+                E.db.nihilistzscheui.utilitybars.bobberbar.bobbers[tonumber(k)].enable = value
+                self:UpdateBar(self.bar)
+            end,
             disabled = function() return not PlayerHasToy(k) end,
         }
     end
