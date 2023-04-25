@@ -1,0 +1,8 @@
+## Interface: 100007
+## Title: |cffff2020NihilistzscheUI|r |cff00ff00Delayed Modules|r
+## Author: Nihilistzsche
+## Version: 12.993
+## RequiredDeps: ElvUI_NihilistzscheUI
+## LoadOnDemand: 1
+
+load_delayed_modules.xml

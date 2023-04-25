@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
+local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local LSM = E.Libs.LSM
 
 local PB = NUI.UtilityBars.ProfessionBar

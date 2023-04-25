@@ -147,6 +147,15 @@ function NUI:Initialize()
     self:InitializeModules()
     NUI.Installer:Initialize()
     if self.Compatibility.DEV then self:RegisterEvent("ADDON_LOADED") end
+    local base = time()
+    local ticker
+    ticker = C_Timer.NewTicker(1, function()
+        local now = time()
+        if now - base > 30 then
+            LoadAddOn("zz_NihilistzscheUI_Delayed_Modules")
+            ticker:Cancel()
+        end
+    end)
 end
 
 E.Libs.EP:HookInitialize(NUI, NUI.Initialize)

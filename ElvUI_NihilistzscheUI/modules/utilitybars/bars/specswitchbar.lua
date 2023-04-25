@@ -1,4 +1,4 @@
-local NUI, E = _G.unpack((select(2, ...)))
+local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 if not E.Retail then return end
 local SSB = NUI.UtilityBars.SpecSwitchBar
 local NUB = NUI.UtilityBars
