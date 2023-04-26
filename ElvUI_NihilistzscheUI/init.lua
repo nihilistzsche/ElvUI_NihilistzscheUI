@@ -138,6 +138,19 @@ InitFrame:SetScript("OnEvent", function(self, event, isInitialLogin, isReloading
     self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
 
+function NUI:DelayLoadModules()
+    local base = time()
+    local ticker
+    local duration = (self.reloadingUI or self.WaitToLoadDelayedModules) and 30 or 60
+    ticker = C_Timer.NewTicker(1, function()
+        local now = time()
+        if now - base > duration then
+            LoadAddOn("ElvUI_NihilistzscheUI_Delayed_Modules")
+            ticker:Cancel()
+        end
+    end)
+end
+
 function NUI:Initialize()
     self.initialized = true
 
@@ -154,16 +167,7 @@ function NUI:Initialize()
     self:InitializeModules()
     NUI.Installer:Initialize()
     if self.Compatibility.DEV then self:RegisterEvent("ADDON_LOADED") end
-    local base = time()
-    local ticker
-    local duration = self.reloadingUI and 30 or 60
-    ticker = C_Timer.NewTicker(1, function()
-        local now = time()
-        if now - base > duration then
-            LoadAddOn("ElvUI_NihilistzscheUI_Delayed_Modules")
-            ticker:Cancel()
-        end
-    end)
+    if not self.WaitToLoadDelayedModules then self:DelayLoadModules() end
 end
 
 E.Libs.EP:HookInitialize(NUI, NUI.Initialize)
