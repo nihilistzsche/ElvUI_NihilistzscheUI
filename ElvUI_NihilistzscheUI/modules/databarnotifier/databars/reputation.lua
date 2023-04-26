@@ -124,7 +124,7 @@ function REP:Notify()
             isMajorFaction = true
         end
         if isFriend and not isParagon then
-            rankData = C_GossipInfo_GetFriendshipReputationRanks(factionID)
+            rankData = C_GossipInfo_GetFriendshipReputationRanks(data.friendshipFactionID)
             if rankData.currentLevel < rankData.maxLevel then
                 barMin, barMax, barValue = data.reactionThreshold, data.nextThreshold, data.standing
             end
