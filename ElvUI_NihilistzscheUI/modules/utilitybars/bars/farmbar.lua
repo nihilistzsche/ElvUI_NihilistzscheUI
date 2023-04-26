@@ -14,9 +14,6 @@ local tinsert = _G.tinsert
 local GetItemInfo = _G.GetItemInfo
 local UIErrorsFrame = _G.UIErrorsFrame
 local C_CurrencyInfo_GetCurrencyLink = _G.C_CurrencyInfo.GetCurrencyLink
-local CopyTable = _G.CopyTable
-local wipe = _G.wipe
-local strfind = _G.strfind
 local strmatch = _G.strmatch
 local CreateFrame = _G.CreateFrame
 
@@ -223,17 +220,11 @@ function FB:UpdateBar(bar)
 
     NUB.WipeButtons(bar)
 
-    local function f(key, id)
-        for i, v in ipairs(ElvDB.farmBar[FB.myname][key]) do
-            if v == id then return i end
-        end
-    end
-
     table.sort(items, function(a, b) return a > b end)
     for i = 1, #items do
         local button = bar.buttons[i]
 
-        NUB.UpdateButtonAsItem(bar, button, items[i], "item", f("items", items[i]))
+        NUB.UpdateButtonAsItem(bar, button, items[i], "item", i)
     end
 
     -- Holy crap why are there strings for the currency ids??
@@ -253,7 +244,7 @@ function FB:UpdateBar(bar)
         local v = currency[i - #items]
         local info = C_CurrencyInfo_GetCurrencyInfo(v)
         button.data = v
-        NUB.UpdateButtonAsCustom(bar, button, info.iconFileID, "currency", f("currency", currency[i - #items]))
+        NUB.UpdateButtonAsCustom(bar, button, info.iconFileID, "currency", i - #items)
     end
 
     NUB.UpdateBar(self, bar, "ELVUIBAR21BINDBUTTON")
