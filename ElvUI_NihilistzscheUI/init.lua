@@ -131,17 +131,10 @@ function NUI:InitializeModules()
     end
 end
 
-local InitFrame = CreateFrame("Frame")
-InitFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-InitFrame:SetScript("OnEvent", function(self, event, isInitialLogin, isReloadingUI)
-    if isReloadingUI then NUI.reloadingUI = true end
-    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-end)
-
-function NUI:DelayLoadModules()
+function NUI:LoadDelayedModules()
     local base = time()
     local ticker
-    local duration = (self.reloadingUI or self.WaitToLoadDelayedModules) and 30 or 60
+    local duration = 30
     ticker = C_Timer.NewTicker(1, function()
         local now = time()
         if now - base > duration then
@@ -165,9 +158,9 @@ function NUI:Initialize()
     self:AddMoverCategories()
     self:SetupProfileCallbacks()
     self:InitializeModules()
-    NUI.Installer:Initialize()
+    self.Installer:Initialize()
     if self.Compatibility.DEV then self:RegisterEvent("ADDON_LOADED") end
-    if not self.WaitToLoadDelayedModules then self:DelayLoadModules() end
+    if not self.WaitToLoadDelayedModules then self:LoadDelayedModules() end
 end
 
 E.Libs.EP:HookInitialize(NUI, NUI.Initialize)
