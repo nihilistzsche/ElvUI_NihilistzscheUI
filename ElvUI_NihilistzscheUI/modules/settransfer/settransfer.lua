@@ -57,7 +57,7 @@ function ST:WithdrawDepositSetHelper(isWithdraw, setID)
             end
         end
     end
-    B:RefreshSearch()
+    B:SearchRefresh()
 end
 
 -- luacheck: push no self
