@@ -21,6 +21,12 @@ local wipe = _G.wipe
 local C_AzeriteItem_FindActiveAzeriteItem = _G.C_AzeriteItem.FindActiveAzeriteItem
 local C_AzeriteItem_GetAzeriteItemXPInfo = _G.C_AzeriteItem.GetAzeriteItemXPInfo
 local C_AzeriteItem_GetPowerLevel = _G.C_AzeriteItem.GetPowerLevel
+local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
+local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
+local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
+local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
+local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
+local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
 local hooksecurefunc = _G.hooksecurefunc
 local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
 local unpack = _G.unpack
@@ -314,4 +320,56 @@ function NUI:HasFishingBuff()
     if not E.Retail then return false end
     if not self.FishingBuffName then self.FishingBuffName = GetSpellInfo(FISHING_BUFF_ID) end
     return AuraUtil_FindAuraByName(self.FishingBuffName, "player", "HELPFUL") ~= nil
+end
+
+function NUI.GetParagonInfo(factionID)
+    if C_Reputation_IsFactionParagon(factionID) then
+        local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
+        local min, max = 0, threshold
+        local value = currentValue % threshold
+        if hasRewardPending then value = value + threshold end
+        return true, min or 0, max or 0, value
+    end
+
+    return false
+end
+
+function NUI.GetFriendshipInfo(factionID)
+    local data = C_GossipInfo_GetFriendshipReputation(factionID)
+    if not data or data.friendshipFactionID == 0 then
+        return false
+    else
+        return true, data
+    end
+end
+
+function NUI.GetMajorFactionInfo(factionID)
+    if C_Reputation_IsMajorFaction(factionID) then
+        local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+        local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+        local min, max = 0, majorFactionData.renownLevelThreshold
+        local value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
+        return true, min, max, value
+    end
+    return false
+end
+
+function NUI.GetFactionValues()
+    local name, _, min, max, value, factionID = GetWatchedFactionInfo()
+    if not factionID then return end
+    local isParagon, pmin, pmax, pvalue = NUI.GetParagonInfo(factionID)
+    if isParagon then
+        min, max, value = pmin, pmax, pvalue
+    end
+
+    local isMajorFaction, mmin, mmax, mvalue = NUI.GetMajorFactionInfo(factionID)
+    if isMajorFaction then
+        min, max, value = mmin, mmax, mvalue
+    end
+    local isFriend, data = NUI.GetFriendshipInfo(factionID)
+    if isFriend and not isParagon then
+        min, max, value = data.reactionThreshold, data.nextThreshold or true, data.standing
+    end
+
+    return name, min, max, value, isParagon, isMajorFaction, isFriend
 end
