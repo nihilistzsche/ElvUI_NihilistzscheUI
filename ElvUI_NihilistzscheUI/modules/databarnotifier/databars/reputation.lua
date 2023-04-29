@@ -90,7 +90,7 @@ function REP:ScanFactions()
             end
         end
     end
-    if numFactions > db.numFactions then db.numFactions = numFactions end
+    if numFactions > (db.numFactions or 0) then db.numFactions = numFactions end
 end
 
 function REP:Initialize()
