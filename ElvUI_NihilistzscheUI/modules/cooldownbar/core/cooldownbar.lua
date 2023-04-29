@@ -9,7 +9,7 @@ local hooksecurefunc = _G.hooksecurefunc
 local C_Timer_After = _G.C_Timer.After
 local C_Timer_NewTicker = _G.C_Timer.NewTicker
 
-CB.MAX_CB_VAL = math.pow(120, 0.3)
+CB.MAX_CB_VAL = math.pow(300, 0.3)
 
 function CB:GetPosition(value)
     local val = math.pow(value, 0.3)
@@ -144,7 +144,7 @@ function CB:Initialize()
     self.db.blacklist.spells = self.db.blacklist.spells or {}
     self.db.blacklist.items = self.db.blacklist.items or {}
 
-    self.values = { 1, 10, 30, 60, 120 }
+    self.values = { 1, 10, 30, 60, 120, 300 }
 
     self:CreateBar()
     self:CreateLabels()
