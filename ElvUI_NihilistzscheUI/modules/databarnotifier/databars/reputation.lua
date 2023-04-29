@@ -22,22 +22,48 @@ local BLUE_FONT_COLOR = _G.BLUE_FONT_COLOR
 local standingmax = 8
 local standingmin = 1
 
+function REP:InitializeDB()
+    self.dbKey = E.myname .. "-" .. E.myrealm
+    E.global.nihilistzscheui = E.global.nihilistzscheui or {}
+    E.global.nihilistzscheui.reputations = E.global.nihilistzscheui.reputations or {}
+    E.global.nihilistzscheui.reputations[self.dbKey] = E.global.nihilistzscheui.reputations[self.dbKey] or {}
+end
+
+function REP:GetDB() return E.global.nihilistzscheui.reputations[self.dbKey] end
+
+function REP:CheckMetatable(db)
+    if not getmetatable(db) then
+        setmetatable(db, {
+            __eq = function(a, b)
+                return a.Standing == b.Standing
+                    and a.Value == b.Value
+                    and a.HasParagonReward == b.HasParagonReward
+                    and a.WasParagon == b.WasParagon
+                    and a.IsMajorFaction == b.IsMajorFaction
+                    and a.IsFriend == b.IsFriend
+            end,
+        })
+    end
+end
+
 function REP:ScanFactions()
-    self.numFactions = GetNumFactions()
-    for i = 1, self.numFactions do
+    local db = self:GetDB()
+    local numFactions = GetNumFactions()
+    for i = 1, numFactions do
         local name, _, standingID, _, _, barValue, _, _, isHeader, _, hasRep, _, _, factionID = GetFactionInfo(i)
         if name and not isHeader or hasRep then
             local hasParagonReward = false
             local isParagon = C_Reputation_IsFactionParagon(factionID)
             local isMajorFaction = C_Reputation_IsMajorFaction(factionID)
-            local isFriend, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
+            local friendData, isFriend = C_GossipInfo_GetFriendshipReputation(factionID)
+            isFriend = friendData and friendData.friendshipFactionID ~= 0
             if isParagon then
                 local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
                 barValue = currentValue % threshold
                 hasParagonReward = hasRewardPending
             elseif isFriend then
-                barValue = data.standing
-                local rankData = C_GossipInfo_GetFriendshipReputationRanks(factionID)
+                barValue = friendData.standing
+                local rankData = C_GossipInfo_GetFriendshipReputationRanks(friendData.friendshipFactionID)
                 standingID = rankData.currentLevel
             elseif isMajorFaction then
                 local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
@@ -47,15 +73,24 @@ function REP:ScanFactions()
                     or majorFactionData.renownReputationEarned
                     or 0
             end
-            self.values[name] = {
+            local values = {
                 Standing = isParagon and 999 or standingID,
                 Value = barValue,
                 HasParagonReward = hasParagonReward,
                 WasParagon = isParagon,
-                isMajorFaction = isMajorFaction,
+                IsMajorFaction = isMajorFaction,
+                IsFriend = isFriend,
             }
+            if not db[name] then
+                db[name] = values
+            else
+                self:CheckMetatable(db[name])
+                self:CheckMetatable(values)
+                if db[name] ~= values then db[name] = values end
+            end
         end
     end
+    if numFactions > db.numFactions then db.numFactions = numFactions end
 end
 
 function REP:Initialize()
@@ -64,7 +99,7 @@ function REP:Initialize()
         local Icon = DB.Icons.Rep
         self.textureMarkup = "|T" .. Icon .. ":12|t"
     end
-    self.values = {}
+    self:InitializeDB()
     self:ScanFactions()
     self:GetParent():RegisterNotifierEvent(self, "UPDATE_FACTION")
 end
@@ -91,15 +126,17 @@ function REP:Notify()
 
     local chatframe = _G["ChatFrame" .. tonumber(DBN.db.repchatframe)]
 
+    local db = self:GetDB()
     local tempfactions = GetNumFactions()
-    if tempfactions > self.numFactions then
+    if tempfactions > db.numFactions then
         self:ScanFactions()
-        self.numFactions = tempfactions
+        db.numFactions = tempfactions
     end
-    for factionIndex = 1, GetNumFactions() do
+    for factionIndex = 1, tempfactions do
         local name, _, standingID, barMin, barMax, barValue, _, _, isHeader, _, hasRep, _, _, factionID =
             GetFactionInfo(factionIndex)
-        local isFriend, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
+        local friendData, isFriend = C_GossipInfo_GetFriendshipReputation(factionID)
+        isFriend = friendData and friendData.friendshipFactionID ~= 0
         local friendID, friendRep
         local isParagon = false
         local hasParagonReward = false
@@ -124,29 +161,26 @@ function REP:Notify()
             isMajorFaction = true
         end
         if isFriend and not isParagon then
-            rankData = C_GossipInfo_GetFriendshipReputationRanks(data.friendshipFactionID)
+            rankData = C_GossipInfo_GetFriendshipReputationRanks(friendData.friendshipFactionID)
             if rankData.currentLevel < rankData.maxLevel then
-                barMin, barMax, barValue = data.reactionThreshold, data.nextThreshold, data.standing
+                barMin, barMax, barValue = friendData.reactionThreshold, friendData.nextThreshold, friendData.standing
             end
             standingID = rankData.currentLevel
-            friendID, friendRep = data.friendshipFactionID, data.reaction
+            friendID, friendRep = friendData.friendshipFactionID, friendData.reaction
         end
         if isParagon then standingID = 999 end
 
-        if (not isHeader or hasRep) and self.values[name] then
-            local diff = barValue - self.values[name].Value
+        if (not isHeader or hasRep) and db[name] then
+            local diff = barValue - db[name].Value
             local skipMessage = false
             if diff ~= 0 then
-                if
-                    standingID ~= self.values[name].Standing
-                    or hasParagonReward ~= self.values[name].HasParagonReward
-                then
+                if standingID ~= db[name].Standing or hasParagonReward ~= db[name].HasParagonReward then
                     local newfaction = friendID and friendID ~= 0 and friendRep
                         or _G["FACTION_STANDING_LABEL" .. standingID]
 
                     local newstandingtext
 
-                    if isParagon and self.values[name].WasParagon then
+                    if isParagon and db[name].WasParagon then
                         newstandingtext = self:GenText({ "You have received a", "reward coffer", "from", name })
                         skipMessage = true
                     elseif isMajorFaction then
@@ -193,7 +227,7 @@ function REP:Notify()
                     end
                 end
 
-                local change = math.abs(barValue - self.values[name].Value)
+                local change = math.abs(barValue - db[name].Value)
                 local repetitions = math.ceil(remaining / change)
 
                 if not skipMessage then
@@ -204,7 +238,7 @@ function REP:Notify()
                         basecolor = color
                     elseif isFriend then
                         local offset = standingmax - rankData.maxLevel
-                        local _color = FACTION_BAR_COLORS[standingID + offset]
+                        local _color = FACTION_BAR_COLORS[rankData.currentLevel + offset]
                         color = E:RGBToHex(_color.r, _color.g, _color.b)
                         basecolor = color
                     elseif isMajorFaction then
@@ -230,11 +264,12 @@ function REP:Notify()
                     )
                 end
 
-                self.values[name].Value = barValue
-                self.values[name].Standing = isParagon and 999 or standingID
-                self.values[name].HasParagonReward = hasParagonReward
-                self.values[name].WasParagon = isParagon
-                self.values[name].isMajorFaction = isMajorFaction
+                db[name].Value = barValue
+                db[name].Standing = isParagon and 999 or standingID
+                db[name].HasParagonReward = hasParagonReward
+                db[name].WasParagon = isParagon
+                db[name].IsMajorFaction = isMajorFaction
+                db[name].IsFriend = isFriend
             end
         end
     end
