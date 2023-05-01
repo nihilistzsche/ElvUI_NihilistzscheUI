@@ -180,7 +180,7 @@ function WD:UpdateBars(isDemonicTyrant)
             yOffset = self.db.spacing
         end
 
-        table.sort(bars, function(a, b)
+        pcall(table.sort, bars, function(a, b)
             local aName = a and GetPetName(a.petGUID)
             local bName = b and GetPetName(b.petGUID)
             if not aName then
