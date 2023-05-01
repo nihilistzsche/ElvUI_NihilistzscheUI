@@ -55,8 +55,8 @@ function REP:ScanFactions()
             local hasParagonReward = false
             local isParagon = C_Reputation_IsFactionParagon(factionID)
             local isMajorFaction = C_Reputation_IsMajorFaction(factionID)
-            local friendData, isFriend = C_GossipInfo_GetFriendshipReputation(factionID)
-            isFriend = friendData and friendData.friendshipFactionID ~= 0
+            local friendData = C_GossipInfo_GetFriendshipReputation(factionID)
+            local isFriend = friendData and friendData.friendshipFactionID ~= 0
             if isParagon then
                 local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
                 barValue = currentValue % threshold
