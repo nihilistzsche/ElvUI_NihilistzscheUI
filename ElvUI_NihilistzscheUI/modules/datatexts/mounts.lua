@@ -334,15 +334,7 @@ local function CreateMenu(self, level)
     end
 end
 
-local interval = 1
-local function OnUpdate(self, elapsed)
-    --if not self.lastUpdate then self.lastUpdate = 0 end
-    self.lastUpdate = self.lastUpdate and self.lastUpdate + elapsed or 0
-    if self.lastUpdate >= interval then
-        UpdateDisplay(self)
-        self.lastUpdate = 0
-    end
-end
+local function OnEvent(self) UpdateDisplay(self) end
 
 local function OnClick(self, button)
     DT.tooltip:Hide()
@@ -428,8 +420,8 @@ DT:RegisterDatatext(
     L.Mounts,
     "NihilistzscheUI",
     { "PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE" },
+    OnEvent,
     UpdateDisplay,
-    OnUpdate,
     OnClick,
     OnEnter,
     nil,
