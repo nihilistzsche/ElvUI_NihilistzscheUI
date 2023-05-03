@@ -264,7 +264,6 @@ function VUF:SetCastTicks(frame, numTicks, extraTickRatio)
     end
 end
 
-
 function VUF:PostCastStart(unit)
     local db = VUF.db.units[unit]
     if not db or not db.castbar then return end

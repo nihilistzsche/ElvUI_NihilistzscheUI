@@ -4,7 +4,6 @@ if E.Classic then return end
 local VUF = NUI.VerticalUnitFrames
 local UF = E.UnitFrames
 
-
 function VUF:ConstructFocusFrame(frame, unit)
     frame.unit = unit
 

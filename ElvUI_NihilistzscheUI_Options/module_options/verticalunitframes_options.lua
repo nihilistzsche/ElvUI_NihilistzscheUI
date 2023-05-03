@@ -214,7 +214,9 @@ function VUF:GenerateElementOptionsTable(
                         type = "group",
                         name = L.Horizontal,
                         guiInline = true,
-                        get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]] end,
+                        get = function(info)
+                            return E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]]
+                        end,
                         set = function(info, value)
                             E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]] = value
                             VUF:UpdateAllFrames()
@@ -248,7 +250,9 @@ function VUF:GenerateElementOptionsTable(
                         type = "group",
                         name = L.Vertical,
                         guiInline = true,
-                        get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]] end,
+                        get = function(info)
+                            return E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]]
+                        end,
                         set = function(info, value)
                             E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]] = value
                             VUF:UpdateAllFrames()
@@ -371,7 +375,9 @@ function VUF:GenerateElementOptionsTable(
                     type = "group",
                     name = L.Anchor,
                     guiInline = true,
-                    get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]] end,
+                    get = function(info)
+                        return E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]]
+                    end,
                     set = function(info, value)
                         E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]] = value
                         VUF:UpdateAllFrames()
@@ -525,7 +531,9 @@ function VUF:GenerateElementOptionsTable(
             order = 3,
             type = "execute",
             name = L.COLORS,
-            func = function() ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction") end,
+            func = function()
+                ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction")
+            end,
             disabled = function() return not E.UnitFrames.Initialized end,
         }
         options.args.anchorPoint = {
@@ -558,7 +566,9 @@ function VUF:GenerateElementOptionsTable(
             order = 7,
             type = "execute",
             name = L["Max Overflow"],
-            func = function() ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction") end,
+            func = function()
+                ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction")
+            end,
             disabled = function() return not E.UnitFrames.Initialized end,
         }
         options.args.warning = E.Libs.ACH:Description(function()
