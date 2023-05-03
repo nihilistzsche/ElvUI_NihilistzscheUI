@@ -2,6 +2,8 @@ local NUI, E, L, _, P, _ = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine,
 local VUF = NUI.VerticalUnitFrames
 if not VUF then return end
 local UF = E.UnitFrames
+local ACH = E.Libs.ACH
+local C, CL = unpack(E.Config)
 
 local NONE = _G.NONE
 local gsub = _G.gsub
@@ -212,9 +214,7 @@ function VUF:GenerateElementOptionsTable(
                         type = "group",
                         name = L.Horizontal,
                         guiInline = true,
-                        get = function(info)
-                            return E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]]
-                        end,
+                        get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]] end,
                         set = function(info, value)
                             E.db.nihilistzscheui.vuf.units[unit][element].size.horizontal[info[#info]] = value
                             VUF:UpdateAllFrames()
@@ -248,9 +248,7 @@ function VUF:GenerateElementOptionsTable(
                         type = "group",
                         name = L.Vertical,
                         guiInline = true,
-                        get = function(info)
-                            return E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]]
-                        end,
+                        get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]] end,
                         set = function(info, value)
                             E.db.nihilistzscheui.vuf.units[unit][element].size.vertical[info[#info]] = value
                             VUF:UpdateAllFrames()
@@ -373,9 +371,7 @@ function VUF:GenerateElementOptionsTable(
                     type = "group",
                     name = L.Anchor,
                     guiInline = true,
-                    get = function(info)
-                        return E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]]
-                    end,
+                    get = function(info) return E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]] end,
                     set = function(info, value)
                         E.db.nihilistzscheui.vuf.units[unit][element].spacesettings[info[#info]] = value
                         VUF:UpdateAllFrames()
@@ -529,9 +525,7 @@ function VUF:GenerateElementOptionsTable(
             order = 3,
             type = "execute",
             name = L.COLORS,
-            func = function()
-                ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction")
-            end,
+            func = function() ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction") end,
             disabled = function() return not E.UnitFrames.Initialized end,
         }
         options.args.anchorPoint = {
@@ -564,9 +558,7 @@ function VUF:GenerateElementOptionsTable(
             order = 7,
             type = "execute",
             name = L["Max Overflow"],
-            func = function()
-                ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction")
-            end,
+            func = function() ACD:SelectGroup("ElvUI", "unitframe", "generalOptionsGroup", "allColorsGroup", "healPrediction") end,
             disabled = function() return not E.UnitFrames.Initialized end,
         }
         options.args.warning = E.Libs.ACH:Description(function()
@@ -723,6 +715,78 @@ local nameMap = {
     },
 }
 
+local function GeneratePrivateAurasOptions(unit)
+    local options = ACH:Group(
+        E.NewSign .. L["Private Auras"],
+        nil,
+        1800,
+        nil,
+        function(info) return E.db.nihilistzscheui.vuf.units[unit].privateAuras[info[#info]] end,
+        function(info, value)
+            E.db.nihilistzscheui.vuf.units[unit].privateAuras[info[#info]] = value
+            VUF:UpdateAllFrames()
+        end,
+        nil,
+        not E.Retail
+    )
+    options.args.enable = ACH:Toggle(CL["Enable"], nil, 1)
+    options.args.countdownFrame = ACH:Toggle(CL["Cooldown Spiral"], nil, 3)
+    options.args.countdownNumbers = ACH:Toggle(CL["Cooldown Numbers"], nil, 4)
+
+    options.args.icon = ACH:Group(
+        L["Icon"],
+        nil,
+        10,
+        nil,
+        function(info) return E.db.nihilistzscheui.vuf.units[unit].privateAuras.icon[info[#info]] end,
+        function(info, value)
+            E.db.nihilistzscheui.vuf.units[unit].privateAuras.icon[info[#info]] = value
+            VUF:UpdateAllFrames()
+        end
+    )
+    options.args.icon.args.point = ACH:Select(CL["Direction"], nil, 1, C.Values.SidePositions)
+    options.args.icon.args.offset = ACH:Range(CL["Offset"], nil, 2, { min = -4, max = 64, step = 1 })
+    options.args.icon.args.amount = ACH:Range(CL["Amount"], nil, 3, { min = 1, max = 5, step = 1 })
+    options.args.icon.args.size = ACH:Range(CL["Size"], nil, 4, { min = 6, max = 80, step = 1 })
+    options.args.icon.inline = true
+
+    options.args.duration = ACH:Group(
+        CL["Duration"],
+        nil,
+        20,
+        nil,
+        function(info) return E.db.nihilistzscheui.vuf.units[unit].privateAuras.duration[info[#info]] end,
+        function(info, value)
+            E.db.nihilistzscheui.vuf.units[unit].privateAuras.duration[info[#info]] = value
+            VUF:UpdateAllFrames()
+        end
+    )
+    options.args.duration.args.enable = ACH:Toggle(CL["Enable"], nil, 1)
+    options.args.duration.args.enable.customWidth = 100
+    options.args.duration.args.point = ACH:Select(CL["Point"], nil, 5, C.Values.AllPoints)
+    options.args.duration.args.offsetX = ACH:Range(CL["X-Offset"], nil, 6, { min = -100, max = 100, step = 1 })
+    options.args.duration.args.offsetY = ACH:Range(CL["Y-Offset"], nil, 7, { min = -100, max = 100, step = 1 })
+    options.args.duration.inline = true
+
+    options.args.parent = ACH:Group(
+        CL["Holder"],
+        nil,
+        20,
+        nil,
+        function(info) return E.db.nihilistzscheui.vuf.units[unit].privateAuras.parent[info[#info]] end,
+        function(info, value)
+            E.db.nihilistzscheui.vuf.units[unit].privateAuras.parent[info[#info]] = value
+            VUF:UpdateAllFrames()
+        end
+    )
+    options.args.parent.args.point = ACH:Select(CL["Point"], nil, 5, C.Values.AllPoints)
+    options.args.parent.args.offsetX = ACH:Range(CL["X-Offset"], nil, 6, { min = -100, max = 100, step = 1 })
+    options.args.parent.args.offsetY = ACH:Range(CL["Y-Offset"], nil, 7, { min = -100, max = 100, step = 1 })
+    options.args.parent.inline = true
+
+    return options
+end
+
 function VUF:GenerateUnitOptionTable(unit, name, order, mover, elements)
     local options = {
         name = L[name],
@@ -794,6 +858,10 @@ function VUF:GenerateUnitOptionTable(unit, name, order, mover, elements)
         end
     end
 
+    if unit == "target" or not unit:match("target") then
+        options.args.privateAuras = GeneratePrivateAurasOptions(unit)
+    end
+
     return options
 end
 
@@ -852,7 +920,7 @@ function VUF:GenerateOptions()
             description = {
                 order = 2,
                 type = "description",
-                name = L["NihilistzscheUI VerticalUnitFrames provides a configurable centered, vertical unit frame option for use with ElvUI.\n"],
+                name = L["NihilistzscheUI VerticalUnitFrames provides a optionsurable centered, vertical unit frame option for use with ElvUI.\n"],
             },
             credits = {
                 order = 10000,

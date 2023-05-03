@@ -132,33 +132,6 @@ function VUF:ConstructCastbar(frame)
     hcastbar.SafeZone = hcastbar.LatencyTexture
     frame.HorizCastbar = hcastbar
 
-    if frame.unit == "player" then
-        hcastbar:HookScript("OnShow", function()
-            if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
-                frame.casting = true
-                VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_DISABLED")
-            end
-        end)
-        hcastbar:HookScript("OnHide", function()
-            if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
-                frame.casting = false
-                VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_ENABLED")
-            end
-        end)
-        vcastbar:HookScript("OnShow", function()
-            if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
-                frame.casting = true
-                VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_DISABLED")
-            end
-        end)
-        vcastbar:HookScript("OnHide", function()
-            if E.db.nihilistzscheui.vuf.hideOOC and not InCombatLockdown() then
-                frame.casting = false
-                VUF:UpdateHiddenStatus(frame, "PLAYER_REGEN_ENABLED")
-            end
-        end)
-    end
-
     if (frame.unit ~= "player" and frame.unit ~= "target") or not self.db.units[frame.unit].horizCastbar then
         return vcastbar
     else
@@ -291,12 +264,8 @@ function VUF:SetCastTicks(frame, numTicks, extraTickRatio)
     end
 end
 
-VUF.HarshDisciplineID = 373183
 
 function VUF:PostCastStart(unit)
-    if E.myclass == "PRIEST" and not VUF.HarshDisciplineName then
-        VUF.HarshDisciplineName = GetSpellInfo(VUF.HarshDisciplineID)
-    end
     local db = VUF.db.units[unit]
     if not db or not db.castbar then return end
 
@@ -322,7 +291,11 @@ function VUF:PostCastStart(unit)
     end
 
     self.unit = unit
-    VUF.units[unit].isCasting = true
+    local f = VUF.units[unit]
+    if f then
+        f.isCasting = true
+        VUF:UpdateHiddenStatus(f)
+    end
 
     if db.castbar.ticks and unit == "player" then
         local unitframe = E.global.unitframe

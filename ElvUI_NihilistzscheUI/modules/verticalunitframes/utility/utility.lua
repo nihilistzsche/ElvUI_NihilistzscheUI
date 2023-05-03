@@ -221,10 +221,6 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
     if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
     self["Construct" .. stringTitle .. "Frame"](self, frame, unit)
 
-    frame.RaisedElementParent = CreateFrame("Frame", nil, frame)
-    frame.RaisedElementParent.TextureParent = CreateFrame("Frame", nil, frame.RaisedElementParent)
-    frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 100)
-
     frame:CreateBackdrop("Transparent")
     frame:SetParent(_G.ElvUF_Parent)
     E.FrameLocks[frame] = true
@@ -284,6 +280,8 @@ function VUF:UpdateFrame(unit)
         if self.db.hideOOC then VUF:UpdateHiddenStatus(frame, event) end
         self:UpdateAllElements(frame)
         self:UpdateAllElementAnchors(frame)
+
+        if frame.PrivateAuras then UF:Configure_PrivateAuras(frame) end
 
         if E.myclass == "DRUID" and unit == "player" then
             local spec = GetSpecialization()

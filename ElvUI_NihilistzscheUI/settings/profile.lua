@@ -527,6 +527,28 @@ NP.vuf = {
                     width = 252,
                 },
             },
+            privateAuras = {
+                enable = true,
+                countdownFrame = true,
+                countdownNumbers = true,
+                icon = {
+                    offset = 3,
+                    point = "LEFT",
+                    amount = 2,
+                    size = 32,
+                },
+                duration = {
+                    enable = true,
+                    point = "BOTTOM",
+                    offsetX = 0,
+                    offsetY = -1,
+                },
+                parent = {
+                    point = "TOP",
+                    offsetX = 0,
+                    offsetY = 0,
+                },
+            },
             raidicon = {
                 enabled = true,
                 size = {
@@ -749,6 +771,28 @@ NP.vuf = {
                     width = 252,
                 },
             },
+            privateAuras = {
+                enable = true,
+                countdownFrame = true,
+                countdownNumbers = true,
+                icon = {
+                    offset = 3,
+                    point = "LEFT",
+                    amount = 2,
+                    size = 32,
+                },
+                duration = {
+                    enable = true,
+                    point = "BOTTOM",
+                    offsetX = 0,
+                    offsetY = -1,
+                },
+                parent = {
+                    point = "TOP",
+                    offsetX = 0,
+                    offsetY = 0,
+                },
+            },
             healPrediction = {
                 enabled = true,
                 absorbStyle = "OVERFLOW",
@@ -927,6 +971,28 @@ NP.vuf = {
                 size = {
                     height = 26,
                     width = 252,
+                },
+            },
+            privateAuras = {
+                enable = true,
+                countdownFrame = true,
+                countdownNumbers = true,
+                icon = {
+                    offset = 3,
+                    point = "LEFT",
+                    amount = 2,
+                    size = 32,
+                },
+                duration = {
+                    enable = true,
+                    point = "BOTTOM",
+                    offsetX = 0,
+                    offsetY = -1,
+                },
+                parent = {
+                    point = "TOP",
+                    offsetX = 0,
+                    offsetY = 0,
                 },
             },
             portrait = {
@@ -1186,34 +1252,6 @@ NP.vuf = {
                     fadeOutTime = 0.6,
                 },
             },
-            buffs = {
-                enabled = true,
-                anchor = {
-                    pointFrom = "BOTTOM",
-                    attachTo = "health",
-                    pointTo = "TOP",
-                    xOffset = 9,
-                    yOffset = 40,
-                },
-                size = {
-                    height = 26,
-                    width = 252,
-                },
-            },
-            debuffs = {
-                enabled = false,
-                anchor = {
-                    pointFrom = "TOP",
-                    attachTo = "buffs",
-                    pointTo = "BOTTOM",
-                    xOffset = 9,
-                    yOffset = 6,
-                },
-                size = {
-                    height = 26,
-                    width = 252,
-                },
-            },
             name = {
                 enabled = true,
                 tag = "[namecolor][name:medium]",
@@ -1366,6 +1404,28 @@ NP.vuf = {
                 size = {
                     height = 26,
                     width = 252,
+                },
+            },
+            privateAuras = {
+                enable = true,
+                countdownFrame = true,
+                countdownNumbers = true,
+                icon = {
+                    offset = 3,
+                    point = "LEFT",
+                    amount = 2,
+                    size = 32,
+                },
+                duration = {
+                    enable = true,
+                    point = "BOTTOM",
+                    offsetX = 0,
+                    offsetY = -1,
+                },
+                parent = {
+                    point = "TOP",
+                    offsetX = 0,
+                    offsetY = 0,
                 },
             },
             portrait = {

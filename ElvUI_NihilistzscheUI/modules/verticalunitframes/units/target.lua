@@ -1,8 +1,11 @@
 local NUI, E = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local VUF = NUI.VerticalUnitFrames
+local UF = E.UnitFrames
 
 function VUF:ConstructTargetFrame(frame, unit)
     frame.unit = unit
+
+    frame.RaisedElementParent = self:ConstructRaisedElementParent(frame)
 
     frame.Health = self:ConstructHealth(frame)
 
@@ -14,6 +17,8 @@ function VUF:ConstructTargetFrame(frame, unit)
 
     frame.Buffs = self:ConstructBuffs(frame)
     frame.Debuffs = self:ConstructDebuffs(frame)
+    frame.PrivateAuras = UF:Construct_PrivateAuras(frame)
+
     frame.AuraBars = self:ConstructAuraBarHeader(frame)
     frame:DisableElement("AuraBars")
 

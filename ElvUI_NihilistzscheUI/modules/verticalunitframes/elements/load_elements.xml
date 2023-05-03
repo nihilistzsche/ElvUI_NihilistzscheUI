@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui">
+    <Script file="raisedelementparent.lua"/>
     <Script file="additionalpower.lua"/>
     <Script file="combatindicator.lua"/>
     <Script file="name.lua"/>

@@ -5,6 +5,8 @@ local VUF = NUI.VerticalUnitFrames
 function VUF:ConstructFocusTargetFrame(frame, unit)
     frame.unit = unit
 
+    frame.RaisedElementParent = self:ConstructRaisedElementParent(frame)
+
     frame.Health = self:ConstructHealth(frame)
 
     frame.Name = self:ConstructName(frame)

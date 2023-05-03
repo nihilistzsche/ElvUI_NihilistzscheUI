@@ -146,7 +146,7 @@ function VUF:UpdateElement(frame, element)
         local buffColor = UF.db.colors.auraBarBuff
         local debuffColor = UF.db.colors.auraBarDebuff
         local aurabars = frame.AuraBars
-        aurabars.db = config
+        aurabars.db = frame.db.aurabar
         aurabars.buffColor = { buffColor.r, buffColor.g, buffColor.b }
         aurabars.debuffColor = { debuffColor.r, debuffColor.g, debuffColor.b }
         aurabars.auraBarHeight = size.height

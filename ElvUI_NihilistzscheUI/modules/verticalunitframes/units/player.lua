@@ -1,5 +1,7 @@
 local NUI, E = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local VUF = NUI.VerticalUnitFrames
+local UF = E.UnitFrames
+
 local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
 
 VUF.PlayerFrameClassSpecific = {
@@ -89,6 +91,8 @@ end
 function VUF:ConstructPlayerFrame(frame, unit)
     frame.unit = unit
 
+    frame.RaisedElementParent = self:ConstructRaisedElementParent(frame)
+
     frame.Health = self:ConstructHealth(frame)
 
     frame.Power = self:ConstructPower(frame)
@@ -106,15 +110,22 @@ function VUF:ConstructPlayerFrame(frame, unit)
 
     frame.Buffs = self:ConstructBuffs(frame)
     frame.Debuffs = self:ConstructDebuffs(frame)
+    frame.PrivateAuras = UF:Construct_PrivateAuras(frame)
+
     frame.RaidTargetIndicator = self:ConstructRaidIcon(frame)
     frame.RestingIndicator = self:ConstructRestingIndicator(frame)
     frame.CombatIndicator = self:ConstructCombatIndicator(frame)
+
     frame.PvPText = self:ConstructPvPText(frame)
+
     frame.HealthPrediction = self:ConstructHealthPrediction(frame)
     frame.PowerPrediction = self:ConstructPowerPrediction(frame)
+
     frame.GCD = self:ConstructGCD(frame)
     frame.Portrait = self:ConstructPortrait(frame)
+
     frame.ResurrectIndicator = self:ConstructResurrectIndicator(frame)
+
     frame.Cutaway = self:ConstructCutaway(frame)
 
     frame.colors = _G.ElvUF.colors
