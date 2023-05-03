@@ -216,7 +216,7 @@ PBAS.PetTamers = {
     [197447] = { valid = true, useFirst = true }, -- Stormamo
     [201878] = { valid = true, useFirst = true }, -- Vikshi Thunderpawu
     -- The Azure Span
-    [196069] = { valid = true, useFirst = true }, -- Patchu
+    [196069] = { valid = true, useFirst = true }, -- Pachu
     [197417] = { valid = true, useFirst = true }, -- Arcantus
     [201899] = { valid = true, useFirst = true }, -- Ixal Whitemoon
     -- Thaldraszus
