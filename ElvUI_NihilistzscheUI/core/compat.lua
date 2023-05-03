@@ -7,7 +7,7 @@ local hooksecurefunc = _G.hooksecurefunc
 
 local function Disable(tbl, key)
     key = key or "enable"
-    if tbl[key] then
+    if tbl and tbl[key] then
         tbl[key] = false
         return true
     end
