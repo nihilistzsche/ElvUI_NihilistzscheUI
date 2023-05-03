@@ -930,7 +930,7 @@ function VUF:GenerateOptions()
             description = {
                 order = 2,
                 type = "description",
-                name = L["NihilistzscheUI VerticalUnitFrames provides a optionsurable centered, vertical unit frame option for use with ElvUI.\n"],
+                name = L["NihilistzscheUI VerticalUnitFrames provides a configurable centered, vertical unit frame option for use with ElvUI.\n"],
             },
             credits = {
                 order = 10000,
