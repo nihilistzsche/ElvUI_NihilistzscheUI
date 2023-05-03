@@ -135,8 +135,8 @@ function REP:Notify()
     for factionIndex = 1, tempfactions do
         local name, _, standingID, barMin, barMax, barValue, _, _, isHeader, _, hasRep, _, _, factionID =
             GetFactionInfo(factionIndex)
-        local friendData, isFriend = C_GossipInfo_GetFriendshipReputation(factionID)
-        isFriend = friendData and friendData.friendshipFactionID ~= 0
+        local _, friendData = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
+        local isFriend = friendData and friendData.friendshipFactionID ~= 0
         local friendID, friendRep
         local isParagon = false
         local hasParagonReward = false
