@@ -142,7 +142,14 @@ function MD:AddFonts()
         self:Register(
             "font",
             "Fira Mono " .. weight,
-            [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\fonts\FiraMono-]] .. weight .. ".ttf"
+            [[Interface\AddOns\ElvUI_NihilistzscheUI\media\fonts\FiraMono-]] .. weight .. ".ttf"
+        )
+    end
+    for _, weight in pairs({ "Bold", "Light", "Medium", "Regular", "SemiBold" }) do
+        self:Register(
+            "Font",
+            "OverpassMono-" .. weight,
+            [[Interface\AddOns\ElvUI_NihilistzscheUI\media\fonts\OverpassMono-]] .. weight .. ".ttf"
         )
     end
 end
