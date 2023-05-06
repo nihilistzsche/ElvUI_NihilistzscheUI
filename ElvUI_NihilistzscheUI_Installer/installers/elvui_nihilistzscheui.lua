@@ -253,7 +253,7 @@ function NI:NihilistzscheUISetup(isSpec)
         },
     }
     self:EDB().nihilistzscheui.cooldownBar = {
-        autohide = true,
+        autohide = not NUI.Lulupeep,
     }
     self:EDB().nihilistzscheui.enhancedshadows = {
         shadowcolor = self:Color(),

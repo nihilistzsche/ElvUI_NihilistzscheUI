@@ -683,6 +683,10 @@ function NI:DatatextPanelSetup()
     end
 end
 
+local function RunRoleSpecificSetup(self, role)
+    self["ElvUI" .. (role ~= "Healer" and "Non" or "") .. "HealerSetup"](self)
+end
+
 function NI:ElvUISetup(role, isSpec)
     self:EDB().general = {
         interruptAnnounce = "SAY",
@@ -1213,9 +1217,13 @@ function NI:ElvUISetup(role, isSpec)
 
     self.SaveMoverPosition("VOICECHAT", "TOPRIGHT", E.UIParent, "TOPRIGHT", -504, -68)
 
-    local function c() return "ElvUI" .. (role == "Healer" and "Healer" or "NonHealer") .. "Setup" end
+    if COMP.PA then
+        self.SaveMoverPosition("AddonCompartmentMover", "TOPRIGHT", _G.SquareMinimapButtonBar, "BOTTOMRIGHT", 0, -4)
+    else
+        self.SaveMoverPosition("AddonCompartmentMover", "TOPRIGHT", "MinimapPanel", "BOTTOMRIGHT", 0, -4)
+    end
 
-    self[c()](self)
+    RunRoleSpecificSetup(self, role)
 
     for k in pairs(P.unitframe.units) do
         self:EDB().unitframe.units[k] = self:EDB().unitframe.units[k] or {}
@@ -1232,12 +1240,16 @@ function NI:ElvUILuluSetup()
             orientation = "HORIZONTAL",
             height = 30,
             textSize = 14,
+            text = "NONE",
+            font = self.db.font,
             width = 415,
         },
         reputation = {
             enable = true,
             height = 28,
             orientation = "HORIZONTAL",
+            text = "NONE",
+            font = self.db.font,
             textSize = 15,
             width = 415,
         },
@@ -1245,6 +1257,9 @@ function NI:ElvUILuluSetup()
             orientation = "HORIZONTAL",
             height = 28,
             textSize = 13,
+            xOffset = 4,
+            text = "NONE",
+            font = self.db.font,
             width = 415,
         },
         honor = {
@@ -1252,6 +1267,8 @@ function NI:ElvUILuluSetup()
             maxleveltag = "[mouseover][honor:maxlevel]",
             height = 35,
             orientation = "HORIZONTAL",
+            text = "NONE",
+            font = self.db.font,
             textSize = 14,
             width = 415,
         },
@@ -1279,18 +1296,18 @@ function NI:ElvUILuluSetup()
                     fontOutline = "NONE",
                 },
             },
+            timeFontOutLine = "NONE",
+            locationFont = self.db.fnot,
+            locationFontOutline = "NONE",
         },
-        valuecolor = {
-            r = 0.09,
-            g = 0.513,
-            b = 0.819,
-        },
+        valuecolor = self:Color(true),
         lootRoll = {
             nameFont = self.db.font,
         },
         vendorGrays = true,
         interruptAnnounce = "SAY",
         autoAcceptInvite = true,
+        stickFrames = false,
     }
     self:EDB().auras = {
         fontSize = 12,
@@ -1545,6 +1562,7 @@ function NI:ElvUILuluSetup()
         itemLevelFont = self.db.font,
         itemLevelFontOutline = "",
         itemLevelFontSize = 14,
+        hideTutorial = 1,
         ignoreItems = "",
         cooldowns = {
             fonts = {
