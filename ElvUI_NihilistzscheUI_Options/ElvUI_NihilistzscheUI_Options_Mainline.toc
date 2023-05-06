@@ -1,5 +1,6 @@
 ## Interface: 100100
 ## Title: |cff1784d1ElvUI|r |cffff2020NihilistzscheUI|r |cff1784d1Options|r
+## IconTexture: Interface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo
 ## Author: Nihilistzsche
 ## Version: 12.9951
 ## Notes: Configuration for ElvUI_NihilistzscheUI

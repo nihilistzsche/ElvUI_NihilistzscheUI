@@ -30,8 +30,6 @@ engine[5] = P
 engine[6] = G
 _G[addon] = engine
 
-_G.NUI = NUI
-
 NUI.Version = GetAddOnMetadata("ElvUI_NihilistzscheUI", "Version")
 NUI.Title = "|cffff2020NihilistzscheUI|r"
 NUI.ShortTitle = "|cffff2020NihiUI|r"
@@ -146,6 +144,8 @@ end
 
 function NUI:Initialize()
     self.initialized = true
+
+    if NUI.Debug then _G.NUI = NUI end
 
     self:BuildGameMenu()
     self.FixPetJournal()

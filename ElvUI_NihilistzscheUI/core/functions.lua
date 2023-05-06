@@ -153,6 +153,8 @@ function NUI.ClickGameMenu()
     HideUIPanel(_G.GameMenuFrame)
 end
 
+_G.ElvUI_NihilistzscheUI_AddonCompartmentFunc = NUI.ClickGameMenu
+
 if SLE then
     NUI.SLEBuildGameMenu = SLE.BuildGameMenu
     SLE.BuildGameMenu = function() end
