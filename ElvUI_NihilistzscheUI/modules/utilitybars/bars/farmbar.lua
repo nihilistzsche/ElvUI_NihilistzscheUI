@@ -290,7 +290,7 @@ function FB:UpdateAndNotify(item, id, count)
     local earned = "You have |cff00ff00earned|r %d %s (|cff00ffffcurrently|r %d, |cff0000ffTarget|r %d)"
     local repstr = "%d |cffff00ffRepetitions|r"
     local change = count - oldCount
-    local link = item and select(2, GetItemInfo(id)) or GetCurrencyLink(id, 0)
+    local link = item and select(2, GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id, 0)
     local notify = E.db.nihilistzscheui.utilitybars.farmBar.notify
     if change and link and change > 0 then
         self.sessionDB[table][id].gained = self.sessionDB[table][id].gained + change
