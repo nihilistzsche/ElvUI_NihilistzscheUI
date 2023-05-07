@@ -183,6 +183,15 @@ function NUB.CreateButtons(bar, num)
     end
 end
 
+function NUB:InitCache()
+    E.global.nihilistzscheui = E.global.nihilistzscheui or {}
+    E.global.nihilistzscheui.utilitybars = E.global.nihilistzscheui.utilitybars or {}
+    E.global.nihilistzscheui.utilitybars.items = E.global.nihilistzscheui.utilitybars.items or {}
+    E.global.nihilistzscheui.utilitybars.spells = E.global.nihilistzscheui.utilitybars.spells or {}
+
+    self.cache = E.global.nihilistzscheui.utilitybars
+end
+
 NUB.PausedConfigs = {}
 local function GenericButtonUpdate(bar, button, ...)
     if NUB.updatesPaused then
@@ -215,6 +224,10 @@ local function CreateOrGetItemClosure(id, bar, button, args)
         button.texture:SetDesaturated(count == 0)
         button:SetState(0, "item", id)
 
+        NUB.cache.items[id] = {
+            itemNaem = itemName,
+            texture = texture,
+        }
         GenericButtonUpdate(_bar, _button, unpack(_args))
     end
     itemClosures[id] = func
@@ -224,7 +237,21 @@ end
 function NUB.UpdateButtonAsItem(bar, button, id, ...)
     button.data = id
     local args = { ... }
-    Item:CreateFromItemID(id):ContinueOnItemLoad(CreateOrGetItemClosure(id, bar, button, args))
+    if NUB.cache.items[id] then
+        local itemName, texture = NUB.cache.items[id].itemname, NUB.cache.items[id].texture
+        local count = GetItemCount(id)
+        button:SetAttribute("type", "item")
+        button:SetAttribute("item", itemName)
+        button.count:SetText(count)
+        button.count:SetShown(count > 1)
+        button.texture:SetTexture(texture)
+        button.texture:SetDesaturated(count == 0)
+        button:SetState(0, "item", id)
+
+        GenericButtonUpdate(bar, button, unpack(args))
+    else
+        Item:CreateFromItemID(id):ContinueOnItemLoad(CreateOrGetItemClosure(id, bar, button, args))
+    end
 end
 
 local spellClosureData = {}
@@ -246,6 +273,10 @@ local function CreateOrGetSpellClosure(id, bar, button, args)
         button.count:Hide()
         button:SetBackdropBorderColor(0, 0, 0, 1)
 
+        NUB.cache.spells[id] = {
+            spellName = name,
+            spellTexture = spellTexture,
+        }
         GenericButtonUpdate(_bar, _button, unpack(_args))
     end
     spellClosures[id] = func
@@ -255,7 +286,19 @@ end
 function NUB.UpdateButtonAsSpell(bar, button, id, ...)
     button.data = id
     local args = { ... }
-    Spell:CreateFromSpellID(id):ContinueOnSpellLoad(CreateOrGetSpellClosure(id, bar, button, args))
+    if NUB.cache.spells[id] then
+        local name, spellTexture = NUB.cache.spells[id].spellName, NUB.cache.spells[id].spellTexture
+        button:SetAttribute("type", "spell")
+        button:SetAttribute("spell", name)
+        button:SetState(0, "spell", id)
+        button.texture:SetTexture(spellTexture)
+        button.count:Hide()
+        button:SetBackdropBorderColor(0, 0, 0, 1)
+
+        GenericButtonUpdate(bar, button, unpack(args))
+    else
+        Spell:CreateFromSpellID(id):ContinueOnSpellLoad(CreateOrGetSpellClosure(id, bar, button, args))
+    end
 end
 
 function NUB.UpdateButtonAsToy(bar, button, id, ...)
@@ -644,6 +687,7 @@ function NUB:Initialize()
     self:AddProfileCallbacks()
     local ForUpdateAll = function(_self) _self:UpdateAll() end
     self.ForUpdateAll = ForUpdateAll
+    self:InitCache()
     self:RegisterEvent("PLAYER_REGEN_DISABLED")
     self:RegisterEvent("PLAYER_REGEN_ENABLED")
 end
