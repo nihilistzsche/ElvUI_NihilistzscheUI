@@ -3,7 +3,7 @@ local NI = NUI.Installer
 
 local tinsert = _G.tinsert
 local strmatch = _G.strmatch
-local GetAddOnMetadata = _G.GetAddOnMetadata
+local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
 local tContains = _G.tContains
 
 function NI:ElvUIFCTSetup()

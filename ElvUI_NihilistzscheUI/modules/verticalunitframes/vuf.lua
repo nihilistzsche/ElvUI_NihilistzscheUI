@@ -19,7 +19,7 @@ local tinsert = _G.tinsert
 local gsub = _G.gsub
 local tContains = _G.tContains
 local hooksecurefunc = _G.hooksecurefunc
-local GetAddOnMetadata = _G.GetAddOnMetadata
+local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
 
 function VUF.CreateWarningFrame()
     local f = CreateFrame("ScrollingMessageFrame", "ElvUIVerticalUnitFramesWarning", UIParent)

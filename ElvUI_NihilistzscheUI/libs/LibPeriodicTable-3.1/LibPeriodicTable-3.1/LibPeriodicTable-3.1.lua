@@ -152,7 +152,7 @@ do
     -- Handle the initial scan of LoD data modules, storing in this local table so the sets metatable can find em
     local lodmodules = {}
     for i = 1, GetNumAddOns() do
-        local metadata = GetAddOnMetadata(i, "X-PeriodicTable-3.1-Module")
+        local metadata = (C_AddOns or _G).GetAddOnMetadata(i, "X-PeriodicTable-3.1-Module")
         if metadata then
             local name, _, _, enabled = GetAddOnInfo(i)
             if enabled then

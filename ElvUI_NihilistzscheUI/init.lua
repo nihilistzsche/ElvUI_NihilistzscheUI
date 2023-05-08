@@ -9,7 +9,7 @@ engine.oUF = _G.ElvUF
 local NUI = E.Libs.AceAddon:NewAddon(addon, "AceEvent-3.0", "AceHook-3.0")
 
 local LibStub = _G.LibStub
-local GetAddOnMetadata = _G.GetAddOnMetadata
+local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
 local ElvUI_CPU = _G.ElvUI_CPU
 local hooksecurefunc = _G.hooksecurefunc
 local geterrorhandler = _G.geterrorhandler

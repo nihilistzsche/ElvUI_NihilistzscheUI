@@ -3,7 +3,7 @@ local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
 local COMP = NUI.Compatibility
 
-local GetAddOnMetadata = _G.GetAddOnMetadata
+local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
 
 function NI:KalielSetup()
     local modulesOrder
