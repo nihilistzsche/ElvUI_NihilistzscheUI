@@ -146,7 +146,6 @@ function VUF:UpdateElement(frame, element)
         local aurabars = frame.AuraBars
         local db = frame.db.aurabar
 
-        aurabars.height = db.height
         aurabars.maxBars = db.maxBars
         aurabars.growth = "DOWN"
         aurabars.barSpacing = UF.thinBorders and 1 or 5
@@ -155,6 +154,9 @@ function VUF:UpdateElement(frame, element)
         aurabars.friendlyAuraType = db.friendlyAuraType
         aurabars.enemyAuraType = db.enemyAuraType
         aurabars.disableMouse = db.clickThrough
+        aurabars.auraBarHeight = size.height
+        aurabars.auraBarWidth = size.width
+        aurabars.barSpacing = (E.PixelMode and -1 or 1) + (aurabars.halfBar and (size.height / 2.25) or 0)
         aurabars.filterList = UF:ConvertFilters(aurabars, db.priority)
         aurabars.auraSort = UF.SortAuraFuncs[db.sortMethod]
 

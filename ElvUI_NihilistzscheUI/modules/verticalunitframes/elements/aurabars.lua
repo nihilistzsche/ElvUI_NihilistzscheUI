@@ -35,7 +35,6 @@ end
 
 function VUF:AuraBarsSetPosition(from, to)
     local anchor = self.initialAnchor
-    local growth = (self.growth == "BELOW" and -1) or 1
     local height = self.aurabarHeight or 20
     local spacing = (E.PixelMode and -1 or 1) + (self.halfBar and (height / 2.25) or 0)
 
@@ -44,7 +43,7 @@ function VUF:AuraBarsSetPosition(from, to)
         if not button then break end
 
         button:ClearAllPoints()
-        button:Point(anchor, self, anchor, 0, (i == 1 and 0) or (growth * ((i - 1) * (height + spacing))))
+        button:Point(anchor, self, anchor, 0, (i == 1 and 0) or (-1 * ((i - 1) * (height + spacing))))
     end
 end
 
