@@ -832,6 +832,7 @@ function NI:ElvUISetup(role, isSpec)
         colors = {
             castClassColor = true,
             auraBarBuff = self:Color(),
+            auraBarDebuff = self:IColor(),
             healthclass = true,
             colorhealthbyvalue = true,
             healPrediction = {
