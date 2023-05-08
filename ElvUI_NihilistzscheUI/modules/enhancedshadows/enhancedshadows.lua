@@ -286,6 +286,9 @@ function ES:UpdateShadow(shadow, hide)
         C_Timer_After(1, function() self:UpdateShadow(shadow) end)
         return
     end
+
+    E:UpdateClassColor(ShadowColor)
+
     local r, g, b = ShadowColor.r, ShadowColor.g, ShadowColor.b
 
     local size = E.db.nihilistzscheui.enhancedshadows.size
