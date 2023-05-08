@@ -168,10 +168,10 @@ function REP:Notify()
             end
             if isFriend and not isParagon then
                 rankData = C_GossipInfo_GetFriendshipReputationRanks(friendData.friendshipFactionID)
-                if rankData.currentLevel < rankData.maxLevel then
-                    barMin, barMax, barValue =
-                        friendData.reactionThreshold, friendData.nextThreshold, friendData.standing
-                end
+                barMin, barMax, barValue =
+                    friendData.reactionThreshold,
+                    friendData.nextThreshold or friendData.reactionThreshold,
+                    friendData.standing
                 standingID = rankData.currentLevel
                 friendID, friendRep = friendData.friendshipFactionID, friendData.reaction
             end
