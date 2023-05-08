@@ -143,14 +143,28 @@ function VUF:UpdateElement(frame, element)
         )
     end
     if element == "aurabars" then
-        local buffColor = UF.db.colors.auraBarBuff
-        local debuffColor = UF.db.colors.auraBarDebuff
         local aurabars = frame.AuraBars
-        aurabars.db = frame.db.aurabar
-        aurabars.buffColor = { buffColor.r, buffColor.g, buffColor.b }
-        aurabars.debuffColor = { debuffColor.r, debuffColor.g, debuffColor.b }
-        aurabars.auraBarHeight = size.height
-        aurabars.auraBarWidth = size.width
+        local db = frame.db.aurabar
+
+        aurabars.height = db.height
+        aurabars.maxBars = db.maxBars
+        aurabars.growth = "DOWN"
+        aurabars.barSpacing = UF.thinBorders and 1 or 5
+        aurabars.spacing = db.spacing
+        aurabars.reverseFill = db.reverseFill
+        aurabars.friendlyAuraType = db.friendlyAuraType
+        aurabars.enemyAuraType = db.enemyAuraType
+        aurabars.disableMouse = db.clickThrough
+        aurabars.filterList = UF:ConvertFilters(aurabars, db.priority)
+        aurabars.auraSort = UF.SortAuraFuncs[db.sortMethod]
+
+        E:UpdateClassColor(UF.db.colors.auraBarBuff)
+        E:UpdateClassColor(UF.db.colors.auraBarDebuff)
+
+        for _, bar in ipairs(aurabars) do
+            UF:AuraBars_UpdateBar(bar)
+        end
+
         aurabars:Size(size.width, size.height)
         aurabars:ForceUpdate()
     end
