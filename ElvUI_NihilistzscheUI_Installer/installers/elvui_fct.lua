@@ -1,5 +1,6 @@
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
+local COMP = NUI.Compatibility
 
 local tinsert = _G.tinsert
 local strmatch = _G.strmatch
@@ -88,14 +89,14 @@ function NI:ElvUIFCTSetup()
             db.unitframes.frames[frame].showDots = true
         end
     end
-    if GetAddOnMetadata("ElvUI_FCT", "X-NZEdit") then
+    if GetAddOnMetadata("ElvUI_FCT", "X-Nihilistzsche") then
         self:EDB().elvui_fct = db
     else
         E:CopyTable(_G.ElvFCT, db)
     end
 end
 
-if GetAddOnMetadata("ElvUI_FCT", "X-NZEdit") then
+if COMP.IsAddOnEnabled("ElvUI_FCT") and GetAddOnMetadata("ElvUI_FCT", "X-Nihilistzsche") then
     NI:RegisterAddOnInstaller("ElvUI_FCT", NI.ElvUIFCTSetup, true)
 else
     NI:RegisterGlobalAddOnInstaller("ElvUI_FCT", NI.ElvUIFCTSetup)
