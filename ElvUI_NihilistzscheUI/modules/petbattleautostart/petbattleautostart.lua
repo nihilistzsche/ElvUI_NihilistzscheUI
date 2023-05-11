@@ -235,49 +235,55 @@ function PBAS.TAS_OnClick()
     end
 end
 
+function PBAS:IsTamerValid()
+    local validTamer, _, tamerID
+
+    if UnitExists("npc") then -- (Fixes edge case where the tamer has been detargeted)
+        _, _, _, _, _, tamerID = strsplit("-", UnitGUID("npc"))
+        tamerID = tonumber(tamerID)
+
+        if tamerID and self.PetTamers[tamerID] and self.PetTamers[tamerID].valid then validTamer = true end
+    elseif UnitExists("target") then
+        _, _, _, _, _, tamerID = strsplit("-", UnitGUID("target"))
+        tamerID = tonumber(tamerID)
+
+        if tamerID and self.PetTamers[tamerID] and self.PetTamers[tamerID].valid then validTamer = true end
+    end
+
+    return validTamer, tamerID
+end
+
 function PBAS:AutoTrainerStart(event)
     if event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" then
         if IsShiftKeyDown() then return end
 
-        local validTamer, _, tamerID
-
-        if UnitExists("npc") then -- (Fixes edge case where the tamer has been detargeted)
-            _, _, _, _, _, tamerID = strsplit("-", UnitGUID("npc"))
-            tamerID = tonumber(tamerID)
-
-            if tamerID and self.PetTamers[tamerID] and self.PetTamers[tamerID].valid then validTamer = true end
-        elseif UnitExists("target") then
-            _, _, _, _, _, tamerID = strsplit("-", UnitGUID("target"))
-            tamerID = tonumber(tamerID)
-
-            if tamerID and self.PetTamers[tamerID] and self.PetTamers[tamerID].valid then validTamer = true end
-        end
+        local validTamer, tamerID = self:IsTamerValid()
 
         if validTamer then
             if event == "GOSSIP_SHOW" then
                 -- Check if any quests are completable
-                local questindex
-                if self.db.autoQuestComplete and C_GossipInfo.GetNumActiveQuests() > 0 then
+                local questIndex
+                local availableQuests = C_GossipInfo.GetAvailableQuests()
+                local activeQuests = C_GossipInfo.GetActiveQuests()
+                if self.db.autoQuestComplete and #activeQuests > 0 then
                     -- Check if any quests are completable
-                    local questcomp
-                    local info = C_GossipInfo.GetActiveQuests()
-                    for i = 1, C_GossipInfo.GetNumActiveQuests() do
-                        if info[i].isComplete then
-                            questindex = i
+                    for i, info in ipairs(activeQuests) do
+                        if info.isComplete then
+                            questIndex = i
                             break
                         end
                     end
                 end
                 local options = C_GossipInfo.GetOptions()
-                if self.db.autoQuestAccept and C_GossipInfo.GetNumAvailableQuests() > 0 then
-                    C_GossipInfo.SelectAvailableQuest(1)
+                if self.db.autoQuestAccept and #availableQuests > 0 then
+                    C_GossipInfo.SelectAvailableQuest(availableQuests[1].questID)
                     C_GossipInfo.CloseGossip()
-                elseif self.db.autoQuestAccept and C_GossipInfo.GetNumActiveQuests() > 0 and questindex then
-                    C_GossipInfo.SelectGossipActiveQuest(questindex)
+                elseif self.db.autoQuestAccept and #activeQuests > 0 and questIndex then
+                    C_GossipInfo.SelectActiveQuest(activeQuests[questIndex].questID)
                     C_GossipInfo.CloseGossip()
                 elseif
                     self.db.autoStartBattle
-                    and C_GossipInfo.GetNumAvailableQuests() == 0
+                    and #availableQuests == 0
                     and #options > 0
                     and not self.PetTamers[tamerID].noBattle
                 then
