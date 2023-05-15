@@ -27,4 +27,5 @@
     <Script file="projectazilroka.lua" />
     <Script file="bloodshieldtracker.lua" />
     <Script file="skillet.lua" />
+    <Script file="cursortrail.lua" />
 </Ui>
