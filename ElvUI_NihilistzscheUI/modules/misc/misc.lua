@@ -5,12 +5,11 @@ local COMP = NUI.Compatibility
 local NM = NUI.Misc
 local hooksecurefunc = _G.hooksecurefunc
 local LoadAddOn = _G.LoadAddOn
-local GetNumSpecializations = _G.GetNumSpecializations
 
 function NM:Initialize()
     self.HookAFK()
     self.UpdateQuestMapFrame()
-    hooksecurefunc(AB, "UpdateButtonConfig", function(barName, buttonName)
+    hooksecurefunc(AB, "UpdateButtonConfig", function(barName)
         if barName and AB.handledBars[barName] then
             for _, button in pairs(AB.handledBars[barName].buttonss) do
                 button:SetAttribute("unit2", "player")
@@ -31,21 +30,6 @@ function NM:Initialize()
             end
         end)
     end
-    _G.PlayerTalentFrameSpecialization:HookScript("OnShow", function(_self)
-        local numSpecs = GetNumSpecializations(false, _self.isPet)
-        -- demon hunters have 2 specs, druids have 4
-        if numSpecs == 1 then
-            _self.specButton1:SetPoint("TOPLEFT", 6, -161)
-            _self.specButton2:Hide()
-            _self.specButton3:Hide()
-        elseif numSpecs == 2 then
-            _self.specButton1:SetPoint("TOPLEFT", 6, -131)
-            _self.specButton3:Hide()
-        elseif numSpecs == 4 then
-            _self.specButton1:SetPoint("TOPLEFT", 6, -61)
-            _self.specButton4:Show()
-        end
-    end)
     if COMP.IsAddOnEnabled("Forward") and _G.MovePad then
         E.FrameLocks[_G.MovePad] = true
         E:CreateMover(
