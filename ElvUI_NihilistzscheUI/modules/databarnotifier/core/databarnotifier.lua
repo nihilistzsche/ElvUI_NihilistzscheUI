@@ -25,15 +25,15 @@ local prototype = { parent = DBN }
 
 function prototype:GetParent() return self.parent end
 
-function prototype:ScanXP() self.values = { last = self.curFunc(), max = self.maxFunc(), level = self.levelFunc() } end
+function prototype:ScanValues() self.values = { last = self.curFunc(), max = self.maxFunc(), level = self.levelFunc() } end
 
 function prototype:Notify()
     local c = self.curFunc()
     local max = self.maxFunc()
 
-    if not self.values then self:ScanXP() end
+    if not self.values then self:ScanValues() end
 
-    self:GetParent():XPNotification(self, c, max)
+    self:GetParent():BaseNotification(self, c, max)
 end
 
 function DBN:NewNotifier(name, label, chatFrameKey, color, curFunc, maxFunc, levelFunc)
@@ -94,7 +94,7 @@ function DBN:GenerateNotification(textureMarkup, color, label, change, remaining
     )
 end
 
-function DBN:XPNotification(module, c, max)
+function DBN:BaseNotification(module, c, max)
     local chatframeID = tonumber(DBN.db[module.chatFrameKey .. "chatframe"])
     if chatframeID == 0 then return end
     local chatframe = _G["ChatFrame" .. chatframeID]
@@ -133,7 +133,7 @@ DBN.NotifierEventCallbacks = {}
 
 function DBN:RegisterNotifierEvent(notifierObj, event)
     if not self.NotifierEventCallbacks[notifierObj] then
-        self.NotifierEventCallbacks[notifierObj] = function() notifierObj:Notify() end
+        self.NotifierEventCallbacks[notifierObj] = function(_, ...) notifierObj:Notify(...) end
     end
 
     self:RegisterEvent(event, self.NotifierEventCallbacks[notifierObj])

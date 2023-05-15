@@ -19,7 +19,7 @@ function AZ:Initialize()
     if COMP.SLE then -- Only checkign SLE here because the rest rely on it
         self.textureMarkup = "|TInterface/ICONS/INV_GlowingAzeriteSpire.blp:12:12:0:0:64:64:4:60:4:60|t"
     end
-    self:ScanXP()
+    self:ScanValues()
     self:GetParent():RegisterNotifierEvent(self, "AZERITE_ITEM_EXPERIENCE_CHANGED")
 end
 

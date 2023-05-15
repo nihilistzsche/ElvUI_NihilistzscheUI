@@ -15,7 +15,7 @@ function XP:Initialize()
         local XPIcon = DB.Icons.XP
         self.textureMarkup = "|T" .. XPIcon .. ":12|t"
     end
-    self:ScanXP()
+    self:ScanValues()
     self:GetParent():RegisterNotifierEvent(self, "PLAYER_XP_UPDATE")
 end
 

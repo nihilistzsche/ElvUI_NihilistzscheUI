@@ -18,7 +18,7 @@ function HN:Initialize()
         local Icon = [[Interface\AddOns\ElvUI_SLE\media\textures\factionlogo\blizzard\]] .. E.myfaction
         self.textureMarkup = "|T" .. Icon .. ":12|t"
     end
-    self:ScanXP()
+    self:ScanValues()
     self:GetParent():RegisterNotifierEvent(self, "HONOR_XP_UPDATE")
     self.color = E.myfaction == "Alliance" and self:GetParent().colors.alliance or self:GetParent().colors.horde
 end
