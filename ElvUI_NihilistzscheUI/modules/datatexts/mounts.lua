@@ -338,9 +338,7 @@ local function OnEvent(self) UpdateDisplay(self) end
 
 local function OnClick(self, button)
     DT.tooltip:Hide()
-    if IsAltKeyDown() and IsShiftKeyDown() then
-        _G.SummonRandomStrider()
-    elseif IsAltKeyDown() and IsControlKeyDown() then
+    if IsAltKeyDown() and IsControlKeyDown() then
         SummonSkyGolem()
     elseif IsAltKeyDown() then
         if db.favAlt then C_MountJournal_SummonByID(db.favAlt) end
