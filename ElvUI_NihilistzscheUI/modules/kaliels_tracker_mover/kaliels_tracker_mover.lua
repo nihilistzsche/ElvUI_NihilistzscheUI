@@ -9,7 +9,7 @@ function KTM.Initialize()
     KT.MoveTracker = E.noop
     local frame = KT.frame
     frame:SetParent(E.UIParent)
-    frame:SetPoint("CENTER", E.UIParent, "CENTER", 0, 0)
+    frame:SetPoint("TOPRIGHT", E.UIParent, "TOPRIGHT", -82, -335)
     E:CreateMover(frame, "NUIKalielsTrackerMover", "Kaliels Tracker", nil, nil, nil, "ALL,SOLO,NIHILISTZSCHEUI")
     frame:SetAllPoints(_G["NUIKalielsTrackerMover"])
 end
