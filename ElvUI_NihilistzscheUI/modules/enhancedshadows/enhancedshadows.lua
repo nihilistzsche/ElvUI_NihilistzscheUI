@@ -20,6 +20,7 @@ local NUM_STANCE_SLOTS = _G.NUM_STANCE_SLOTS
 local hooksecurefunc = _G.hooksecurefunc
 local C_Timer_After = _G.C_Timer.After
 local GetNumGroupMembers = _G.GetNumGroupMembers
+local wipe = _G.wipe
 if not IsAddOnLoaded("Blizzard_TalentUI") then LoadAddOn("Blizzard_TalentUI") end
 
 ES.AddOnFrames = {
@@ -247,10 +248,30 @@ function ES:SkinAlerts()
     end
 end
 
-function ES:UpdateShadows(hide)
-    for frame, _ in pairs(ES.shadows) do
-        self:UpdateShadow(frame, hide)
+ES.pendingShadows = {}
+function ES:UpdateShadows(hide, shadow)
+    if not self:CheckShadowColor() then
+        if shadow then tinsert(self.pendingShadows, shadow) end
+        if not self.pendingUpdate then
+            C_Timer_After(2, function() self:UpdateShadows(hide) end)
+            self.pendingUpdate = true
+        end
+        return
     end
+    if #self.pendingShadows > 0 then
+        for _, _shadow in next, self.pendingShadows do
+            self:UpdateShadow(_shadow, hide)
+        end
+        wipe(self.pendingShadows)
+    end
+    if shadow then
+        self:UpdateShadow(shadow, hide)
+    else
+        for frame, _ in pairs(ES.shadows) do
+            self:UpdateShadow(frame, hide)
+        end
+    end
+    self.pendingUpdate = nil
 end
 
 function ES:RegisterFrameShadows(frame)
@@ -258,40 +279,41 @@ function ES:RegisterFrameShadows(frame)
     if shadow and not shadow.isRegistered then
         self.shadows[shadow] = true
         shadow.isRegistered = true
-        self:UpdateShadow(shadow)
+        self:UpdateShadows(false, shadow)
     end
     local ishadow = frame.invertedshadow or frame.InvertedShadow
     if ishadow and not ishadow.isRegistered then
         self.shadows[ishadow] = true
         ishadow.isRegistered = true
-        self:UpdateShadow(ishadow)
+        self:UpdateShadows(false, ishadow)
     end
 end
 
 function ES:RegisterShadow(shadow)
     if shadow.isRegistered then
-        self:UpdateShadow(shadow)
+        self:UpdateShadows(false, shadow)
         return
     end
     self.shadows[shadow] = shadow
     shadow.isRegistered = true
-    self:UpdateShadow(shadow)
+    self:UpdateShadows(false, shadow)
+end
+
+function ES:CheckShadowColor()
+    local color = self.db and self.db.shadowcolor
+    if color and not self.classColorUpdated then
+        E:UpdateClassColor(color)
+        self.classColorUpdated = true
+    end
+    return not not color
 end
 
 function ES:UpdateShadow(shadow, hide)
-    local ShadowColor = E.db.nihilistzscheui
-        and E.db.nihilistzscheui.enhancedshadows
-        and E.db.nihilistzscheui.enhancedshadows.shadowcolor
-    if not ShadowColor then
-        C_Timer_After(1, function() self:UpdateShadow(shadow) end)
-        return
-    end
-
-    E:UpdateClassColor(ShadowColor)
+    local ShadowColor = self.db.shadowcolor
 
     local r, g, b = ShadowColor.r, ShadowColor.g, ShadowColor.b
 
-    local size = E.db.nihilistzscheui.enhancedshadows.size
+    local size = self.db.size
     if size ~= LastSize then
         if shadow.inverted then
             shadow:SetInside(nil, -size, -size)
@@ -307,7 +329,7 @@ function ES:UpdateShadow(shadow, hide)
     end
     shadow:SetBackdropColor(r, g, b, 0)
     shadow:SetBackdropBorderColor(r, g, b, 0.9)
-    shadow:SetShown(E.db.nihilistzscheui.enhancedshadows.enabled and not hide)
+    shadow:SetShown(self.db.enabled and not hide)
 end
 
 function ES:UpdateMERShadows()
