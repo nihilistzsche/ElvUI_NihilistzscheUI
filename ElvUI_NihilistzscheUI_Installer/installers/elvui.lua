@@ -39,12 +39,12 @@ function NI:ElvUINonHealerSetup()
         },
     }
 
-    self.SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
-    self.SaveMoverPosition("ElvUF_Raid2Mover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
-    self.SaveMoverPosition("ElvUF_Raid3Mover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
-    self.SaveMoverPosition("ElvUF_RaidpetMover", "BOTTOMLEFT", "ElvUF_RaidMover", "BOTTOMRIGHT", 4, 0)
-    self.SaveMoverPosition("ElvUF_PartyMover", "BOTTOMLEFT", "DTPanelDTB2_NihilistzscheUITMover", "TOPLEFT", 0, 4)
-    self.SaveMoverPosition("ElvUF_TankMover", "BOTTOMLEFT", "ElvUF_RaidMover", "TOPLEFT", 50, 80)
+    self.SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
+    self.SaveMoverPosition("ElvUF_Raid2Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
+    self.SaveMoverPosition("ElvUF_Raid3Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
+    self.SaveMoverPosition("ElvUF_RaidpetMover", "BOTTOMLEFT", "ElvUF_Raid1Mover", "BOTTOMRIGHT", 4, 0)
+    self.SaveMoverPosition("ElvUF_PartyMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
+    self.SaveMoverPosition("ElvUF_TankMover", "BOTTOMLEFT", "ElvUF_Raid1Mover", "TOPLEFT", 50, 80)
     self.SaveMoverPosition("ElvUF_AssistMover", "TOP", "ElvUF_TankMover", "BOTTOM", 0, -4)
 end
 
