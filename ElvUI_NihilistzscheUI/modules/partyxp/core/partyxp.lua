@@ -8,7 +8,6 @@ local ES = NUI.EnhancedShadows
 
 local min = _G.math.min
 local UnitClass = _G.UnitClass
-local RAID_CLASS_COLORS = _G.RAID_CLASS_COLORS
 local tinsert = _G.tinsert
 local tremove = _G.tremove
 local tInvert = _G.tInvert
@@ -37,7 +36,7 @@ function PXP:UpdateColorSetting()
         if self.db.classColor then
             local _, class = UnitClass(self:GetDataForPartyMember(v.guid).name)
             if class then
-                local color = class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[class]
+                local color = NUI.ClassColor(false, class)
                 v:SetStatusBarColor(color.r, color.g, color.b)
                 v.restedbar:SetStatusBarColor(color.r * 0.8, color.g * 0.8, color.b * 0.8, 0.2)
             end

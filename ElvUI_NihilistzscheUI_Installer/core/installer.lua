@@ -6,8 +6,7 @@ NUI.Installer = NI
 -- luacheck: globals NUIIDB ElvDB
 local _G = _G
 
-local RAID_CLASS_COLORS, pairs, unpack, format, ReloadUI, print =
-    _G.RAID_CLASS_COLORS, _G.pairs, _G.unpack, _G.format, _G.ReloadUI, _G.print
+local pairs, format, ReloadUI, print = _G.pairs, _G.format, _G.ReloadUI, _G.print
 local tinsert = _G.tinsert
 local C_Timer_After = _G.C_Timer.After
 local wipe = _G.wipe
@@ -63,7 +62,7 @@ function NI:SetupForCharacters()
     for s, l in pairs(_G.ElvDB.class) do
         for n, c in pairs(l) do
             self.currentClass = c
-            self.classColor = E:ClassColor(c, true)
+            self.classColor = NUI.ClassColor(false, true)
             self:UpdateProfileKey()
             self:InitBaseProfile(n, s)
             self:InstallForClass(c)
@@ -159,7 +158,7 @@ NI.installTable = {
         [1] = _G.START,
         [2] = "Use Authors Defaults",
     },
-    StepTitlesColorSelected = E.myclass == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[E.myclass],
+    StepTitlesColorSelected = NUI.ClassColor(),
     StepTitleWidth = 200,
     StepTitleButtonWidth = 200,
     StepTitleTextJustification = "CENTER",

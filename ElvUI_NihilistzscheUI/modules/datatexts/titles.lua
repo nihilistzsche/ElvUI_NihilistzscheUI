@@ -13,7 +13,6 @@ local CreateFrame = _G.CreateFrame
 local GetTitleName = _G.GetTitleName
 local UnitClass = _G.UnitClass
 local UnitName = _G.UnitName
-local RAID_CLASS_COLORS = _G.RAID_CLASS_COLORS
 local GetNumTitles = _G.GetNumTitles
 local IsTitleKnown = _G.IsTitleKnown
 local GetCurrentTitle = _G.GetCurrentTitle
@@ -53,7 +52,7 @@ local function GetTitleFormat(data)
         name = ("|cffa6c939<%s>|r"):format(L.name)
     else
         local _, classFile = UnitClass("player")
-        local player, nameRGB = UnitName("player"), RAID_CLASS_COLORS[classFile]
+        local player, nameRGB = UnitName("player"), NUI.ClassColor()
         local nameHex = ("%02x%02x%02x"):format(nameRGB.r * 255, nameRGB.g * 255, nameRGB.b * 255)
         name = ("|cff%s%s|r"):format(nameHex, player)
     end

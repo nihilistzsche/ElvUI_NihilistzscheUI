@@ -6,7 +6,6 @@ local ES = NUI.EnhancedShadows
 local COMP = NUI.Compatibility
 
 local UnitName = _G.UnitName
-local RAID_CLASS_COLORS = _G.RAID_CLASS_COLORS
 local GetSpellTexture = _G.GetSpellTexture
 local UnitGUID = _G.UnitGUID
 local IsInRaid = _G.IsInRaid
@@ -35,7 +34,7 @@ function RCD:CreateBar(spell_id, guid)
     if COMP.MERS then bar:Styling() end
 
     local class = self.cached_players[guid].unitInfo.class
-    local classColor = class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[class]
+    local classColor = NUI.ClassColor(false, class)
     if not classColor then return end
 
     bar:SetColor(classColor.r, classColor.g, classColor.b)

@@ -10,7 +10,6 @@ local BNet_GetBNetIDAccount = _G.BNet_GetBNetIDAccount
 local C_BattleNet_GetAccountInfoByID = _G.C_BattleNet.GetAccountInfoByID
 local C_BattleNet_GetGameAccountInfoByID = _G.C_BattleNet.GetGameAccountInfoByID
 local GetQuestDifficultyColor = _G.GetQuestDifficultyColor
-local RAID_CLASS_COLORS = _G.RAID_CLASS_COLORS
 local GetPlayerInfoByGUID = _G.GetPlayerInfoByGUID
 local UnitInParty = _G.UnitInParty
 local UnitClass = _G.UnitClass
@@ -191,7 +190,7 @@ function NC:SetInfoString(event, sender, guid)
             if not token then token = self.femaleClasses[gameAccountInfo.className] end
             local color = GetQuestDifficultyColor(gameAccountInfo.characterLevel)
             local levelColor = E:RGBToHex(color.r, color.g, color.b)
-            local classColor = RAID_CLASS_COLORS[token]
+            local classColor = NUI.ClassColor(false, token)
             classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
             tabName = classColor .. accountInfo.accountName .. "|r"
             infoString = classColor
@@ -284,7 +283,7 @@ function NC:SetInfoString(event, sender, guid)
 
                 local token = self.maleClasses[class]
                 if not token then token = self.femaleClasses[class] end
-                classColor = RAID_CLASS_COLORS[token]
+                classColor = NUI.ClassColor(false, token)
                 classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
 
                 if realm ~= NC.myrealm then
@@ -383,7 +382,7 @@ function NC:AddIncoming(event, msg, sender, guid) -- Add messages to the text
     if not chat.hex then chat.hex = "|cffffffff" end
 
     if event == "CHAT_MSG_WHISPER_INFORM" then -- Whisper
-        local classColor = E.myclass == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[E.myclass]
+        local classColor = NUI.ClassColor()
         classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
         if self.senderInfo[sender] then
             str = classColor
@@ -415,7 +414,7 @@ function NC:AddIncoming(event, msg, sender, guid) -- Add messages to the text
         end
         chat.LastMessage:SetText("Last message recieved at " .. NC:GetFormattedTime(true))
     elseif event == "CHAT_MSG_BN_WHISPER_INFORM" then -- BNet
-        local classColor = E.myclass == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[E.myclass]
+        local classColor = NUI.ClassColor()
         classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
         if self.senderInfo[sender] then
             str = classColor
@@ -492,20 +491,66 @@ function NC:AddStatus(_, toast, author) -- Add messages to the text
     )
 end
 
-function NC:CopyChat(frame)
-    local CopyChatFrame = _G.CopyChatFrame
-    if not CopyChatFrame:IsShown() then
-        local lines = {}
-        for i = 1, frame:GetNumMessages() do
-            local t = frame:GetMessageInfo(i)
-            if t then tinsert(lines, t) end
-        end
-        local text = table.concat(lines, "\n")
+local removeIconFromLine
+do
+    local raidIconFunc = function(x)
+        x = x ~= "" and _G["RAID_TARGET_" .. x]
+        return x and ("{" .. strlower(x) .. "}") or ""
+    end
+    local stripTextureFunc = function(w, x, y)
+        if x == "" then return (w ~= "" and w) or (y ~= "" and y) or "" end
+    end
+    local hyperLinkFunc = function(w, x, y)
+        if w ~= "" then return end
+        local emoji = (x ~= "" and x) and strmatch(x, "elvmoji:%%(.+)")
+        return (emoji and E.Libs.Deflate:DecodeForPrint(emoji)) or y
+    end
+    local fourString = function(v, w, x, y) return format("%s%s%s", v, w, (v and v == "1" and x) or y) end
+    removeIconFromLine = function(text)
+        text = gsub(text, [[|TInterface\TargetingFrame\UI%-RaidTargetingIcon_(%d+):0|t]], raidIconFunc) --converts raid icons into {star} etc, if possible.
+        text = gsub(text, "(%s?)(|?)|[TA].-|[ta](%s?)", stripTextureFunc) --strip any other texture out but keep a single space from the side(s).
+        text = gsub(text, "(|?)|H(.-)|h(.-)|h", hyperLinkFunc) --strip hyperlink data only keeping the actual text.
+        text = gsub(text, "(%d+)(.-)|4(.-):(.-);", fourString) --stuff where it goes 'day' or 'days' like played; tech this is wrong but okayish
+        return text
+    end
+end
 
+local function colorizeLine(text, r, g, b)
+    local hexCode = E:RGBToHex(r, g, b)
+    return format("%s%s|r", hexCode, text)
+end
+
+local copyLines = {}
+function NC:GetLines(frame)
+    local index = 1
+    for i = 1, frame:GetNumMessages() do
+        local message, r, g, b = frame:GetMessageInfo(i)
+        if message and not CH:MessageIsProtected(message) then
+            --Set fallback color values
+            r, g, b = r or 1, g or 1, b or 1
+
+            --Remove icons
+            message = removeIconFromLine(message)
+
+            --Add text color
+            message = colorizeLine(message, r, g, b)
+
+            copyLines[index] = message
+            index = index + 1
+        end
+    end
+
+    return index - 1
+end
+
+function NC:CopyChat(frame)
+    if not _G.CopyChatFrame:IsShown() then
+        _G.CopyChatFrame:Show()
+        local lineCt = self:GetLines(frame)
+        local text = tconcat(copyLines, " \n", 1, lineCt)
         _G.CopyChatFrameEditBox:SetText(text)
-        CopyChatFrame:Show()
     else
-        CopyChatFrame:Hide()
+        _G.CopyChatFrame:Hide()
     end
 end
 

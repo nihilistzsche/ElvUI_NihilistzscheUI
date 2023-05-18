@@ -7,7 +7,6 @@ local ES = NUI.EnhancedShadows
 
 local UnitName = _G.UnitName
 local UnitClass = _G.UnitClass
-local RAID_CLASS_COLORS = _G.RAID_CLASS_COLORS
 local GetSpellInfo = _G.GetSpellInfo
 local hooksecurefunc = _G.hooksecurefunc
 
@@ -85,9 +84,7 @@ function ENA:PostUpdateAura(unit, button)
             local name = UnitName(button.caster)
             local class = select(2, UnitClass(button.caster))
             local color = ENA.db.ccDebuffCasterInfo.textColor
-            if class and ENA.db.ccDebuffCasterInfo.classColor then
-                color = class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[class]
-            end
+            if class and ENA.db.ccDebuffCasterInfo.classColor then color = NUI.ClassColor(false, class) end
             button.cc_name:SetText(name)
             button.cc_name:SetTextColor(color.r, color.g, color.b)
         elseif button.cc_name then

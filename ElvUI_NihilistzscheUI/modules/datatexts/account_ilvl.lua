@@ -46,7 +46,7 @@ local function buildCharacterNameString(entry)
             return "|T" .. iconPath .. _entry.class .. ".tga:15:15:0:0:64:64:4:56:4:56|t"
         end
     end
-    local classColors = entry.class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[entry.class]
+    local classColors = NUI.ClassColor(false, entry.class)
     local color = E:RGBToHex(classColors.r, classColors.g, classColors.b)
     if COMP.SLE and NUI.Private then
         return format("%s %s%s|r %s", buildClassIconString(entry), color, entry.name, buildFactionIconString(entry))

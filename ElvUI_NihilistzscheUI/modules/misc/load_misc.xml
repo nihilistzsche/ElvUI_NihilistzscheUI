@@ -1,9 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui">
-    <Script file="misc.lua"/>
-    <Script file="afk.lua"/>
-    <Script file="questmapframe.lua"/>
-    <Script file="cardinalpoints.lua"/>
-    <Script file="brc.lua"/>
-    <Script file="threat.lua"/>
-    <Script file="flightmode.lua"/>
+	<Script file="afk.lua"/>
+	<Script file="brc.lua"/>
+	<Script file="cardinalpoints.lua"/>
+	<Script file="questmapframe.lua"/>
+	<Script file="threat.lua"/>
+	<Script file="flightmode.lua"/>
+	<Script file="misc.lua"/>
+	<Script file="umc_health_circle_class_color.lua"/>
 </Ui>

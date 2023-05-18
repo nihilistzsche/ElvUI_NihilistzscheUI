@@ -467,9 +467,9 @@ function NC:InitNewFrame(chatType, chatTarget)
 
     chat.copybutton.tex = chat.copybutton:CreateTexture(nil, "OVERLAY")
     chat.copybutton.tex:SetInside()
-    chat.copybutton.tex:SetTexture([[Interface\AddOns\ElvUI\media\textures\copy.tga]])
+    chat.copybutton.tex:SetTexture([[Interface\AddOns\ElvUI\Core\Media\Textures\Copy.tga]])
 
-    chat.copybutton:SetScript("OnMouseUp", function(self, btn) NC:CopyChat(chat.Text) end)
+    chat.copybutton:SetScript("OnMouseUp", function(self, btn) NC:CopyChat(self:GetParent().Text) end)
 
     chat.copybutton:SetScript("OnEnter", function(self) self:SetAlpha(1) end)
     chat.copybutton:SetScript("OnLeave", function(self) self:SetAlpha(0) end)

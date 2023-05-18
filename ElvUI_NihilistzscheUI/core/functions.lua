@@ -375,3 +375,21 @@ function NUI.GetFactionValues()
 
     return name, min, max, value, isParagon, isMajorFaction, isFriend
 end
+
+function NUI.ClassColor(useIndex, class)
+    local color = E:ClassColor(class or E.myclass, true)
+    if useIndex then
+        return { color.r, color.g, color.b, 1 }
+    else
+        return color
+    end
+end
+
+function NUI.InvertedClassColor(useIndex, class)
+    local color = NUI.ClassColor(false, class)
+    if useIndex then
+        return { 1 - color.r, 1 - color.g, 1 - color.b, 1 }
+    else
+        return { r = 1 - color.r, g = 1 - color.g, b = 1 - color.b, a = 1 }
+    end
+end
