@@ -90,6 +90,9 @@ function NI:MerathilisUISetup(isSpec)
     }
     self:EDB().mui.chat = {
         panelHeight = 180,
+        chatText = {
+            enable = false,
+        },
     }
     self:EDB().mui.datatexts = {
         [2] = { enable = false },

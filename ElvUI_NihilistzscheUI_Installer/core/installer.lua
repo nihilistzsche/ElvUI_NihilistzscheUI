@@ -62,7 +62,7 @@ function NI:SetupForCharacters()
     for s, l in pairs(_G.ElvDB.class) do
         for n, c in pairs(l) do
             self.currentClass = c
-            self.classColor = NUI.ClassColor(false, true)
+            self.classColor = NUI.ClassColor(false, c)
             self:UpdateProfileKey()
             self:InitBaseProfile(n, s)
             self:InstallForClass(c)
