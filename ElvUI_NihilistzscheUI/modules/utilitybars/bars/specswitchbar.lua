@@ -17,6 +17,7 @@ local CreateFrame = _G.CreateFrame
 
 function SSB:CreateBar()
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_SpecSwitchBar",
         "specSwitchBar",
         { "CENTER", E.UIParent, "CENTER", 0, 0 },

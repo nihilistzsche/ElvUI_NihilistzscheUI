@@ -1,7 +1,7 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local RCD = NUI.RaidCDs
 
-local GetSpellInfo = _G.GetSpellInfo
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
 
 function RCD:GenerateOptions()
     local options = {
@@ -195,7 +195,7 @@ function RCD:GenerateOptions()
         local o = 1
         for k, _ in pairs(self.categories[category]) do
             categoryOptions.args[tostring(k)] = {
-                name = GetSpellInfo(k),
+                name = C_Spell_GetSpellName(k),
                 type = "toggle",
                 desc = "Uncheck to disable tracking",
                 order = o,

@@ -5,14 +5,15 @@ local NUB = NUI.UtilityBars
 local COMP = NUI.Compatibility
 
 local PT = NUI.Libs.PT
-local GetItemCount = _G.GetItemCount
-local IsSpellKnown = _G.IsSpellKnown
+local C_Item_GetItemCount = _G.C_Item.GetItemCount
+local IsSpellKnownOrOverridesKnown = _G.IsSpellKnownOrOverridesKnown
 local tinsert = _G.tinsert
 local CreateFrame = _G.CreateFrame
 local Item = _G.Item
 
-function PRB.CreateBar()
+function PRB:CreateBar()
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_PortalBar",
         "portalBar",
         { "BOTTOMRIGHT", _G.NihilistzscheUI_ProfessionBar, "TOPRIGHT", 0, 2 },
@@ -48,7 +49,7 @@ function PRB.CreateButtons(bar)
     local j = 1
 
     local function addItemButton(itemID, row)
-        local count = GetItemCount(itemID)
+        local count = C_Item_GetItemCount(itemID)
 
         if count > 0 then
             local button = bar.buttons[j]
@@ -65,7 +66,7 @@ function PRB.CreateButtons(bar)
     end
 
     local function addSpellButton(spellID, row)
-        if IsSpellKnown(spellID) then
+        if IsSpellKnownOrOverridesKnown(spellID) then
             local button = bar.buttons[j]
             if not button then
                 button = NUB.CreateButton(bar)
@@ -132,6 +133,9 @@ function PRB.UpdateBarKeys(bar)
 end
 
 function PRB:UpdateBar(bar)
+    if bar.updateTime and time() - bar.updateTime < 1 then return end
+    bar.updateTime = time()
+
     PRB.UpdateBarKeys(bar)
     NUB.WipeButtons(bar)
     PRB.CreateButtons(bar)
@@ -213,7 +217,7 @@ function PRB:Initialize()
     frame:RegisterEvent("SPELL_UPDATE_ICON")
     NUB:RegisterEventHandler(self, frame)
 
-    local bar = self.CreateBar()
+    local bar = self:CreateBar()
     self.bar = bar
     self.hooks = {}
 

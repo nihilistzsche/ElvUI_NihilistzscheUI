@@ -1,5 +1,5 @@
 <Bindings>
-<Binding category="BINDING_HEADER_NIHILISTZSCHEUI" name="Summon Favorite Mount">
+<Binding category="BINDING_HEADER_NIHILISTZSCHEUI" name="Summon Favorite Mount" DEFAULT="SHIFT-Z">
         SummonFavoriteMount();
     </Binding>
 <Binding category="BINDING_HEADER_NIHILISTZSCHEUI" name="Summon Sky Golem">

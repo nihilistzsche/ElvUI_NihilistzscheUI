@@ -4,15 +4,17 @@ local LSM = E.Libs.LSM
 local PB = NUI.UtilityBars.ProfessionBar
 local NUB = NUI.UtilityBars
 
-local GetSpellTexture = _G.GetSpellTexture
+local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
 local GetProfessionInfo = _G.GetProfessionInfo
 local GetProfessions = _G.GetProfessions
-local GetSpellInfo = _G.GetSpellInfo
+local C_Spell_GetSpellInfo = _G.C_Spell.GetSpellInfo
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
 local tinsert = _G.tinsert
 local CreateFrame = _G.CreateFrame
 
 function PB:CreateBar()
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_ProfessionBar",
         "professionBar",
         { "BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 2 },
@@ -52,7 +54,7 @@ function PB:CreateButtonHook(button)
 end
 
 function PB.UpdateButtonHook(button, prof, ranks)
-    button.texture:SetTexture(GetSpellTexture(prof))
+    button.texture:SetTexture(C_Spell_GetSpellTexture(prof))
     button.ranktext:SetText(ranks[prof] or "")
 end
 
@@ -66,13 +68,13 @@ function PB:GetProfessions()
             if self.SkillFixMap[skillID] then
                 local realSkill = self.SkillFixMap[skillID]
                 if realSkill > 0 then
-                    name = GetSpellInfo(realSkill)
+                    name = C_Spell_GetSpellName(realSkill)
                     tinsert(professions, name)
                     ranks[name] = rank
                 else
                     tinsert(professions, name)
                     ranks[name] = rank
-                    local secondSkillName = GetSpellInfo(-self.SkillFixMap[skillID])
+                    local secondSkillName = C_Spell_GetSpellName(-self.SkillFixMap[skillID])
                     if secondSkillName then tinsert(professions, secondSkillName) end
                 end
             else
@@ -83,7 +85,7 @@ function PB:GetProfessions()
     end
 
     if self.ClassProfMap[E.myclass] then
-        local name = GetSpellInfo(self.ClassProfMap[E.myclass])
+        local name = C_Spell_GetSpellName(self.ClassProfMap[E.myclass])
         tinsert(professions, name)
     end
 
@@ -98,8 +100,8 @@ function PB:UpdateBar(bar)
 
     for i, prof in ipairs(professions) do
         local button = bar.buttons[i]
-        local _, _, _, _, _, _, spellID = GetSpellInfo(prof)
-        if spellID then NUB.UpdateButtonAsSpell(bar, button, spellID, prof, ranks) end
+        local spellInfo = C_Spell_GetSpellInfo(prof)
+        if spellInfo then NUB.UpdateButtonAsSpell(bar, button, spellInfo.spellID, prof, ranks) end
     end
 
     NUB.UpdateBar(self, bar, "ELVUIBAR25BINDBUTTON")

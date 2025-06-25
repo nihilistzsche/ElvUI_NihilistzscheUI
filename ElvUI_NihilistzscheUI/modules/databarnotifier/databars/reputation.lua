@@ -6,8 +6,8 @@ local COMP = NUI.Compatibility
 local REP = DBN:NewNotifier("Reputation")
 local DB
 
-local GetNumFactions = _G.GetNumFactions
-local GetFactionInfo = _G.GetFactionInfo
+local GetNumFactions = _G.C_Reputation.GetNumFactions
+local GetFactionDataByIndex = _G.C_Reputation.GetFactionDataByIndex
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
@@ -61,8 +61,10 @@ function REP:ScanFactions()
     local db = self:GetDB()
     local numFactions = GetNumFactions()
     for i = 1, numFactions do
-        local name, _, standingID, _, _, barValue, _, _, isHeader, _, hasRep, _, _, factionID = GetFactionInfo(i)
-        if name and not isHeader or hasRep then
+        local factionData = GetFactionDataByIndex(i)
+        if factionData and not factionData.isHeader or factionData.isHeaderWithRep then
+            local barValue = factionData.currentStanding
+            local factionID = factionData.factionID
             local hasParagonReward = false
             local isParagon = C_Reputation_IsFactionParagon(factionID)
             local isMajorFaction = C_Reputation_IsMajorFaction(factionID)
@@ -92,7 +94,7 @@ function REP:ScanFactions()
                 IsMajorFaction = isMajorFaction,
                 IsFriend = isFriend,
             }
-            self:UpdateDBValues(name, values)
+            self:UpdateDBValues(factionData.name, values)
         end
     end
     if numFactions > (db.numFactions or 0) then db.numFactions = numFactions end
@@ -138,9 +140,14 @@ function REP:Notify()
         db.numFactions = tempfactions
     end
     for factionIndex = 1, tempfactions do
-        local name, _, standingID, barMin, barMax, barValue, _, _, isHeader, _, hasRep, _, _, factionID =
-            GetFactionInfo(factionIndex)
-        if name then
+        local factionData =
+            GetFactionDataByIndex(factionIndex)
+        if factionData then
+            local barValue = factionData.currentStanding
+            local barMin = factionData.currentReactionThreshold
+            local barMax = factionData.nextReactionThreshold
+            local factionID = factionData.factionID
+            local standingID = factionData.reaction
             local _, friendData = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
             local isFriend = friendData and friendData.friendshipFactionID ~= 0
             local friendID, friendRep
@@ -177,7 +184,7 @@ function REP:Notify()
             end
             if isParagon then standingID = 999 end
 
-            if (not isHeader or hasRep) and db[name] then
+            if (not factionData.isHeader or factionData.isHeaderWithRep) and db[name] then
                 local diff = barValue - db[name].Value
                 local skipMessage = false
                 if diff ~= 0 then

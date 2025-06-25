@@ -70,8 +70,7 @@ local function BuildClassFavorites(class)
 end
 
 function NI:NihilistzscheUIGlobalNameplateSetup()
-    local classes = {}
-    _G.FillLocalizedClassList(classes, false)
+    local classes = _G.LocalizedClassList(false)
     E.global.nameplates.filters.Active_BattlePet_PBN = {
         actions = {
             scale = 1.1,
@@ -377,7 +376,7 @@ function NI:NihilistzscheUISetup(isSpec)
     if not NUI.Lulupeep and COMP.TT then
         for unit, tbl in pairs(P.nihilistzscheui.vuf.units) do
             self:EDB().nihilistzscheui.vuf.units[unit].health = {
-                value = { tag = "[healthcolor][health:current-percent][nui-absorbs]" },
+                value = { tag = "[healthcolor][health:current-percent][nui:absorbs]" },
             }
         end
     end
@@ -394,24 +393,21 @@ function NI:NihilistzscheUISetup(isSpec)
         self:EPRV().nihilistzscheui.mounts.favDragonridingMount = 1589
     end
 
-    self.SaveMoverPosition("NihilistzscheUI_SpecSwitchBarMover", "BOTTOMRIGHT", _G.RightChatPanel, "BOTTOMLEFT", -4, 0)
+    self:SaveMoverPosition("NihilistzscheUI_SpecSwitchBarMover", "BOTTOMRIGHT", _G.RightChatPanel, "BOTTOMLEFT", -4, 0)
     if COMP.IsAddOnEnabled("OldGodWhispers") then
-        self.SaveMoverPosition("OldGodWhispersDragFrameMover", "BOTTOM", "NihilistzscheUI_SpecSwitchBar", "TOP", 0, 4)
+        self:SaveMoverPosition("OldGodWhispersDragFrameMover", "BOTTOM", "NihilistzscheUI_SpecSwitchBar", "TOP", 0, 4)
     end
 
-    if self.currentClass == "WARLOCK" then
-        self.SaveMoverPosition("WarlockDemonsMover", "TOP", E.UIParent, "TOPRIGHT", -460, -50)
-    end
-    self.SaveMoverPosition("NihilistzscheUI_PartyXPHolderMover", "TOP", E.UIParent, "TOP", 0, -167)
-    self.SaveMoverPosition("ArtifactHiddenAppearanceTrackerMover", "BOTTOM", "AzeriteBarMover", "TOP", 0, 4)
-    self.SaveMoverPosition("NihilistzscheChatDockMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -530, -30)
-    self.SaveMoverPosition("NihilistzscheUI_EquipmentManagerMover", "BOTTOMLEFT", _G.LeftChatPanel, "BOTTOMRIGHT", 4, 0)
-    self.SaveMoverPosition("CooldownBarMover", "BOTTOM", "ElvAB_1", "TOP", 0, 2)
-    self.SaveMoverPosition("NihilistzscheUI_ToyBarMover", "BOTTOM", E.UIParent, "BOTTOM", 307, 95)
-    self.SaveMoverPosition("NihilistzscheUI_TrackerBarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
-    self.SaveMoverPosition("NihilistzscheUI_PortalBarMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -180, -30)
-    self.SaveMoverPosition("NihilistzscheUI_BobberBarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 195, -352)
-    self.SaveMoverPosition(
+    self:SaveMoverPosition("NihilistzscheUI_PartyXPHolderMover", "TOP", E.UIParent, "TOP", 0, -167)
+    self:SaveMoverPosition("ArtifactHiddenAppearanceTrackerMover", "BOTTOM", "AzeriteBarMover", "TOP", 0, 4)
+    self:SaveMoverPosition("NihilistzscheChatDockMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -530, -30)
+    self:SaveMoverPosition("NihilistzscheUI_EquipmentManagerMover", "BOTTOMLEFT", _G.LeftChatPanel, "BOTTOMRIGHT", 4, 0)
+    self:SaveMoverPosition("CooldownBarMover", "BOTTOM", "ElvAB_1", "TOP", 0, 2)
+    self:SaveMoverPosition("NihilistzscheUI_ToyBarMover", "BOTTOM", E.UIParent, "BOTTOM", 307, 95)
+    self:SaveMoverPosition("NihilistzscheUI_TrackerBarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
+    self:SaveMoverPosition("NihilistzscheUI_PortalBarMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -180, -30)
+    self:SaveMoverPosition("NihilistzscheUI_BobberBarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 195, -352)
+    self:SaveMoverPosition(
         "NihilistzscheUI_ProfessionBarMover",
         "TOPRIGHT",
         "NihilistzscheUI_PortalBar",
@@ -419,7 +415,7 @@ function NI:NihilistzscheUISetup(isSpec)
         0,
         -4
     )
-    self.SaveMoverPosition(
+    self:SaveMoverPosition(
         "NihilistzscheUI_EngineerToyBarMover",
         "TOPRIGHT",
         "NihilistzscheUI_ProfessionBar",
@@ -427,11 +423,11 @@ function NI:NihilistzscheUISetup(isSpec)
         0,
         -4
     )
-    self.SaveMoverPosition("NihilistzscheUF_Player AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", -310, 424)
-    self.SaveMoverPosition("NihilistzscheUF_Target AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", 310, 424)
-    self.SaveMoverPosition("NihilistzscheUF_Player Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 370)
-    self.SaveMoverPosition("NihilistzscheUF_Target Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 315)
+    self:SaveMoverPosition("NihilistzscheUF_Player AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", -310, 424)
+    self:SaveMoverPosition("NihilistzscheUF_Target AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", 310, 424)
+    self:SaveMoverPosition("NihilistzscheUF_Player Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 370)
+    self:SaveMoverPosition("NihilistzscheUF_Target Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 315)
 
-    self.SaveMoverPosition("AoE CCMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
-    if NUI.Private then self.SaveMoverPosition("PrimalStormsMover", "TOPLEFT", E.UIParent, "TOPLEFT", 255, -272) end
+    self:SaveMoverPosition("AoE CCMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
+    if NUI.Private then self:SaveMoverPosition("PrimalStormsMover", "TOPLEFT", E.UIParent, "TOPLEFT", 255, -272) end
 end

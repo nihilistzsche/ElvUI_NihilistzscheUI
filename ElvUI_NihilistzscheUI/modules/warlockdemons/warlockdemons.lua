@@ -12,7 +12,8 @@ local GetCVar = _G.GetCVar
 local tremove = _G.tremove
 local GetSpecialization = _G.GetSpecialization
 local InCombatLockdown = _G.InCombatLockdown
-local GetSpellTexture = _G.GetSpellTexture
+local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
+local C_Spell_GetSpellCooldown = _G.C_Spell.GetSpellCooldown
 local hooksecurefunc = _G.hooksecurefunc
 local C_Timer_After = _G.C_Timer.After
 local C_Timer_NewTicker = _G.C_Timer.NewTicker
@@ -21,8 +22,7 @@ local UnitName = _G.UnitName
 local UnitIsFriend = _G.UnitIsFriend
 local FindInTableIf = _G.FindInTableIf
 local tinsert = _G.tinsert
-local InPetBattle = _G.C_PetBattles.IsInBattle
-local GetPetName
+local GetPetName, GetPetEnergy, GetPetDurationInfo
 
 WD.activeNamePlateGUIDs = {}
 
@@ -30,8 +30,6 @@ function WD:CreateHeader()
     local header = CreateFrame("Frame", nil, E.UIParent, "BackdropTemplate")
     header:Size(self.db.width, self.db.height)
     header:CreateBackdrop("Transparent")
-
-    if COMP.MERS then header:Styling() end
 
     if COMP.BUI then header:BuiStyle("Outside") end
 
@@ -80,7 +78,7 @@ function WD:AttachBarToNamePlate(bar, guid)
     bar:ClearAllPoints()
     bar:SetParent(np)
     local yOffset = -4
-    if _G.zPets.GetPetName(guid):find("Imp") then yOffset = -8 end
+    if GetPetName(guid):find("Imp") then yOffset = -8 end
     bar:SetPoint("TOPLEFT", np.Castbar, "BOTTOMLEFT", 0, yOffset)
     bar:SetPoint("TOPRIGHT", np.Castbar, "BOTTOMRIGHT", 0, yOffset)
     bar:Show()
@@ -93,7 +91,6 @@ function WD:CreateBar(icon, duration, guid)
     bar:SetFrameLevel(self.header.Container:GetFrameLevel() + 1)
     bar:SetIcon(icon)
     bar.candyBarBackdrop:SetTemplate("Transparent")
-    if COMP.MERS then bar:Styling() end
     bar:SetDuration(duration)
     bar.remaining = duration
     bar:SetColor(self.db.color.r, self.db.color.g, self.db.color.b, self.db.alpha)
@@ -148,7 +145,7 @@ function WD:UpdateBars(isDemonicTyrant)
 
     if isDemonicTyrant then
         for _, b in ipairs(bars) do
-            local start, duration = _G.GetSpellCooldown(265187)
+            local start, duration = C_Spell_GetSpellCooldown(265187)
             local mod = 4
             if start > 0 and duration > 0 then
                 local running = _G.GetTime() - start
@@ -156,7 +153,7 @@ function WD:UpdateBars(isDemonicTyrant)
                     mod = 15
                 end
             end
-            if _G.zPets.GetPetName(b.petGUID) ~= "Demonic Tyrant" then
+            if GetPetName(b.petGUID) ~= "Demonic Tyrant" then
                 local c = b.remaining
                 stopBar(b)
                 b:SetDuration(c + mod)
@@ -300,7 +297,7 @@ end
 
 function WD:InitializeNPHooks()
     E.StyleFilterDefaults.triggers.isDemonologyWarlockDemonNUI = false
-    E.StyleFilterDefaults.triggers.isNotDemonologyWarlockDemonUI = false
+    E.StyleFilterDefaults.triggers.isNotDemonologyWarlockDemonNUI = false
     E.StyleFilterDefaults.triggers.demonologyWarlockDemonAboutToExpireNUI = false
     hooksecurefunc(NP, "StyleFilterConfigure", function() NP.StyleFilterTriggerEvents.FAKE_WDForceUpdate = 0 end)
     NP:StyleFilterConfigure()
@@ -319,17 +316,17 @@ local WILD_IMP_ENERGY_COLORS = {
 }
 function WD:CreateWildImpUpdateClosure(bar, petGUID)
     return function()
-        local petEnergy = _G.zPets.GetPetEnergy(petGUID)
+        local petEnergy = GetPetEnergy(petGUID)
         if WILD_IMP_ENERGY_COLORS[petEnergy] then
             bar:SetLabel(
                 ("%s (%s%s|r)"):format(
-                    self:ShouldAttachToNamePlate() and "Remaining" or _G.zPets.GetPetName(petGUID),
+                    self:ShouldAttachToNamePlate() and "Remaining" or GetPetName(petGUID),
                     E:RGBToHex(unpack(WILD_IMP_ENERGY_COLORS[petEnergy])),
                     petEnergy
                 )
             )
         else
-            bar:SetLabel(self:ShouldAttachToNamePlate() and "Remaining (?)" or _G.zPets.GetPetName(petGUID) .. " (?)")
+            bar:SetLabel(self:ShouldAttachToNamePlate() and "Remaining (?)" or GetPetName(petGUID) .. " (?)")
         end
     end
 end
@@ -365,11 +362,11 @@ function WD:OnSpawn(petGUID)
     end
     local demon_info = self.demons[petName]
 
-    local bar = self:CreateBar(demon_info.icon, select(2, _G.zPets.GetPetDurationInfo(petGUID)), petGUID)
+    local bar = self:CreateBar(demon_info.icon, select(2, GetPetDurationInfo(petGUID)), petGUID)
 
     local label = self:ShouldAttachToNamePlate() and "Remaining" or petName
     if petName:find("Imp") then
-        local petEnergy = _G.zPets.GetPetEnergy(petGUID)
+        local petEnergy = GetPetEnergy(petGUID)
         label = ("%s (%s%s|r)"):format(
             self:ShouldAttachToNamePlate() and "Remaining" or petName,
             WILD_IMP_ENERGY_COLORS[petEnergy] and E:RGBToHex(unpack(WILD_IMP_ENERGY_COLORS[petEnergy]))
@@ -422,7 +419,7 @@ function WD.StyleFilterCustomCheck(frame, _, trigger)
             local petName = GetPetName(guid)
             local barIndex = FindInTableIf(WD.activeBars, function(b) return b.petGUID == guid end)
             if not barIndex then return false end
-            if (petName:find("Imp") and (_G.zPets.GetPetEnergy(guid) < 3)) or WD.activeBars[barIndex].remaining < 5 then
+            if (petName:find("Imp") and (GetPetEnergy(guid) < 3)) or WD.activeBars[barIndex].remaining < 5 then
                 passed = true
             else
                 return false
@@ -442,26 +439,30 @@ function WD:Initialize()
     self.attachedNPs = {}
 
     self.demons = {
-        ["Wild Imp"] = { icon = GetSpellTexture(205145), priority = 4, optionOrder = 2 },
-        ["Demonic Tyrant"] = { icon = GetSpellTexture(265187), priority = 1, optionOrder = 1 },
-        Dreadstalker = { icon = GetSpellTexture(104316), priority = 5, optionOrder = 3 },
-        Felguard = { icon = GetSpellTexture(111898), priority = 6, optionOrder = 11 },
-        Bilescourge = { icon = GetSpellTexture(267992), priority = 9, optionOrder = 14 },
-        Vilefiend = { icon = GetSpellTexture(264119), priority = 10, optionOrder = 13 },
-        ["Prince Malchezaar"] = { icon = GetSpellTexture(267986), priority = 2, optionOrder = 4 },
-        ["Illidari Satyr"] = { icon = GetSpellTexture(267987), priority = 7, optionOrder = 15 },
-        ["Vicious Hellhound"] = { icon = GetSpellTexture(267988), priority = 8, optionOrder = 16 },
-        ["Eye of Gul'dan"] = { icon = GetSpellTexture(267989), priority = 11, optionOrder = 17 },
-        ["Void Terror"] = { icon = GetSpellTexture(267991), priority = 12, optionOrder = 18 },
-        Shivarra = { icon = GetSpellTexture(267994), priority = 14, optionOrder = 20 },
-        Wrathguard = { icon = GetSpellTexture(267995), priority = 15, optionOrder = 21 },
-        Darkhound = { icon = GetSpellTexture(267996), priority = 16, optionOrder = 22 },
-        ["Ur'zul"] = { icon = GetSpellTexture(268001), priority = 17, optionOrder = 23 },
-        ["Fel Lord"] = { icon = GetSpellTexture(212459), priority = 18, optionOrder = 24 },
-        Observer = { icon = GetSpellTexture(201996), priority = 19, optionOrder = 25 },
-        ["Imp Gang Boss"] = { icon = GetSpellTexture(387445), priority = 3, optionsOrder = 26 },
-        Soulkeeper = { icon = GetSpellTexture(386244), priority = 2, optionsOrder = 27 },
-        ["Pit Lord"] = { icon = GetSpellTexture(138787), priority = 1, optionsOrder = 28 },
+        ["Wild Imp"] = { icon = C_Spell_GetSpellTexture(205145), priority = 4, optionOrder = 2 },
+        ["Demonic Tyrant"] = { icon = C_Spell_GetSpellTexture(265187), priority = 1, optionOrder = 1 },
+        Dreadstalker = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
+        Felguard = { icon = C_Spell_GetSpellTexture(111898), priority = 6, optionOrder = 11 },
+        Bilescourge = { icon = C_Spell_GetSpellTexture(267992), priority = 9, optionOrder = 14 },
+        Vilefiend = { icon = C_Spell_GetSpellTexture(264119), priority = 10, optionOrder = 13 },
+        ["Prince Malchezaar"] = { icon = C_Spell_GetSpellTexture(267986), priority = 2, optionOrder = 4 },
+        ["Illidari Satyr"] = { icon = C_Spell_GetSpellTexture(267987), priority = 7, optionOrder = 15 },
+        ["Vicious Hellhound"] = { icon = C_Spell_GetSpellTexture(267988), priority = 8, optionOrder = 16 },
+        ["Eye of Gul'dan"] = { icon = C_Spell_GetSpellTexture(267989), priority = 11, optionOrder = 17 },
+        ["Void Terror"] = { icon = C_Spell_GetSpellTexture(267991), priority = 12, optionOrder = 18 },
+        Shivarra = { icon = C_Spell_GetSpellTexture(267994), priority = 14, optionOrder = 20 },
+        Wrathguard = { icon = C_Spell_GetSpellTexture(267995), priority = 15, optionOrder = 21 },
+        Darkhound = { icon = C_Spell_GetSpellTexture(267996), priority = 16, optionOrder = 22 },
+        ["Ur'zul"] = { icon = C_Spell_GetSpellTexture(268001), priority = 17, optionOrder = 23 },
+        ["Fel Lord"] = { icon = C_Spell_GetSpellTexture(212459), priority = 18, optionOrder = 24 },
+        Observer = { icon = C_Spell_GetSpellTexture(201996), priority = 19, optionOrder = 25 },
+        ["Imp Gang Boss"] = { icon = C_Spell_GetSpellTexture(387445), priority = 3, optionsOrder = 26 },
+        Soulkeeper = { icon = C_Spell_GetSpellTexture(386244), priority = 2, optionsOrder = 27 },
+        ["Pit Lord"] = { icon = C_Spell_GetSpellTexture(138787), priority = 1, optionsOrder = 28 },
+        ["Mother of Chaos"] = { icon = C_Spell_GetSpellTexture(432794), priority = 1, optionsOrder = 29 },
+        Overlord = { icon = C_Spell_GetSpellTexture(428524), priority = 1, optionsOrder = 30 },
+        Gloomhound = { icon = C_Spell_GetSpellTexture(455465), priority = 10, optionsOrder = 31 },
+        Charhound = { icon = C_Spell_GetSpellTexture(455476), priority = 10, optionsOrder = 32 },
     }
 
     self.header = self:CreateHeader()
@@ -470,6 +471,8 @@ function WD:Initialize()
     _G.zPets.RegisterPetEvent("OnDespawn", function(petGUID) WD:OnDespawn(petGUID) end)
 
     GetPetName = _G.zPets.GetPetName
+    GetPetEnergy = _G.zPets.GetPetEnergy
+    GetPetDurationInfo = _G.zPets.GetPetDurationInfo
 
     self:InitializeNPHooks()
 

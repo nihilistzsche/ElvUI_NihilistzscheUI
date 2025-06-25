@@ -10,14 +10,17 @@ local RegisterStateDriver = _G.RegisterStateDriver
 local tremove = _G.tremove
 local GameTooltip = _G.GameTooltip
 local GameTooltip_Hide = _G.GameTooltip_Hide
-local GetItemInfo = _G.GetItemInfo
-local GetSpellInfo = _G.GetSpellInfo
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
+local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
+local C_Item_GetItemNameByID = _G.C_Item.GetItemIconByID
+local C_Item_GetItemIconByID = _G.C_Item.GetItemIconByID
 local tinsert = _G.tinsert
 
 function CB:UpdateFrame(frame)
     local cd, s, d = self:GetCooldown(frame)
+    local tex = self:GetTexture(frame)
 
-    if not cd then return end
+    if not cd or not tex then return end
 
     local w = self.bar:GetWidth() - (self.bar:GetHeight() / 2)
 
@@ -28,7 +31,7 @@ function CB:UpdateFrame(frame)
         frame.cooldown:Show()
     end
 
-    frame.tex:SetTexture(self:GetTexture(frame))
+    frame.tex:SetTexture(tex)
 
     frame:ClearAllPoints()
     frame:SetPoint("CENTER", self.bar, "LEFT", pos, 0)
@@ -107,7 +110,6 @@ function CB:CreateBar()
     E:CreateMover(bar, "CooldownBarMover", "Cooldown Bar", nil, nil, nil, "ALL,ACTIONBARS,NIHILISTZSCHEUI")
     RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
     bar:SetTemplate("Transparent")
-    if COMP.MERS then bar:Styling() end
     bar:SetAlpha(self.db.alpha)
     if ES then
         bar:CreateShadow()
@@ -148,11 +150,12 @@ function CB:CreateFrame(type, id)
             if button == "RightButton" then
                 local message
                 if frame.type == "item" then
-                    message = "|cffff0000Blacklisted|r the cooldown for |cffffff00item|r" .. GetItemInfo(frame.itemID)
+                    message = "|cffff0000Blacklisted|r the cooldown for |cffffff00item|r"
+                        .. C_Item_GetItemNameByID(frame.itemID)
                     self.db.blacklist.items[frame.itemID] = true
                 else
                     message = "|cffff0000Blacklisted|r the cooldown for |cffff00ffspell|r"
-                        .. GetSpellInfo(frame.spellID)
+                        .. C_Spell_GetSpellName(frame.spellID)
                     self.db.blacklist.spells[frame.spellID] = true
                 end
                 print(message)
@@ -179,9 +182,9 @@ function CB:CreateFrame(type, id)
     frame.type = type
     frame[type .. "ID"] = id
     if type == "spell" then
-        frame.tex:SetTexture(select(3, GetSpellInfo(id)))
+        frame.tex:SetTexture(C_Spell_GetSpellTexture(id))
     else
-        frame.tex:SetTexture(select(10, GetItemInfo(id)))
+        frame.tex:SetTexture(C_Item_GetItemIconByID(id))
     end
     self.frameLevelSerial = self.frameLevelSerial + 5
     frame.nativeFrameLevel = self.frameLevelSerial

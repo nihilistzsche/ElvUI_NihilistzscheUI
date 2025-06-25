@@ -84,13 +84,6 @@ RCD.categories.aoeCC = {
         cd = 45,
         is_talent = true,
     },
-    [205369] = {
-        -- Mind Bomb
-        class = "PRIEST",
-        spec = 3,
-        cd = 30,
-        is_talent = true,
-    },
     [204263] = {
         -- Shining Force
         class = "PRIEST",

@@ -81,8 +81,8 @@ function NI:BenikUISetup(isSpec)
             font = self.db.font,
         },
     }
-    self.SaveMoverPosition("RequestStopButton", "TOP", E.UIParent, "TOP", 0, -315)
-    self.SaveMoverPosition(
+    self:SaveMoverPosition("RequestStopButton", "TOP", E.UIParent, "TOP", 0, -315)
+    self:SaveMoverPosition(
         "ProfessionsMover",
         "BOTTOM",
         NUI.Private and "DTPanelDTB2_NihilistzscheUIURMover" or "DTPanelDTB2_NihilistzscheUILRRMover",

@@ -1,12 +1,12 @@
-## Interface: 100100
+## Interface: 110107
 ## Title: |cff1784d1ElvUI|r |cffffffffNihilistzsche|cffff2020UI|r
 ## IconTexture: Interface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo
 ## Author: Nihilistzsche
-## Version: 12.9952
+## Version: 13.00
 ## Notes: An external edit for ElvUI and ElvUI Shadow & Light
 ## RequiredDeps: ElvUI
-## OptionalDeps: ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI
-## OptionalDeps: AddOnSkins_NihilistzschezschePrivate, ElvUI_CPU, zPets, Executive_Assistant, TotalRP3, ElvUI_DynamicStatusIcons, Forward, OldGodWhispers, Pawn, Immersion
+## OptionalDeps: ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI, ProjectAzilroka
+## OptionalDeps: AddOnSkins_NihilistzschezschePrivate, ElvUI_CPU, zPets, Executive_Assistant, TotalRP3, ElvUI_DynamicStatusIcons, Forward, OldGodWhispers, Pawn, Immersion, RP_Tags
 ## AddonCompartmentFunc: ElvUI_NihilistzscheUI_AddonCompartmentFunc
 ## X-oUF: ElvUF
 ## X-Curse-Project-ID: 690477

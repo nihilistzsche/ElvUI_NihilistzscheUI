@@ -5,7 +5,8 @@ local ENA = NUI.EnhancedNameplateAuras
 local selectedSpellID
 local spellLists
 
-local GetSpellInfo = _G.GetSpellInfo
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
+local C_Spell_GetSpellInfo = _G.C_Spell.GetSpellInfo
 
 local function deepcopy(object)
     local lookup_table = {}
@@ -34,7 +35,7 @@ local function UpdateSpellGroup()
 
     E.Options.args.NihilistzscheUI.args.modules.args.EnhancedNameplateAuras.args.specificSpells.args.spellGroup = {
         type = "group",
-        name = GetSpellInfo(selectedSpellID),
+        name = C_Spell_GetSpellName(selectedSpellID),
         guiInline = true,
         order = -10,
         get = function(info) return E.global.nameplates.spellList[selectedSpellID][info[#info]] end,
@@ -160,9 +161,9 @@ function ENA.GenerateOptions()
                         get = function() return "" end,
                         set = function(_, value)
                             if not tonumber(value) then value = tostring(value) end
-
-                            local spellID = select(7, GetSpellInfo(tonumber(value) or value))
-                            if spellID then
+                            local spellInfo = C_Spell_GetSpellInfo(tonumber(value) or value)
+                            if spellInfo then
+                                local spellID = spellInfo.spellID
                                 if not E.global.nameplates.spellList[spellID] then
                                     E.global.nameplates.spellList[spellID] = {
                                         visibility = E.global.nameplates.spellListDefault.visibility,
@@ -200,7 +201,7 @@ function ENA.GenerateOptions()
                                 elseif visibility == 3 then
                                     color = "|cff00ffff"
                                 end
-                                spellLists[spell] = color .. GetSpellInfo(spell) .. "|r"
+                                spellLists[spell] = color .. C_Spell_GetSpellName(spell) .. "|r"
                             end
                             return spellLists
                         end,

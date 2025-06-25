@@ -1,4 +1,5 @@
 local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+
 local ISD = NUI.DataTexts.ImprovedSystemDataText
 
 local PDT = NUI.DataTexts.ProfessionsDataText

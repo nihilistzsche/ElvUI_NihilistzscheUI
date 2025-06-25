@@ -20,7 +20,6 @@ function VUF:ConstructStagger(frame)
     local staggerBar = self:ConstructStatusBar(frame, "stagger", frame, "staggerbar")
     staggerBar:SetFrameStrata("MEDIUM")
     staggerBar:SetTemplate("Transparent")
-    if COMP.MERS then staggerBar:Styling() end
     staggerBar:SetFrameLevel(8)
     staggerBar:SetBackdropBorderColor(0, 0, 0, 0)
     staggerBar.PostUpdateVisibility = VUF.PostUpdateStaggerBar
@@ -34,7 +33,6 @@ function VUF:ConstructSubBars(frame, element, name, num)
     local bars = self:CreateFrame(frame, element)
     bars:SetFrameLevel(frame:GetFrameLevel() + 30)
     bars:SetTemplate("Transparent")
-    if COMP.MERS then bars:Styling() end
     bars:SetBackdropBorderColor(0, 0, 0, 0)
 
     if element == "classbars" then

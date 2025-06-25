@@ -31,7 +31,7 @@ function NM:CheckMigrations()
 
         for _, mover in ipairs(moversToCheck) do
             if E.db.movers["Nena" .. mover] then
-                self.SaveMoverPosition("Nihilistzsche" .. mover, unpack(E.db.movers["Nena" .. mover]))
+                self:SaveMoverPosition("Nihilistzsche" .. mover, unpack(E.db.movers["Nena" .. mover]))
                 E.db.movers["Nena" .. mover] = nil
             end
         end
@@ -46,7 +46,7 @@ function NM:CheckMigrations()
         E.db.nihilistzscheui.chaoticchat = nil
         for _, mover in ipairs(moversToCheck) do
             if E.db.movers["Chaotic" .. mover] then
-                self.SaveMoverPosition("Nihilistzsche" .. mover, unpack(E.db.movers["Chaotic" .. mover]))
+                self:SaveMoverPosition("Nihilistzsche" .. mover, unpack(E.db.movers["Chaotic" .. mover]))
                 E.db.movers["Chaotic" .. mover] = nil
             end
         end
@@ -62,7 +62,7 @@ function NM:CheckMigrations()
         E.db.nihilistzscheui.nihilistchat = nil
         for _, mover in ipairs(moversToCheck) do
             if E.db.movers["Nihilist" .. mover] then
-                self.SaveMoverPosition("Nihilistzsche" .. mover, unpack(E.db.movers["Nihilist" .. mover]))
+                self:SaveMoverPosition("Nihilistzsche" .. mover, unpack(E.db.movers["Nihilist" .. mover]))
                 E.db.movers["Nihilist" .. mover] = nil
             end
         end

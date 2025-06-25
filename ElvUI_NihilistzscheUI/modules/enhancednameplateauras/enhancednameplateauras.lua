@@ -7,7 +7,7 @@ local ES = NUI.EnhancedShadows
 
 local UnitName = _G.UnitName
 local UnitClass = _G.UnitClass
-local GetSpellInfo = _G.GetSpellInfo
+local C_Spell_GetSpellInfo = _G.C_Spell_GetSpellInfo
 local hooksecurefunc = _G.hooksecurefunc
 
 -- luacheck: no self
@@ -170,8 +170,9 @@ function ENA:UpdateSpellList()
 
     for key, value in pairs(filters) do
         if not tonumber(key) or value.version ~= 2 then
-            local spellID = select(7, GetSpellInfo(key))
-            if spellID then
+            local spellInfo = C_Spell_GetSpellInfo(key)
+            if spellInfo then
+                local spellID = spellInfo.spellID
                 filters[spellID] = value
                 filters[spellID].version = 2
             end

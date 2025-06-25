@@ -2,29 +2,29 @@ local NUI = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, Gl
 local CDB = NUI.CustomDataBar
 local NT = NUI.Libs.NT
 
-local GetWatchedFactionInfo = _G.GetWatchedFactionInfo
+local GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
 local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
 function CDB.RegisterRepTags()
     NT:RegisterTag("rep:name", function()
-        local name = GetWatchedFactionInfo()
+        local data = GetWatchedFactionData()
 
-        if not name then return "" end
+        if not data then return "" end
 
-        return name
+        return data.name
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:standing", function()
-        local name, reaction, _, _, _, factionID = GetWatchedFactionInfo()
-        if not name then return "" end
+        local data = GetWatchedFactionData()
+        if not data then return "" end
 
-        local isFriend, friendData = NUI.GetFriendshipInfo(factionID)
-        if NUI.GetParagonInfo(factionID) then return "Paragon" end
-        if not isFriend and C_Reputation_IsMajorFaction(factionID) then
-            local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+        local isFriend, friendData = NUI.GetFriendshipInfo(data.factionID)
+        if NUI.GetParagonInfo(data.factionID) then return "Paragon" end
+        if not isFriend and C_Reputation_IsMajorFaction(data.factionID) then
+            local majorFactionData = C_MajorFactions_GetMajorFactionData(data.factionID)
             return RENOWN_LEVEL_LABEL .. majorFactionData.renownLevel
         end
-        return isFriend and friendData.reaction or _G["FACTION_STANDING_LABEL" .. reaction]
+        return isFriend and friendData.reaction or _G["FACTION_STANDING_LABEL" .. data.reaction]
     end, "UPDATE_FACTION")
 
     NT:RegisterTag("rep:current", function()

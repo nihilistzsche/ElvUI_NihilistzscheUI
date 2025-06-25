@@ -7,7 +7,7 @@ local tContains = _G.tContains
 local C_CreatureInfo_GetRaceInfo = _G.C_CreatureInfo.GetRaceInfo
 local strlower = _G.strlower
 local CreateFrame = _G.CreateFrame
-local FillLocalizedClassList = _G.FillLocalizedClassList
+local LocalizedClassList = _G.LocalizedClassList
 local SetCVar = _G.SetCVar
 local ChatFrame_RemoveMessageGroup = _G.ChatFrame_RemoveMessageGroup
 local format = _G.format
@@ -43,10 +43,8 @@ function NC:Initialize()
     self.delayed = {}
     self.mobileStatus = {}
 
-    local tMale = {}
-    local tFemale = {}
-    FillLocalizedClassList(tMale, false)
-    FillLocalizedClassList(tFemale, true)
+    local tMale = LocalizedClassList(false)
+    local tFemale = LocalizedClassList(true)
 
     self.maleClasses = tInvert(tMale)
     self.femaleClasses = tInvert(tFemale)

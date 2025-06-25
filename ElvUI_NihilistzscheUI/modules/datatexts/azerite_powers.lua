@@ -6,7 +6,8 @@ local Item = _G.Item
 local BAG_ITEM_QUALITY_COLORS = _G.BAG_ITEM_QUALITY_COLORS
 local CreateFrame = _G.CreateFrame
 local UIParent = _G.UIParent
-local GetSpellInfo = _G.GetSpellInfo
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
+local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
 local GREEN_FONT_COLOR_CODE = _G.GREEN_FONT_COLOR_CODE
 local HIGHLIGHT_FONT_COLOR_CODE = _G.HIGHLIGHT_FONT_COLOR_CODE
 local NORMAL_FONT_COLOR = _G.NORMAL_FONT_COLOR
@@ -48,7 +49,7 @@ local function addPowerSpellString(item, tierLevel, powerID)
     local powerInfo = C_AzeriteEmpoweredItem_GetPowerInfo(powerID)
     if powerID then
         local spellID = powerInfo.spellID
-        local name, _, icon = GetSpellInfo(spellID)
+        local name, icon = C_Spell_GetSpellName(spellID), C_Spell_GetSpellTexture(spellID)
         local itemID = item:GetItemID()
         local itemLevel = item:GetCurrentItemLevel()
         local itemLink = item:GetItemLink()

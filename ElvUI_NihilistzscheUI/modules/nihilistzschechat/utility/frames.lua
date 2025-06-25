@@ -380,15 +380,11 @@ function NC:InitNewFrame(chatType, chatTarget)
     end)
     chat:SetScript("OnMouseUp", function(self) NC.tabFrame:StopMovingOrSizing() end)
 
-    if COMP.MERS then chat:Styling() end
-
     chat.Flash = CreateFrame("Frame")
 
     local top = CreateFrame("Frame", nil, chat, "BackdropTemplate")
     top:CreateBackdrop("Transparent")
     top.backdrop:SetAllPoints()
-
-    if COMP.MERS then top:Styling() end
 
     top:Size(self.db.windows.width, 23)
     top:Point("TOP", chat, "TOP")
@@ -400,8 +396,6 @@ function NC:InitNewFrame(chatType, chatTarget)
     local bottom = CreateFrame("Frame", nil, chat, "BackdropTemplate")
     bottom:CreateBackdrop("Transparent")
     bottom.backdrop:SetAllPoints()
-
-    if COMP.MERS then bottom:Styling() end
 
     bottom:Size(self.db.windows.width, 23)
     bottom:SetPoint("BOTTOM", chat, "BOTTOM")

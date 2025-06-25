@@ -323,8 +323,6 @@ function NI:SLESetup(isSpec)
     end
 end
 
-function NI.GlobalSLESetup() E.global.sle.advanced.gameMenu.reload = true end
-
 function NI:SLELuluSetup()
     self:EDB().sle = {
         databars = {
@@ -418,4 +416,3 @@ end
 if COMP.SLE then NI:SaveInstallTable(_G["ElvUI_SLE"][1]) end
 
 NI:RegisterAddOnInstaller("ElvUI_SLE", NI.SLESetup, true)
-NI:RegisterGlobalAddOnInstaller("ElvUI_SLE", NI.GlobalSLESetup)

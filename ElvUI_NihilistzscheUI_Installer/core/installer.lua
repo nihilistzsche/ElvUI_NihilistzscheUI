@@ -1,12 +1,12 @@
 local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
 
-local NI = E.Libs.AceAddon:NewAddon("NinihilistzscheUI_Installer")
+local NI = E.Libs.AceAddon:NewAddon("NihilistzscheUI_Installer")
 NUI.Installer = NI
 
 -- luacheck: globals NUIIDB ElvDB
 local _G = _G
 
-local pairs, format, ReloadUI, print = _G.pairs, _G.format, _G.ReloadUI, _G.print
+local pairs, format, ReloadUI, print = _G.pairs, _G.format, _G.C_UI.Reload, _G.print
 local tinsert = _G.tinsert
 local C_Timer_After = _G.C_Timer.After
 local wipe = _G.wipe
@@ -163,6 +163,9 @@ NI.installTable = {
     StepTitleButtonWidth = 200,
     StepTitleTextJustification = "CENTER",
 }
+local PI = E.PluginInstaller
+PI.Queue = E.noop
+
 local tryInstall
 tryInstall = function()
     if not _G.PluginInstallFrame then
@@ -171,9 +174,9 @@ tryInstall = function()
     end
     if E.InstallFrame then E.InstallFrame:Hide() end
     E.private.install_complete = E.version
-    local PI = E.PluginInstaller
+    
     wipe(PI.Installs)
-    PI:Queue(NI.installTable)
+    tinsert(PI.Installs, #(PI.Installs)+1, NI.installTable)
     PI:RunInstall()
 end
 

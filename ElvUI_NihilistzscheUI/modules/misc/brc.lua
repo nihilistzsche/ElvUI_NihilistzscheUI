@@ -6,7 +6,7 @@ local DB = E.DataBars
 
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 
-function BRC:Initialize() hooksecurefunc("ReputationFrame_Update", BRC.ReputationFrame_Update) end
+function BRC:Initialize() hooksecurefunc(ReputationFrame, "Update", BRC.ReputationFrame_Update) end
 
 function BRC.ReputationFrame_Update()
     if not DB.db.colors.useCustomFactionColors then return end

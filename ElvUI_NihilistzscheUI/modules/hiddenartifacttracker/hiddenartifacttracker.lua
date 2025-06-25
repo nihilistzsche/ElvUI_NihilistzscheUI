@@ -39,7 +39,6 @@ function HAT:CreateStatusBar(holder, info, ...)
 
     local frame = CreateFrame("Frame", nil, holder, "BackdropTemplate")
     frame:SetTemplate("Transparent")
-    if COMP.MERS then frame:Styling() end
     frame:SetSize(self.db.width, self.db.height)
     if ES then
         frame:CreateShadow()

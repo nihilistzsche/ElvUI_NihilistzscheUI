@@ -6,10 +6,10 @@ local ES = NUI.EnhancedShadows
 local COMP = NUI.Compatibility
 
 local UnitName = _G.UnitName
-local GetSpellTexture = _G.GetSpellTexture
+local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
 local UnitGUID = _G.UnitGUID
 local IsInRaid = _G.IsInRaid
-local GetSpellCharges = _G.GetSpellCharges
+local C_Spell_GetSpellCharges = _G.C_Spell.GetSpellCharges
 local GameTooltip = _G.GameTooltip
 local CreateFrame = _G.CreateFrame
 local tinsert = _G.tinsert
@@ -31,7 +31,6 @@ function RCD:CreateBar(spell_id, guid)
 
     bar:SetParent(self:GetHolder(category))
     bar.candyBarBackdrop:SetTemplate("Transparent")
-    if COMP.MERS then bar:Styling() end
 
     local class = self.cached_players[guid].unitInfo.class
     local classColor = NUI.ClassColor(false, class)
@@ -43,7 +42,7 @@ function RCD:CreateBar(spell_id, guid)
     bar:SetLabel(UnitName(self.cached_players[guid].unit))
     local duration = self.cd_list[category][spell_id][guid]
     bar:SetDuration(duration)
-    local icon = GetSpellTexture(spell_id)
+    local icon = C_Spell_GetSpellTexture(spell_id)
     bar:SetIcon(icon)
     bar.info = {
         id = spell_id,
@@ -56,14 +55,14 @@ function RCD:CreateBar(spell_id, guid)
         local unit, _, _spell_id = ...
         if UnitGUID(unit) == _self.info.guid and _spell_id == _self.info.id then
             if IsInRaid() and _self.info.raidBattleRes then
-                local currentCharges, _, _, cooldownDuration = GetSpellCharges(_spell_id)
-                if currentCharges == 0 then
-                    _self:SetDuration(cooldownDuration)
+                local chargeInfo = C_Spell_GetSpellCharges(_spell_id)
+                if chargeInfo and chargeInfo.cooldownDuration > 0 then
+                    _self:SetDuration(chargeInfo.cooldownDuration)
                     _self:Start()
                     _self.loopProtect = false
                     return
-                else
-                    _self.candyBarDuration:SetText(("%d RDY"):format(currentCharges))
+                elseif chargeInfo then
+                    _self.candyBarDuration:SetText(("%d RDY"):format(chargeInfo.currentCharges))
                 end
             end
             _self:Start()
@@ -110,8 +109,6 @@ function RCD:CreateHolder(category, defaultPoint)
     local holder = CreateFrame("Frame", "NihilistzscheUIRaidCDs_" .. category, E.UIParent, "BackdropTemplate")
     holder:SetSize(self.db.width, self.db.height)
     holder:CreateBackdrop("Transparent")
-
-    if COMP.MERS then holder:Styling() end
 
     if COMP.BUI then holder:BuiStyle("Outside") end
 

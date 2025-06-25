@@ -7,7 +7,7 @@ local CreateFrame = _G.CreateFrame
 local InCombatLockdown = _G.InCombatLockdown
 local abs = _G.abs
 local GetNetStats = _G.GetNetStats
-local GetSpellInfo = _G.GetSpellInfo
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
 local strsub = _G.strsub
 local floor = _G.floor
 local UnitSpellHaste = _G.UnitSpellHaste
@@ -15,7 +15,6 @@ local UnitIsPlayer = _G.UnitIsPlayer
 local UnitClass = _G.UnitClass
 local UnitReaction = _G.UnitReaction
 local UnitCanAttack = _G.UnitCanAttack
-local AuraUtil_FindAuraByName = _G.AuraUtil_FindAuraByName
 
 -- Castbar for units it is enabled on
 -- For player/target castbar can be (and defaults) to horizontal mode.
@@ -270,7 +269,7 @@ function VUF:PostCastStart(unit)
 
     if unit == "vehicle" then unit = "player" end
 
-    local name = GetSpellInfo(self.spellID)
+    local name = C_Spell_GetSpellName(self.spellID)
     if db.castbar.displayTarget and self.curTarget then
         self.Text:SetText(
             strsub(

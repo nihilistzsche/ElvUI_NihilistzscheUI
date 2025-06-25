@@ -228,6 +228,18 @@ PBAS.PetTamers = {
     [204792] = { valid = true }, -- Shinmura
     [204926] = { valid = true }, -- Delver Mardei
     [204934] = { valid = true }, -- Trainer Orlogg
+    -- Isle of Dorn
+    [223446] = { valid = true }, -- Collector Dyna
+    [223407] = { valid = true }, -- Awakened Custodian
+    -- The Ringing Deeps
+    [223444] = { valid = true }, -- Friendhaver Grem
+    [222535] = { valid = true }, -- Haywire Servobot
+    -- Hallowfall
+    [223442] = { valid = true }, -- Kyrie
+    [223409] = { valid = true }, -- Guttergunk
+    -- Azj-Kahet
+    [223443] = { valid = true }, -- Ziriak
+    [223406] = { valid = true }, -- Zaedu
 }
 
 function PBAS.TAS_OnClick()

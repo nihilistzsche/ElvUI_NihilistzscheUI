@@ -16,8 +16,9 @@ function TOTTB.AddTools()
     })
 end
 
-function TOTTB.CreateBar()
+function TOTTB:CreateBar()
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_ToolsOfTheTradeBar",
         "toolsOfTheTradeBar",
         { "CENTER", E.UIParent, "CENTER", 0, -280 },
@@ -96,7 +97,7 @@ function TOTTB:Initialize()
 
     NUB:InjectScripts(self)
 
-    local bar = self.CreateBar()
+    local bar = self:CreateBar()
     bar.doNotHideInCombat = true
     self.bar = bar
     self:UpdateBar(bar)

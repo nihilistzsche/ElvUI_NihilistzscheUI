@@ -7,13 +7,14 @@ local COMP = NUI.Compatibility
 local PT = NUI.Libs.PT
 
 local UnitLevel = _G.UnitLevel
-local GetItemCount = _G.GetItemCount
+local C_Item_GetItemCount = _G.C_Item.GetItemCount
 local CreateFrame = _G.CreateFrame
 local unpack = _G.unpack
 local Item = _G.Item
 
-function RPB.CreateBar()
+function RPB:CreateBar()
     return NUB:CreateBar(
+        self,
         "NihilistzscheUI_RaidPrepBar",
         "raidPrepBar",
         { "TOPRIGHT", _G.NihilistzscheUI_TrackerBar, "BOTTOMRIGHT", 0, -2 },
@@ -141,7 +142,7 @@ function RPB.CreateButtons(bar)
     local j = 1
 
     local function addButton(itemID)
-        local count = GetItemCount(itemID)
+        local count = C_Item_GetItemCount(itemID)
 
         if count > 0 then
             local button = bar.buttons[j]
@@ -183,6 +184,9 @@ function RPB.CreateButtons(bar)
 end
 
 function RPB:UpdateBar(bar)
+    if bar.updateTime and time() - bar.updateTime < 1 then return end
+    bar.updateTime = time()
+
     NUB.WipeButtons(bar)
     RPB.CreateButtons(bar)
     NUB.UpdateBar(self, bar, "ELVUIBAR26BINDBUTTON")

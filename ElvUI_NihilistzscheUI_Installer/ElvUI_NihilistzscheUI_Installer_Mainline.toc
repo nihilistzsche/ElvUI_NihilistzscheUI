@@ -1,12 +1,13 @@
-## Interface: 100100
+## Interface: 110107
 ## Title: |cff1784d1ElvUI|r |cffffffffNihilistzsche|cffff2020UI|r |cffff2020Installer|r
 ## IconTexture: Interface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo
 ## Author: Nihilistzsche
-## Version: 12.9952
+## Version: 13.00
 ## Notes: The installer files for ElvUI_NihilistzscheUI.
 ## SavedVariables: NUIIDB
 ## RequiredDeps: ElvUI_NihilistzscheUI
-## OptionalDeps: ElvUI_NihilistzscheUI_Private, ElvUI_NihilistzscheUI_Lulupeep. ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI, AddOnSkins_NihilistzschePrivate, ElvUI_CPU, zPets, TotalRP3, OldGodWhispers, ParagonReputation
+## OptionalDeps: ElvUI_NihilistzscheUI_Private, ElvUI_NihilistzscheUI_Lulupeep, ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI, AddOnSkins_NihilistzschePrivate, ElvUI_CPU, zPets, TotalRP3, OldGodWhispers, ParagonReputation
+## Group: ElvUI_NihilistzscheUI
 
 core\load_core.xml
 installers\load_installers.xml

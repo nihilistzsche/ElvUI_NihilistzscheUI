@@ -49,7 +49,6 @@ function ADB:CreateAnimatedBar(tbl, key)
     local holder = bar.holder
 
     holder:SetTemplate("Transparent")
-    if COMP.MERS then holder:Styling() end
     if not holder.shadow then holder:CreateShadow() end
     ES:RegisterFrameShadows(holder)
     local color = { bar:GetStatusBarColor() }

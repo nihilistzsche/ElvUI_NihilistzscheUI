@@ -1570,6 +1570,10 @@ NP.warlockdemons = {
         ["Imp Gang Boss"] = { enable = true },
         Soulkeeper = { enable = true },
         ["Pit Lord"] = { enable = true },
+        ["Mother of Chaos"] = { enable = true },
+        Overlord = { enable = true },
+        Gloomhound = { enable = true },
+        Charhound = { enable = true },
     },
 }
 

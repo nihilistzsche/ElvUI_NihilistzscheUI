@@ -27,6 +27,7 @@ local C_EquipmentSet_UseEquipmentSet = _G.C_EquipmentSet.UseEquipmentSet
 
 function EM:CreateBar()
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_EquipmentManagerBar",
         "equipmentManagerBar",
         { "BOTTOMLEFT", _G.LeftChatPanel, "BOTTOMRIGHT", 4, 24 },

@@ -2,7 +2,7 @@ local NUI, E = _G.unpack((select(2, ...)))
 local COMP = NUI.Compatibility
 local B = E.Bags
 
-local GetAddOnEnableState = _G.GetAddOnEnableState
+local C_AddOns_GetAddOnEnableState = _G.C_AddOns.GetAddOnEnableState
 local hooksecurefunc = _G.hooksecurefunc
 
 local function Disable(tbl, key)
@@ -14,9 +14,7 @@ local function Disable(tbl, key)
     return false
 end
 
-function COMP.IsAddOnEnabled(addon) -- Credit: Azilroka
-    return GetAddOnEnableState(E.myname, addon) == 2
-end
+function COMP.IsAddOnEnabled(addon) return C_AddOns_GetAddOnEnableState(addon, E.myname) == 2 end
 
 COMP.BUI = COMP.IsAddOnEnabled("ElvUI_BenikUI")
 COMP.MERS = COMP.IsAddOnEnabled("ElvUI_MerathilisUI")

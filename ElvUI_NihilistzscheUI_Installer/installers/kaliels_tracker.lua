@@ -10,30 +10,32 @@ function NI:KalielSetup()
 
     if COMP.WQT and GetAddOnMetadata("!KalielsTracker", "X-WQTSupport") then
         modulesOrder = {
-            nil,
-            "KT_CAMPAIGN_QUEST_TRACKER_MODULE",
-            "KT_WORLD_QUEST_TRACKER_MODULE",
-            "KT_BONUS_OBJECTIVE_TRACKER_MODULE",
-            "WORLDQUESTTRACKER_TRACKER_MODULE",
-            "KT_AUTO_QUEST_POPUP_TRACKER_MODULE",
-            "KT_QUEST_TRACKER_MODULE",
-            "QUECHO_TRACKER_MODULE",
-            "KT_MONTHLY_ACTIVITIES_TRACKER_MODULE",
-            "PETTRACKER_TRACKER_MODULE",
-            "KT_ACHIEVEMENT_TRACKER_MODULE",
+            "KT_ScenarioObjectiveTracker",
+            "KT_UIWidgetObjectiveTracker",
+            "KT_CampaignQuestObjectiveTracker",
+            "KT_WorldQuestObjectiveTracker",
+            "KT_BonusObjectiveTracker",
+            "KT_WorldQuestTrackerObjectiveTracker",
+            "KT_QuestObjectiveTracker",
+            "KT_AdventureObjectiveTracker",
+            "KT_MonthlyActivitiesObjectiveTracker",
+            "KT_PetTrackerObjectiveTracker",
+            "KT_ProfessionsRecipeTracker",
+            "KT_AchievementObjectiveTracker",
         }
     else
         modulesOrder = {
-            nil,
-            "KT_CAMPAIGN_QUEST_TRACKER_MODULE",
-            "KT_WORLD_QUEST_TRACKER_MODULE",
-            "KT_BONUS_OBJECTIVE_TRACKER_MODULE",
-            "KT_AUTO_QUEST_POPUP_TRACKER_MODULE",
-            "KT_QUEST_TRACKER_MODULE",
-            nil,
-            "KT_MONTHLY_ACTIVITIES_TRACKER_MODULE",
-            "PETTRACKER_TRACKER_MODULE",
-            "KT_ACHIEVEMENT_TRACKER_MODULE",
+            "KT_ScenarioObjectiveTracker",
+            "KT_UIWidgetObjectiveTracker",
+            "KT_CampaignQuestObjectiveTracker",
+            "KT_WorldQuestObjectiveTracker",
+            "KT_BonusObjectiveTracker",
+            "KT_QuestObjectiveTracker",
+            "KT_AdventureObjectiveTracker",
+            "KT_MonthlyActivitiesObjectiveTracker",
+            "KT_PetTrackerObjectiveTracker",
+            "KT_ProfessionsRecipeTracker",
+            "KT_AchievementObjectiveTracker",
         }
     end
     self:SetProfile(_G.KalielsTrackerDB, {
@@ -55,7 +57,8 @@ function NI:KalielSetup()
         hdrBgrColorShare = true,
         colorDifficulty = true,
         addonWorldQuestTracker = true,
-        addonQuecho = true,
+        addonPetTracker = true,
+        addonTomTom = true,
         hdrTxtColorShare = true,
         textWordWrap = true,
         helpTutorial = 10,
@@ -65,7 +68,7 @@ function NI:KalielSetup()
         modulesOrder = E:CopyTable({}, modulesOrder),
     })
 
-    self.SaveMoverPosition("NUIKalielsTrackerMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -82, -335)
+    self:SaveMoverPosition("NUIKalielsTrackerMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -82, -335)
 end
 
 NI:RegisterAddOnInstaller("!KalielsTracker", NI.KalielSetup)

@@ -1,16 +1,14 @@
-﻿## Title: Lib: PeriodicTable-3.1
-## LoadOnDemand: 1
+## Interface: 100200
+## Title: Lib: PeriodicTable-3.1
 ## Notes: Library of compressed itemid sets.
-## Author: Nymbia
-## X-eMail: nymbia@gmail.com
-## Interface: 80100
-## Version: v3.3.0.@project-revision@
+## Author: Elkano, MuffinManKen, Nymbia
+## Version: v3.3.0.669
+## LoadOnDemand: 1
 
+## X-Date: 2023-12-17T2:12:14Z
 ## X-Website: http://www.wowace.com/projects/libperiodictable-3-1/
 ## X-Category: Library
 ## X-License: LGPL v2.1
-## X-AceForum: 0
-
 
 LibStub\LibStub.lua
 LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua

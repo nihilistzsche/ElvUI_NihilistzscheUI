@@ -5,11 +5,11 @@ local COMP = NUI.Compatibility
 
 local REP = ADB:NewDataBar()
 
-local GetWatchedFactionInfo = _G.GetWatchedFactionInfo
-local GetNumFactions = _G.GetNumFactions
+local GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
+local GetNumFactions = _G.C_Reputation.GetNumFactions
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
-local GetFactionInfo = _G.GetFactionInfo
+local GetFactionDataByIndex = _G.C_Reputation.GetFactionDataByIndex
 local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
 local C_GossipInfo_GetFriendshipReputationRanks = _G.C_GossipInfo.GetFriendshipReputationRanks
 local FACTION_BAR_COLORS = _G.FACTION_BAR_COLORS
@@ -29,7 +29,9 @@ function REP.GetLevel() return 0 end
 -- luacheck: no self
 function REP:Update(bar)
     local ID
-    local name, reaction, min, max, value, factionID = GetWatchedFactionInfo()
+    local data = GetWatchedFactionData()
+    if not data then return end
+    local name, value, min, max, level, factionID = data.name, data.reaction, data.currentReactionThreshold, data.nextReactionThreshold, data.currentStanding, data.factionID
     local isParagon = false
     local showReward = false
     local isMajorFaction = false
@@ -55,15 +57,17 @@ function REP:Update(bar)
     local level
 
     for i = 1, numFactions do
-        local factionName, _, standingID, _, _, _, _, _, _, _, _, _, _, _factionID = GetFactionInfo(i)
-        if _factionID then
-            local success, data = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, _factionID)
+        local _data = GetFactionDataByIndex(i)
+        if _data then
+            local _factionID = _data.factionID
+            local standingID = _data.currentStanding
+            local success, fdata = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, _factionID)
             local friendID, friendRep, friendThreshold, nextFriendThreshold
-            if success then
+            if success and fdata then
                 friendID, friendRep, friendThreshold, nextFriendThreshold =
-                    data.friendshipFactionID, data.standing, data.reactionThreshold, data.nextThreshold
+                    fdata.friendshipFactionID, fdata.standing, fdata.reactionThreshold, fdata.nextThreshold
             end
-            if factionName == name then
+            if _data.name == name then
                 if friendID and friendID ~= 0 then
                     -- do something different for friendships
                     local rankData = C_GossipInfo_GetFriendshipReputationRanks(friendID)

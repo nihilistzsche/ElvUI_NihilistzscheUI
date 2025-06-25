@@ -4,7 +4,7 @@ if not E.Retail then return end
 local PBN = NUI.PetBattleNameplates
 local NP = E.NamePlates
 local UF = E.UnitFrames
-local BattlePetBreedID = _G.IsAddOnLoaded("BattlePetBreedID")
+local BattlePetBreedID = _G.C_AddOns.IsAddOnLoaded("BattlePetBreedID")
 local COMP = NUI.Compatibility
 
 local Enum_BattlePetOwner_Ally = _G.Enum.BattlePetOwner.Ally
@@ -36,7 +36,7 @@ function PBN:PET_BATTLE_OPENING_START()
         if not self.CVarCache[cvar] then self.CVarCache[cvar] = GetCVar(cvar) end
         if firstValue then
             SetCVar(cvar, firstValue)
-            C_Timer_After(1, function() SetCVar(cvar, newValue) end)
+            C_Timer_After(3, function() SetCVar(cvar, newValue) end)
         else
             SetCVar(cvar, newValue)
         end
@@ -506,8 +506,9 @@ function PBN:Update(event)
 end
 
 function PBN:Initialize()
-    if _G.EPB then
-        hooksecurefunc(_G.EPB, "ChangePetBattlePetSelectionFrameState", function()
+    local EPB = _G.EnhancedPetBattleUI
+    if EPB then
+        hooksecurefunc(EPB, "ChangePetBattlePetSelectionFrameState", function()
             for np in pairs(self.handledNameplates) do
                 NP:StyleFilterUpdate(np, "FAKE_PBNForceUpdate")
             end

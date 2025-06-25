@@ -8,11 +8,11 @@ local LSM = E.Libs.LSM
 local BS = NUI.ButtonStyle
 local COMP = NUI.Compatibility
 
-local CreateFrame, GetItemCount, GetItemInfo, GetSpellInfo, InCombatLockdown, RegisterStateDriver, select, unpack, tinsert, ipairs, pairs, floor, format, max =
+local CreateFrame, C_Item_GetItemCount, C_Item_GetItemInfo, C_Spell_GetSpellInfo, InCombatLockdown, RegisterStateDriver, select, unpack, tinsert, ipairs, pairs, floor, format, max =
     _G.CreateFrame,
-    _G.GetItemCount,
-    _G.GetItemInfo,
-    _G.GetSpellInfo,
+    _G.C_Item.GetItemCount,
+    _G.C_Item.GetItemInfo,
+    _G.C_Spell.GetSpellInfo,
     _G.InCombatLockdown,
     _G.RegisterStateDriver,
     _G.select,
@@ -26,17 +26,25 @@ local CreateFrame, GetItemCount, GetItemInfo, GetSpellInfo, InCombatLockdown, Re
 
 local Item = _G.Item
 local Spell = _G.Spell
-local GetSpellTexture = _G.GetSpellTexture
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
+local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
 local C_ToyBox_GetToyInfo = _G.C_ToyBox.GetToyInfo
 local C_CurrencyInfo_GetCurrencyInfo = _G.C_CurrencyInfo.GetCurrencyInfo
 local GameTooltip = _G.GameTooltip
 local UnitAffectingCombat = _G.UnitAffectingCombat
 
 function NUB.ActivateBar(bar)
-    if bar:IsVisible() then E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), bar.db.alpha or 1) end
+    if bar:IsVisible() then
+        bar.__nub_parent.__nub_update_locked = nil
+        bar.__nub_parent:UpdateBar(bar)
+        E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), bar.db.alpha or 1)
+    end
 end
 
-function NUB.DeactivateBar(bar) E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), 0) end
+function NUB.DeactivateBar(bar)
+    bar.__nub_parent.__nub_update_locked = true
+    E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), 0)
+end
 
 local function onUpdate(self, elapsed)
     if (self.watcher or 0) + elapsed > 0.5 then
@@ -84,8 +92,10 @@ function NUB:PLAYER_REGEN_ENABLED()
     end
 end
 
-function NUB:CreateBar(name, db, point, moverName)
+function NUB:CreateBar(tbl, name, db, point, moverName)
     local bar = CreateFrame("Frame", name, E.UIParent, "SecureHandlerStateTemplate")
+
+    bar.__nub_parent = tbl
 
     if type(db) == "string" then
         NUI:RegisterDB(bar, "utilitybars." .. db)
@@ -99,7 +109,6 @@ function NUB:CreateBar(name, db, point, moverName)
     local ES = NUI.EnhancedShadows
     bar:SetFrameLevel(1)
     bar:CreateBackdrop("Transparent", nil, nil, nil, nil, nil, nil, nil, 0)
-    if COMP.MERS then bar:Styling() end
     if ES then
         bar:CreateShadow()
         ES:RegisterFrameShadows(bar)
@@ -110,7 +119,7 @@ function NUB:CreateBar(name, db, point, moverName)
     RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
 
     bar:Size(320, 36)
-    if point then
+    if point and type(point) == "table" then
         bar:Point(unpack(point))
     else
         bar:Point("BOTTOMLEFT", _G.LeftChatPanel, "TOPRIGHT", 0, 15)
@@ -214,8 +223,8 @@ local function CreateOrGetItemClosure(id, bar, button, args)
     local func = function()
         if not itemClosureData[id] then return end
         local _bar, _button, _args = unpack(itemClosureData[id])
-        local itemName, _, _, _, _, _, _, _, _, texture = GetItemInfo(id)
-        local count = GetItemCount(id)
+        local itemName, _, _, _, _, _, _, _, _, texture = C_Item_GetItemInfo(id)
+        local count = C_Item_GetItemCount(id)
         button:SetAttribute("type", "item")
         button:SetAttribute("item", itemName)
         button.count:SetText(count)
@@ -239,7 +248,7 @@ function NUB.UpdateButtonAsItem(bar, button, id, ...)
     local args = { ... }
     if NUB.cache.items[id] then
         local itemName, texture = NUB.cache.items[id].itemname, NUB.cache.items[id].texture
-        local count = GetItemCount(id)
+        local count = C_Item_GetItemCount(id)
         button:SetAttribute("type", "item")
         button:SetAttribute("item", itemName)
         button.count:SetText(count)
@@ -264,11 +273,11 @@ local function CreateOrGetSpellClosure(id, bar, button, args)
     local func = function()
         if not spellClosureData[id] then return end
         local _bar, _button, _args = unpack(spellClosureData[id])
-        local name = GetSpellInfo(id)
+        local name = C_Spell_GetSpellName(id)
         button:SetAttribute("type", "spell")
         button:SetAttribute("spell", name)
         button:SetState(0, "spell", id)
-        local spellTexture = GetSpellTexture(id)
+        local spellTexture = C_Spell_GetSpellTexture(id)
         button.texture:SetTexture(spellTexture)
         button.count:Hide()
         button:SetBackdropBorderColor(0, 0, 0, 1)
@@ -645,7 +654,7 @@ function NUB:UpdateButtonConfig(bar, buttonName)
 end
 
 function NUB.HandleEvent(mod, frame, event)
-    if not mod.bar then return end
+    if not mod.bar or mod.__nub_update_locked then return end
 
     if (UnitAffectingCombat("player") or InCombatLockdown()) and not mod.ignoreCombatLockdown then
         frame:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -690,6 +699,7 @@ function NUB:Initialize()
     self:InitCache()
     self:RegisterEvent("PLAYER_REGEN_DISABLED")
     self:RegisterEvent("PLAYER_REGEN_ENABLED")
+    self:UpdateAll()
 end
 
 NUI:RegisterModule(NUB:GetName())

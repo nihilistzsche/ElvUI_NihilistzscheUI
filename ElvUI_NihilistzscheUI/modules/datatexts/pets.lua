@@ -22,9 +22,9 @@ local tContains = _G.tContains
 local UIDropDownMenu_AddButton = _G.UIDropDownMenu_AddButton
 local ToggleDropDownMenu = _G.ToggleDropDownMenu
 local ToggleCollectionsJournal = _G.ToggleCollectionsJournal
-local IsAddOnLoaded = _G.IsAddOnLoaded
+local IsAddOnLoaded = _G.C_AddOns.IsAddOnLoaded
 local PetJournalFilterDropDown = _G.PetJournalFilterDropDown
-local LoadAddOn = _G.LoadAddOn
+local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
 
 local menu = {}
 
@@ -277,7 +277,7 @@ local function OnClick(self, button)
         if IsAddOnLoaded("Blizzard_PetJournal") then
             ToggleDropDownMenu(1, nil, PetJournalFilterDropDown, self, 0, 0)
         else
-            LoadAddOn("Blizzard_PetJournal")
+            C_AddOns_LoadAddOn("Blizzard_PetJournal")
             ToggleDropDownMenu(1, nil, PetJournalFilterDropDown, self, 0, 0)
         end
     end

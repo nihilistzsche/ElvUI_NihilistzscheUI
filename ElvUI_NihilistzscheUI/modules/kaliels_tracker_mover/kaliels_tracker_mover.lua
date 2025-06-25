@@ -3,9 +3,9 @@ local COMP = NUI.Compatibility
 local KTM = NUI.KalielsTrackerMover
 
 function KTM.Initialize()
-    if not COMP.KT then return end
+    if not COMP.KT or not C_AddOns.GetAddOnMetadata("!KalielsTracker", "X-WQTSupport") then return end
 
-    local KT = _G.LibStub("AceAddon-3.0"):GetAddon("!KalielsTracker")
+    local KT = KalielsTracker:GetKT()
     KT.MoveTracker = E.noop
     local frame = KT.frame
     frame:SetParent(E.UIParent)

@@ -10,6 +10,7 @@ local NUI = E.Libs.AceAddon:NewAddon(addon, "AceEvent-3.0", "AceHook-3.0")
 
 local LibStub = _G.LibStub
 local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
+local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
 local ElvUI_CPU = _G.ElvUI_CPU
 local hooksecurefunc = _G.hooksecurefunc
 local geterrorhandler = _G.geterrorhandler
@@ -130,25 +131,12 @@ function NUI:InitializeModules()
     end
 end
 
-function NUI:LoadDelayedModules()
-    local base = time()
-    local ticker
-    local duration = 30
-    ticker = C_Timer.NewTicker(1, function()
-        local now = time()
-        if now - base > duration then
-            LoadAddOn("ElvUI_NihilistzscheUI_Delayed_Modules")
-            ticker:Cancel()
-        end
-    end)
-end
-
 function NUI:Initialize()
     self.initialized = true
 
     if NUI.Debug then _G.NUI = NUI end
 
-    self:BuildGameMenu()
+    --self:BuildGameMenu()
     self.FixPetJournal()
 
     self.currentQuestXP = 0
@@ -161,7 +149,6 @@ function NUI:Initialize()
     self:InitializeModules()
     self.Installer:Initialize()
     if self.Compatibility.DEV then self:RegisterEvent("ADDON_LOADED") end
-    if not self.WaitToLoadDelayedModules then self:LoadDelayedModules() end
 end
 
 E.Libs.EP:HookInitialize(NUI, NUI.Initialize)

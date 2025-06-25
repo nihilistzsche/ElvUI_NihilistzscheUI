@@ -107,7 +107,7 @@ function NI:DynamicCamSetup()
                 extras = {
                     hideUI = false,
                 },
-                condition = '        for k,v in pairs(this.spells) do \n            if (UnitCastingInfo("player") == GetSpellInfo(v)) then \n                return true;\n            end\n        end\n        return false;',
+                condition = '        for k,v in pairs(this.spells) do \n            if (UnitCastingInfo("player") == C_Spell.GetSpellName(v)) then \n                return true;\n            end\n        end\n        return false;',
             },
             ["102"] = {
                 cameraActions = {
@@ -138,7 +138,7 @@ function NI:DynamicCamSetup()
                     test_cameraHeadMovementStrength = 0,
                     test_cameraOverShoulder = 0,
                 },
-                condition = '    for k,v in pairs(this.annoyingSpellsToLookFor) do \n        name = GetSpellInfo(v)\n        if (AuraUtil.FindAuraByName(name, "player")) then\n            return true;\n        end\n    end\n\n    return false;\n    ',
+                condition = '    for k,v in pairs(this.annoyingSpellsToLookFor) do \n        name = C_Spell.GetSpellName(v)\n        if (AuraUtil.FindAuraByName(name, "player")) then\n            return true;\n        end\n    end\n\n    return false;\n    ',
             },
             ["301"] = {
                 enabled = false,

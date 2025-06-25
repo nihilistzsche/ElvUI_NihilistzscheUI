@@ -13,15 +13,15 @@ local Border, LastSize
 
 ES.shadows = {}
 
-local IsAddOnLoaded = _G.IsAddOnLoaded
-local LoadAddOn = _G.LoadAddOn
+local IsAddOnLoaded = _G.C_AddOns.IsAddOnLoaded
+local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
 local tinsert = _G.tinsert
 local NUM_STANCE_SLOTS = _G.NUM_STANCE_SLOTS
 local hooksecurefunc = _G.hooksecurefunc
 local C_Timer_After = _G.C_Timer.After
 local GetNumGroupMembers = _G.GetNumGroupMembers
 local wipe = _G.wipe
-if not IsAddOnLoaded("Blizzard_TalentUI") then LoadAddOn("Blizzard_TalentUI") end
+if not IsAddOnLoaded("Blizzard_TalentUI") then C_AddOns_LoadAddOn("Blizzard_TalentUI") end
 
 ES.AddOnFrames = {
     QG = "QuestGuru",
@@ -332,42 +332,15 @@ function ES:UpdateShadow(shadow, hide)
     shadow:SetShown(self.db.enabled and not hide)
 end
 
-function ES:UpdateMERShadows()
-    for frame, _ in pairs(_G.ElvUI_MerathilisUI[1].styling) do
-        if frame and not frame.enhanced then
-            if not frame.shadow then frame:CreateShadow() end
-            self:RegisterFrameShadows(frame)
-            frame.enhanced = true
-        end
-    end
-end
-
-if COMP.MERS then
-    local MER = _G.ElvUI_MerathilisUI[1]
-    local realTable = MER.styling
-    local stylingShadow = setmetatable({}, { __index = realTable })
-
-    local mt = {
-        __index = stylingShadow,
-        __newindex = function(_, k, v)
-            stylingShadow[k] = v
-            ES:UpdateMERShadows()
-        end,
-    }
-
-    MER.styling = setmetatable({}, mt)
-end
-
 function ES:MERInit()
     local MER = _G.ElvUI_MerathilisUI[1]
-    self:UpdateMERShadows()
     if not _G[MER.Title .. "MicroBar"] then return end
     _G[MER.Title .. "MicroBar"]:CreateShadow()
     self:RegisterFrameShadows(_G[MER.Title .. "MicroBar"])
 end
 
 function ES:EPBHook()
-    local EPB = _G.EPB
+    local EPB = _G.EnhancedPetBattleUI
     hooksecurefunc(EPB, "UpdatePetFrame", function(_, frame)
         if not frame.enhanced then
             if not frame.shadow then frame:CreateShadow() end
@@ -444,7 +417,7 @@ function ES:Initialize()
 
     UF:Update_AllFrames()
     if COMP.IF then
-        LoadAddOn("InFlight")
+        C_AddOns_LoadAddOn("InFlight-WW")
         _G.InFlight:CreateBar()
         _G.InFlightBar:CreateShadow()
         ES:RegisterFrameShadows(_G.InFlightBar)
@@ -472,23 +445,26 @@ function ES:Initialize()
         end
     end
     if COMP.PA then
-        if not _G.EPB then LoadAddOn("ProjectAzilroka") end
-        if EPB.UpdatePetFrame then
-            self:EPBHook()
-        else
-            hooksecurefunc(EPB, "InitPetFrameAPI", function() self:EPBHook() end)
-        end
-        hooksecurefunc(EPB, "UpdateReviveBar", function()
-            local f = function(frame)
-                if not frame.enhanced then
-                    if not frame.shadow then frame:CreateShadow() end
-                    ES:RegisterFrameShadows(frame)
-                    frame.enhanced = true
-                end
+        if not _G.EnhancedPetBattleUI then C_AddOns_LoadAddOn("ProjectAzilroka") end
+        local EPB = _G.EnhancedPetBattleUI
+        if EPB then
+            if EPB.UpdatePetFrame then
+                self:EPBHook()
+            else
+                hooksecurefunc(EPB, "InitPetFrameAPI", function() self:EPBHook() end)
             end
-            f(EPB.holder.ReviveButton)
-            f(EPB.holder.BandageButton)
-        end)
+            hooksecurefunc(EPB, "UpdateReviveBar", function()
+                local f = function(frame)
+                    if not frame.enhanced then
+                        if not frame.shadow then frame:CreateShadow() end
+                        ES:RegisterFrameShadows(frame)
+                        frame.enhanced = true
+                    end
+                end
+                f(EPB.holder.ReviveButton)
+                f(EPB.holder.BandageButton)
+            end)
+        end
     end
     hooksecurefunc(E, "ToggleOptions", function(_)
         local win = _:Config_GetWindow()

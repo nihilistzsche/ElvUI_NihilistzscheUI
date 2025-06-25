@@ -191,7 +191,6 @@ function PXP:CreateBar()
     bar = CreateFrame("StatusBar", nil, _G.NihilistzscheUI_PartyXPHolder, "BackdropTemplate")
     bar:SetSize(_G.NihilistzscheUI_PartyXPHolder:GetSize())
     bar:CreateBackdrop("Transparent")
-    if COMP.MERS then bar:Styling() end
 
     bar:SetStatusBarTexture(LSM:Fetch("statusbar", self.db.texture))
     if ES then

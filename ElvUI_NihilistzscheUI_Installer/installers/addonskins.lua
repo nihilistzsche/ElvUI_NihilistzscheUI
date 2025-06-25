@@ -19,7 +19,6 @@ function NI:AddOnSkinsSetup()
         EmbedIsHidden = true,
         BarrelsOEasy = true,
         SkinDebug = AS.Nihilistzsche and true or false,
-        MerathilisUIStyling = COMP.MERS and true or nil,
         Font = self.db.font,
     })
 end

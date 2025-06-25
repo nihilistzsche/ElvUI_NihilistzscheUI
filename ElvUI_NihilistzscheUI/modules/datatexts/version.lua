@@ -6,8 +6,8 @@ local COMP = NUI.Compatibility
 local displayString = ""
 local Eversion = E.version
 local format = _G.format
-local IsAddOnLoaded = _G.IsAddOnLoaded
-local LoadAddOn = _G.LoadAddOn
+local IsAddOnLoaded = _G.C_AddOns.IsAddOnLoaded
+local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
 local GAME_VERSION_LABEL = _G.GAME_VERSION_LABEL
 
 local function OnEvent(self) self.text:SetText(displayString) end
@@ -18,7 +18,7 @@ local function Click()
 
     ACD = ACD or E.Libs.AceConfigDialog
     if not ACD then
-        if not IsAddOnLoaded("ElvUI_Options") then LoadAddOn("ElvUI_Options") end
+        if not IsAddOnLoaded("ElvUI_Options") then C_AddOns_LoadAddOn("ElvUI_Options") end
         ACD = E.Libs.AceConfigDialog
     end
     if ACD then ACD:SelectGroup("ElvUI", "NihilistzscheUI") end

@@ -6,7 +6,7 @@ local FL = NUI.Libs.FL
 
 local PT = NUI.Libs.PT
 
-local GetItemCount = _G.GetItemCount
+local C_Item_GetItemCount = _G.C_Item.GetItemCount
 local CreateFrame = _G.CreateFrame
 
 function BB.AddBaits()
@@ -20,7 +20,7 @@ end
 
 function BB:CreateBar()
     local bar =
-        NUB:CreateBar("NihilistzscheUI_BaitBar", "baitBar", { "CENTER", E.UIParent, "CENTER", 0, -280 }, "Bait Bar")
+        NUB:CreateBar(self, "NihilistzscheUI_BaitBar", "baitBar", { "CENTER", E.UIParent, "CENTER", 0, -280 }, "Bait Bar")
     NUB.RegisterUpdateButtonHook(bar, function(button, ...) self.UpdateButtonHook(button, ...) end)
 
     return bar
@@ -57,7 +57,7 @@ function BB:UpdateBar(bar)
     local j = 1
 
     local function addButton(itemID)
-        local count = GetItemCount(itemID)
+        local count = C_Item_GetItemCount(itemID) 
 
         if count > 0 then
             local button = bar.buttons[j]

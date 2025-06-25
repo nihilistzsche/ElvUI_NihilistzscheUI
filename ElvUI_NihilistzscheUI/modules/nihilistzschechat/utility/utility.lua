@@ -61,8 +61,6 @@ function NC:SetStyle(f, panel, border)
     else
         f:SetBackdropBorderColor(0, 0, 0)
     end
-
-    if COMP.MERS then f:Styling() end
 end
 
 function NC:CreateDock()

@@ -1,14 +1,14 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-    <Script file="baitbar.lua"/>
-    <Script file="equipmentmanagerbar.lua"/>
-    <Script file="portalbar.lua"/>
-    <Script file="professionbar.lua"/>
-    <Script file="toybar.lua"/>
-    <Script file="specswitchbar.lua"/>
-    <Script file="trackerbar.lua"/>
-    <Script file="farmbar.lua"/>
-    <Script file="raidprepbar.lua"/>
-    <Script file="toolsofthetradebar.lua"/>
-    <Script file="engineertoybar.lua"/>
-    <Script file="bobberbar.lua"/>
+<Ui xmlns="http://www.blizzard.com/wow/ui">
+	<Script file="baitbar.lua"/>
+	<Script file="bobberbar.lua"/>
+	<Script file="engineertoybar.lua"/>
+	<Script file="equipmentmanagerbar.lua"/>
+	<Script file="farmbar.lua"/>
+	<Script file="portalbar.lua"/>
+	<Script file="professionbar.lua"/>
+	<Script file="raidprepbar.lua"/>
+	<Script file="specswitchbar.lua"/>
+	<Script file="toolsofthetradebar.lua"/>
+	<Script file="toybar.lua"/>
+	<Script file="trackerbar.lua"/>
 </Ui>

@@ -20,9 +20,12 @@ end
 NI:RegisterGlobalAddOnInstaller("ElvUI_MerathilisUI", NI.MerathilisUIGlobalSetup)
 
 function NI:MerathilisUISetup(isSpec)
+    local MER = _G.ElvUI_MerathilisUI[1]
     self:EDB().mui = self:EDB().mui or {}
-    self:EDB().mui.installed = true
-    _G.MERDataPerChar = _G.ElvUI_MerathilisUI[1].Version
+    self:EDB().mui.core = self:EDB().mui.core or {}
+    self:EDB().mui.core.installed = true
+    self:EDB().mui.core.lastLayoutVersion = MER.DisplayVersion
+    _G.MERDataPerChar = MER.Version
     self:EDB().mui.general = {
         splashScreen = false,
         gmotd = false,
@@ -56,6 +59,7 @@ function NI:MerathilisUISetup(isSpec)
     self:EDB().mui.raidmarkers = {
         enable = true,
         backdrop = true,
+        visibility = "INPARTY",
     }
     self:EDB().mui.raidBuffs = {
         enable = true,
@@ -138,36 +142,43 @@ function NI:MerathilisUISetup(isSpec)
             },
         },
     }
+    self:EDB().mui.quest = {
+        turnIn = {
+            enable = false,
+        },
+    }
     if not isSpec then
-        self:EPRV().muiSkins = {
+        self:EPRV().mui = self:EPRV().mui or {}
+        self:EPRV().mui.skins = {
             blizzard = {
                 merchant = false,
             },
-        }
-        self:EPRV().mui = self:EPRV().mui or {}
-        self:EPRV().mui.skins = {
             embed = {
                 enable = false,
             },
             addonSkins = {
                 wa = false,
             },
+            shadow = {
+                enable = false,
+            },
         }
     end
-    self.SaveMoverPosition("MER_RaidBuffReminderMover", "TOPLEFT", E.UIParent, "TOPLEFT", 238, -141)
-    self.SaveMoverPosition("MER_RaidManager", "TOPRIGHT", E.UIParent, "TOPRIGHT", -179, -190)
-    self.SaveMoverPosition("Notification Mover", "TOP", E.UIParent, "TOP", 0, -120)
-    self.SaveMoverPosition("MER_RaidMarkersBarAnchor", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -40, 396)
-    self.SaveMoverPosition("AutoButtonBar1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -398, 334)
-    self.SaveMoverPosition("AutoButtonBar2Mover", "TOP", "AutoButtonBar1Mover", "BOTTOM", 0, -4)
-    self.SaveMoverPosition("AutoButtonBar3Mover", "TOP", "AutoButtonBar2Mover", "BOTTOM", 0, -4)
-    self.SaveMoverPosition("SpellFeedback", "BOTTOM", E.UIParent, "BOTTOM", 0, 415)
+    self:SaveMoverPosition("MER_RaidBuffReminderMover", "TOPLEFT", E.UIParent, "TOPLEFT", 238, -141)
+    self:SaveMoverPosition("MER_RaidManager", "TOPRIGHT", E.UIParent, "TOPRIGHT", -179, -190)
+    self:SaveMoverPosition("MER_SwitchButtonBarMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -602, 0)
+    self:SaveMoverPosition("Notification Mover", "TOP", E.UIParent, "TOP", 0, -120)
+    self:SaveMoverPosition("MER_RaidMarkersBarAnchor", "TOPRIGHT", E.UIParent, "TOPRIGHT", -89, -287)
+    self:SaveMoverPosition("AutoButtonBar1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -398, 334)
+    self:SaveMoverPosition("AutoButtonBar2Mover", "TOP", "AutoButtonBar1Mover", "BOTTOM", 0, -4)
+    self:SaveMoverPosition("AutoButtonBar3Mover", "TOP", "AutoButtonBar2Mover", "BOTTOM", 0, -4)
+    self:SaveMoverPosition("SpellFeedback", "BOTTOM", E.UIParent, "BOTTOM", 0, 415)
 
     if COMP.LCP then
         self:EDB().mui.locPanel = {
             enable = false,
         }
-        self.SaveMoverPosition("MicroBarAnchor", "TOP", "LocationPlusPanel", "BOTTOM", 0, -2)
+        self:SaveMoverPosition("MicroBarAnchor", "TOP", "LocationPlusPanel", "BOTTOM", 0, -2)
     end
 end
 

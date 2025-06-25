@@ -1,15 +1,15 @@
 local NUI, E, L = _G.unpack((select(2, ...)))
 local COMP = NUI.Compatibility
 local SLE = COMP.SLE and _G["ElvUI_SLE"][1]
-local lib = _G.LibStub("LibElv-GameMenu-1.0")
+--local lib = _G.LibStub("LibElv-GameMenu-1.0")
 
 local tinsert = _G.tinsert
 local sort = _G.sort
 local strsplit = _G.strsplit
 local gsub = _G.gsub
 local InCombatLockdown = _G.InCombatLockdown
-local IsAddOnLoaded = _G.IsAddOnLoaded
-local LoadAddOn = _G.LoadAddOn
+local IsAddOnLoaded = _G.C_AddOns.IsAddOnLoaded
+local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
 local HideUIPanel = _G.HideUIPanel
 local C_PetJournal_SetAllPetSourcesChecked = _G.C_PetJournal.SetAllPetSourcesChecked
 local C_PetJournal_SetAllPetTypesChecked = _G.C_PetJournal.SetAllPetTypesChecked
@@ -27,10 +27,11 @@ local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
 local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
 local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
+local C_Reputation_GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
 local hooksecurefunc = _G.hooksecurefunc
 local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
 local unpack = _G.unpack
-local GetSpellInfo = _G.GetSpellInfo
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
 local strfind = _G.strfind
 local strmatch = _G.strmatch
 
@@ -145,7 +146,7 @@ function NUI.ClickGameMenu()
     if InCombatLockdown() then return end
     ACD = ACD or E.Libs.AceConfigDialog
     if not ACD then
-        if not IsAddOnLoaded("ElvUI_Options") then LoadAddOn("ElvUI_Options") end
+        if not IsAddOnLoaded("ElvUI_Options") then C_AddOns_LoadAddOn("ElvUI_Options") end
         ACD = E.Libs.AceConfigDialog
     end
     E:ToggleOptions()
@@ -320,7 +321,7 @@ end
 local FISHING_BUFF_ID = 394009
 function NUI:HasFishingBuff()
     if not E.Retail then return false end
-    if not self.FishingBuffName then self.FishingBuffName = GetSpellInfo(FISHING_BUFF_ID) end
+    if not self.FishingBuffName then self.FishingBuffName = C_Spell_GetSpellName(FISHING_BUFF_ID) end
     return AuraUtil_FindAuraByName(self.FishingBuffName, "player", "HELPFUL") ~= nil
 end
 
@@ -357,8 +358,9 @@ function NUI.GetMajorFactionInfo(factionID)
 end
 
 function NUI.GetFactionValues()
-    local name, _, min, max, value, factionID = GetWatchedFactionInfo()
-    if not factionID then return end
+    local data = C_Reputation_GetWatchedFactionData()
+    if not data then return end
+    local name, min, max, value, factionID = data.name, data.currentReactionThreshold, data.nextReactionThreshold, data.currentStanding, data.factionID
     local isParagon, pmin, pmax, pvalue = NUI.GetParagonInfo(factionID)
     if isParagon then
         min, max, value = pmin, pmax, pvalue
@@ -368,7 +370,7 @@ function NUI.GetFactionValues()
     if isMajorFaction then
         min, max, value = mmin, mmax, mvalue
     end
-    local isFriend, data = NUI.GetFriendshipInfo(factionID)
+    local isFriend, _data = NUI.GetFriendshipInfo(factionID)
     if isFriend and not isParagon then
         min, max, value = data.reactionThreshold, data.nextThreshold or true, data.standing
     end

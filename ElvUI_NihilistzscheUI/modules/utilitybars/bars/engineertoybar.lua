@@ -10,9 +10,10 @@ local tinsert = _G.tinsert
 local CreateFrame = _G.CreateFrame
 local tContains = _G.tContains
 
-function ETOYB.CreateBar()
+function ETOYB:CreateBar()
     -- luacheck: no max line length
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_EngineerToyBar",
         "engineertoybar",
         { "BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 65 },
@@ -101,7 +102,7 @@ function ETOYB:Initialize()
 
     NUB:InjectScripts(self)
 
-    local bar = self.CreateBar()
+    local bar = self:CreateBar()
     self.bar = bar
 
     self.hooks = {}

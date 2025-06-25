@@ -15,6 +15,8 @@ local C_MountJournal_GetMountInfoByID = _G.C_MountJournal.GetMountInfoByID
 local C_MountJournal_GetNumDisplayedMounts = _G.C_MountJournal.GetNumDisplayedMounts
 local C_MountJournal_GetNumMounts = _G.C_MountJournal.GetNumMounts
 local C_MountJournal_SummonByID = _G.C_MountJournal.SummonByID
+local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
 local C_Timer_After = _G.C_Timer.After
 local GetSpecialization = _G.GetSpecialization
 local GetSpecializationInfo = _G.GetSpecializationInfo
@@ -37,7 +39,8 @@ local displayString = ""
 local hexColor = "|cff00ff96"
 local DRAGON_ISLES_CONTINENT_ID = 1978
 local NOKHUD_OFFENSIVE_MAP_ID = 2093
-
+local SKYRIDING_BUFF_ID = 404464
+local SKYRIDING_BUFF_NAME
 local dragonriding_mounts = {
     [1563] = true, -- Classic Drake
     [1589] = true, -- Renewed Proto-Drake
@@ -150,11 +153,14 @@ _G.SummonFavoriteMount = function()
         end
         return
     end
+    if not SKYRIDING_BUFF_NAME then SKYRIDING_BUFF_NAME = C_Spell_GetSpellName(SKYRIDING_BUFF_ID) end
     if
-        E.MapInfo.continentMapID == DRAGON_ISLES_CONTINENT_ID
-        and IsSpellKnown(dragonridingSpellID)
+        IsSpellKnown(dragonridingSpellID)
         and db.favDragonridingMount
-        and (not IsInInstance() or E.MapInfo.mapID == NOKHUD_OFFENSIVE_MAP_ID)
+        and (
+            E.MapInfo.mapID == NOKHUD_OFFENSIVE_MAP_ID
+            or not IsInInstance() and AuraUtil_FindAuraByName(SKYRIDING_BUFF_NAME, "player")
+        )
     then
         C_MountJournal_SummonByID(db.favDragonridingMount)
         return

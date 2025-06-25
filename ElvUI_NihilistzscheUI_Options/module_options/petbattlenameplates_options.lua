@@ -2,7 +2,7 @@ local NUI, E, L, _, P, _ = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local PBN = NUI.PetBattleNameplates
 if not PBN then return end
 
-local BattlePetBreedID = _G.IsAddOnLoaded("BattlePetBreedID")
+local BattlePetBreedID = _G.C_AddOns.IsAddOnLoaded("BattlePetBreedID")
 function PBN:AddStyleFilterOptions()
     -- luacheck: push no max line length
     local npTriggerOptions = {

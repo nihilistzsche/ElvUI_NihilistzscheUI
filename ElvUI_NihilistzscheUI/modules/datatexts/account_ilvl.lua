@@ -120,10 +120,11 @@ end
 local function UpdateDisplay(self) self.text:SetText(displayString) end
 
 local function OnEvent(self)
-    for _, v in pairs(E.global.nihilistzscheui.accountilvl[1] or {}) do
-        if type(v) ~= "table" then E.global.nihilistzscheui.accountilvl = {} end
+    if E.global.nihilistzscheui.accountilvl then
+        for _, v in pairs(E.global.nihilistzscheui.accountilvl[1] or {}) do
+            if type(v) ~= "table" then E.global.nihilistzscheui.accountilvl = {} end
+        end
     end
-
     local entry = addOrUpdateIlvlEntry()
     local str1, str2 = buildEntryString(entry)
     displayString = format("%s %s", str1, str2)

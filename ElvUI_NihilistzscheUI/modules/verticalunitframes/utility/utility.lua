@@ -11,7 +11,7 @@ local gsub = _G.gsub
 local DELETE = _G.DELETE
 local UIParent = _G.UIParent
 local UnitAffectingCombat = _G.UnitAffectingCombat
-local IsAddOnLoaded = _G.IsAddOnLoaded
+local IsAddOnLoaded = _G.C_AddOns.IsAddOnLoaded
 local InCombatLockdown = _G.InCombatLockdown
 local GetSpecialization = _G.GetSpecialization
 local tContains = _G.tContains
@@ -219,6 +219,7 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
     frame.unitframeType = unit
     local stringTitle = E:StringTitle(unit)
     if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
+    frame.frameName = "NihilistzscheUF_" .. stringTitle
     self["Construct" .. stringTitle .. "Frame"](self, frame, unit)
 
     frame:CreateBackdrop("Transparent")
@@ -393,7 +394,6 @@ function VUF:ConstructStatusBar(frame, element, parent, name, t, noBG)
     local sb = CreateFrame("StatusBar", sbname, parent, "BackdropTemplate")
     if not t then
         sb:SetTemplate("Transparent")
-        if COMP.MERS then sb:Styling() end
     end
 
     -- Dummy texture so we can set colors

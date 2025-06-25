@@ -1,9 +1,0 @@
-## Interface: 100100
-## Title: |cff1784d1ElvUI|r |cffffffffNihilistzsche|cffff2020UI|r |cff00ff00Delayed Modules|r
-## IconTexture: Interface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo
-## Author: Nihilistzsche
-## Version: 12.9952
-## RequiredDeps: ElvUI_NihilistzscheUI
-## LoadOnDemand: 1
-
-load_delayed_modules.xml

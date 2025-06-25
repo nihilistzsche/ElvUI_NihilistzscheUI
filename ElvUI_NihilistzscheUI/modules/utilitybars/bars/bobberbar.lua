@@ -8,9 +8,10 @@ local PlayerHasToy = _G.PlayerHasToy
 local tinsert = _G.tinsert
 local CreateFrame = _G.CreateFrame
 
-function BOBB.CreateBar()
+function BOBB:CreateBar()
     -- luacheck: no max line length
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_BobberBar",
         "bobberbar",
         { "BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 45 },
@@ -48,6 +49,8 @@ function BOBB:GetToys()
 end
 
 function BOBB:UpdateBar(bar)
+    if InCombatLockdown() or UnitAffectingCombat("player") or UnitAffectingCombat("pet") then return end
+
     local toys = self:GetToys()
 
     NUB.CreateButtons(bar, #toys)
@@ -75,7 +78,7 @@ function BOBB:Initialize()
 
     NUB:InjectScripts(self)
 
-    local bar = self.CreateBar()
+    local bar = self:CreateBar()
     self.bar = bar
     self.ignoreCombatLockdown = true
 

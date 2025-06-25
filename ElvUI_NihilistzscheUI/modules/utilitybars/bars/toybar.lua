@@ -26,9 +26,10 @@ local GetNumExpansions = _G.GetNumExpansions
 local tinsert = _G.tinsert
 local CreateFrame = _G.CreateFrame
 
-function TOYB.CreateBar()
+function TOYB:CreateBar()
     -- luacheck: no max line length
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_ToyBar",
         "toybar",
         { "BOTTOMRIGHT", _G.RightChatPanel, "TOPRIGHT", 0, 45 },
@@ -113,7 +114,7 @@ function TOYB:Initialize()
 
     NUB:InjectScripts(self)
 
-    local bar = self.CreateBar()
+    local bar = self:CreateBar()
     self.bar = bar
     self.ignoreCombatLockdown = true
 

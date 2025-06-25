@@ -8,18 +8,17 @@ local B = E.Bags
 
 local tremove = _G.tremove
 local GameTooltip = _G.GameTooltip
-local GetItemCount = _G.GetItemCount
+local C_Item_GetItemCount = _G.C_Item.GetItemCount
 local C_CurrencyInfo_GetCurrencyInfo = _G.C_CurrencyInfo.GetCurrencyInfo
 local tContains = _G.tContains
 local tinsert = _G.tinsert
-local GetItemInfo = _G.GetItemInfo
+local C_Item_GetItemInfo = _G.C_Item.GetItemInfo
 local UIErrorsFrame = _G.UIErrorsFrame
 local C_CurrencyInfo_GetCurrencyLink = _G.C_CurrencyInfo.GetCurrencyLink
 local CreateFrame = _G.CreateFrame
-local GetContainerNumSlots = _G.C_Container and _G.C_Container.GetContainerNumSlots or _G.GetContainerNumSlots
-local GetContainerItemID = _G.C_Container and _G.C_Container.GetContainerItemID or _G.GetContainerItemID
+local GetContainerNumSlots = _G.C_Container.GetContainerNumSlots
+local GetContainerItemID = _G.C_Container.GetContainerItemID
 local ClearCursor = _G.ClearCursor
-local ClearCursorItem = _G.ClearCursorItem
 local REAGENTBANK_CONTAINER = _G.REAGENTBANK_CONTAINER
 local HybridScrollFrame_GetOffset = _G.HybridScrollFrame_GetOffset
 local C_CurrencyInfo_GetCurrencyListInfo = _G.C_CurrencyInfo.GetCurrencyListInfo
@@ -28,6 +27,7 @@ local hooksecurefunc = _G.hooksecurefunc
 
 function TB:CreateBar()
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_TrackerBar",
         "trackerbar",
         { "TOPLEFT", E.UIParent, "TOPLEFT", 0, -20 },
@@ -145,7 +145,7 @@ function TB:UpdateItemButton(button)
     local v = button.data
     if not self.sessionDB.items[v] then self:AddWatchStartValue(true, v) end
 
-    local count = GetItemCount(v, true)
+    local count = C_Item_GetItemCount(v, true)
     TB:UpdateAndNotify(true, v, count)
     count = self:GetItemCount(v)
     button.farmed:SetText(count)
@@ -232,13 +232,13 @@ function TB:AddWatch(item, id)
     local notificationCurrency = L["Added currency watch for %s"]
 
     if not tContains(ElvDB.trackerbar[TB.myname][table], id) then
-        ElvDB.trackerbar[TB.myname].count[table][id] = item and GetItemCount(id, true)
+        ElvDB.trackerbar[TB.myname].count[table][id] = item and C_Item_GetItemCount(id, true)
             or (C_CurrencyInfo_GetCurrencyInfo(id)).quantity
         tinsert(ElvDB.trackerbar[TB.myname][table], id)
         if E.db.nihilistzscheui.utilitybars.trackerbar.notify then
             local string = item and notificationItem or notificationCurrency
             UIErrorsFrame:AddMessage(
-                string:format(item and select(2, GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id))
+                string:format(item and select(2, C_Item_GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id))
             )
         end
     end
@@ -272,7 +272,7 @@ function TB:HookElvUIBags()
                 if mouseButton == "LeftButton" then
                     self:AddWatch(true, GetContainerItemID(REAGENTBANK_CONTAINER, slotID))
                 end
-                ClearCursorItem()
+                ClearCursor()
             end)
         end
         self.hookedBags[REAGENTBANK_CONTAINER] = true
@@ -316,7 +316,7 @@ function TB:UpdateAndNotify(item, id, count)
     local earned = L["You have |cff00ff00earned|r %d %s (|cff00ffffcurrently|r %d)"]
     local lost = L["You have |cffff0000lost|r %d %s (|cff00ffffcurrently|r %d)"]
     local change = count - oldCount
-    local link = item and select(2, GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id, 0)
+    local link = item and select(2, C_Item_GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id, 0)
     local notify = E.db.nihilistzscheui.utilitybars.trackerbar.notify
     if change and link and change > 0 then
         self.sessionDB[table][id].gained = self.sessionDB[table][id].gained + change
@@ -394,7 +394,7 @@ function TB:Initialize()
     self:HookElvUIBags()
     hooksecurefunc(B, "Layout", function() self:HookElvUIBags() end)
 
-    hooksecurefunc(_G, "TokenFrame_Update", function()
+    hooksecurefunc(_G.TokenFrame, "Update", function()
         if GetNumberOfTokenFrameButtons() ~= self.hookedCurrency then
             self.hookedCurrency = self:HookCurrencyButtons()
         end

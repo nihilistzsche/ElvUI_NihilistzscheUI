@@ -4,7 +4,7 @@ local AB = E.ActionBars
 local COMP = NUI.Compatibility
 local NM = NUI.Misc
 local hooksecurefunc = _G.hooksecurefunc
-local LoadAddOn = _G.LoadAddOn
+local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
 
 function NM:Initialize()
     self.HookAFK()
@@ -17,7 +17,7 @@ function NM:Initialize()
         end
     end)
     if COMP.IF then
-        LoadAddOn("InFlight")
+        C_AddOns_LoadAddOn("InFlight")
         hooksecurefunc(_G.InFlight, "StartTimer", function()
             local InFlightBar = _G.InFlightBar
             if InFlightBar then
@@ -43,7 +43,7 @@ function NM:Initialize()
         )
     end
     if COMP.IsAddOnEnabled("OldGodWhispers") then
-        if not _G.DragFrame then LoadAddOn("OldGodWhispers") end
+        if not _G.DragFrame then C_AddOns_LoadAddOn("OldGodWhispers") end
         E:CreateMover(
             _G.DragFrame,
             "OldGodWhispersDragFrameMover",
@@ -54,7 +54,7 @@ function NM:Initialize()
             "ALL,SOLO,NIHILISTZSCHEUI"
         )
     end
-    if COMP.PAWN and COMP.IMMERSION then self:HookImmersionRewards() end
+    --if COMP.PAWN and COMP.IMMERSION then self:HookImmersionRewards() end
 end
 
 NUI:RegisterModule(NM:GetName())

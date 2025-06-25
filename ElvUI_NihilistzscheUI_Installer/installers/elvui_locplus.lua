@@ -10,7 +10,7 @@ function NI:LocPlusSetup()
         [1] = COMP.SLE and "S&L Guild" or "Guild",
     }
 
-    self.SaveMoverPosition("LocationMover", "TOP", E.UIParent, "TOP", 0, -30)
+    self:SaveMoverPosition("LocationMover", "TOP", E.UIParent, "TOP", 0, -30)
 end
 
 NI:RegisterAddOnInstaller("ElvUI_LocPlus", NI.LocPlusSetup, true)

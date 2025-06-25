@@ -7,11 +7,11 @@ local NUB = NUI.UtilityBars
 
 local tremove = _G.tremove
 local GameTooltip = _G.GameTooltip
-local GetItemCount = _G.GetItemCount
+local C_Item_GetItemCount = _G.C_Item.GetItemCount
 local C_CurrencyInfo_GetCurrencyInfo = _G.C_CurrencyInfo.GetCurrencyInfo
 local tContains = _G.tContains
 local tinsert = _G.tinsert
-local GetItemInfo = _G.GetItemInfo
+local C_Item_GetItemInfo = _G.C_Item.GetItemInfo
 local UIErrorsFrame = _G.UIErrorsFrame
 local C_CurrencyInfo_GetCurrencyLink = _G.C_CurrencyInfo.GetCurrencyLink
 local strmatch = _G.strmatch
@@ -19,6 +19,7 @@ local CreateFrame = _G.CreateFrame
 
 function FB:CreateBar()
     local bar = NUB:CreateBar(
+        self,
         "NihilistzscheUI_FarmBar",
         "farmBar",
         { "TOPLEFT", _G.NihilistzscheUI_TrackerBar, "BOTTOMLEFT", 0, -2 },
@@ -170,7 +171,7 @@ function FB:UpdateItemButton(button)
     local v = button.data
     if not self.sessionDB.items[v] then self:AddWatchStartValue(true, v) end
     button.table = "items"
-    local count = GetItemCount(v, true)
+    local count = C_Item_GetItemCount(v, true)
     self:UpdateAndNotify(true, v, count)
     button.farmed:SetText(FB:GetItemCount(v))
     local target = _G.ElvDB.farmBar[FB.myname].target.items[v]
@@ -266,14 +267,14 @@ function FB:AddWatch(item, id, target)
     local notificationCurrency = L["Added currency watch for %s"]
 
     if not tContains(_G.ElvDB.farmBar[self.myname][table], id) then
-        _G.ElvDB.farmBar[self.myname].count[table][id] = item and GetItemCount(id, true)
+        _G.ElvDB.farmBar[self.myname].count[table][id] = item and C_Item_GetItemCount(id, true)
             or select(2, C_CurrencyInfo_GetCurrencyInfo(id))
         tinsert(_G.ElvDB.farmBar[self.myname][table], id)
         if E.db.nihilistzscheui.utilitybars.farmBar.notify then
             local string = item and notificationItem or notificationCurrency
-            if not item or GetItemInfo(id) then
+            if not item or C_Item_GetItemInfo(id) then
                 UIErrorsFrame:AddMessage(
-                    string:format(item and select(2, GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id))
+                    string:format(item and select(2, C_Item_GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id))
                 )
             end
         end
@@ -290,7 +291,7 @@ function FB:UpdateAndNotify(item, id, count)
     local earned = "You have |cff00ff00earned|r %d %s (|cff00ffffcurrently|r %d, |cff0000ffTarget|r %d)"
     local repstr = "%d |cffff00ffRepetitions|r"
     local change = count - oldCount
-    local link = item and select(2, GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id, 0)
+    local link = item and select(2, C_Item_GetItemInfo(id)) or C_CurrencyInfo_GetCurrencyLink(id, 0)
     local notify = E.db.nihilistzscheui.utilitybars.farmBar.notify
     if change and link and change > 0 then
         self.sessionDB[table][id].gained = self.sessionDB[table][id].gained + change

@@ -3,6 +3,7 @@ local VUF = NUI.VerticalUnitFrames
 local UF = E.UnitFrames
 
 local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
+local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
 
 VUF.PlayerFrameClassSpecific = {
     WARLOCK = {
@@ -48,7 +49,7 @@ VUF.PlayerFrameRaceSpecific = {
         Exec = function(_, frame)
             local UnitAuraUpdate = function(f, e)
                 if not EntropicEmbraceSpellName then
-                    EntropicEmbraceSpellName = _G.GetSpellInfo(EntropicEmbraceSpellID)
+                    EntropicEmbraceSpellName = C_Spell_GetSpellName(EntropicEmbraceSpellID)
                 end
                 if ((f.entropicEmbraceElapsed or 0) + e) > skipTime then
                     local es = AuraUtil_FindAuraByName(EntropicEmbraceSpellName, "player", "HELPFUL")
@@ -57,6 +58,7 @@ VUF.PlayerFrameRaceSpecific = {
                         f.Portrait:SetUnit(f.unit)
                     end
                     f.entropicEmbraceState = es
+                    f.entropicEmbraceElapsed = 0
                 else
                     f.entropicEmbraceElapsed = (f.entropicEmbraceElapsed or 0) + e
                 end

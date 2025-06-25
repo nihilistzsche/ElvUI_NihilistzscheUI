@@ -3,7 +3,7 @@ local NI = NUI.Installer
 local COMP = NUI.Compatibility
 local NP = E.NamePlates
 
-local LoadAddOn = _G.LoadAddOn
+local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
 local tinsert = _G.tinsert
 local tContains = _G.tContains
 local wipe = _G.wipe
@@ -17,9 +17,9 @@ NI.DataTextsByRole = {
     Healer = "Primary Stat",
 }
 
-function NI.SaveMoverPosition(mover, anchor, parent, point, x, y)
-    NI:EDB().movers = NI:EDB().movers or {}
-    NI:EDB().movers[mover] =
+function NI:SaveMoverPosition(mover, anchor, parent, point, x, y)
+    self:EDB().movers = self:EDB().movers or {}
+    self:EDB().movers[mover] =
         format("%s,%s,%s,%d,%d", anchor, type(parent) == "string" and parent or parent:GetName(), point, x, y)
 end
 
@@ -52,7 +52,7 @@ NI.ClassSpecProfiles = {
     DEATHKNIGHT = { "Tank", "MeleeDPS", "MeleeDPS" },
     DEMONHUNTER = { "MeleeDPS", "Tank" },
     DRUID = { "CasterDPS", "MeleeDPS", "Tank", "Healer" },
-    EVOKER = { "CasterDPS", "Healer" },
+    EVOKER = { "CasterDPS", "Healer", "CasterDPS" },
     HUNTER = "MeleeDPS",
     MAGE = "CasterDPS",
     MONK = { "Tank", "Healer", "MeleeDPS" },
@@ -163,7 +163,7 @@ function NI:RegisterGlobalAddOnInstaller(addonName, func) self.GlobalAddOnSetupF
 function NI:RunGlobalAddOnInstallers()
     for addon, setupFunc in pairs(self.GlobalAddOnSetupFunctions) do
         if COMP.IsAddOnEnabled(addon) then
-            LoadAddOn(addon)
+            C_AddOns_LoadAddOn(addon)
             setupFunc(self)
         end
     end
@@ -172,7 +172,7 @@ end
 function NI:RunAddOnInstallers()
     for addon, setupFunc in pairs(self.AddOnSetupFunctions) do
         if COMP.IsAddOnEnabled(addon) then
-            LoadAddOn(addon)
+            C_AddOns_LoadAddOn(addon)
             setupFunc(self)
         end
     end
@@ -181,7 +181,7 @@ end
 function NI:RunCharacterSpecificAddOnInstallers()
     for addon, setupFunc in pairs(self.CharacterSpecificAddOnFunctions) do
         if COMP.IsAddOnEnabled(addon) then
-            LoadAddOn(addon)
+            C_AddOns_LoadAddOn(addon)
             setupFunc(self)
         end
     end

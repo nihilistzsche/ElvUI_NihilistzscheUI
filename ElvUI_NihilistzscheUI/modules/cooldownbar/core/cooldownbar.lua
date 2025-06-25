@@ -3,8 +3,8 @@ local CB = NUI.CooldownBar
 
 local tinsert = _G.tinsert
 local tremove = _G.tremove
-local GetSpellInfo = _G.GetSpellInfo
-local GetItemInfo = _G.GetItemInfo
+local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
+local C_Item_GetItemIconByID = _G.C_Item.GetItemIconByID
 local hooksecurefunc = _G.hooksecurefunc
 local C_Timer_After = _G.C_Timer.After
 local C_Timer_NewTicker = _G.C_Timer.NewTicker
@@ -63,10 +63,10 @@ end
 
 -- luacheck: no self
 function CB:GetTexture(frame)
-    if frame.type == "spell" then
-        return select(3, GetSpellInfo(frame.spellID))
-    else
-        return select(10, GetItemInfo(frame.itemID))
+    if frame.type == "spell" and frame.SpellID then
+        return C_Spell_GetSpellTexture(frame.SpellID)
+    elseif frame.itemID then
+        return C_Item_GetItemIconByID(frame.itemID)
     end
 end
 

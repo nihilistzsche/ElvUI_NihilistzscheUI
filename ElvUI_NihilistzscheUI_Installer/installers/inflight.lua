@@ -48,4 +48,4 @@ function NI:InFlightSetup()
     })
 end
 
-NI:RegisterAddOnInstaller("InFlight", NI.InFlightSetup)
+NI:RegisterAddOnInstaller("InFlight-WW", NI.InFlightSetup)

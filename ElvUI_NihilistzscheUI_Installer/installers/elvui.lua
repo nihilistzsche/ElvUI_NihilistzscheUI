@@ -39,13 +39,13 @@ function NI:ElvUINonHealerSetup()
         },
     }
 
-    self.SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
-    self.SaveMoverPosition("ElvUF_Raid2Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
-    self.SaveMoverPosition("ElvUF_Raid3Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
-    self.SaveMoverPosition("ElvUF_RaidpetMover", "BOTTOMLEFT", "ElvUF_Raid1Mover", "BOTTOMRIGHT", 4, 0)
-    self.SaveMoverPosition("ElvUF_PartyMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
-    self.SaveMoverPosition("ElvUF_TankMover", "BOTTOMLEFT", "ElvUF_Raid1Mover", "TOPLEFT", 50, 80)
-    self.SaveMoverPosition("ElvUF_AssistMover", "TOP", "ElvUF_TankMover", "BOTTOM", 0, -4)
+    self:SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
+    self:SaveMoverPosition("ElvUF_Raid2Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
+    self:SaveMoverPosition("ElvUF_Raid3Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
+    self:SaveMoverPosition("ElvUF_RaidpetMover", "BOTTOMLEFT", "ElvUF_Raid1Mover", "BOTTOMRIGHT", 4, 0)
+    self:SaveMoverPosition("ElvUF_PartyMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 262)
+    self:SaveMoverPosition("ElvUF_TankMover", "BOTTOMLEFT", "ElvUF_Raid1Mover", "TOPLEFT", 50, 80)
+    self:SaveMoverPosition("ElvUF_AssistMover", "TOP", "ElvUF_TankMover", "BOTTOM", 0, -4)
 end
 
 function NI:ElvUIHealerSetup()
@@ -159,13 +159,13 @@ function NI:ElvUIHealerSetup()
         },
     }
 
-    self.SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 465, 343)
-    self.SaveMoverPosition("ElvUF_Raid2Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 465, 343)
-    self.SaveMoverPosition("ElvUF_Raid3Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 442, 343)
-    self.SaveMoverPosition("ElvUF_RaidpetMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 208, 341)
-    self.SaveMoverPosition("ElvUF_PartyMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 466, 559)
-    self.SaveMoverPosition("ElvUF_TankMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 141, 669)
-    self.SaveMoverPosition("ElvUF_AssistMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 138, 341)
+    self:SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 465, 343)
+    self:SaveMoverPosition("ElvUF_Raid2Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 465, 343)
+    self:SaveMoverPosition("ElvUF_Raid3Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 442, 343)
+    self:SaveMoverPosition("ElvUF_RaidpetMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 208, 341)
+    self:SaveMoverPosition("ElvUF_PartyMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 466, 559)
+    self:SaveMoverPosition("ElvUF_TankMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 141, 669)
+    self:SaveMoverPosition("ElvUF_AssistMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 138, 341)
 end
 
 function NI:NameplateSetup()
@@ -479,8 +479,7 @@ end
 function NI:GlobalNameplateSetup()
     local needsPetFilterClasses = { "DEATHKNIGHT", "MAGE", "HUNTER", "WARLOCK" }
     wipe(E.global.nameplates.filters or {})
-    local classes = {}
-    _G.FillLocalizedClassList(classes, false)
+    local classes = LocalizedClassList(false)
     classes = tFilter(classes, function(k, _) return k ~= "Adventurer" end)
     for c, filterClassName in pairs(classes) do
         self.classColor = E:ClassColor(c, true)
@@ -638,13 +637,11 @@ function NI:DatatextPanelSetup()
     E.global.datatexts = E.global.datatexts or {}
     E.global.datatexts.currentCurrencies = E.global.customCurrencies or {}
     E.global.datatexts.customCurrencies[1889] = {
-        DISPLAY_STYLE = "ICON_TEXT",
-        NAME = "Adventure Campaign Progress",
-        USE_TOOLTIP = true,
-        ID = 1889,
-        DISPLAY_IN_MAIN_TOOLTIP = true,
-        ICON = "|T255347:16:16:0:0:64:64:4:60:4:60|t",
-        SHOW_MAX = false,
+        showIcon = true,
+        name = "Adventure Campaign Progress",
+        nameStyle = "full",
+        currencyTooltip = true,
+        showMax = false,
     }
     E.global.datatexts.customPanels = E.global.datatexts.customPanels or {}
     E.global.datatexts.newPanelInfo = {
@@ -1145,14 +1142,14 @@ function NI:ElvUISetup(role, isSpec)
     NI:EDB().movers = NI:EDB().movers or {}
     wipe(NI:EDB().movers)
 
-    self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUILLMover", "BOTTOM", _G.LeftChatPanel, "TOP", 0, 4)
-    self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUILRMover", "BOTTOM", _G.RightChatPanel, "TOP", 0, 4)
-    self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUIULMover", "BOTTOM", _G.LeftChatPanel, "TOP", 0, 30)
+    self:SaveMoverPosition("DTPanelDTB2_NihilistzscheUILLMover", "BOTTOM", _G.LeftChatPanel, "TOP", 0, 4)
+    self:SaveMoverPosition("DTPanelDTB2_NihilistzscheUILRMover", "BOTTOM", _G.RightChatPanel, "TOP", 0, 4)
+    self:SaveMoverPosition("DTPanelDTB2_NihilistzscheUIULMover", "BOTTOM", _G.LeftChatPanel, "TOP", 0, 30)
     if NUI.Private then
-        self.SaveMoverPosition("DTPanelDTB2_NihilistzscheUIURMover", "BOTTOM", _G.RightChatPanel, "TOP", 0, 30)
+        self:SaveMoverPosition("DTPanelDTB2_NihilistzscheUIURMover", "BOTTOM", _G.RightChatPanel, "TOP", 0, 30)
     end
     for i = 1, 8 do
-        self.SaveMoverPosition(
+        self:SaveMoverPosition(
             "DTPanelNUI_DataPanel_" .. i .. "Mover",
             template[i].point,
             E.UIParent,
@@ -1163,65 +1160,65 @@ function NI:ElvUISetup(role, isSpec)
     end
 
     -- Action Bars
-    self.SaveMoverPosition("ElvAB_1", "BOTTOM", E.UIParent, "BOTTOM", 0, 26)
-    self.SaveMoverPosition("ElvAB_2", "RIGHT", "ElvAB_1", "LEFT", -2, 0)
-    self.SaveMoverPosition("ElvAB_3", "BOTTOM", "ElvAB_2", "TOP", 0, 2)
-    self.SaveMoverPosition("ElvAB_5", "LEFT", "ElvAB_1", "RIGHT", 2, 0)
-    self.SaveMoverPosition("ElvAB_6", "BOTTOM", "ElvAB_5", "TOP", 0, 2)
-    self.SaveMoverPosition("ElvAB_7", "BOTTOM", "ElvAB_3", "TOP", 0, 2)
-    self.SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_3", "TOP", 0, 16)
-    self.SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 415, 0)
-    self.SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 227)
-    self.SaveMoverPosition("ZoneAbility", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -474, 190)
+    self:SaveMoverPosition("ElvAB_1", "BOTTOM", E.UIParent, "BOTTOM", 0, 26)
+    self:SaveMoverPosition("ElvAB_2", "RIGHT", "ElvAB_1", "LEFT", -2, 0)
+    self:SaveMoverPosition("ElvAB_3", "BOTTOM", "ElvAB_2", "TOP", 0, 2)
+    self:SaveMoverPosition("ElvAB_5", "LEFT", "ElvAB_1", "RIGHT", 2, 0)
+    self:SaveMoverPosition("ElvAB_6", "BOTTOM", "ElvAB_5", "TOP", 0, 2)
+    self:SaveMoverPosition("ElvAB_7", "BOTTOM", "ElvAB_3", "TOP", 0, 2)
+    self:SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_3", "TOP", 0, 16)
+    self:SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 415, 0)
+    self:SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 227)
+    self:SaveMoverPosition("ZoneAbility", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -474, 190)
     -- Unit Frames
-    self.SaveMoverPosition("ElvUF_PlayerMover", "BOTTOM", E.UIParent, "BOTTOM", -278, 110)
-    self.SaveMoverPosition("ElvUF_TargetTargetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 110)
-    self.SaveMoverPosition("ElvUF_TargetMover", "BOTTOM", E.UIParent, "BOTTOM", 278, 110)
-    self.SaveMoverPosition("ElvUF_PetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 150)
-    self.SaveMoverPosition("ElvUF_BodyGuardMover", "TOP", E.UIParent, "TOP", -331, -332)
-    self.SaveMoverPosition("ElvUF_PlayerCastbarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 42)
-    self.SaveMoverPosition("BossHeaderMover", "TOP", E.UIParent, "TOP", 0, -220)
-    self.SaveMoverPosition("ArenaHeaderMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -413, 375)
-    self.SaveMoverPosition("BNETMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -4, 226)
-    self.SaveMoverPosition("DurabilityFrameMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -372, -310)
-    self.SaveMoverPosition("LeftChatMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 0)
-    self.SaveMoverPosition("GMMover", "TOPLEFT", E.UIParent, "TOPLEFT", 4, -341)
-    self.SaveMoverPosition("BuffsMover", "TOP", E.UIParent, "TOP", -317, -303)
-    self.SaveMoverPosition("DebuffsMover", "TOP", E.UIParent, "TOP", -317, -399)
-    self.SaveMoverPosition("FlareMover", "TOP", E.UIParent, "TOP", 0, -511)
-    self.SaveMoverPosition("MicrobarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
-    self.SaveMoverPosition("VehicleSeatMover", "TOPLEFT", E.UIParent, "TOPLEFT", 490, -45)
-    self.SaveMoverPosition("MinimapMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", 0, -30)
+    self:SaveMoverPosition("ElvUF_PlayerMover", "BOTTOM", E.UIParent, "BOTTOM", -278, 110)
+    self:SaveMoverPosition("ElvUF_TargetTargetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 110)
+    self:SaveMoverPosition("ElvUF_TargetMover", "BOTTOM", E.UIParent, "BOTTOM", 278, 110)
+    self:SaveMoverPosition("ElvUF_PetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 150)
+    self:SaveMoverPosition("ElvUF_BodyGuardMover", "TOP", E.UIParent, "TOP", -331, -332)
+    self:SaveMoverPosition("ElvUF_PlayerCastbarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 42)
+    self:SaveMoverPosition("BossHeaderMover", "TOP", E.UIParent, "TOP", 0, -220)
+    self:SaveMoverPosition("ArenaHeaderMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -413, 375)
+    self:SaveMoverPosition("BNETMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -4, 226)
+    self:SaveMoverPosition("DurabilityFrameMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -372, -310)
+    self:SaveMoverPosition("LeftChatMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 0)
+    self:SaveMoverPosition("GMMover", "TOPLEFT", E.UIParent, "TOPLEFT", 4, -341)
+    self:SaveMoverPosition("BuffsMover", "TOP", E.UIParent, "TOP", -317, -303)
+    self:SaveMoverPosition("DebuffsMover", "TOP", E.UIParent, "TOP", -317, -399)
+    self:SaveMoverPosition("FlareMover", "TOP", E.UIParent, "TOP", 0, -511)
+    self:SaveMoverPosition("MicrobarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
+    self:SaveMoverPosition("VehicleSeatMover", "TOPLEFT", E.UIParent, "TOPLEFT", 490, -45)
+    self:SaveMoverPosition("MinimapMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", 0, -30)
 
-    self.SaveMoverPosition("ExperienceBarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 97)
-    self.SaveMoverPosition("HonorBarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 97)
-    self.SaveMoverPosition("ReputationBarMover", "BOTTOM", "ExperienceBarMover", "TOP", 0, 4)
-    self.SaveMoverPosition("AzeriteBarMover", "BOTTOM", "ReputationBarMover", "TOP", 0, 4)
+    self:SaveMoverPosition("ExperienceBarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 97)
+    self:SaveMoverPosition("HonorBarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 97)
+    self:SaveMoverPosition("ReputationBarMover", "BOTTOM", "ExperienceBarMover", "TOP", 0, 4)
+    self:SaveMoverPosition("AzeriteBarMover", "BOTTOM", "ReputationBarMover", "TOP", 0, 4)
 
-    self.SaveMoverPosition("RightChatMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -4, 0)
-    self.SaveMoverPosition("Dashboard", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -22)
-    self.SaveMoverPosition("FarmToolAnchor", "TOPLEFT", E.UIParent, "TOPLEFT", 41, -512)
-    self.SaveMoverPosition("MinimapButtonAnchor", "TOPRIGHT", E.UIParent, "TOPRIGHT", -4, -227)
-    self.SaveMoverPosition("AltPowerBarMover", "TOP", E.UIParent, "TOP", 0, -196)
+    self:SaveMoverPosition("RightChatMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -4, 0)
+    self:SaveMoverPosition("Dashboard", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -22)
+    self:SaveMoverPosition("FarmToolAnchor", "TOPLEFT", E.UIParent, "TOPLEFT", 41, -512)
+    self:SaveMoverPosition("MinimapButtonAnchor", "TOPRIGHT", E.UIParent, "TOPRIGHT", -4, -227)
+    self:SaveMoverPosition("AltPowerBarMover", "TOP", E.UIParent, "TOP", 0, -196)
 
-    self.SaveMoverPosition("UIBFrameMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -417, 0)
-    self.SaveMoverPosition("RaidUtility_Mover", "TOP", E.UIParent, "TOP", -158, -47)
+    self:SaveMoverPosition("UIBFrameMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -417, 0)
+    self:SaveMoverPosition("RaidUtility_Mover", "TOP", E.UIParent, "TOP", -158, -47)
 
-    self.SaveMoverPosition("PvPMover", "TOP", E.UIParent, "TOP", 0, -93)
+    self:SaveMoverPosition("PvPMover", "TOP", E.UIParent, "TOP", 0, -93)
 
-    self.SaveMoverPosition("AlertFrameMover", "TOP", E.UIParent, "TOP", 0, -281)
-    self.SaveMoverPosition("RaidMarkerBarAnchor", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -650, 27)
-    self.SaveMoverPosition("TalkingHeadFrameMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 263)
-    self.SaveMoverPosition("TopCenterContainerMover", "TOP", E.UIParent, "TOP", 0, -170)
-    self.SaveMoverPosition("MirrorTimer1Mover", "TOP", E.UIParent, "TOP", 0, -110)
-    self.SaveMoverPosition("PowerBarContainerMover", "TOP", E.UIParent, "TOP", 0, -110)
+    self:SaveMoverPosition("AlertFrameMover", "TOP", E.UIParent, "TOP", 0, -281)
+    self:SaveMoverPosition("RaidMarkerBarAnchor", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -650, 27)
+    self:SaveMoverPosition("TalkingHeadFrameMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 263)
+    self:SaveMoverPosition("TopCenterContainerMover", "TOP", E.UIParent, "TOP", 0, -170)
+    self:SaveMoverPosition("MirrorTimer1Mover", "TOP", E.UIParent, "TOP", 0, -110)
+    self:SaveMoverPosition("PowerBarContainerMover", "TOP", E.UIParent, "TOP", 0, -140)
 
-    self.SaveMoverPosition("VOICECHAT", "TOPRIGHT", E.UIParent, "TOPRIGHT", -504, -68)
+    self:SaveMoverPosition("VOICECHAT", "TOPRIGHT", E.UIParent, "TOPRIGHT", -504, -68)
 
     if COMP.PA then
-        self.SaveMoverPosition("AddonCompartmentMover", "TOPRIGHT", _G.SquareMinimapButtonBar, "BOTTOMRIGHT", 0, -4)
+        self:SaveMoverPosition("AddonCompartmentMover", "TOPRIGHT", _G.SquareMinimapButtonBar, "BOTTOMRIGHT", 0, -4)
     else
-        self.SaveMoverPosition("AddonCompartmentMover", "TOPRIGHT", "MinimapPanel", "BOTTOMRIGHT", 0, -4)
+        self:SaveMoverPosition("AddonCompartmentMover", "TOPRIGHT", "MinimapPanel", "BOTTOMRIGHT", 0, -4)
     end
 
     RunRoleSpecificSetup(self, role)
@@ -1333,7 +1330,7 @@ function NI:ElvUILuluSetup()
     self:EDB().datatexts = self:EDB().datatexts or {}
     self:EDB().datatexts.panels = self:EDB().datatexts.panels or {}
     for i = 1, 8 do
-        self.SaveMoverPosition(
+        self:SaveMoverPosition(
             "DTPanelNUI_DataPanel_" .. i .. "Mover",
             template[i].point,
             E.UIParent,
@@ -1342,47 +1339,47 @@ function NI:ElvUILuluSetup()
             0
         )
     end
-    self.SaveMoverPosition("RaidMarkerBarAnchor", "TOPLEFT", E.UIParent, "TOPLEFT", 513, -51)
-    self.SaveMoverPosition("ElvUF_RaidMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 3, 880)
-    self.SaveMoverPosition("LeftChatMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 0, 22)
-    self.SaveMoverPosition("GMMover", "TOPLEFT", E.UIParent, "TOPLEFT", 242, -27)
-    self.SaveMoverPosition("BuffsMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -182, -23)
-    self.SaveMoverPosition("GhostFrameMover", "TOP", E.UIParent, "TOP", -11, -251)
-    self.SaveMoverPosition("LocationMover", "TOP", E.UIParent, "TOP", 3, -25)
-    self.SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", -73, 208)
-    self.SaveMoverPosition("MirrorTimer3Mover", "TOP", E.UIParent, "TOP", -2, -237)
-    self.SaveMoverPosition("ElvUF_RaidpetMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 415, 335)
-    self.SaveMoverPosition("RightChatMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -5, 24)
-    self.SaveMoverPosition("CooldownBarMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -5, 207)
-    self.SaveMoverPosition("ElvUF_PetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 150)
-    self.SaveMoverPosition("MicrobarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 0, 203)
-    self.SaveMoverPosition("UIErrorsFrameMover", "TOP", E.UIParent, "TOP", 7, -304)
-    self.SaveMoverPosition("ElvUF_TargetMover", "BOTTOM", E.UIParent, "BOTTOM", 346, 299)
-    self.SaveMoverPosition("EnemyBattlePetMover", "BOTTOM", E.UIParent, "BOTTOM", 348, 141)
-    self.SaveMoverPosition("AltPowerBarMover", "BOTTOM", E.UIParent, "BOTTOM", 8, 130)
-    self.SaveMoverPosition("ElvUF_Raid40Mover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 5, 859)
-    self.SaveMoverPosition("MirrorTimer1Mover", "TOP", E.UIParent, "TOP", -2, -209)
-    self.SaveMoverPosition("ElvAB_1", "BOTTOM", E.UIParent, "BOTTOM", 5, 93)
-    self.SaveMoverPosition("ElvAB_2", "BOTTOM", E.UIParent, "BOTTOM", 5, 52)
-    self.SaveMoverPosition("RaidUtility_Mover", "TOPLEFT", E.UIParent, "TOPLEFT", 550, -28)
-    self.SaveMoverPosition("TalkingHeadFrameMover", "BOTTOM", E.UIParent, "BOTTOM", 48, 405)
-    self.SaveMoverPosition("ReputationBarMover", "BOTTOM", "ExperienceBarMover", "TOP", 0, 4)
-    self.SaveMoverPosition("BattlePetMover", "BOTTOM", E.UIParent, "BOTTOM", -327, 138)
-    self.SaveMoverPosition("ElvAB_3", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 435, 466)
-    self.SaveMoverPosition("ElvAB_5", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 430, 418)
-    self.SaveMoverPosition("ArtifactBarMover", "BOTTOM", "ReputationBarMover", "TOP", 0, 4)
-    self.SaveMoverPosition("ShiftAB", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 4, 1196)
-    self.SaveMoverPosition("MirrorTimer2Mover", "TOP", E.UIParent, "TOP", -3, -228)
-    self.SaveMoverPosition("HonorBarMover", "TOP", E.UIParent, "TOP", -6, -127)
-    self.SaveMoverPosition("ElvAB_6", "BOTTOM", E.UIParent, "BOTTOM", 4, 13)
-    self.SaveMoverPosition("TooltipMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -433, 218)
-    self.SaveMoverPosition("ElvUF_TargetTargetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 110)
-    self.SaveMoverPosition("ElvUF_PlayerMover", "TOPLEFT", E.UIParent, "TOPLEFT", 673, -457)
-    self.SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 548, 140)
-    self.SaveMoverPosition("ElvUF_PartyMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 0, 607)
-    self.SaveMoverPosition("AlertFrameMover", "BOTTOM", E.UIParent, "BOTTOM", 12, 377)
-    self.SaveMoverPosition("ElvUF_PlayerCastbarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 42)
-    self.SaveMoverPosition("MinimapMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", 0, -21)
+    self:SaveMoverPosition("RaidMarkerBarAnchor", "TOPLEFT", E.UIParent, "TOPLEFT", 513, -51)
+    self:SaveMoverPosition("ElvUF_RaidMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 3, 880)
+    self:SaveMoverPosition("LeftChatMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 0, 22)
+    self:SaveMoverPosition("GMMover", "TOPLEFT", E.UIParent, "TOPLEFT", 242, -27)
+    self:SaveMoverPosition("BuffsMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -182, -23)
+    self:SaveMoverPosition("GhostFrameMover", "TOP", E.UIParent, "TOP", -11, -251)
+    self:SaveMoverPosition("LocationMover", "TOP", E.UIParent, "TOP", 3, -25)
+    self:SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", -73, 208)
+    self:SaveMoverPosition("MirrorTimer3Mover", "TOP", E.UIParent, "TOP", -2, -237)
+    self:SaveMoverPosition("ElvUF_RaidpetMover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 415, 335)
+    self:SaveMoverPosition("RightChatMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -5, 24)
+    self:SaveMoverPosition("CooldownBarMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -5, 207)
+    self:SaveMoverPosition("ElvUF_PetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 150)
+    self:SaveMoverPosition("MicrobarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 0, 203)
+    self:SaveMoverPosition("UIErrorsFrameMover", "TOP", E.UIParent, "TOP", 7, -304)
+    self:SaveMoverPosition("ElvUF_TargetMover", "BOTTOM", E.UIParent, "BOTTOM", 346, 299)
+    self:SaveMoverPosition("EnemyBattlePetMover", "BOTTOM", E.UIParent, "BOTTOM", 348, 141)
+    self:SaveMoverPosition("AltPowerBarMover", "BOTTOM", E.UIParent, "BOTTOM", 8, 130)
+    self:SaveMoverPosition("ElvUF_Raid40Mover", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 5, 859)
+    self:SaveMoverPosition("MirrorTimer1Mover", "TOP", E.UIParent, "TOP", -2, -209)
+    self:SaveMoverPosition("ElvAB_1", "BOTTOM", E.UIParent, "BOTTOM", 5, 93)
+    self:SaveMoverPosition("ElvAB_2", "BOTTOM", E.UIParent, "BOTTOM", 5, 52)
+    self:SaveMoverPosition("RaidUtility_Mover", "TOPLEFT", E.UIParent, "TOPLEFT", 550, -28)
+    self:SaveMoverPosition("TalkingHeadFrameMover", "BOTTOM", E.UIParent, "BOTTOM", 48, 405)
+    self:SaveMoverPosition("ReputationBarMover", "BOTTOM", "ExperienceBarMover", "TOP", 0, 4)
+    self:SaveMoverPosition("BattlePetMover", "BOTTOM", E.UIParent, "BOTTOM", -327, 138)
+    self:SaveMoverPosition("ElvAB_3", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 435, 466)
+    self:SaveMoverPosition("ElvAB_5", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 430, 418)
+    self:SaveMoverPosition("ArtifactBarMover", "BOTTOM", "ReputationBarMover", "TOP", 0, 4)
+    self:SaveMoverPosition("ShiftAB", "TOPLEFT", E.UIParent, "BOTTOMLEFT", 4, 1196)
+    self:SaveMoverPosition("MirrorTimer2Mover", "TOP", E.UIParent, "TOP", -3, -228)
+    self:SaveMoverPosition("HonorBarMover", "TOP", E.UIParent, "TOP", -6, -127)
+    self:SaveMoverPosition("ElvAB_6", "BOTTOM", E.UIParent, "BOTTOM", 4, 13)
+    self:SaveMoverPosition("TooltipMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -433, 218)
+    self:SaveMoverPosition("ElvUF_TargetTargetMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 110)
+    self:SaveMoverPosition("ElvUF_PlayerMover", "TOPLEFT", E.UIParent, "TOPLEFT", 673, -457)
+    self:SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 548, 140)
+    self:SaveMoverPosition("ElvUF_PartyMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 0, 607)
+    self:SaveMoverPosition("AlertFrameMover", "BOTTOM", E.UIParent, "BOTTOM", 12, 377)
+    self:SaveMoverPosition("ElvUF_PlayerCastbarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 42)
+    self:SaveMoverPosition("MinimapMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", 0, -21)
     self:EDB().gridSize = 128
     self:EDB().tooltip = {
         fontSize = 12,
