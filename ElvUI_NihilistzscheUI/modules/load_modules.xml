@@ -14,6 +14,7 @@
     <Include file="invertedshadows\load_invertedshadows.xml"/>
     <Include file="misc\load_misc.xml"/>
     <Include file="nihilistzschechat\load_nihilistzschechat.xml"/>
+    <Include file="partyxp\load_partyxp.xml"/>
     <Include file="petbattleautostart\load_petbattleautostart.xml"/>
     <Include file="petbattlenameplates\load_petbattlenameplates.xml"/>
     <Include file="raidcds\load_raidcds.xml"/>
