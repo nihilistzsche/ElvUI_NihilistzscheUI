@@ -214,7 +214,11 @@ function VUF:Initialize()
     local function spawnUnit(unit)
         local stringTitle = E:StringTitle(unit)
         if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
-        oUF:Spawn(unit, "NihilistzscheUF_" .. stringTitle)
+        oUF:Spawn(
+            unit,
+            "NihilistzscheUF_" .. stringTitle,
+            E.Retail and "SecureUnitButtonTemplate, PingableUnitFrameTemplate" or "SecureUnitButtonTemplate"
+        )
     end
 
     local needsManualCreate = { "player", "target" }

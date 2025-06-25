@@ -221,10 +221,7 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
     if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
     frame.frameName = "NihilistzscheUF_" .. stringTitle
     self["Construct" .. stringTitle .. "Frame"](self, frame, unit)
-
     frame:CreateBackdrop("Transparent")
-    frame:SetParent(_G.ElvUF_Parent)
-    E.FrameLocks[frame] = true
     if ES then
         frame:CreateShadow()
         ES:RegisterFrameShadows(frame)
@@ -255,7 +252,7 @@ function VUF:UpdateFrame(unit)
     then
         width = width + self.db.units[unit].power.size.width
     end
-    frame:SetSize(width, height)
+    frame:Size(width, height)
     _G[frame:GetName() .. "Mover"]:Size(frame:GetSize())
     frame.backdrop:SetFrameLevel(0)
     if E.db.nihilistzscheui.vuf.enabled and self.db.units[unit].enabled then
