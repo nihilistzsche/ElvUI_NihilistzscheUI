@@ -1588,7 +1588,7 @@ NP.databarnotifier = {
 -- Custom DataBar
 P.databars.experience.tag =
     "[name] Lvl [xp:level] XP: [xp:current]/[xp:max] ([xp:percent]) [xp:rested] Rested ([xp:quest] Quest) [xp:levelup?]"
-P.databars.reputation.tag = "[rep:name]: [rep:standing] ([rep:current-max-percent])"
+P.databars.reputation.tag = "[rep:name][rep:account-wide]: [rep:standing] ([rep:current-max-percent])"
 P.databars.azerite.tag =
     "[azerite:name] Level: [azerite:level] (XP: [azerite:current] / [azerite:max], [azerite:percent])"
 P.databars.honor.tag = "[name] Honor Level [honor:level] XP: [honor:current]/[honor:max] ([honor:percent])"

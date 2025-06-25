@@ -4,7 +4,11 @@ local NT = NUI.Libs.NT
 
 local C_Reputation_GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
+local C_Reputation_IsAccountWideReputation = _G.C_Reputation.IsAccountWideReputation
 local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
+
+local REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE = _G.REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE
+
 function CDB.RegisterRepTags()
     NT:RegisterTag("rep:name", function()
         local data = C_Reputation_GetWatchedFactionData()
@@ -26,7 +30,15 @@ function CDB.RegisterRepTags()
         end
         return isFriend and friendData.reaction or _G["FACTION_STANDING_LABEL" .. data.reaction]
     end, "UPDATE_FACTION")
+    NT:RegisterTag("rep:account-wide", function()
+        local watchedData = C_Reputation_GetWatchedFactionData()
 
+        if not watchedData or watchedData.factionID == 0 then return "" end
+
+        return C_Reputation_IsAccountWideReputation(watchedData.factionID)
+                and " " .. REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE
+            or ""
+    end, "UPDATE_FACTION")
     NT:RegisterTag("rep:current", function()
         local name, min, max, value = NUI.GetFactionValues()
 
