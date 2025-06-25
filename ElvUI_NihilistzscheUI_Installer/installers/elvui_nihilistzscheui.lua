@@ -423,10 +423,11 @@ function NI:NihilistzscheUISetup(isSpec)
         0,
         -4
     )
-    self:SaveMoverPosition("NihilistzscheUF_Player AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", -310, 424)
-    self:SaveMoverPosition("NihilistzscheUF_Target AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", 310, 424)
-    self:SaveMoverPosition("NihilistzscheUF_Player Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 370)
-    self:SaveMoverPosition("NihilistzscheUF_Target Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 315)
+    self:SaveMoverPosition("NihilistzscheUF_Player AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", -310, 532)
+    self:SaveMoverPosition("NihilistzscheUF_Target AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", 310, 532)
+    self:SaveMoverPosition("NihilistzscheUF_Pet AuraBar Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 569, 532)
+    self:SaveMoverPosition("NihilistzscheUF_Player Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 488)
+    self:SaveMoverPosition("NihilistzscheUF_Target Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 433)
 
     self:SaveMoverPosition("AoE CCMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
     if NUI.Private then self:SaveMoverPosition("PrimalStormsMover", "TOPLEFT", E.UIParent, "TOPLEFT", 255, -272) end
