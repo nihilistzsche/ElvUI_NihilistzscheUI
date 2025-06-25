@@ -10,7 +10,9 @@ function CB:SpellIsOnCooldown(spellID)
 
     local cooldownInfo = C_Spell_GetSpellCooldown(spellID)
 
-    if cooldownInfo and cooldownInfo.isEnabled and cooldownInfo.startTime ~= 0 and cooldownInfo.duration > 1.5 then return true end
+    if cooldownInfo and cooldownInfo.isEnabled and cooldownInfo.startTime ~= 0 and cooldownInfo.duration > 1.5 then
+        return true
+    end
 
     return false
 end

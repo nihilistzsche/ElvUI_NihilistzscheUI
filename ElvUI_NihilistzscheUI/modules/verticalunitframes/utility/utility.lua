@@ -392,9 +392,7 @@ function VUF:ConstructStatusBar(frame, element, parent, name, t, noBG)
 
     -- Create the status bar
     local sb = CreateFrame("StatusBar", sbname, parent, "BackdropTemplate")
-    if not t then
-        sb:SetTemplate("Transparent")
-    end
+    if not t then sb:SetTemplate("Transparent") end
 
     -- Dummy texture so we can set colors
     sb:SetStatusBarTexture(E.media.blankTex)

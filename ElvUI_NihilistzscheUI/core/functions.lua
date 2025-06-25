@@ -360,7 +360,8 @@ end
 function NUI.GetFactionValues()
     local data = C_Reputation_GetWatchedFactionData()
     if not data then return end
-    local name, min, max, value, factionID = data.name, data.currentReactionThreshold, data.nextReactionThreshold, data.currentStanding, data.factionID
+    local name, min, max, value, factionID =
+        data.name, data.currentReactionThreshold, data.nextReactionThreshold, data.currentStanding, data.factionID
     local isParagon, pmin, pmax, pvalue = NUI.GetParagonInfo(factionID)
     if isParagon then
         min, max, value = pmin, pmax, pvalue

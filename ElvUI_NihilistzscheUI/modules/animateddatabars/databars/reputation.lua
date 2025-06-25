@@ -31,7 +31,13 @@ function REP:Update(bar)
     local ID
     local data = GetWatchedFactionData()
     if not data then return end
-    local name, value, min, max, level, factionID = data.name, data.reaction, data.currentReactionThreshold, data.nextReactionThreshold, data.currentStanding, data.factionID
+    local name, value, min, max, level, factionID =
+        data.name,
+        data.reaction,
+        data.currentReactionThreshold,
+        data.nextReactionThreshold,
+        data.currentStanding,
+        data.factionID
     local isParagon = false
     local showReward = false
     local isMajorFaction = false

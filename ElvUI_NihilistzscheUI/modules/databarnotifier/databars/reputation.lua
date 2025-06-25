@@ -140,8 +140,7 @@ function REP:Notify()
         db.numFactions = tempfactions
     end
     for factionIndex = 1, tempfactions do
-        local factionData =
-            GetFactionDataByIndex(factionIndex)
+        local factionData = GetFactionDataByIndex(factionIndex)
         if factionData then
             local barValue = factionData.currentStanding
             local barMin = factionData.currentReactionThreshold

@@ -174,9 +174,9 @@ tryInstall = function()
     end
     if E.InstallFrame then E.InstallFrame:Hide() end
     E.private.install_complete = E.version
-    
+
     wipe(PI.Installs)
-    tinsert(PI.Installs, #(PI.Installs)+1, NI.installTable)
+    tinsert(PI.Installs, #PI.Installs + 1, NI.installTable)
     PI:RunInstall()
 end
 
