@@ -120,6 +120,11 @@ function NI:ProjectAzilrokaSetup(isSpec)
                 PvPTargetBuffs = Disable(),
                 TargetDebuffs = Disable(),
             },
+            MasterExperience = {
+                Enable = true,
+                Font = self.db.font,
+                ColorByClass = true,
+            },
             SquareMinimapButtons = {
                 Enable = true,
                 BarMouseOver = true,
