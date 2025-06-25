@@ -462,7 +462,7 @@ function NI.BaseElvUISetup()
     E:SetupTheme("class", true)
 
     if not NUIIDB.uiScaleSet then
-        E.global.general.UIScale = 0.64
+        E.global.general.UIScale = 0.60
         NUIIDB.uiScaleSet = true
     end
     E:PixelScaleChanged()
