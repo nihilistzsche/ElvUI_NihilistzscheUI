@@ -736,7 +736,7 @@ function NI:ElvUISetup(role, isSpec)
             fontSize = 10,
             fontOutline = "MONOCHROMEOUTLINE",
             font = self.db.font,
-            tag = "[rep:name]: [rep:standing] ([rep:current-max-percent])",
+            tag = "[rep:name][rep:account-wide]: [rep:standing] ([rep:current-max-percent])",
         },
         azerite = {
             enable = true,
