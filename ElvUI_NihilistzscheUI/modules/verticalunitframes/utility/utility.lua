@@ -221,7 +221,10 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
     if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
     frame.frameName = "NihilistzscheUF_" .. stringTitle
     self["Construct" .. stringTitle .. "Frame"](self, frame, unit)
+
     frame:CreateBackdrop("Transparent")
+    frame:SetParent(E.UFParent)
+    E.FrameLocks[frame] = true
     if ES then
         frame:CreateShadow()
         ES:RegisterFrameShadows(frame)
