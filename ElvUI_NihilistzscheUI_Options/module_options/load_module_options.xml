@@ -10,7 +10,6 @@
   <Script file="enhancedshadows_options.lua"/>
   <Script file="hiddenartifacttracker_options.lua"/>
   <Script file="nihilistzschechat_options.lua"/>
-  <Script file="partyxp_options.lua"/>
   <Include file="utilitybars_bars\loadutilitybars_bars.xml"/>
   <Script file="utilitybars_options.lua"/>
   <Script file="verticalunitframes_options.lua"/>
