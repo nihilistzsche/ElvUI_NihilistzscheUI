@@ -24,7 +24,7 @@ local IsAltKeyDown = _G.IsAltKeyDown
 local IsControlKeyDown = _G.IsControlKeyDown
 local IsShiftKeyDown = _G.IsShiftKeyDown
 local DEFAULT_CHAT_FRAME = _G.DEFAULT_CHAT_FRAME
-local MountJournal_Pickup = _G.MountJournal_Pickup
+local C_MountJournal_Pickup = _G.C_MountJournal.Pickup
 local UIDropDownMenu_AddButton = _G.UIDropDownMenu_AddButton
 local IsInInstance = _G.IsInInstance
 local IsFlyableArea = _G.IsFlyableArea
@@ -41,12 +41,6 @@ local DRAGON_ISLES_CONTINENT_ID = 1978
 local NOKHUD_OFFENSIVE_MAP_ID = 2093
 local SKYRIDING_BUFF_ID = 404464
 local SKYRIDING_BUFF_NAME
-local dragonriding_mounts = {
-    [1563] = true, -- Classic Drake
-    [1589] = true, -- Renewed Proto-Drake
-    [1590] = true, -- Velocidrake
-    [1591] = true, -- Wylderdrake
-}
 
 local db = {}
 
@@ -77,10 +71,10 @@ local function ModifiedClick(_, id)
     local name, _, _, _, _ = C_MountJournal_GetMountInfoByID(id)
     if not IsShiftKeyDown() and not IsControlKeyDown() and not IsAltKeyDown() then
         C_MountJournal_SummonByID(id)
-    elseif IsShiftKeyDown() and IsControlKeyDown() and not IsAltKeyDown() and dragonriding_mounts[id] then
-        db.favDragonridingMount = id
+    elseif IsShiftKeyDown() and IsControlKeyDown() and not IsAltKeyDown() then
+        db.favSkyridingMount = id
         DEFAULT_CHAT_FRAME:AddMessage(
-            (L["%sMounts:|r %s added as dragonriding favorite."]):format(hexColor, name),
+            (L["%sMounts:|r %s added as skyriding favorite."]):format(hexColor, name),
             1,
             1,
             1
@@ -110,7 +104,7 @@ local function ModifiedClick(_, id)
             1
         )
     else
-        MountJournal_Pickup(id)
+        C_MountJournal_Pickup(id)
     end
 end
 
@@ -127,7 +121,7 @@ local journeymanRidingSpelID = 33391
 local expertRidingSpellID = 34090
 local artisanRidingSpellID = 34091
 local masterRidingSpellID = 90265
-local dragonridingSpellID = 376777
+local skyridingSpellID = 376777
 local chaufferredMounts = {
     ["Horde"] = 678,
     ["Alliance"] = 679,
@@ -155,14 +149,14 @@ _G.SummonFavoriteMount = function()
     end
     if not SKYRIDING_BUFF_NAME then SKYRIDING_BUFF_NAME = C_Spell_GetSpellName(SKYRIDING_BUFF_ID) end
     if
-        IsSpellKnown(dragonridingSpellID)
-        and db.favDragonridingMount
+        IsSpellKnown(skyridingSpellID)
+        and db.favSkyridingMount
         and (
             E.MapInfo.mapID == NOKHUD_OFFENSIVE_MAP_ID
             or not IsInInstance() and AuraUtil_FindAuraByName(SKYRIDING_BUFF_NAME, "player")
         )
     then
-        C_MountJournal_SummonByID(db.favDragonridingMount)
+        C_MountJournal_SummonByID(db.favSkyridingMount)
         return
     end
     local specID = GetSpecializationInfo(GetSpecialization())
@@ -235,13 +229,13 @@ local function AddFavorites(self, level)
         UIDropDownMenu_AddButton(menu, level)
     end
 
-    if db.favDragonridingMount ~= nil then
-        local name, _, icon, active, _ = C_MountJournal_GetMountInfoByID(db.favDragonridingMount)
-        menu.text = ("Dragonriding: %s"):format(name)
+    if db.favSkyridingMount ~= nil then
+        local name, _, icon, active, _ = C_MountJournal_GetMountInfoByID(db.favSkyridingMount)
+        menu.text = ("Skyriding: %s"):format(name)
         menu.icon = icon
         menu.colorCode = active == 1 and hexColor or "|cffffffff"
         menu.func = ModifiedClick
-        menu.arg1 = db.favDragonridingMount
+        menu.arg1 = db.favSkyridingMount
         menu.hasArrow = false
         menu.notCheckable = true
         UIDropDownMenu_AddButton(menu, level)

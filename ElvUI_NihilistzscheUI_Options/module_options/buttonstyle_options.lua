@@ -15,12 +15,12 @@ function BS:GenerateOptions()
             header = {
                 order = 1,
                 type = "header",
-                name = L["NihilistzschetUI ButtonStyle by Nihilistzsche"],
+                name = L["NihilistzscheUI ButtonStyle by Nihilistzsche"],
             },
             description = {
                 order = 2,
                 type = "description",
-                name = L["NihilistzschetUI ButtonStyle provides a style setting for ElvUI buttons similar to Masque or ButtonFacade\n"],
+                name = L["NihilistzscheUI ButtonStyle provides a style setting for ElvUI buttons similar to Masque or ButtonFacade\n"],
             },
             general = {
                 order = 3,

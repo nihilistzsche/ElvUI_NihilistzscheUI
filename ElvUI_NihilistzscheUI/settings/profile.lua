@@ -51,6 +51,32 @@ NP.enhancednameplateauras = {
         textColor = { r = 1.0, g = 1.0, b = 1.0 },
     },
 }
+NP.heritageArmorTrackerDataText = {
+    [29] = true, -- Void Elf
+    [27] = true, -- Nightborne
+    [30] = true, -- Lightforged Draenei
+    [28] = true, -- Higmountain Tauren
+    [34] = true, -- Dark Iron Dwarf
+    [36] = true, -- Mag'har Orc
+    [31] = true, -- Zandalari Troll
+    [32] = true, -- Kul Tiran
+    [35] = true, -- Vulpera
+    [37] = true, -- Mechagnome
+    [84] = true, -- Earthen
+    [85] = true, -- Earthen
+    [3] = true, -- Dwarf
+    [7] = true, -- Gnome
+    [10] = true, -- Blood Elf
+    [6] = true, -- Tauren
+    [9] = true, --Goblin
+    [22] = true, -- Worgen
+    [2] = true, -- Orc
+    [1] = true, -- Human
+    [4] = true, -- Night Elf
+    [5] = true, -- Undead
+    [11] = true, -- Draenei
+    [8] = true, -- Troll
+}
 NP.hiddenArtifactTracker = {
     enabled = true,
     width = 410,
@@ -89,6 +115,14 @@ NP.petbattleautostart = {
     autoQuestAccept = false,
     autoQuestComplete = false,
     autoStartBattle = false,
+}
+NP.petBattleChallengeDataText = {
+    [33137] = true,
+    [45539] = true,
+    [46292] = true,
+    [54186] = true,
+    [56492] = true,
+    [58458] = true,
 }
 NP.pxp = {
     enabled = true,

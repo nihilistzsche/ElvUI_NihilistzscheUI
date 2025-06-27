@@ -124,6 +124,7 @@ hooksecurefunc(B, "UpdateSlot", COMP.FixBagSlotClicks)
 function COMP.Initialize()
     -- Workfround for blizzard bug: See https://github.com/Stanzilla/WoWUIBugs/issues/343
     _G.ITEM_INVENTORY_BANK_BAG_OFFSET = 5
+    ElvUI_ExperienceBar_Quest:SetFrameLevel(1)
 end
 
 NUI:RegisterModule(COMP:GetName())

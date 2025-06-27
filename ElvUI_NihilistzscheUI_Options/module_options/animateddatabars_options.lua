@@ -10,12 +10,12 @@ function ADB:GenerateOptions()
             header = {
                 order = 1,
                 type = "header",
-                name = L["NihilistzschetUI Animated DataBars by Nihilistzsche"],
+                name = L["NihilistzscheUI Animated DataBars by Nihilistzsche"],
             },
             description = {
                 order = 2,
                 type = "description",
-                name = L["NihilistzschetUI Animated DataBars change the xp/rep/etc. databars to use the animated status bar template."],
+                name = L["NihilistzscheUI Animated DataBars change the xp/rep/etc. databars to use the animated status bar template."],
             },
             ticks = {
                 order = 3,

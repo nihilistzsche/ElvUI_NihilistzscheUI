@@ -3,10 +3,9 @@ local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
 
 function NI:CursorTrailSetup()
-    _G.CursorTrail_Config = _G.CursorTrail_Config or {}
-    _G.CursorTrail_Config.Profiles = _G.CursorTrail_Config.Profiles or {}
+    local profileDB = _G.CursorTrail.OptionsFrame_GetProfilesDB()
     local color = self:Color()
-    _G.CursorTrail_Config.Profiles[string.lower(self.profileKey)] = {
+    profileDB:set(string.lower(self.profileKey), {
         ["Strata"] = "BACKGROUND",
         ["UserOfsY"] = 0,
         ["ShapeColorG"] = color.g,
@@ -18,8 +17,8 @@ function NI:CursorTrailSetup()
         ["UserScale"] = 1,
         ["UserShadowAlpha"] = 0,
         ["ShapeColorR"] = color.r,
-        ["FadeOut"] = false,
-    }
+        ["FadeOut"] = true,
+    })
 end
 
 NI:RegisterAddOnInstaller("CursorTrail", NI.CursorTrailSetup)

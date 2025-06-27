@@ -150,7 +150,7 @@ function NUI.ClickGameMenu()
         ACD = E.Libs.AceConfigDialog
     end
     E:ToggleOptions()
-    ACD:SelectGroup("ElvUI", "NihilistzschetUI")
+    ACD:SelectGroup("ElvUI", "NihilistzscheUI")
     HideUIPanel(_G.GameMenuFrame)
 end
 
@@ -163,7 +163,7 @@ end
 
 function NUI:BuildGameMenu()
     local button = {
-        name = "GameMenu_NihilistzschetUIConfig",
+        name = "GameMenu_NihilistzscheUIConfig",
         text = NUI.Title,
         func = function() self.ClickGameMenu() end,
     }

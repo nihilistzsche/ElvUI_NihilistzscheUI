@@ -149,4 +149,9 @@ function NM:CheckMigrations()
         E.db.nihilistzscheui.cbn = nil
         E.db.nihilistzscheui.migrated.dbn = true
     end
+
+    if E.private.nihilistzscheui.mounts.favDragonridingMount then
+        E.private.nihilistzscheui.mounts.favSkyridingMount = E.private.nihilistzscheui.mounts.favDragonridingMount
+        E.private.nihilistzscheui.mounts.favDragonridingMount = nil
+    end
 end

@@ -417,7 +417,7 @@ function ES:Initialize()
 
     UF:Update_AllFrames()
     if COMP.IF then
-        C_AddOns_LoadAddOn("InFlight-WW")
+        C_AddOns_LoadAddOn("InFlight")
         _G.InFlight:CreateBar()
         _G.InFlightBar:CreateShadow()
         ES:RegisterFrameShadows(_G.InFlightBar)

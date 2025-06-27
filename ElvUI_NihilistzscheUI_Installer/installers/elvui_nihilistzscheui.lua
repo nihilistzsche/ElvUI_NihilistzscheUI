@@ -60,6 +60,10 @@ NI.ClassMountFavorites = {
     },
 }
 
+NI.ClassMountSkyridingFavorite = {
+    WARLOCK = 416,
+}
+
 local function BuildClassFavorites(class)
     if NI.ClassMountFavorites[class] or not NI.SpecIDs[class] or not NI.ClassMountIDs[class] then return end
     local mountID = NI.ClassMountIDs[class]
@@ -390,14 +394,20 @@ function NI:NihilistzscheUISetup(isSpec)
             self:EPRV().nihilistzscheui.mounts = self:EPRV().nihilistzscheui.mounts or {}
         end
         self:EPRV().nihilistzscheui.mounts.favAlt = 460
-        self:EPRV().nihilistzscheui.mounts.favDragonridingMount = 1589
+        if self.ClassMountSkyridingFavorite[self.currentClass] then
+            self:EPRV().nihilistzscheui.mounts.favSkyridingMount = self.ClassMountSkyridingFavorite[self.currentClass]
+        else
+            self:EPRV().nihilistzscheui.mounts.favSkyridingMount = 1589
+        end
     end
 
     self:SaveMoverPosition("NihilistzscheUI_SpecSwitchBarMover", "BOTTOMRIGHT", _G.RightChatPanel, "BOTTOMLEFT", -4, 0)
     if COMP.IsAddOnEnabled("OldGodWhispers") then
         self:SaveMoverPosition("OldGodWhispersDragFrameMover", "BOTTOM", "NihilistzscheUI_SpecSwitchBar", "TOP", 0, 4)
     end
-
+    if self.currentClass == "WARLOCK" then
+        self:SaveMoverPosition("WarlockDemonsMover", "TOP", E.UIParent, "TOPRIGHT", -460, -50)
+    end
     self:SaveMoverPosition("NihilistzscheUI_PartyXPHolderMover", "TOP", E.UIParent, "TOP", 0, -167)
     self:SaveMoverPosition("ArtifactHiddenAppearanceTrackerMover", "BOTTOM", "AzeriteBarMover", "TOP", 0, 4)
     self:SaveMoverPosition("NihilistzscheChatDockMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -530, -30)

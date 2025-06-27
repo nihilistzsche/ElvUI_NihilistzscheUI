@@ -8,6 +8,7 @@
   <Script file="datatexts_options.lua"/>
   <Script file="enhancednameplateauras_options.lua"/>
   <Script file="enhancedshadows_options.lua"/>
+  <Script file="heritage_armor_tracker_datatext_options.lua"/>
   <Script file="hiddenartifacttracker_options.lua"/>
   <Script file="nihilistzschechat_options.lua"/>
   <Script file="partyxp_options.lua"/>
@@ -19,5 +20,6 @@
   <Script file="raidcds_options.lua"/>
   <Script file="petbattlenameplates_options.lua"/>
   <Script file="petbattleautostart_options.lua"/>
+  <Script file="pet_battle_challenge_datatext_options.lua"/>
   <Script file="settransfer_options.lua"/>
 </Ui>
