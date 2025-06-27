@@ -7,7 +7,7 @@ function NI:PDBCSetup(isSpec)
         experienceBar = {},
     }
     self:EDB().EPDBC.experienceBar.progress = false
-    
+
     if not isSpec then
         self:EPRV().EPDBC = self:EPRV().EPDBC or {}
         self:EPRV().EPDBC.install_complete = true

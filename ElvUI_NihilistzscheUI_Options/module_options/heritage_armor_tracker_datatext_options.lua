@@ -30,7 +30,9 @@ function HATDT:GenerateOptions()
             desc = "Show heritage armor obtained status for " .. raceInfo.raceName,
             type = "toggle",
             order = info.type == self.AlliedRace and ai or ci,
-            disabled = function() return info.type == self.AlliedRace and not select(4, GetAchievementInfo(info.unlock_req)) end,
+            disabled = function()
+                return info.type == self.AlliedRace and not select(4, GetAchievementInfo(info.unlock_req))
+            end,
         }
         if info.type == self.AlliedRace then
             ai = ai + 1
