@@ -4,7 +4,7 @@ local COMP = NUI.Compatibility
 
 local tinsert = _G.tinsert
 local strmatch = _G.strmatch
-local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
+local C_AddOns_GetAddOnMetadata = _G.C_AddOns.GetAddOnMetadata
 local tContains = _G.tContains
 
 function NI:ElvUIFCTSetup()
@@ -89,14 +89,14 @@ function NI:ElvUIFCTSetup()
             db.unitframes.frames[frame].showDots = true
         end
     end
-    if GetAddOnMetadata("ElvUI_FCT", "X-Nihilistzsche") then
+    if C_AddOns_GetAddOnMetadata("ElvUI_FCT", "X-Nihilistzsche") then
         self:EDB().elvui_fct = db
     else
         E:CopyTable(_G.ElvFCT, db)
     end
 end
 
-if COMP.IsAddOnEnabled("ElvUI_FCT") and GetAddOnMetadata("ElvUI_FCT", "X-Nihilistzsche") then
+if COMP.IsAddOnEnabled("ElvUI_FCT") and C_AddOns_GetAddOnMetadata("ElvUI_FCT", "X-Nihilistzsche") then
     NI:RegisterAddOnInstaller("ElvUI_FCT", NI.ElvUIFCTSetup, true)
 else
     NI:RegisterGlobalAddOnInstaller("ElvUI_FCT", NI.ElvUIFCTSetup)

@@ -1170,7 +1170,7 @@ function NI:ElvUISetup(role, isSpec)
     self:SaveMoverPosition("ElvAB_7", "BOTTOM", "ElvAB_3", "TOP", 0, 2)
     self:SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_3", "TOP", 0, 16)
     self:SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 415, 0)
-    self:SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 364)
+    self:SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 192)
     self:SaveMoverPosition("ZoneAbility", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -474, 190)
     -- Unit Frames
     self:SaveMoverPosition("ElvUF_PlayerMover", "BOTTOM", E.UIParent, "BOTTOM", -278, 110)

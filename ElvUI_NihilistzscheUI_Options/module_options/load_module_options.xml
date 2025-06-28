@@ -22,4 +22,5 @@
   <Script file="petbattleautostart_options.lua"/>
   <Script file="pet_battle_challenge_datatext_options.lua"/>
   <Script file="settransfer_options.lua"/>
+  <Script file="rp_style_filter_options.lua"/>
 </Ui>

@@ -433,9 +433,9 @@ function NI:NihilistzscheUISetup(isSpec)
         0,
         -4
     )
-    self:SaveMoverPosition("NihilistzscheUF_Player AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", -310, 532)
-    self:SaveMoverPosition("NihilistzscheUF_Target AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", 310, 532)
-    self:SaveMoverPosition("NihilistzscheUF_Pet AuraBar Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 569, 532)
+    self:SaveMoverPosition("NihilistzscheUF_Player AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", -310, 474)
+    self:SaveMoverPosition("NihilistzscheUF_Target AuraBar Mover", "BOTTOM", E.UIParent, "BOTTOM", 310, 474)
+    self:SaveMoverPosition("NihilistzscheUF_Pet AuraBar Mover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 496, 474)
     self:SaveMoverPosition("NihilistzscheUF_Player Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 488)
     self:SaveMoverPosition("NihilistzscheUF_Target Castbar Mover", "BOTTOM", E.UIParent, "BOTTOM", 0, 433)
 

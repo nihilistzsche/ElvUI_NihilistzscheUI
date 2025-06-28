@@ -7,11 +7,15 @@ function NI:Ls_ToastsSetup()
             name = self.db.font,
         },
         skin = NUI.Private and "MerathilisUI" or "elv-no-artwork",
-        point = {
-            rP = "TOP",
-            p = "TOP",
-            y = -300,
-            x = 0,
+        anchors = {
+            {
+                point = {
+                    rP = "TOP",
+                    p = "TOP",
+                    y = -300,
+                    x = 0,
+                },
+            },
         },
     })
 end

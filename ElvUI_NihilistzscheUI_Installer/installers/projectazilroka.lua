@@ -16,8 +16,11 @@ function NI:ProjectAzilrokaSetup(isSpec)
                 [267218] = true,
                 [387437] = true,
                 [394776] = true,
+                [428524] = true,
+                [432794] = true,
+                [432795] = true,
                 [433885] = true,
-                [434506] = true,
+                [433891] = true,
             },
         }
         local classReminder = {

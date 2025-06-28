@@ -37,15 +37,15 @@ function PBN:AddStyleFilterOptions()
             "does not belong to the currently active pet on either the friendly or opponent side during a pet battle.",
         },
     }
+    local PROVIDED_BY_NUI = "  This filter is provided by NihilistzscheUI."
+    local IF_ENABLED = "If enabled then the filter will only activate when the nameplate "
+    local nlogo = [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo:12:12|t]]
     local oldFunc = E.Options.args.nameplates.args.stylefilters.args.selectFilter.set
     E.Options.args.nameplates.args.stylefilters.args.selectFilter.set = function(info, value)
         oldFunc(info, value)
-        local nlogo = [[|TInterface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo:12:12|t]]
         local tbl = E.Options.args.nameplates.args.stylefilters.args.triggers.args.combat.args
         if not tbl.isBattlePetPBN then
             local order = 53
-            local PROVIDED_BY_NUI = "  This filter is provided by NihilistzscheUI."
-            local IF_ENABLED = "If enabled then the filter will only activate when the nameplate "
             for i, v in ipairs(npTriggerOptions) do
                 tbl[v[1] .. "PBN"] = {
                     name = nlogo .. v[2],
