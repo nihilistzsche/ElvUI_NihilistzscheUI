@@ -1,10 +1,13 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui">
 	<Script file="account_ilvl.lua"/>
 	<Script file="azerite_powers.lua"/>
+	<Script file="pets.lua"/>
+	<Script file="version.lua"/>
 	<Script file="improved_system.lua"/>
 	<Script file="mounts.lua"/>
-	<Script file="pets.lua"/>
 	<Script file="professions.lua"/>
 	<Script file="titles.lua"/>
-	<Script file="version.lua"/>
+	<Script file="heirloom_upgrade.lua"/>
+	<Script file="heritage_armor_tracker.lua"/>
+	<Script file="pet_battle_challenge.lua"/>
 </Ui>
