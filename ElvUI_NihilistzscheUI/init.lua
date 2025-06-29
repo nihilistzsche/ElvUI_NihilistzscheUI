@@ -48,6 +48,7 @@ NUI.InvertedShadows = NUI:NewModule("InvertedShadows")
 
 NUI.Migration = NUI:NewModule("Migration")
 NUI.Misc = NUI:NewModule("Misc")
+NUI.Misc.AddMountIDToTooltip = NUI:NewModule("AddMountIDToTooltip")
 NUI.Misc.BetterReputationColors = NUI:NewModule("BetterReputationColors")
 NUI.Misc.CardinalPoints = NUI:NewModule("CardinalPoints")
 NUI.Misc.ChatItemLevelGems = NUI:NewModule("ChatItemLevelGems")
