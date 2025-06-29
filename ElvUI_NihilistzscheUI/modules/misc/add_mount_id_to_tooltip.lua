@@ -13,7 +13,7 @@ function AMITT:SetUnitAura(tt, unit, index, filter)
     local mountID = E.MountIDs[spellID]
     if mountID then
         local sourceText = E.MountText[mountID]
-        if sourceText then tt:AddLine(format(IDLine, "Mount ID:", mountID)) end
+        if sourceText then tt:AddLine(format(IDLine, "Mount ID", mountID)) end
         tt:Show()
     end
 end
