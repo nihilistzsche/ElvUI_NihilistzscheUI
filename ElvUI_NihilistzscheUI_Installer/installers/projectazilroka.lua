@@ -119,6 +119,7 @@ function NI:ProjectAzilrokaSetup(isSpec)
                     Whitelist = whitelist,
                 },
                 Cooldowns = Disable(),
+                ItemCooldowns = Disable(),
                 Buffs = Disable(),
                 Debuffs = Disable(),
                 FocusBuffs = Disable(),
