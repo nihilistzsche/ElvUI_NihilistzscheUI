@@ -14,7 +14,6 @@ local CreateFrame = _G.CreateFrame
 local UIParent = _G.UIParent
 local UnitExists = _G.UnitExists
 local InCombatLockdown = _G.InCombatLockdown
-local GetMouseFocus = _G.GetMouseFocus
 local UnitAffectingCombat = _G.UnitAffectingCombat
 local tinsert = _G.tinsert
 local gsub = _G.gsub
@@ -65,7 +64,18 @@ end
 
 function VUF:ActivateFrame(frame) E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha) end
 
-function VUF:DeactivateFrame(frame) E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC) end
+local portraitFixClosures = {}
+local function GetPortraitFixClosure(frame)
+    if portraitFixClosures[frame] then return portraitFixClosures[frame] end
+    local portraitFix = function() frame.Portrait:SetAlpha(VUF.db.alphaOOC) end
+    portraitFixClosures[frame] = portraitFix
+    return portraitFix
+end
+
+function VUF:DeactivateFrame(frame)
+    E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC)
+    if frame.Portrait then C_Timer.After(1, GetPortraitFixClosure(frame)) end
+end
 
 function VUF:UpdateHideSetting()
     if self.db.hideOOC then

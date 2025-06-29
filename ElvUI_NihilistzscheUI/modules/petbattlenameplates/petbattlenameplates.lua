@@ -34,15 +34,12 @@ end
 function PBN:PET_BATTLE_OPENING_START()
     local function CacheCVarAndSet(cvar, newValue, firstValue)
         if not self.CVarCache[cvar] then self.CVarCache[cvar] = GetCVar(cvar) end
-        if firstValue then
-            SetCVar(cvar, firstValue)
-            C_Timer_After(3, function() SetCVar(cvar, newValue) end)
-        else
-            SetCVar(cvar, newValue)
-        end
+        SetCVar(cvar, firstValue or newValue)
+        if firstValue then C_Timer_After(3, function() SetCVar(cvar, newValue) end) end
     end
-    CacheCVarAndSet("nameplateShowFriendlyNPCs", self.db.enabled and "1" or "0", "0")
-    CacheCVarAndSet("nameplateShowAll", self.db.enabled and "1" or "0", "0")
+    local cvarValue = self.db.enabled and "1" or "0"
+    CacheCVarAndSet("nameplateShowFriendlyNPCs", cvarValue, "0")
+    CacheCVarAndSet("nameplateShowAll", cvarValue, "0")
     CacheCVarAndSet("nameplateOccludedAlphaMult", "1")
 end
 

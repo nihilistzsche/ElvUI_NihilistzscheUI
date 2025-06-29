@@ -57,6 +57,14 @@ function NI.TinkerToolboxSetup()
         func = 'function(unit)\n    local text = _TAGS.absorbs(unit)\n    if text and text ~= "" then\n        return ("(+%s)"):format(text)\n    else\n        return nil\n    end\nend',
         events = "UNIT_ABSORB_AMOUNT_CHANGED",
     }
+    if COMP.SLE then
+        E.global.CustomTags["pvp:icon"] = {
+            vars = "",
+            description = "",
+            func = 'function(unit, _, args)\n    local iconPath = [[Interface\\AddOns\\ElvUI_SLE\\media\\textures\\afk\\factionlogo\\blizzard\\]]\n    \n    if not UnitIsPlayer(unit) or not UnitIsPVP(unit) then return "" end\n    return "|T" .. iconPath .. UnitFactionGroup(unit) .. ".blp:15:15:0:0:64:64:4:56:4:56|t"\nend',
+            events = "UNIT_FLAGS",
+        }
+    end
     if COMP.IsAddOnEnabled("TotalRP3") and COMP.IsAddOnEnabled("RP_Tags") then
         E.global.CustomTags["rp:title:name:colors"] = {
             vars = "",

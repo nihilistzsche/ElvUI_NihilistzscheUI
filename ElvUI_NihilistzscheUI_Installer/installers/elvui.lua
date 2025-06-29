@@ -955,17 +955,15 @@ function NI:ElvUISetup(role, isSpec)
         enable = true,
         "LDB_Rarity",
     }
-    local NUI_DataPanel_6_LeftDT = "Quick Join"
-    if NUI.Private then NUI_DataPanel_6_LeftDT = "NihilistzscheUI Dungeon/Raid Difficulty" end
     self:EDB().datatexts.panels.NUI_DataPanel_1 = {
         enable = true,
         "NihilistzscheUI Account Item Level",
-        NUI.Private and "NihilistzscheUI Heirloom Upgrade Cost" or "LDB_WarMode",
+        "NihilistzscheUI Heirloom Upgrade Cost",
         "LDB_Broker_TimeToExecute_kill",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_2 = {
         enable = true,
-        "LDB_Locked Out",
+        "LDB_Token price",
         "LDB_LegionInvasionTimer",
         "LDB_BFAInvasionTimer",
     }
@@ -981,14 +979,14 @@ function NI:ElvUISetup(role, isSpec)
     }
     self:EDB().datatexts.panels.NUI_DataPanel_5 = {
         enable = true,
-        NUI.Private and "NihilistzscheUI Heritage Armor Tracker" or "NihilistzscheUI Azerite Powers",
+        "NihilistzscheUI Heritage Armor Tracker",
         "LDB_DungeonHelper",
-        "LDB_LDB-WoWToken",
+        "WarMode",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_6 = {
         enable = true,
         "CallToArms",
-        NUI_DataPanel_6_LeftDT,
+        "Difficulty",
         "Chat Tweaks",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_7 = {
@@ -999,14 +997,12 @@ function NI:ElvUISetup(role, isSpec)
         enable = true,
         self.DataTextsByRole[role],
         "LDB_BtWQuests",
-        "ClassTactics Talent Manager",
+        "CombatIndicator",
     }
-    if NUI.Private then
-        self:EDB().datatexts.panels.DTB2_NihilistzscheUIUR = {
-            enable = true,
-            [1] = "NihilistzscheUI Pet Challenge Tracker",
-        }
-    end
+    self:EDB().datatexts.panels.DTB2_NihilistzscheUIUR = {
+        enable = true,
+        [1] = "NihilistzscheUI Pet Challenge Tracker",
+    }
     local bar7enabled = true
     if
         self.currentClass == "DRUID"
