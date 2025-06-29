@@ -200,7 +200,7 @@ function CB:OnFrameUpdate(t)
 
     if self.delta < 0.05 then return end
 
-    self.delta = self.delta - 0.05
+    self.delta = 0
 
     self:Update()
 end

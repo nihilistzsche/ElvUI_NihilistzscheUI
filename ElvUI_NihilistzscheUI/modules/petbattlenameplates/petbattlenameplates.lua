@@ -34,15 +34,12 @@ end
 function PBN:PET_BATTLE_OPENING_START()
     local function CacheCVarAndSet(cvar, newValue, firstValue)
         if not self.CVarCache[cvar] then self.CVarCache[cvar] = GetCVar(cvar) end
-        if firstValue then
-            SetCVar(cvar, firstValue)
-            C_Timer_After(3, function() SetCVar(cvar, newValue) end)
-        else
-            SetCVar(cvar, newValue)
-        end
+        SetCVar(cvar, firstValue or newValue)
+        if firstValue then C_Timer_After(3, function() SetCVar(cvar, newValue) end) end
     end
-    CacheCVarAndSet("nameplateShowFriendlyNPCs", self.db.enable and "1" or "0", "0")
-    CacheCVarAndSet("nameplateShowAll", self.db.enable and "1" or "0", "0")
+    local cvarValue = self.db.enabled and "1" or "0"
+    CacheCVarAndSet("nameplateShowFriendlyNPCs", cvarValue, "0")
+    CacheCVarAndSet("nameplateShowAll", cvarValue, "0")
     CacheCVarAndSet("nameplateOccludedAlphaMult", "1")
 end
 
@@ -396,7 +393,6 @@ function PBN:ResetNameplates()
     wipe(self.theirPets)
     wipe(self.PetInfoByGUID)
     wipe(self.LastSeenHealthValueForNP)
-    PBN.TickerFrame:SetScript("OnUpdate", nil)
     self.lowestIDValue = nil
     NP:ConfigureAll()
 end
@@ -413,17 +409,6 @@ PBN.StyleFilterTriggerDefaults = {
 function PBN:AddNPStyleFilterTriggerDefaults()
     for k, v in pairs(self.StyleFilterTriggerDefaults) do
         E.StyleFilterDefaults.triggers[k .. "PBN"] = v
-    end
-end
-
-function PBN.TickerFrameOnUpdate(self, elapsed)
-    if (self.elapsed or 0) + elapsed > 0.5 then
-        for plate in pairs(PBN.handledNameplates) do
-            NP:StyleFilterUpdate(plate, "FAKE_PBNForceUpdate")
-        end
-        self.elapsed = 0
-    else
-        self.elapsed = (self.elapsed or 0) + elapsed
     end
 end
 
@@ -445,7 +430,6 @@ function PBN:InitializeNPHooks()
     NP:StyleFilterAddCustomCheck("PBNStyleFilter", self.StyleFilterCustomCheck)
     hooksecurefunc(UF, "PostUpdateAura", self.PostUpdateAura)
     hooksecurefunc(NP, "StyleFilterSetChanges", self.CheckActions)
-    PBN.TickerFrame = CreateFrame("Frame")
 end
 
 function PBN.StyleFilterCustomCheck(frame, _, trigger)
@@ -496,11 +480,8 @@ function PBN:Update(event)
                 self:UpdateNamePlate(pet)
             end
         end
-        if not self.TickerFrame:GetScript("OnUpdate") then
-            self.TickerFrame:SetScript("OnUpdate", self.TickerFrameOnUpdate)
-        end
     end
-    for plate in pairs(NP.Plates) do
+    for plate in pairs(self.handledNameplates) do
         NP:StyleFilterUpdate(plate, "FAKE_PBNForceUpdate")
     end
 end
@@ -538,7 +519,7 @@ function PBN:Initialize()
         self:RegisterEvent(event, "Update")
     end
 
-    self.db = E.db.nihilistzscheui.petbattlenameplates
+    NUI:RegisterDB(self, "petbattlenameplates")
     hooksecurefunc(NP, "UpdatePlateGUID", PBN.UpdatePlateGUID)
     self:InitializeNPHooks()
 end

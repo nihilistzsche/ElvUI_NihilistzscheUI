@@ -9,17 +9,22 @@
     <Include file="databarnotifier\load_databarnotifier.xml"/>
     <Include file="datatexts\load_datatexts.xml"/>
     <Include file="enhancednameplateauras\load_enhancednameplateauras.xml"/>
+    <Include file="heirloom_upgrade_datatext\load_heirloom_upgrade_datatext.xml"/>
+    <Include file="heritage_armor_tracker_datatext\load_heritage_armor_tracker_datatext.xml"/>
     <Include file="hiddenartifacttracker\load_hiddenartifacttracker.xml"/>
-    <Include file="kaliels_tracker_mover\load_kaliels_tracker_mover.xml"/>
     <Include file="invertedshadows\load_invertedshadows.xml"/>
     <Include file="misc\load_misc.xml"/>
     <Include file="nihilistzschechat\load_nihilistzschechat.xml"/>
     <Include file="partyxp\load_partyxp.xml"/>
     <Include file="petbattleautostart\load_petbattleautostart.xml"/>
     <Include file="petbattlenameplates\load_petbattlenameplates.xml"/>
+    <Include file="pet_battle_challenge_datatext\load_pet_battle_challenge_datatext.xml"/>
     <Include file="raidcds\load_raidcds.xml"/>
     <Include file="utilitybars\load_utilitybars.xml"/>
     <Include file="verticalunitframes\load_verticalunitframes.xml"/>
     <Include file="warlockdemons\load_warlockdemons.xml"/>
     <Include file="settransfer\load_settransfer.xml"/>
+    <Include file="rematch_expanded_script_filter\load_rematch_expanded_script_filter.xml"/>
+    <Include file="rp_style_filter\load_rp_style_filter.xml"/>
+    <Include file="sle_equip_manager_extension\load_sle_equip_manager_extension.xml"/>
 </Ui>

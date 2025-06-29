@@ -223,7 +223,7 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
     self["Construct" .. stringTitle .. "Frame"](self, frame, unit)
 
     frame:CreateBackdrop("Transparent")
-    frame:SetParent(_G.ElvUF_Parent)
+    frame:SetParent(E.UFParent)
     E.FrameLocks[frame] = true
     if ES then
         frame:CreateShadow()
@@ -255,7 +255,7 @@ function VUF:UpdateFrame(unit)
     then
         width = width + self.db.units[unit].power.size.width
     end
-    frame:SetSize(width, height)
+    frame:Size(width, height)
     _G[frame:GetName() .. "Mover"]:Size(frame:GetSize())
     frame.backdrop:SetFrameLevel(0)
     if E.db.nihilistzscheui.vuf.enabled and self.db.units[unit].enabled then
@@ -392,9 +392,7 @@ function VUF:ConstructStatusBar(frame, element, parent, name, t, noBG)
 
     -- Create the status bar
     local sb = CreateFrame("StatusBar", sbname, parent, "BackdropTemplate")
-    if not t then
-        sb:SetTemplate("Transparent")
-    end
+    if not t then sb:SetTemplate("Transparent") end
 
     -- Dummy texture so we can set colors
     sb:SetStatusBarTexture(E.media.blankTex)

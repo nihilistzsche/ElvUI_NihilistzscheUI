@@ -16,6 +16,11 @@ function NI:ProjectAzilrokaSetup(isSpec)
                 [267218] = true,
                 [387437] = true,
                 [394776] = true,
+                [428524] = true,
+                [432794] = true,
+                [432795] = true,
+                [433885] = true,
+                [433891] = true,
             },
         }
         local classReminder = {
@@ -120,6 +125,11 @@ function NI:ProjectAzilrokaSetup(isSpec)
                 PvPTargetBuffs = Disable(),
                 TargetDebuffs = Disable(),
             },
+            MasterExperience = {
+                Enable = true,
+                Font = self.db.font,
+                ColorByClass = true,
+            },
             SquareMinimapButtons = {
                 Enable = true,
                 BarMouseOver = true,
@@ -148,11 +158,11 @@ function NI:ProjectAzilrokaSetup(isSpec)
     self:SaveMoverPosition("EnemyBattlePetMover", "BOTTOMRIGHT", E.UIParent, "BOTTOMRIGHT", -400, 350)
     self:SaveMoverPosition("SquareMinimapButtonBarMover", "TOPRIGHT", "MinimapPanel", "BOTTOMRIGHT", 0, -4)
     self:SaveMoverPosition("OzCooldownsMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 250)
-    self:SaveMoverPosition("iFilger Enhancements", "TOP", E.UIParent, "TOP", 307, -217)
-    self:SaveMoverPosition("iFilger Procs", "BOTTOM", E.UIParent, "BOTTOM", 0, 436)
-    self:SaveMoverPosition("iFilger Cooldowns", "BOTTOM", E.UIParent, "BOTTOM", 0, 340)
-    self:SaveMoverPosition("iFilger Buffs", "TOP", E.UIParent, "TOP", 306, -68)
-    self:SaveMoverPosition("Ifilger Debuffs", "TOPRIGHT", E.UIParent, "TOPRIGHT", -489, -479)
+    self:SaveMoverPosition("iFilger_EnhancementsMover", "TOP", E.UIParent, "TOP", 307, -217)
+    self:SaveMoverPosition("iFilger_ProcsMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 300)
+    self:SaveMoverPosition("iFilger_CooldownsMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 340)
+    self:SaveMoverPosition("iFilger_BuffsMover", "TOP", E.UIParent, "TOP", 306, -68)
+    self:SaveMoverPosition("Ifilger_DebuffsMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -489, -479)
     self:SaveMoverPosition("TorghastBuffsMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -160)
     self:SaveMoverPosition("SunsongRanchFarmerFarmBar", "TOPLEFT", E.UIParent, "TOPLEFT", 41, -459)
     self:SaveMoverPosition("SunsongRanchFarmerSeedBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 4, 423)

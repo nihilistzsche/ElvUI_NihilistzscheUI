@@ -9,6 +9,7 @@ local GetContainerItemCooldown = _G.C_Container.GetContainerItemCooldown
 local C_Item_GetItemCooldown = _G.C_Item.GetItemCooldown
 local C_ToyBox_GetNumToys = _G.C_ToyBox.GetNumToys
 local C_ToyBox_GetToyFromIndex = _G.C_ToyBox.GetToyFromIndex
+local PlayerHasToy = _G.PlayerHasToy
 
 function CB:UpdateSpells()
     for spellID, _ in pairs(self.cache) do
@@ -70,17 +71,18 @@ end
 function CB:UpdateToys()
     for i = 1, C_ToyBox_GetNumToys() do
         local id = C_ToyBox_GetToyFromIndex(i)
+        if PlayerHasToy(id) then
+            local start, duration, active = C_Item_GetItemCooldown(id)
 
-        local start, duration, active = C_Item_GetItemCooldown(id)
-
-        if active and start > 0 and duration > 1.5 then
-            local frame = self:FindFrame("item", id)
-            if frame then
-                self:UpdateFrame(frame)
-            else
-                self:CreateFrame("item", id)
+            if active and start > 0 and duration > 1.5 then
+                local frame = self:FindFrame("item", id)
+                if frame then
+                    self:UpdateFrame(frame)
+                else
+                    self:CreateFrame("item", id)
+                end
+                self:Activate()
             end
-            self:Activate()
         end
     end
 end

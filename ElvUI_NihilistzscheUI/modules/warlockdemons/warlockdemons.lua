@@ -145,7 +145,8 @@ function WD:UpdateBars(isDemonicTyrant)
 
     if isDemonicTyrant then
         for _, b in ipairs(bars) do
-            local start, duration = C_Spell_GetSpellCooldown(265187)
+            local cooldownInfo = C_Spell_GetSpellCooldown(265187)
+            local start, duration = cooldownInfo.startTime, cooldownInfo.duration
             local mod = 4
             if start > 0 and duration > 0 then
                 local running = _G.GetTime() - start

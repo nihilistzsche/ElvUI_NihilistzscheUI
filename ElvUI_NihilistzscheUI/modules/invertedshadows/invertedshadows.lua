@@ -47,5 +47,4 @@ while object do
 end
 
 local IS = NUI.InvertedShadows
-function IS.Initialize() end
 NUI:RegisterModule(IS:GetName())

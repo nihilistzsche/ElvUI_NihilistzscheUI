@@ -8,7 +8,7 @@ local GI = NUI.Libs.GI
 local wipe = _G.wipe
 local tFilter = _G.tFilter
 local IsInRaid = _G.IsInRaid
-local GetSpellCharges = _G.GetSpellCharges
+local C_Spell_GetSpellCharges = _G.C_Spell.GetSpellCharges
 local UnitAffectingCombat = _G.UnitAffectingCombat
 local GetNumGroupMembers = _G.GetNumGroupMembers
 local UnitGUID = _G.UnitGUID
@@ -120,8 +120,8 @@ function RCD:CheckRaidBattleRes()
     if not IsInRaid() then return end
     for _, bar in ipairs(self.bars.battleRes) do
         if bar.info.raidBattleRes then
-            local currentCharges = GetSpellCharges(bar.info.id)
-            bar.candyBarDuration:SetText(("%d RDY"):format(currentCharges))
+            local chargeInfo = C_Spell_GetSpellCharges(bar.info.id)
+            bar.candyBarDuration:SetText(("%d RDY"):format(chargeInfo.currentCharges))
         end
     end
 end

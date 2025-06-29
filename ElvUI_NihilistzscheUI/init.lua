@@ -45,11 +45,13 @@ NUI.DataBarNotifier = NUI:NewModule("DataBarNotifier", "AceTimer-3.0", "AceEvent
 NUI.EnhancedNameplateAuras = NUI:NewModule("EnhancedNameplateAuras", "AceEvent-3.0")
 NUI.EnhancedShadows = NUI:NewModule("EnhancedShadows", "AceEvent-3.0")
 NUI.InvertedShadows = NUI:NewModule("InvertedShadows")
-NUI.KalielsTrackerMover = NUI:NewModule("KalielsTrackerMover")
+
 NUI.Migration = NUI:NewModule("Migration")
 NUI.Misc = NUI:NewModule("Misc")
 NUI.Misc.BetterReputationColors = NUI:NewModule("BetterReputationColors")
 NUI.Misc.CardinalPoints = NUI:NewModule("CardinalPoints")
+NUI.Misc.ChatItemLevelGems = NUI:NewModule("ChatItemLevelGems")
+NUI.Misc.DifficultyTooltipFix = NUI:NewModule("DifficultyTooltipFix")
 NUI.Misc.FlightMode = NUI:NewModule("FlightMode")
 NUI.Misc.QuestNpcIcons = NUI:NewModule("QuestNPCIcons", "AceEvent-3.0")
 NUI.Misc.Threat = NUI:NewModule("Threat")
@@ -62,6 +64,12 @@ NUI.DataTexts = {}
 NUI.DataTexts.ImprovedSystemDataText = NUI:NewModule("ImprovedSystemDataText")
 NUI.DataTexts.ProfessionsDataText = NUI:NewModule("ProfessionsDataText")
 NUI.DataTexts.TitlesDT = NUI:NewModule("TitlesDT")
+NUI.DataTexts.PetBattleChallengeDataText = NUI:NewModule("PetBattleChallengeDataText")
+NUI.DataTexts.HeirloomUpgradeDataText = NUI:NewModule("HeirloomUpgradeDataText")
+NUI.DataTexts.HeritageArmorTrackerDataText = NUI:NewModule("HeritageArmorTrackerDataText")
+NUI.RematchExpandedScriptFilter = NUI:NewModule("RematchExpandedScriptFilter", "AceEvent-3.0")
+NUI.RPStyleFilter = NUI:NewModule("RPStyleFilter")
+NUI.SLEEquipManagerExtension = NUI:NewModule("SLEEquipManagerExtension", "AceEvent-3.0")
 NUI.UtilityBars = NUI:NewModule("UtilityBars", "AceEvent-3.0")
 NUI.UtilityBars.FarmBar = NUI:NewModule("FarmBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.UtilityBars.TrackerBar = NUI:NewModule("TrackerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
@@ -103,7 +111,7 @@ function NUI:RegisterModule(name)
         local module = self:GetModule(name)
         if module and module.Initialize then
             xpcall(function() module:Initialize() end, geterrorhandler())
-            if ElvUI_CPU then ElvUI_CPU:RegisterPluginModule("ElvUI_NihilistzschetUI", name, module) end
+            if ElvUI_CPU then ElvUI_CPU:RegisterPluginModule("ElvUI_NihilistzscheUI", name, module) end
         end
     end
     self.RegisteredModules[#self.RegisteredModules + 1] = name

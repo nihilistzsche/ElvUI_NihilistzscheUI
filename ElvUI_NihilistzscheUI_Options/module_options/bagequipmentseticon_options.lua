@@ -12,12 +12,12 @@ function BESI:GenerateOptions()
             header = {
                 order = 1,
                 type = "header",
-                name = L["NihilistzschetUI BagEquipmentSetIcon by Nihilistzsche"],
+                name = L["NihilistzscheUI BagEquipmentSetIcon by Nihilistzsche"],
             },
             description = {
                 order = 2,
                 type = "description",
-                name = L["NihilistzschetUI BagEquipmentSetIcon shows a set icon over items in your bag belonging to a set.\n"],
+                name = L["NihilistzscheUI BagEquipmentSetIcon shows a set icon over items in your bag belonging to a set.\n"],
             },
             general = {
                 order = 3,

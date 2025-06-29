@@ -2,6 +2,8 @@
 	<Script file="afk.lua"/>
 	<Script file="brc.lua"/>
 	<Script file="cardinalpoints.lua"/>
+	<Script file="chat_item_level_gems.lua"/>
+	<Script file="difficulty_tooltip_fix.lua"/>
 	<Script file="questmapframe.lua"/>
 	<Script file="threat.lua"/>
 	<Script file="flightmode.lua"/>

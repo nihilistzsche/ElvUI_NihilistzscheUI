@@ -2,7 +2,7 @@
 ## Title: |cff1784d1ElvUI|r |cffffffffNihilistzsche|cffff2020UI|r
 ## IconTexture: Interface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo
 ## Author: Nihilistzsche
-## Version: 13.00
+## Version: 13.01
 ## Notes: An external edit for ElvUI and ElvUI Shadow & Light
 ## RequiredDeps: ElvUI
 ## OptionalDeps: ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI, ProjectAzilroka

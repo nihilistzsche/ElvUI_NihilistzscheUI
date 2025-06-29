@@ -35,7 +35,11 @@ function NI:AddProfileKey(db, key, val) tinsert(self.ProfileKeysToSet, { db, key
 function NI:SetProfileKeys()
     for _, kp in ipairs(self.ProfileKeysToSet) do
         local db, key, val = _G.unpack(kp)
-        db.profileKeys[key] = val
+        if db.keys then -- InFlight compat
+            db.keys[key] = val
+        else
+            db.profileKeys[key] = val
+        end
     end
 end
 
@@ -174,9 +178,9 @@ tryInstall = function()
     end
     if E.InstallFrame then E.InstallFrame:Hide() end
     E.private.install_complete = E.version
-    
+
     wipe(PI.Installs)
-    tinsert(PI.Installs, #(PI.Installs)+1, NI.installTable)
+    tinsert(PI.Installs, #PI.Installs + 1, NI.installTable)
     PI:RunInstall()
 end
 
@@ -185,7 +189,7 @@ function NI.Install() tryInstall() end
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function()
-    C_Timer_After(5, function() NI:BaseElvUISetup() end)
+    C_Timer_After(5, NI.BaseElvUISetup)
     f:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
 

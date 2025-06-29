@@ -150,7 +150,7 @@ function NUI.ClickGameMenu()
         ACD = E.Libs.AceConfigDialog
     end
     E:ToggleOptions()
-    ACD:SelectGroup("ElvUI", "NihilistzschetUI")
+    ACD:SelectGroup("ElvUI", "NihilistzscheUI")
     HideUIPanel(_G.GameMenuFrame)
 end
 
@@ -163,7 +163,7 @@ end
 
 function NUI:BuildGameMenu()
     local button = {
-        name = "GameMenu_NihilistzschetUIConfig",
+        name = "GameMenu_NihilistzscheUIConfig",
         text = NUI.Title,
         func = function() self.ClickGameMenu() end,
     }
@@ -242,9 +242,8 @@ end
 
 function NUI:UpdateAll()
     self:UpdateRegisteredDBs()
-    for _, module in ipairs(self:GetRegisteredModules()) do
-        local mod = NUI:GetModule(module)
-        if mod and mod.ForUpdateAll then mod:ForUpdateAll() end
+    for _, module in self:IterateModules() do
+        if module.ForUpdateAll then module:ForUpdateAll() end
     end
 end
 
@@ -360,7 +359,8 @@ end
 function NUI.GetFactionValues()
     local data = C_Reputation_GetWatchedFactionData()
     if not data then return end
-    local name, min, max, value, factionID = data.name, data.currentReactionThreshold, data.nextReactionThreshold, data.currentStanding, data.factionID
+    local name, min, max, value, factionID =
+        data.name, data.currentReactionThreshold, data.nextReactionThreshold, data.currentStanding, data.factionID
     local isParagon, pmin, pmax, pvalue = NUI.GetParagonInfo(factionID)
     if isParagon then
         min, max, value = pmin, pmax, pvalue

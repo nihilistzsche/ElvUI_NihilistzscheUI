@@ -1,6 +1,7 @@
 local addon, ns = ...
 ns.oUF = _G.ElvUF
 local oUF = ns.oUF
+
 local NUI, E, _, _, P = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local VUF = NUI.VerticalUnitFrames
 local UF = E.UnitFrames
@@ -13,7 +14,6 @@ local CreateFrame = _G.CreateFrame
 local UIParent = _G.UIParent
 local UnitExists = _G.UnitExists
 local InCombatLockdown = _G.InCombatLockdown
-local GetMouseFocus = _G.GetMouseFocus
 local UnitAffectingCombat = _G.UnitAffectingCombat
 local tinsert = _G.tinsert
 local gsub = _G.gsub
@@ -64,7 +64,18 @@ end
 
 function VUF:ActivateFrame(frame) E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha) end
 
-function VUF:DeactivateFrame(frame) E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC) end
+local portraitFixClosures = {}
+local function GetPortraitFixClosure(frame)
+    if portraitFixClosures[frame] then return portraitFixClosures[frame] end
+    local portraitFix = function() frame.Portrait:SetAlpha(VUF.db.alphaOOC) end
+    portraitFixClosures[frame] = portraitFix
+    return portraitFix
+end
+
+function VUF:DeactivateFrame(frame)
+    E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC)
+    if frame.Portrait then C_Timer.After(1, GetPortraitFixClosure(frame)) end
+end
 
 function VUF:UpdateHideSetting()
     if self.db.hideOOC then
@@ -214,7 +225,11 @@ function VUF:Initialize()
     local function spawnUnit(unit)
         local stringTitle = E:StringTitle(unit)
         if stringTitle:find("target") then stringTitle = gsub(stringTitle, "target", "Target") end
-        oUF:Spawn(unit, "NihilistzscheUF_" .. stringTitle)
+        oUF:Spawn(
+            unit,
+            "NihilistzscheUF_" .. stringTitle,
+            E.Retail and "SecureUnitButtonTemplate, PingableUnitFrameTemplate" or "SecureUnitButtonTemplate"
+        )
     end
 
     local needsManualCreate = { "player", "target" }
@@ -238,6 +253,7 @@ function VUF:Initialize()
     self:UpdateAll()
 
     self:RegisterEvent("UNIT_HEALTH")
+    self:RegisterEvent("PET_BATTLE_CLOSE", "UpdateAllFrames")
     if COMP.FCT then self:RegisterEvent("PLAYER_TARGET_CHANGED") end
     self.version = GetAddOnMetadata(addon, "Version")
 end

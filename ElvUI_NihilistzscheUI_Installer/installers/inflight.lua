@@ -2,8 +2,13 @@ local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 
 local NI = NUI.Installer
 
+local default_per_char_set = false
 function NI:InFlightSetup()
-    self:SetProfile(_G.InFlightDB, {
+    if not default_per_char_set then
+        InFlight.db.profiles["Default"].perchar = true
+        default_per_char_set = true
+    end
+    self:SetProfile(_G.InFlight.db, {
         outline = false,
         backcolor = {
             a = 0.850000008940697,
@@ -45,7 +50,7 @@ function NI:InFlightSetup()
             b = 1,
         },
         fill = true,
-    })
+    }, self.baseProfile)
 end
 
-NI:RegisterAddOnInstaller("InFlight-WW", NI.InFlightSetup)
+NI:RegisterAddOnInstaller("InFlight", NI.InFlightSetup, nil, true)

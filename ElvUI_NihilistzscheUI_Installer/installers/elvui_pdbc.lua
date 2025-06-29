@@ -6,9 +6,8 @@ function NI:PDBCSetup(isSpec)
     self:EDB().EPDBC = {
         experienceBar = {},
     }
-    self:EDB().EPDBC.experienceBar.xpColor = self:Color()
-    self:EDB().EPDBC.experienceBar.restColor = self:ModColor(function(x) return math.max(1 - x, 0.15) end)
-    self:EDB().EPDBC.experienceBar.restColor.a = 0.20
+    self:EDB().EPDBC.experienceBar.progress = false
+
     if not isSpec then
         self:EPRV().EPDBC = self:EPRV().EPDBC or {}
         self:EPRV().EPDBC.install_complete = true
