@@ -106,7 +106,7 @@ function NI:NihilistzscheUIGlobalNameplateSetup()
             priority = 91,
         },
     }
----@diagnostic disable-next-line: missing-parameter
+    ---@diagnostic disable-next-line: missing-parameter
     classes = tFilter(classes, function(k, _) return k ~= "Adventurer" end)
     for c, filterClassName in pairs(classes) do
         self.classColor = E:ClassColor(c, true)

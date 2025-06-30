@@ -481,7 +481,7 @@ function NI:GlobalNameplateSetup()
     local needsPetFilterClasses = { "DEATHKNIGHT", "MAGE", "HUNTER", "WARLOCK" }
     wipe(E.global.nameplates.filters or {})
     local classes = LocalizedClassList(false)
----@diagnostic disable-next-line: missing-parameter
+    ---@diagnostic disable-next-line: missing-parameter
     classes = tFilter(classes, function(k, _) return k ~= "Adventurer" end)
     for c, filterClassName in pairs(classes) do
         self.classColor = E:ClassColor(c, true)

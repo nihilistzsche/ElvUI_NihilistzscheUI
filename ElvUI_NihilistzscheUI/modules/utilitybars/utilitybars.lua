@@ -470,7 +470,7 @@ function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
     local spacing, mult = bar.db.spacing, 1
     local size = bar.db.buttonsize
 
----@diagnostic disable-next-line: unbalanced-assignments
+    ---@diagnostic disable-next-line: unbalanced-assignments
     local shownButtons, anchorX, anchorY = {}, {}
 
     local totalShown = 0
