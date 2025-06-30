@@ -66,7 +66,7 @@ function VUF:PostUpdateHealth(unit, min, max)
     -- Flash health below threshold %
     if max == 0 then return end
     if (min / max * 100) < E.db.nihilistzscheui.vuf.lowThreshold then
-        E:Flash(parent, 0.6)
+        E:Flash(self, 0.6)
         if (not warningTextShown and unit == "player") and E.db.nihilistzscheui.vuf.warningText then
             _G.ElvUIVerticalUnitFramesWarning:AddMessage("|cffff0000LOW HEALTH")
             warningTextShown = true
@@ -79,7 +79,7 @@ function VUF:PostUpdateHealth(unit, min, max)
             E:Flash(_G.ElvUIVerticalUnitFramesScreenFlash, 0.6)
         end
     else
-        E:StopFlash(parent)
+        E:StopFlash(self)
         E:StopFlash(_G.ElvUIVerticalUnitFramesScreenFlash)
         _G.ElvUIVerticalUnitFramesScreenFlash:SetAlpha(0)
         warningTextShown = false
