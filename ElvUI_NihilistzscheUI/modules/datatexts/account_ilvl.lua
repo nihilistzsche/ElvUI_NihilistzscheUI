@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E = _G.unpack((select(2, ...))) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E.DataTexts
 local COMP = NUI.Compatibility

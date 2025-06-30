@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, _, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
 local COMP = NUI.Compatibility

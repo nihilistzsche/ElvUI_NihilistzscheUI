@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
 
 local NI = E.Libs.AceAddon:NewAddon("NihilistzscheUI_Installer")

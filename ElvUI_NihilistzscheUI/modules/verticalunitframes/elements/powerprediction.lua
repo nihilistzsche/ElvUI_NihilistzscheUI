@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E = _G.unpack((select(2, ...)))
 local VUF = NUI.VerticalUnitFrames
 local UF = E.UnitFrames

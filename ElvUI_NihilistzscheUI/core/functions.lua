@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L = _G.unpack((select(2, ...)))
 local COMP = NUI.Compatibility
 local SLE = COMP.SLE and _G["ElvUI_SLE"][1]

@@ -6,6 +6,7 @@ local DB = E.DataBars
 
 engine.oUF = _G.ElvUF
 
+---@class NUI : AceAddon-3.0, AceEvent-3.0, AceHook-3.0
 local NUI = E.Libs.AceAddon:NewAddon(addon, "AceEvent-3.0", "AceHook-3.0")
 
 local LibStub = _G.LibStub

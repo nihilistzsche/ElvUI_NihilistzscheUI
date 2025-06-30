@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L, _, P, _ = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local VUF = NUI.VerticalUnitFrames
 if not VUF then return end

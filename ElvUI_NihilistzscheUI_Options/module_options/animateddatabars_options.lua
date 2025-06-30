@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local ADB = NUI.AnimatedDataBars
 if not ADB then return end

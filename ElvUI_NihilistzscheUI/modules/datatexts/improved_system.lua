@@ -2,6 +2,7 @@
 -- By: Lockslap, US - Bleeding Hollow
 -- Basic functionality is from ElvUI's system datatext, with some improvements by myself.
 
+---@class NUI
 local NUI, E, L = _G.unpack((select(2, ...))) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E.DataTexts
 

@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L, _, P, _ = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local PXP = NUI.PartyXP
 

@@ -1,3 +1,4 @@
+---@class NUI
 local NUI = _G.unpack((select(2, ...)))
 local CB = NUI.CooldownBar
 

@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
 local NP = E.NamePlates
 local ENA = NUI.EnhancedNameplateAuras

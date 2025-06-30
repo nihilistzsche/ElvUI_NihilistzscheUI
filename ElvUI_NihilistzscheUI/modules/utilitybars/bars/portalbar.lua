@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 
 local PRB = NUI.UtilityBars.PortalBar

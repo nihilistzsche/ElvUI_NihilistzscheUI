@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, _, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local BESI = NUI.BagEquipmentSetIcon
 if not BESI then return end

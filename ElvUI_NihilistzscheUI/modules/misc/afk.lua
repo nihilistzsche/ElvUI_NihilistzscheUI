@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E = _G.unpack((select(2, ...)))
 
 local AFK = E.AFK

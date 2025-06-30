@@ -2,6 +2,7 @@
 -- ElvUI Titles Datatext By Lockslap
 -------------------------------------------------------------------------------
 
+---@class NUI
 local NUI, E, L = _G.unpack((select(2, ...)))
 local DT = E.DataTexts
 

@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L, V, P, G = _G.unpack((select(2, ...)))
 if E.Classic then return end
 local ST = NUI.SetTransfer

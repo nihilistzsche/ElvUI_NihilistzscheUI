@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L = _G.unpack((select(2, ...)))
 
 local WD = NUI.WarlockDemons

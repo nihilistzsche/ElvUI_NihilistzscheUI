@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E = _G.unpack((select(2, ...)))
 
 if not E.Retail then return end
@@ -135,6 +136,8 @@ function HAT:UpdateBars()
             bar:SetMinMaxValues(0, info.needed)
             local count = 0
             for j = 1, info.criteriaCount do
+                print(info.achievementID)
+                print(j)
                 local n = select(4, GetAchievementCriteriaInfo(info.achievementID, j))
                 count = count + n
             end

@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local PBCDT = NUI.DataTexts.PetBattleChallengeDataText
 if not PBCDT then return end

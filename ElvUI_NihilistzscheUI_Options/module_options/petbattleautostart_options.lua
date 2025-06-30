@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local PBAS = NUI.PetBattleAutoStart
 if not PBAS then return end

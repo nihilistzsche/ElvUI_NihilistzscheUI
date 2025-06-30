@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L, V, P, G = _G.unpack((select(2, ...)))
 local NC = NUI.NihilistzscheChat
 

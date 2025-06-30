@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local SSB = NUI.UtilityBars.SpecSwitchBar
 

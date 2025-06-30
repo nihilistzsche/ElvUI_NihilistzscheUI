@@ -1,3 +1,4 @@
+---@class NUI
 local NUI = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local CDB = NUI.CustomDataBar
 local NT = NUI.Libs.NT

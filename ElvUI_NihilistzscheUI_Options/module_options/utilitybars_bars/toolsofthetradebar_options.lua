@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local TOTTB = NUI.UtilityBars.ToolsOfTheTradeBar
 if not TOTTB then return end

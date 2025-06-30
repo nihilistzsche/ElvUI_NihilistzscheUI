@@ -2,6 +2,7 @@ local addon, ns = ...
 ns.oUF = _G.ElvUF
 local oUF = ns.oUF
 
+---@class NUI
 local NUI, E, _, _, P = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local VUF = NUI.VerticalUnitFrames
 local UF = E.UnitFrames

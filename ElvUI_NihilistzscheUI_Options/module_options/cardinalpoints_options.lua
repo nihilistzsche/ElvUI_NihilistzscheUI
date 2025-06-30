@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local CP = NUI.Misc.CardinalPoints
 

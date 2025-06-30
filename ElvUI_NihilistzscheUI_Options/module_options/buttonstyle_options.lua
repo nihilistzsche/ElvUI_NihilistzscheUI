@@ -1,3 +1,4 @@
+---@class NUI
 local NUI, _, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local BS = NUI.ButtonStyle
 if not BS then return end
