@@ -27,9 +27,10 @@ function CDB.RegisterRepTags()
         if NUI.GetParagonInfo(data.factionID) then return "Paragon" end
         if not isFriend and C_Reputation_IsMajorFaction(data.factionID) then
             local majorFactionData = C_MajorFactions_GetMajorFactionData(data.factionID)
+            if not majorFactionData then return end
             return RENOWN_LEVEL_LABEL:format(majorFactionData.renownLevel)
         end
-        return isFriend and friendData.reaction or _G["FACTION_STANDING_LABEL" .. data.reaction]
+        return isFriend and friendData and friendData.reaction or _G["FACTION_STANDING_LABEL" .. data.reaction]
     end, "UPDATE_FACTION")
     NT:RegisterTag("rep:account-wide", function()
         local watchedData = C_Reputation_GetWatchedFactionData()

@@ -10,6 +10,7 @@ local GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
 local GetNumFactions = _G.C_Reputation.GetNumFactions
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
+local C_Reputation_GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
 local GetFactionDataByIndex = _G.C_Reputation.GetFactionDataByIndex
 local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
 local C_GossipInfo_GetFriendshipReputationRanks = _G.C_GossipInfo.GetFriendshipReputationRanks
@@ -55,13 +56,14 @@ function REP:Update(bar)
     if C_Reputation_IsMajorFaction(factionID) then
         local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
         local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+        if not majorFactionData then return end
         min, max = 0, majorFactionData.renownLevelThreshold
         value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
         isMajorFaction = true
     end
     local numFactions = GetNumFactions()
 
-    local level
+    local reaction
 
     for i = 1, numFactions do
         local _data = GetFactionDataByIndex(i)
@@ -123,7 +125,7 @@ function REP:OnEnter()
     GameTooltip:ClearLines()
     GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0, -4)
 
-    local name, reaction, min, max, value, factionID = GetWatchedFactionInfo()
+    local name, reaction, min, max, value, factionID
 
     local standing = _G["FACTION_STANDING_LABEL" .. reaction]
     if C_Reputation_IsFactionParagon(factionID) then
@@ -137,6 +139,7 @@ function REP:OnEnter()
     if C_Reputation_IsMajorFaction(factionID) then
         local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
         local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+        if not majorFactionData then return end
         min, max = 0, majorFactionData.renownLevelThreshold
         value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
         standing = RENOWN_LEVEL_LABEL .. majorFactionData.renownLevel

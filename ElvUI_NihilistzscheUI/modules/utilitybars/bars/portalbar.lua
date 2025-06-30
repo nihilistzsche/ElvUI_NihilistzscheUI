@@ -142,7 +142,7 @@ function PRB:UpdateBar(bar)
     PRB.CreateButtons(bar)
 
     NUB.UpdateBarMultRow(self, bar, "ELVUIBAR24BINDBUTTON")
-    if COMP.MERS then self:BlacklistPortalItemMeraAutoButtons(bar) end
+    if COMP.MERS then self:BlacklistPortalItemMeraAutoButtons() end
 end
 
 function PRB.AddNihilsitzscheUIData()

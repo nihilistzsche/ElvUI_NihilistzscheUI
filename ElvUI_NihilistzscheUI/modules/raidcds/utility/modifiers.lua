@@ -36,6 +36,7 @@ end
 function RCD.EvaluatePlayerTalent(unitInfo, modifierTbl)
     if not unitInfo.talents then return false end
     for _, tbl in pairs(unitInfo.talents) do
+---@diagnostic disable-next-line: missing-parameter
         if select(6, GetTalentInfoByID(tbl.talent_id)) == modifierTbl.id then return true end
     end
     return false

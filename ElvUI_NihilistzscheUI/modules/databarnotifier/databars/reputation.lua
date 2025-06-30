@@ -61,9 +61,10 @@ end
 function REP:ScanFactions()
     local db = self:GetDB()
     local numFactions = GetNumFactions()
+    local standingID
     for i = 1, numFactions do
         local factionData = GetFactionDataByIndex(i)
-        if factionData and not factionData.isHeader or factionData.isHeaderWithRep then
+        if factionData and not (factionData.isHeader or factionData.isHeaderWithRep) then
             local barValue = factionData.currentStanding
             local factionID = factionData.factionID
             local hasParagonReward = false
@@ -81,6 +82,7 @@ function REP:ScanFactions()
                 standingID = rankData.currentLevel
             elseif isMajorFaction then
                 local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+                if not majorFactionData then return end
                 local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
                 standingID = majorFactionData.renownLevel
                 barValue = isCapped and majorFactionData.renownLevelThreshold
@@ -155,6 +157,7 @@ function REP:Notify()
             local hasParagonReward = false
             local isMajorFaction = false
             local rankData
+            local name = factionData.name
 
             if factionID and C_Reputation_IsFactionParagon(factionID) then
                 local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
@@ -166,6 +169,7 @@ function REP:Notify()
             if factionID and C_Reputation_IsMajorFaction(factionID) then
                 local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
                 local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+                if not majorFactionData then return end
                 standingID = majorFactionData.renownLevel
                 barMin, barMax = 0, majorFactionData.renownLevelThreshold
                 barValue = isCapped and majorFactionData.renownLevelThreshold

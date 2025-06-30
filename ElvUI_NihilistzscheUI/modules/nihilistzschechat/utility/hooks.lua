@@ -127,7 +127,7 @@ function NC:SetUpHooks()
                     if FCFManager_GetNumDedicatedFrames(chatGroup, chatTarget) == 0 then
                         local chatFrame = FCF_OpenTemporaryWindow(chatGroup, chatTarget)
                         chatFrame:GetScript("OnEvent")(chatFrame, event, ...) --Re-fire the event for the frame.
-                    elseif GetCVar("conversationMode") == "popout_and_inline" and BCIsSelf(select(13, ...)) then
+                    elseif GetCVar("conversationMode") == "popout_and_inline" then
                         FCFManager_StopFlashOnDedicatedWindows(chatGroup, chatTarget)
                     end
                 end

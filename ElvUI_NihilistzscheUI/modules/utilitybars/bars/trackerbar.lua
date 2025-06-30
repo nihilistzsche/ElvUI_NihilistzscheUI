@@ -280,35 +280,6 @@ function TB:HookElvUIBags()
     end
 end
 
-function TB:HookCurrencyButtons()
-    local count = 0
-    for _, button in pairs(TokenFrame.ScrollBox.ScrollTarget) do
-        if
-            type(button) == "table"
-            and not button.isHeader
-            and button.RegisterForClicks
-            and not button.nui_utibar_hooked
-        then
-            button:RegisterForClicks("AnyUp", "AnyDown")
-            button:HookScript("OnDoubleClick", function(_, mouseButton)
-                if mouseButton == "LeftButton" then
-                    local offset = HybridScrollFrame_GetOffset(TokenFrameContainer)
-                    local _, isHeader = C_CurrencyInfo_GetCurrencyListInfo(i + offset)
-                    if not isHeader then
-                        local link = C_CurrencyInfo_GetCurrencyListLink(i + offset)
-                        local id = tonumber(string.match(link, "currency:(%d+)"))
-                        self:AddWatch(false, id)
-                    end
-                end
-                TokenFramePopup:Hide()
-            end)
-            button.nui_utibar_hooked = true
-            count = count + 1
-        end
-    end
-    return count
-end
-
 function TB:UpdateAndNotify(item, id, count)
     if not id then return end
     local table = item and "items" or "currency"
@@ -394,12 +365,6 @@ function TB:Initialize()
     self.hookedBags = {}
     self:HookElvUIBags()
     hooksecurefunc(B, "Layout", function() self:HookElvUIBags() end)
-
-    hooksecurefunc(_G.TokenFrame, "Update", function()
-        if GetNumberOfTokenFrameButtons() ~= self.hookedCurrency then
-            self.hookedCurrency = self:HookCurrencyButtons()
-        end
-    end)
 
     _G.SLASH_TBADD1 = "/tbadd"
     _G.SlashCmdList.TBADD = AddTrackWatch

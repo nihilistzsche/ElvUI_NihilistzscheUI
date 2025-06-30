@@ -5,9 +5,9 @@ if not E:IsAddOnEnabled("TotalRP3") then return end
 local RPSF = NUI.RPStyleFilter
 local NP = E.NamePlates
 
-local getProfile = TRP3_API.register.getUnitIDCurrentProfileSafe
-local getUnitID = TRP3_API.utils.str.getUnitID
-local getData = TRP3_API.profile.getData
+local getProfile = _G.TRP3_API.register.getUnitIDCurrentProfileSafe
+local getUnitID = _G.TRP3_API.utils.str.getUnitID
+local getData = _G.TRP3_API.profile.getData
 
 function RPSF.StyleFilterCustomCheck(frame, _, trigger)
     local passed = nil
@@ -46,8 +46,8 @@ function RPSF:Initialize()
     hooksecurefunc(NP, "StyleFilterConfigure", function() NP.StyleFilterTriggerEvents.FAKE_RPStyleFilterUpdate = 0 end)
     NP:StyleFilterConfigure()
     NP:StyleFilterAddCustomCheck("NihilistzscheUI_RPProfiles", self.StyleFilterCustomCheck)
-    local TRP3_Addon = TRP3_API.globals.addon
-    TRP3_API.RegisterCallback(
+    local TRP3_Addon = _G.TRP3_API.globals.addon
+    _G.TRP3_API.RegisterCallback(
         TRP3_Addon,
         TRP3_Addon.Events.REGISTER_DATA_UPDATED,
         function(_, unitID, profileID, dataType)

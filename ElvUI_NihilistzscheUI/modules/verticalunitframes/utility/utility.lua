@@ -295,7 +295,7 @@ function VUF:UpdateFrame(unit)
         end
 
         if COMP.DSI and (unit == "player" or unit == "target") then
-            local DSI = ElvUI_DynamicStatusIcons[1]
+            local DSI = _G.ElvUI_DynamicStatusIcons[1]
             DSI:Update_PlayerFrame(frame)
         end
     else
@@ -410,7 +410,7 @@ function VUF:ConstructStatusBar(frame, element, parent, name, t, noBG)
         local bg = sb:CreateTexture(nil, "BORDER")
         bg:SetInside(sb)
         bg:SetTexture(E.media.blankTex)
-        if element == "gcd" then bg:SetTexture(0.1, 0.1, 0.1) end
+        if element == "gcd" then bg:SetColorTexture(0.1, 0.1, 0.1) end
         bg:SetAlpha(0.2)
         bg.multiplier = 0.25
         sb.bg = bg

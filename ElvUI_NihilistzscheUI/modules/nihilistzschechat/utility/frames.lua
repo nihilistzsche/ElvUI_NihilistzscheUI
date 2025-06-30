@@ -71,7 +71,7 @@ function NC:CreateTab(chat)
     tab:Size(64, 24)
     tab:SetText(chat.tabName)
     tab:Show()
-    tab:SetScript("OnClick", function(self, button, down) NC:ClickTab(self, not self.shown) end)
+    tab:SetScript("OnClick", function(_self) NC:ClickTab(_self) end)
     local fs = tab:CreateFontString(nil, "OVERLAY")
     fs:FontTemplate()
     fs:Size(60, 24)
@@ -114,6 +114,7 @@ function NC:ClickTab(btn)
                 k.active = false
             end
         end
+        ES:UpdateShadows()
     end
 end
 
@@ -597,7 +598,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     else
         self:ShowTab(chat)
         self:UpdateTabs()
-        self:ClickTab(self.tabs[chat], true)
+        self:ClickTab(self.tabs[chat])
     end
 
     chat.target = chatTarget

@@ -101,7 +101,11 @@ local function UpdateMemory()
     end
 
     sort(memoryTable, function(a, b)
-        if a and b then return a[3] > b[3] end
+        if a and b then
+            return a[3] > b[3]
+        else
+            return false
+        end
     end)
 
     return totalMemory
@@ -119,7 +123,11 @@ local function UpdateCPU()
     end
 
     sort(cpuTable, function(a, b)
-        if a and b then return a[3] > b[3] end
+        if a and b then
+            return a[3] > b[3]
+        else
+            return false
+        end
     end)
 
     return totalCPU

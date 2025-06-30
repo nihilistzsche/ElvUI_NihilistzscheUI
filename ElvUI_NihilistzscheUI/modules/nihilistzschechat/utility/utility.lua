@@ -3,7 +3,7 @@ local NUI, E = _G.unpack((select(2, ...)))
 local CH = E.Chat
 local NC = NUI.NihilistzscheChat
 local LW = NUI.Libs.LibWho
-local COMP = NUI.Compatibility
+local ES = NUI.EnhancedShadows
 
 local CreateFrame = _G.CreateFrame
 local ChatTypeInfo = _G.ChatTypeInfo
@@ -128,7 +128,10 @@ setmetatable(NC.Clients, {
     __index = function(t, k) return rawget(t, k) or ("Unknown: %s"):format(k) end,
 })
 
-function NC:GetRaceTexture(race) return self.TexturePath .. string.format(self.CrestFormat, race) end
+function NC:GetRaceTexture(race)
+    if not race then return end
+    return self.TexturePath .. string.format(self.CrestFormat, race)
+end
 
 function NC:QueueWhoUpdate(sender)
     self.queuedWhoUpdates = self.queuedWhoUpdates or {}
@@ -176,6 +179,7 @@ function NC:SetInfoString(event, sender, guid)
     local tabName
     local hasInfo = true
     local isWoW, raceBackground = false, nil
+    local token
 
     local chatType, chatColor
     if event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" then
@@ -183,9 +187,11 @@ function NC:SetInfoString(event, sender, guid)
         chatColor = ChatTypeInfo[chatType]
         local id = BNet_GetBNetIDAccount(sender)
         local accountInfo = C_BattleNet_GetAccountInfoByID(id)
+        if not accountInfo then return end
         local gameAccountInfo = C_BattleNet_GetGameAccountInfoByID(accountInfo.gameAccountInfo.gameAccountID)
+        if not gameAccountInfo then return end
         if gameAccountInfo.clientProgram == "WoW" then
-            local token = self.maleClasses[gameAccountInfo.className]
+            token = self.maleClasses[gameAccountInfo.className]
             if not token then token = self.femaleClasses[gameAccountInfo.className] end
             local color = GetQuestDifficultyColor(gameAccountInfo.characterLevel)
             local levelColor = E:RGBToHex(color.r, color.g, color.b)
@@ -280,9 +286,10 @@ function NC:SetInfoString(event, sender, guid)
                 local color = level ~= "??" and GetQuestDifficultyColor(level) or GetQuestDifficultyColor(1)
                 local levelColor = E:RGBToHex(color.r, color.g, color.b)
 
-                local token = self.maleClasses[class]
+                token = self.maleClasses[class]
                 if not token then token = self.femaleClasses[class] end
                 classColor = NUI.ClassColor(false, token)
+                ES:SetOverrideShadowColor(chat, classColor)
                 classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
 
                 if realm ~= NC.myrealm then
@@ -326,8 +333,14 @@ function NC:SetInfoString(event, sender, guid)
     chat.Name:SetText(infoString)
     chat.DockedName:SetText(infoString)
     chat.Background:SetShown(isWoW)
-    chat.Background:SetTexture(raceBackground)
+    if raceBackground then chat.Background:SetTexture(raceBackground) end
+    if token then
+        chat._nc_wow_class = token
+    else
+        chat._nc_wow_class = nil
+    end
     NC:UpdateTab(chat, tabName)
+    ES:UpdateShadows()
 
     return true
 end
@@ -546,7 +559,7 @@ function NC:CopyChat(frame)
     if not _G.CopyChatFrame:IsShown() then
         _G.CopyChatFrame:Show()
         local lineCt = self:GetLines(frame)
-        local text = tconcat(copyLines, " \n", 1, lineCt)
+        local text = table.concat(copyLines, " \n", 1, lineCt)
         _G.CopyChatFrameEditBox:SetText(text)
     else
         _G.CopyChatFrame:Hide()

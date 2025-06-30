@@ -6,7 +6,7 @@ local NI = NUI.Installer
 local default_per_char_set = false
 function NI:InFlightSetup()
     if not default_per_char_set then
-        InFlight.db.profiles["Default"].perchar = true
+        _G.InFlight.db.profiles["Default"].perchar = true
         default_per_char_set = true
     end
     self:SetProfile(_G.InFlight.db, {

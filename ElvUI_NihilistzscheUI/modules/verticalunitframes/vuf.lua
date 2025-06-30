@@ -245,10 +245,10 @@ function VUF:Initialize()
     hooksecurefunc(E, "UpdateAll", function() self:UpdateAll() end)
     hooksecurefunc(UF, "Update_AllFrames", function() self:UpdateAllFrames() end)
     hooksecurefunc(UF, "CreateAndUpdateUF", function(_, unit) self:UpdateFrame(unit) end)
-    if CastingBarFrame then
-        CastingBarFrame:Hide()
-        CastingBarFrame.Show = function() end
-        CastingBarFrame.SetShown = function() end
+    if _G.CastingBarFrame then
+        _G.CastingBarFrame:Hide()
+        _G.CastingBarFrame.Show = function() end
+        _G.CastingBarFrame.SetShown = function() end
     end
 
     self:UpdateAll()

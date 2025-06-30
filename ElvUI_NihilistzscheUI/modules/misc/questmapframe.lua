@@ -14,6 +14,7 @@ function NM.UpdateQuestMapFrame()
     if COMP.QG or COMP.CQL then
         WorldMapFrame.SidePanelToggle.OpenButton:Hide()
         WorldMapFrame.SidePanelToggle.OpenButton.Show = function() end
+---@diagnostic disable-next-line: redundant-parameter
         WorldMapFrameTitleText:SetText("World Map")
         WorldMapFrameTitleText.SetText = function() end
     else

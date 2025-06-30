@@ -6,7 +6,7 @@ local NUB = NUI.UtilityBars
 
 local PT = NUI.Libs.PT
 
-local GetItemCount = _G.GetItemCount
+local C_Item_GetItemCount = _G.C_Item.GetItemCount
 local RegisterStateDriver = _G.RegisterStateDriver
 local CreateFrame = _G.CreateFrame
 
@@ -49,7 +49,7 @@ function TOTTB:UpdateBar(bar)
     local j = 1
 
     local function addButton(itemID)
-        local count = GetItemCount(itemID)
+        local count = C_Item_GetItemCount(itemID)
 
         if count > 0 then
             local button = bar.buttons[j]

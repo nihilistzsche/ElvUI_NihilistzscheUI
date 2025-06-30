@@ -162,7 +162,7 @@ if SLE then
     SLE.BuildGameMenu = function() end
 end
 
-function NUI:BuildGameMenu()
+--[[function NUI:BuildGameMenu()
     local button = {
         name = "GameMenu_NihilistzscheUIConfig",
         text = NUI.Title,
@@ -173,7 +173,7 @@ function NUI:BuildGameMenu()
     lib:UpdateHolder()
 
     if SLE then NUI.SLEBuildGameMenu(SLE) end
-end
+end]]
 
 function NUI.FixPetJournal()
     C_PetJournal_SetFilterChecked(LE_PET_JOURNAL_FILTER_COLLECTED, true)
@@ -237,7 +237,7 @@ function NUI:UpdateRegisteredDBs()
     local dbs = NUI.RegisteredDBs
 
     for tbl, path in pairs(dbs) do
-        self:UpdateRegisteredDB(tbl, path)
+        self.UpdateRegisteredDB(tbl, path)
     end
 end
 
@@ -349,6 +349,7 @@ end
 function NUI.GetMajorFactionInfo(factionID)
     if C_Reputation_IsMajorFaction(factionID) then
         local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+        if not majorFactionData then return false end
         local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
         local min, max = 0, majorFactionData.renownLevelThreshold
         local value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
@@ -372,7 +373,7 @@ function NUI.GetFactionValues()
         min, max, value = mmin, mmax, mvalue
     end
     local isFriend, _data = NUI.GetFriendshipInfo(factionID)
-    if isFriend and not isParagon then
+    if isFriend and _data and not isParagon then
         min, max, value = _data.reactionThreshold, _data.nextThreshold or true, _data.standing
     end
 

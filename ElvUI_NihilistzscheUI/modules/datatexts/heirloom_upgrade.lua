@@ -4,6 +4,12 @@ local DT = E.DataTexts
 if E.Classic then return end
 local HUDT = NUI.DataTexts.HeirloomUpgradeDataText
 
+local C_Item_GetItemInfo = _G.C_Item.GetItemInfo
+local C_Item_GetItemInfoInstant = _G.C_Item.GetItemInfoInstant
+local C_Heirloom_PlayerHasHeirloom = _G.C_Heirloom.PlayerHasHeirloom
+local C_Heirloom_GetHeirloomItemIDs = _G.C_Heirloom.GetHeirloomItemIDs
+local C_Heirloom_GetHeirloomInfo = _G.C_Heirloom.GetHeirloomInfo
+
 HUDT.HeirloomUpgradeCosts = {
     Armor = {
         [1] = 500,
@@ -71,7 +77,7 @@ end
 
 function HUDT:OnEvent(event, ...)
     -- Retrieve heirloom data
-    local heirloomItemIDs = C_Heirloom.GetHeirloomItemIDs()
+    local heirloomItemIDs = C_Heirloom_GetHeirloomItemIDs()
     E.global.nihilistzscheui.heirloomCache = E.global.nihilistzscheui.heirloomCache or {}
     local cache = E.global.nihilistzscheui.heirloomCache
     -- Reset heirloom data and total cost fields
@@ -82,11 +88,11 @@ function HUDT:OnEvent(event, ...)
     local lastUpgradeMaxLevel = tInvert(HUDT.UpgradeLevelByMaxLevel)[MAX_HEIRLOOM_UPGRADE]
     -- Iterate over heirlooms and store relevant information
     for _, heirloomItemID in ipairs(heirloomItemIDs) do
-        local name, _, _, _, upgradeLevel, _, _, _, _, maxLevel = C_Heirloom.GetHeirloomInfo(heirloomItemID)
-        local known = C_Heirloom.PlayerHasHeirloom(heirloomItemID)
+        local name, _, _, _, upgradeLevel, _, _, _, _, maxLevel = C_Heirloom_GetHeirloomInfo(heirloomItemID)
+        local known = C_Heirloom_PlayerHasHeirloom(heirloomItemID)
         if name and known and maxLevel ~= lastUpgradeMaxLevel then
             local currentUpgradeLevel = HUDT.UpgradeLevelByMaxLevel[maxLevel]
-            local itemType = select(6, GetItemInfo(heirloomItemID))
+            local itemType = select(6, C_Item_GetItemInfo(heirloomItemID))
 
             local cost = 0
             local costKey = itemType == "Weapon" and "Weapon" or "Armor"
@@ -143,7 +149,7 @@ function HUDT:OnClick()
             if cache.upgradesNeededByLevel[key][i] then
                 DEFAULT_CHAT_FRAME:AddMessage(
                     "|T"
-                        .. select(5, GetItemInfoInstant(HUDT.UpgradeItemIDs[key][i]))
+                        .. select(5, C_Item_GetItemInfoInstant(HUDT.UpgradeItemIDs[key][i]))
                         .. ":12:12|t"
                         .. HUDT.UpgradeItems[key][i]
                         .. ": "

@@ -27,12 +27,12 @@ function BB:CreateBar()
         { "CENTER", E.UIParent, "CENTER", 0, -280 },
         "Bait Bar"
     )
-    NUB.RegisterUpdateButtonHook(bar, function(button, ...) self.UpdateButtonHook(button, ...) end)
+    NUB.RegisterUpdateButtonHook(bar, function(button, ...) self.UpdateButtonHook(button) end)
 
     return bar
 end
 
-function BB.UpdateButtonHook(button) button.texture:SetDesaturated(GetItemCount(button.data) == 0) end
+function BB.UpdateButtonHook(button) button.texture:SetDesaturated(C_Item_GetItemCount(button.data) == 0) end
 
 local DRAENOR_MAP_ID = 572
 local BROKEN_ISLES_MAP_ID = 619

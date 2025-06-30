@@ -2,7 +2,7 @@ local MAJOR, MINOR = "LibElv-GameMenu-1.0", 1
 local lib, oldminor = LibStub:NewLibrary(MAJOR, MINOR)
 --GLOBALS: CreateFrame
 if not lib then return end
-local E = ElvUI[1]
+local E = _G.ElvUI[1]
 local S = E.Skins
 local _G = _G
 local tinsert = tinsert

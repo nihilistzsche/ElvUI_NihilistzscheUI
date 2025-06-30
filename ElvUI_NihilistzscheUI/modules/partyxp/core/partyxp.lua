@@ -1,3 +1,4 @@
+---@diagnostic disable: need-check-nil
 ---@class NUI
 local NUI, E = _G.unpack((select(2, ...)))
 local PXP = NUI.PartyXP
@@ -155,6 +156,7 @@ function PXP:Update()
                     local _, class = UnitClass("party" .. i)
                     if class then
                         local color = class == "PRIEST" and E.PriestColors or RAID_CLASS_COLORS[class]
+                        if not color then return end
                         bar:SetStatusBarColor(color.r, color.g, color.b)
                         bar.restedbar:SetStatusBarColor(color.r * 0.8, color.g * 0.8, color.b * 0.8, 0.2)
                     end
@@ -208,7 +210,7 @@ function PXP:CreateBar()
     bar.restedbar = restedbar
 
     local questbar = CreateFrame("StatusBar", nil, bar)
-    questbar:SetPoint("TOPLEFT", bar:GetStatusBarTexture("TOPRIGHT"))
+    questbar:SetPoint("TOPLEFT", bar, "TOPLEFT")
     questbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT")
     questbar:SetStatusBarTexture(LSM:Fetch("statusbar", self.db.texture))
     questbar:SetMinMaxValues(0, 1)

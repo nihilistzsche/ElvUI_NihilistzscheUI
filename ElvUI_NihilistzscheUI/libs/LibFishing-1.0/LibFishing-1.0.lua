@@ -31,10 +31,11 @@ local ipairs = ipairs
 local GetInventoryItemLink = GetInventoryItemLink
 local GetInventoryItemID = GetInventoryItemID
 local GetWeaponEnchantInfo = GetWeaponEnchantInfo
-local UnitBuff = UnitBuff
-local GetItemCooldown = GetItemCooldown
+local C_UnitAuras_GetAuraDataBySpellName = C_UnitAuras.GetAuraDataBySpellName
+local C_Item_GetItemCooldown = C_Item.GetItemCooldown
+local C_Item_GetItemCount = C_Item.GetItemCount
 local GetProfessions, GetProfessionInfo = GetProfessions, GetProfessionInfo
-local GetItemInfo = GetItemInfo
+local C_Item_GetItemInfo = C_Item.GetItemInfo
 local HasAction, IsAttackAction, GetActionTexture = HasAction, IsAttackAction, GetActionTexture
 
 local LureEffects = {
@@ -246,13 +247,14 @@ function FishLib:UpdateLureInventory()
     local b = 0
     for _, lure in ipairs(FISHINGLURES) do
         local id = lure.id
-        local count = GetItemCount(id)
+        local count = C_Item_GetItemCount(id)
         -- does this lure have to be "worn"
         if (count > 0) then
-            local startTime, _, _ = GetItemCooldown(id)
+            local startTime, _, _ = C_Item_GetItemCooldown(id)
             if (startTime == 0) then
                 -- get the name so we can check enchants
-                lure.n, _, _, _, _, _, _, _, _, _ = GetItemInfo(id)
+                local itemInfo = C_Item_GetItemInfo(id)
+                lure.n = itemInfo.name
                 if (lure.b > b or lure.w) then
                     b = lure.b
                     if (lure.u) then
@@ -276,7 +278,7 @@ end
 -- Deal with lures
 function FishLib:HasBuff(buffName)
     if (buffName) then
-        local name = UnitBuff("player", buffName)
+        local name = C_UnitAuras_GetAuraDataBySpellName("player", buffName, "HELPFUL")
         return name ~= nil
     end
     -- return nil
@@ -284,10 +286,10 @@ end
 
 local function UseThisLure(lure, b, enchant, skill, level)
     if (lure) then
-        local startTime, _, _ = GetItemCooldown(lure.id)
+        local cdInfo = C_Item_GetItemCooldown(lure.id)
         level = level or 0
         local bonus = lure.b or 0
-        if (startTime == 0 and (skill and level <= (skill + bonus)) and (bonus > enchant)) then
+        if (cdInfo.startTime == 0 and (skill and level <= (skill + bonus)) and (bonus > enchant)) then
             if (not b or bonus > b) then
                 return true, bonus
             end
@@ -297,6 +299,7 @@ local function UseThisLure(lure, b, enchant, skill, level)
     return false, 0
 end
 
+local LastUsed
 function FishLib:FindBestLure(b, state, usedrinks)
     local rank, modifier, _, enchant = self:GetCurrentSkill()
     local skill = rank + modifier
