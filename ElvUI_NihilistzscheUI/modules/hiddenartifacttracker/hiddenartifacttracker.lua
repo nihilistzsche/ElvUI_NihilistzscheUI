@@ -136,8 +136,6 @@ function HAT:UpdateBars()
             bar:SetMinMaxValues(0, info.needed)
             local count = 0
             for j = 1, info.criteriaCount do
-                print(info.achievementID)
-                print(j)
                 local n = select(4, GetAchievementCriteriaInfo(info.achievementID, j))
                 count = count + n
             end
@@ -169,7 +167,7 @@ function HAT:Initialize()
         label = "Dungeons",
         needed = 30,
         achievementID = 11152,
-        criteriaCount = 15,
+        criteriaCount = 1,
         color = { 0, 1, 0, 1 },
     }
 
