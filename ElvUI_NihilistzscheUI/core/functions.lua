@@ -373,7 +373,7 @@ function NUI.GetFactionValues()
     end
     local isFriend, _data = NUI.GetFriendshipInfo(factionID)
     if isFriend and not isParagon then
-        min, max, value = data.reactionThreshold, data.nextThreshold or true, data.standing
+        min, max, value = _data.reactionThreshold, _data.nextThreshold or true, _data.standing
     end
 
     return name, min, max, value, isParagon, isMajorFaction, isFriend
