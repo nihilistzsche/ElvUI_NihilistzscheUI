@@ -119,60 +119,6 @@ function REP:Update(bar)
     end
 end
 
-function REP:OnEnter()
-    REP.OrigOnEnter(DB.StatusBars.Reputation)
-    if DB.db.reputation.mouseover then E:UIFrameFadeIn(self, 0.4, self:GetAlpha(), 1) end
-    GameTooltip:ClearLines()
-    GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0, -4)
-
-    local name, reaction, min, max, value, factionID
-
-    local standing = _G["FACTION_STANDING_LABEL" .. reaction]
-    if C_Reputation_IsFactionParagon(factionID) then
-        local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
-        min, max = 0, threshold
-        value = currentValue % threshold
-        if hasRewardPending then value = value + threshold end
-        standing = "Paragon"
-    end
-
-    if C_Reputation_IsMajorFaction(factionID) then
-        local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
-        local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
-        if not majorFactionData then return end
-        min, max = 0, majorFactionData.renownLevelThreshold
-        value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
-        standing = RENOWN_LEVEL_LABEL .. majorFactionData.renownLevel
-    end
-
-    local data = C_GossipInfo_GetFriendshipReputation(factionID)
-    local friendID, friendTextLevel = data.friendshipFactionID, data.text
-
-    if name then
-        GameTooltip:AddLine(name)
-        GameTooltip:AddLine(" ")
-
-        GameTooltip:AddDoubleLine(STANDING .. ":", friendID ~= 0 and friendTextLevel or standing, 1, 1, 1)
-        GameTooltip:AddDoubleLine(
-            REPUTATION .. ":",
-            format(
-                "%d / %d (%d%%)",
-                value - min,
-                max - min,
-                (value - min) / ((max - min == 0) and max or (max - min)) * 100
-            ),
-            1,
-            1,
-            1
-        )
-    end
-    GameTooltip:Show()
-end
-
-function REP:Initialize()
-    self:GetParent():CreateAnimatedBar(self, "Reputation")
-    self.OrigOnEnter = DB.ReputationBar_OnEnter
-    function DB:ReputationBar_OnEnter() REP:OnEnter() end
-end
+function REP:Initialize() self:GetParent():CreateAnimatedBar(self, "Reputation") end
 
 ADB:RegisterDataBar(REP)
