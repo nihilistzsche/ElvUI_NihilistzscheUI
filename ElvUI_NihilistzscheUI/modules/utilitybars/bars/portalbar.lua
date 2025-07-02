@@ -214,11 +214,11 @@ function PRB:Initialize()
     local frame = CreateFrame("Frame", "NihilistzscheUI_PortalBarController")
     frame:RegisterEvent("SPELLS_CHANGED")
     frame:RegisterEvent("BAG_UPDATE")
-    frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
     frame:RegisterEvent("SPELL_UPDATE_ICON")
     NUB:RegisterEventHandler(self, frame)
 
     local bar = self:CreateBar()
+    bar.frame = frame
     self.bar = bar
     self.hooks = {}
 

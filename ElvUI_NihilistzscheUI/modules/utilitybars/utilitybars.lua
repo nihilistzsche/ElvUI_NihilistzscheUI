@@ -219,11 +219,8 @@ local itemClosureData = {}
 local itemClosures = {}
 
 local function CreateOrGetItemClosure(id, bar, button, args)
-    itemClosureData[id] = { bar, button, args }
     if itemClosures[id] then return itemClosures[id] end
     local func = function()
-        if not itemClosureData[id] then return end
-        local _bar, _button, _args = unpack(itemClosureData[id])
         local itemName, _, _, _, _, _, _, _, _, texture = C_Item_GetItemInfo(id)
         local count = C_Item_GetItemCount(id)
         button:SetAttribute("type", "item")
@@ -238,11 +235,18 @@ local function CreateOrGetItemClosure(id, bar, button, args)
             itemNaem = itemName,
             texture = texture,
         }
-        GenericButtonUpdate(_bar, _button, unpack(_args))
+        NUB.waitingOnItemInfo[bar] = (NUB.waitingOnItemInfo[bar] or 0) - 1
+        if NUB.waitingOnItemInfo[bar] <= 0 then
+            NUB.waitingOnItemInfo[bar] = 0
+            bar.frame:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
+        end
+        GenericButtonUpdate(bar, button, unpack(args))
     end
     itemClosures[id] = func
     return func
 end
+
+NUB.waitingOnItemInfo = {}
 
 function NUB.UpdateButtonAsItem(bar, button, id, ...)
     button.data = id
@@ -261,6 +265,8 @@ function NUB.UpdateButtonAsItem(bar, button, id, ...)
         GenericButtonUpdate(bar, button, unpack(args))
     else
         Item:CreateFromItemID(id):ContinueOnItemLoad(CreateOrGetItemClosure(id, bar, button, args))
+        NUB.waitingOnItemInfo[bar] = (NUB.waitingOnItemInfo[bar] or 0) + 1
+        bar.frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
     end
 end
 
@@ -269,11 +275,9 @@ local spellClosureData = {}
 local spellClosures = {}
 
 local function CreateOrGetSpellClosure(id, bar, button, args)
-    spellClosureData[id] = { bar, button, args }
     if spellClosures[id] then return spellClosures[id] end
     local func = function()
         if not spellClosureData[id] then return end
-        local _bar, _button, _args = unpack(spellClosureData[id])
         local name = C_Spell_GetSpellName(id)
         button:SetAttribute("type", "spell")
         button:SetAttribute("spell", name)
@@ -287,7 +291,7 @@ local function CreateOrGetSpellClosure(id, bar, button, args)
             spellName = name,
             spellTexture = spellTexture,
         }
-        GenericButtonUpdate(_bar, _button, unpack(_args))
+        GenericButtonUpdate(bar, button, unpack(args))
     end
     spellClosures[id] = func
     return func
@@ -342,9 +346,10 @@ function NUB.AddAltoholicCurrencyInfo(id)
     if not id then return end
     local DataStore = _G.DataStore
     local Altoholic = _G.Altoholic
-    if not DataStore or not Altoholic then return end
+    local AddonFactory = _G.AddonFactory
+    if not DataStore or not Altoholic or not AddonFactory then return end
 
-    local colors = Altoholic.Colors
+    local colors = AddonFactory.Colors
     local currency = C_CurrencyInfo_GetCurrencyInfo(id)
     if not currency then return end
 

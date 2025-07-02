@@ -268,10 +268,10 @@ function RPB:Initialize()
     local frame = CreateFrame("Frame", "NihilistzscheUI_RaidPrepBarController")
     frame:RegisterEvent("BAG_UPDATE")
     frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
     NUB:RegisterEventHandler(self, frame)
 
     local bar = self:CreateBar()
+    bar.frame = frame
     self.bar = bar
     self.hooks = {}
 

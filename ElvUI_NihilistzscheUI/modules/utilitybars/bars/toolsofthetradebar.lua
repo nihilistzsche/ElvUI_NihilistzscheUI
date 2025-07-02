@@ -92,13 +92,13 @@ function TOTTB:Initialize()
     local frame = CreateFrame("Frame", "NihilistzscheUI_ToolsOfTheTradeController")
     frame:RegisterEvent("BAG_UPDATE")
     frame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
-    frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
     frame:RegisterEvent("PLAYER_ENTERING_WORLD")
     NUB:RegisterEventHandler(self, frame)
 
     NUB:InjectScripts(self)
 
     local bar = self:CreateBar()
+    bar.frame = frame
     bar.doNotHideInCombat = true
     self.bar = bar
     self:UpdateBar(bar)

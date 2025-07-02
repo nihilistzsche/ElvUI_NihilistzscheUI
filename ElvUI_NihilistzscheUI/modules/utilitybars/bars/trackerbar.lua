@@ -356,7 +356,7 @@ function TB:Initialize()
     NUB:RegisterEventHandler(self, frame)
 
     local bar = self:CreateBar()
-
+    bar.frame = frame
     self.bar = bar
     self.hooks = {}
 
