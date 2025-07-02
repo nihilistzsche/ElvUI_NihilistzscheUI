@@ -34,12 +34,10 @@ function BRC.UpdateReputation(button, elementData)
     local factionInfo = C_Reputation_GetFactionDataByID(factionID)
     if not factionInfo then return end
     local reaction = factionInfo.reaction
-    local friendshipInfo = C_GossipInfo_GetFriendshipReputation(factionID)
-    if friendshipInfo.friendshipFactionID > 0 then reaction = friendshipInfo.standing end
     if not COMP.PR or not C_Reputation_IsFactionParagon(factionID) then
         local color = DB.db.colors.factionColors[reaction]
         if not color then
-            print("No color found for reaction " .. reaction)
+            print("No color found for reaction " .. reaction .. " for faction with ID " .. factionID)
             return
         end
         bar:SetStatusBarColor(color.r, color.g, color.b)

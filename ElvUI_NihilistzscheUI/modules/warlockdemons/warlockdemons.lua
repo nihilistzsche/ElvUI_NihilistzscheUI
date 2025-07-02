@@ -465,6 +465,7 @@ function WD:Initialize()
         Overlord = { icon = C_Spell_GetSpellTexture(428524), priority = 1, optionsOrder = 30 },
         Gloomhound = { icon = C_Spell_GetSpellTexture(455465), priority = 10, optionsOrder = 31 },
         Charhound = { icon = C_Spell_GetSpellTexture(455476), priority = 10, optionsOrder = 32 },
+        Doomguard = { icon = C_Spell_GetSpellTexture(18540), priority = 11, optionsOrder = 33 },
     }
 
     self.header = self:CreateHeader()

@@ -243,7 +243,8 @@ end
 
 function NUI:UpdateAll()
     self:UpdateRegisteredDBs()
-    for _, module in self:IterateModules() do
+    for _, moduleName in next, self.RegisteredModules do
+        local module = NUI:GetModule(moduleName)
         if module.ForUpdateAll then module:ForUpdateAll() end
     end
 end

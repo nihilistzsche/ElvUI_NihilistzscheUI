@@ -1608,6 +1608,7 @@ NP.warlockdemons = {
         Overlord = { enable = true },
         Gloomhound = { enable = true },
         Charhound = { enable = true },
+        Doomguard = { enable = true },
     },
 }
 
@@ -1622,6 +1623,10 @@ NP.databarnotifier = {
 -- Custom DataBar
 P.databars.experience.tag =
     "[name] Lvl [xp:level] XP: [xp:current]/[xp:max] ([xp:percent]) [xp:rested] Rested ([xp:quest] Quest) [xp:levelup?]"
+P.databars.experience.noRestedTag =
+    "[name] Lvl [xp:level] XP: [xp:current]/[xp:max] ([xp:percent]) ([xp:quest] Quest) [xp:levelup?]"
+P.databars.experience.noQuestTag = "[name] Lvl [xp:level] XP: [xp:current]/[xp:max] ([xp:percent]) [xp:rested] Rested"
+P.databars.experience.noQuestNoRestedTag = "[name] Lvl [xp:level] XP: [xp:current]/[xp:max] ([xp:percent])"
 P.databars.reputation.tag = "[rep:name][rep:account-wide]: [rep:standing] ([rep:current-max-percent])"
 P.databars.azerite.tag =
     "[azerite:name] Level: [azerite:level] (XP: [azerite:current] / [azerite:max], [azerite:percent])"

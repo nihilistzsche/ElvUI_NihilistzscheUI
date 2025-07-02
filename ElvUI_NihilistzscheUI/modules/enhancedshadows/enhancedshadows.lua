@@ -309,8 +309,9 @@ function ES:CheckShadowColor()
     return not not color
 end
 
-function ES:UpdateShadow(shadow, hide)
-    local ShadowColor = self.db.shadowcolor
+function ES:UpdateShadow(shadow, hide, overrideColor)
+    if shadow.__nui_locked then return end
+    local ShadowColor = overrideColor or self.db.shadowcolor
 
     local r, g, b = ShadowColor.r, ShadowColor.g, ShadowColor.b
 
