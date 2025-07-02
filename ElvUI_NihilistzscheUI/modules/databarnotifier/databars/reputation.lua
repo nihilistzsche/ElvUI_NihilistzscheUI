@@ -203,7 +203,7 @@ function REP:Notify()
                             skipMessage = true
                         elseif isMajorFaction then
                             newstandingtext =
-                                self:GenText({ "New standing with", name, "is", RENOWN_LEVEL_LABEL .. standingID })
+                                self:GenText({ "New standing with", name, "is", RENOWN_LEVEL_LABEL:format(standingID) })
                         else
                             if isParagon then newfaction = "Paragon" end
                             newstandingtext = self:GenText({ "New standing with", name, "is", newfaction })
@@ -218,7 +218,7 @@ function REP:Notify()
                         if friendID and friendID ~= 0 then
                             nextstanding = ("next rank (current rank: %s)"):format(friendRep)
                         elseif isMajorFaction then
-                            nextstanding = RENOWN_LEVEL_LABEL .. standingID + 1
+                            nextstanding = RENOWN_LEVEL_LABEL:format(standingID + 1)
                         else
                             if standingID < standingmax then
                                 nextstanding = _G["FACTION_STANDING_LABEL" .. standingID + 1]
@@ -234,7 +234,7 @@ function REP:Notify()
                         if friendID and friendID ~= 0 then
                             nextstanding = ("next rank (current rank: %s)"):format(friendRep)
                         elseif isMajorFaction then
-                            nextstanding = RENOWN_LEVEL_LABEL .. standingID - 1
+                            nextstanding = RENOWN_LEVEL_LABEL:format(standingID - 1)
                         else
                             if standingID > standingmin then
                                 nextstanding = _G["FACTION_STANDING_LABEL" .. standingID - 1]
