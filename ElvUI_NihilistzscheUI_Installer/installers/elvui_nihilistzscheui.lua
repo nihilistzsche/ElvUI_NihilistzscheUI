@@ -395,7 +395,7 @@ function NI:NihilistzscheUISetup(isSpec)
         else
             self:EPRV().nihilistzscheui.mounts = self:EPRV().nihilistzscheui.mounts or {}
         end
-        self:EPRV().nihilistzscheui.mounts.favAlt = 460
+        self:EPRV().nihilistzscheui.mounts.favAlt = 2237
         if self.ClassMountSkyridingFavorite[self.currentClass] then
             self:EPRV().nihilistzscheui.mounts.favSkyridingMount = self.ClassMountSkyridingFavorite[self.currentClass]
         else
