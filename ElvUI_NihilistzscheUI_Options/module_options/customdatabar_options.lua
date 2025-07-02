@@ -9,14 +9,49 @@ function CDB:GenerateOptions()
         width = "full",
         name = L["Text Format"],
         desc = L.TEXT_FORMAT_DESC,
-        order = 4,
+        order = 10,
         get = function() return E.db.databars.experience.tag end,
         set = function(_, value)
             E.db.databars.experience.tag = value
             self:UpdateTag("experience")
         end,
     }
-
+    E.Options.args.databars.args.experience.args.noRestedTag = {
+        type = "input",
+        width = "full",
+        name = L["Text Format"] .. " (No Rested XP)",
+        desc = L.TEXT_FORMAT_DESC,
+        order = 11,
+        get = function() return E.db.databars.experience.noRestedTag end,
+        set = function(_, value)
+            E.db.databars.experience.noRestedTag = value
+            self:UpdateTag("experience")
+        end,
+    }
+    E.Options.args.databars.args.experience.args.noQuestTag = {
+        type = "input",
+        width = "full",
+        name = L["Text Format"] .. " (No Quest XP)",
+        desc = L.TEXT_FORMAT_DESC,
+        order = 12,
+        get = function() return E.db.databars.experience.noQuestTag end,
+        set = function(_, value)
+            E.db.databars.experience.noQuestTag = value
+            self:UpdateTag("experience")
+        end,
+    }
+    E.Options.args.databars.args.experience.args.noQuestNoRestedTag = {
+        type = "input",
+        width = "full",
+        name = L["Text Format"] .. " (No Quest XP or Rested XP)",
+        desc = L.TEXT_FORMAT_DESC,
+        order = 13,
+        get = function() return E.db.databars.experience.noQuestNoRestedTag end,
+        set = function(_, value)
+            E.db.databars.experience.noQuestNoRestedTag = value
+            self:UpdateTag("experience")
+        end,
+    }
     E.Options.args.databars.args.reputation.args.textFormat = nil
     E.Options.args.databars.args.reputation.args.tag = {
         type = "input",

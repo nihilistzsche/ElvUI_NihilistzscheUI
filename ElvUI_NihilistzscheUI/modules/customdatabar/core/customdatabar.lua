@@ -86,7 +86,19 @@ function CDB:RegisterDataBar(key, frame)
     NT:RegisterFontString(key, frame.text)
 end
 
-function CDB:UpdateTag(frameKey) NT:Tag(frameKey, E.db.databars[frameKey].tag) end
+CDB.CustomTagFuncs = {}
+
+function CDB:RegisterCustomTagFunction(frameKey, tagFunc) self.CustomTagFuncs[frameKey] = tagFunc end
+
+function CDB:UpdateTag(frameKey)
+    local tag
+    if self.CustomTagFuncs[frameKey] then
+        tag = self.CustomTagFuncs[frameKey]()
+    else
+        tag = E.db.databars[frameKey].tag
+    end
+    NT:Tag(frameKey, tag)
+end
 
 function CDB:Initialize()
     CDB.currQexperience = NUI:GetCurrentQuestXP()
@@ -97,6 +109,7 @@ function CDB:Initialize()
     self.RegisterRepTags()
 
     self:RegisterDataBar("experience", DB.StatusBars.Experience)
+    
     self:RegisterDataBar("reputation", DB.StatusBars.Reputation)
 
     self:UpdateTag("experience")
