@@ -114,13 +114,17 @@ function NC:ClickTab(btn)
                 k.active = false
             end
         end
-        ES:UpdateShadows()
+        ES:UpdateShadow(btn.shadow, false, btn.classColor)
+        ES:UpdateShadow(self.tabFrame, false, btn.classColor)
     end
 end
 
-function NC:UpdateTab(chat, text)
+function NC:UpdateTab(chat, text, classColor)
     if not self.tabs[chat] then return end
     self.tabs[chat].text:SetText(text)
+    self.tabs[chat].classColor = classColor
+    ES:UpdateShadow(self.tabs[chat].shadow, false, classColor)
+    ES:UpdateShadow(self.tabFrame.shadow, false, classColor)
 end
 
 function NC:UpdateTabs()

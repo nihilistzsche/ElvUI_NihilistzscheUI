@@ -179,7 +179,7 @@ function NC:SetInfoString(event, sender, guid)
     local tabName
     local hasInfo = true
     local isWoW, raceBackground = false, nil
-    local token
+    local classColor, classColorHex
 
     local chatType, chatColor
     if event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" then
@@ -191,14 +191,14 @@ function NC:SetInfoString(event, sender, guid)
         local gameAccountInfo = C_BattleNet_GetGameAccountInfoByID(accountInfo.gameAccountInfo.gameAccountID)
         if not gameAccountInfo then return end
         if gameAccountInfo.clientProgram == "WoW" then
-            token = self.maleClasses[gameAccountInfo.className]
+            local token = self.maleClasses[gameAccountInfo.className]
             if not token then token = self.femaleClasses[gameAccountInfo.className] end
             local color = GetQuestDifficultyColor(gameAccountInfo.characterLevel)
             local levelColor = E:RGBToHex(color.r, color.g, color.b)
-            local classColor = NUI.ClassColor(false, token)
-            classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
-            tabName = classColor .. accountInfo.accountName .. "|r"
-            infoString = classColor
+            classColor = NUI.ClassColor(false, token)
+            classColorHex = E:RGBToHex(classColor.r, classColor.g, classColor.b)
+            tabName = classColorHex .. accountInfo.accountName .. "|r"
+            infoString = classColorHex
                 .. accountInfo.accountName
                 .. " "
                 .. gameAccountInfo.characterName
@@ -208,12 +208,12 @@ function NC:SetInfoString(event, sender, guid)
                 .. "|r  "
                 .. gameAccountInfo.raceName
                 .. " "
-                .. classColor
+                .. classColorHex
                 .. gameAccountInfo.className
                 .. "|r) "
             isWoW = true
             raceBackground = self:GetRaceTexture(self.raceMap[gameAccountInfo.raceName])
-            self.senderInfo[sender] = { classColor = classColor, toonName = gameAccountInfo.characterName }
+            self.senderInfo[sender] = { classColor = classColorHex, toonName = gameAccountInfo.characterName }
         elseif gameAccountInfo.clientProgram then
             local fixedClient = NC.Clients[gameAccountInfo.clientProgram]
             tabName = accountInfo.accountName
@@ -280,20 +280,18 @@ function NC:SetInfoString(event, sender, guid)
             name = self.userCache[sender].name
             isWoW = true
             raceBackground = self:GetRaceTexture(self.raceMap[race])
-            local classColor
 
             if level ~= UNKNOWN then
                 local color = level ~= "??" and GetQuestDifficultyColor(level) or GetQuestDifficultyColor(1)
                 local levelColor = E:RGBToHex(color.r, color.g, color.b)
 
-                token = self.maleClasses[class]
+                local token = self.maleClasses[class]
                 if not token then token = self.femaleClasses[class] end
                 classColor = NUI.ClassColor(false, token)
-                ES:SetOverrideShadowColor(chat, classColor)
-                classColor = E:RGBToHex(classColor.r, classColor.g, classColor.b)
+                classColorHex = E:RGBToHex(classColor.r, classColor.g, classColor.b)
 
                 if realm ~= NC.myrealm then
-                    infoString = classColor
+                    infoString = classColorHex
                         .. name
                         .. "|r ("
                         .. levelColor
@@ -301,12 +299,12 @@ function NC:SetInfoString(event, sender, guid)
                         .. "|r "
                         .. race
                         .. " "
-                        .. classColor
+                        .. classColorHex
                         .. class
                         .. "|r) "
                         .. realm
                 else
-                    infoString = classColor
+                    infoString = classColorHex
                         .. name
                         .. "|r ("
                         .. levelColor
@@ -314,19 +312,19 @@ function NC:SetInfoString(event, sender, guid)
                         .. "|r  "
                         .. race
                         .. " "
-                        .. classColor
+                        .. classColorHex
                         .. class
                         .. "|r)"
                 end
-                tabName = classColor .. name .. "|r"
+                tabName = classColorHex .. name .. "|r"
             else
-                classColor = E:RGBToHex(1.0, 1.0, 1.0)
+                classColorHex = E:RGBToHex(1.0, 1.0, 1.0)
                 tabName = name
                 infoString = name
             end
 
-            self.senderInfo[sender] = { classColor = classColor, toonName = name }
-            chat.hex = classColor
+            self.senderInfo[sender] = { classColor = classColorHex, toonName = name }
+            chat.hex = classColorHex
         end
     end
 
@@ -334,13 +332,8 @@ function NC:SetInfoString(event, sender, guid)
     chat.DockedName:SetText(infoString)
     chat.Background:SetShown(isWoW)
     if raceBackground then chat.Background:SetTexture(raceBackground) end
-    if token then
-        chat._nc_wow_class = token
-    else
-        chat._nc_wow_class = nil
-    end
-    NC:UpdateTab(chat, tabName)
-    ES:UpdateShadows()
+
+    NC:UpdateTab(chat, tabName, isWoW and classColor)
 
     return true
 end
