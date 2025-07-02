@@ -11,7 +11,11 @@ local GetXPExhaustion = _G.GetXPExhaustion
 -- luacheck: no max line length
 
 function CDB.RegisterExperienceTags()
-    
+    NT:RegisterTag("xp:current", function()
+        local cur = UnitXP("player")
+
+        return CDB:GetFormattedText("CURRENT", cur, cur)
+    end, "PLAYER_XP_UPDATE")
 
     NT:RegisterTag("xp:max", function()
         local _, max = UnitXP("player"), UnitXPMax("player")
