@@ -14,8 +14,8 @@ local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
 local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
 local C_GossipInfo_GetFriendshipReputationRanks = _G.C_GossipInfo.GetFriendshipReputationRanks
-local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
-local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
+local C_MajorFactions_GetMajorFactionData = E.Retail and _G.C_MajorFactions.GetMajorFactionData
+local C_MajorFactions_HasMaximumRenown = E.Retail and _G.C_MajorFactions.HasMaximumRenown
 
 local FACTION_BAR_COLORS = _G.FACTION_BAR_COLORS
 local RENOWN_LEVEL_LABEL = _G.RENOWN_LEVEL_LABEL
@@ -69,7 +69,7 @@ function REP:ScanFactions()
             local factionID = factionData.factionID
             local hasParagonReward = false
             local isParagon = C_Reputation_IsFactionParagon(factionID)
-            local isMajorFaction = C_Reputation_IsMajorFaction(factionID)
+            local isMajorFaction = E.Retail and C_Reputation_IsMajorFaction(factionID)
             local friendData = C_GossipInfo_GetFriendshipReputation(factionID)
             local isFriend = friendData and friendData.friendshipFactionID ~= 0
             if isParagon then

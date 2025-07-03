@@ -20,9 +20,9 @@ local STANDING = _G.STANDING
 local REPUTATION = _G.REPUTATION
 local format = _G.format
 local xpcall = _G.xpcall
-local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
-local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
-local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
+local C_Reputation_IsMajorFaction = E.Retail and _G.C_Reputation.IsMajorFaction
+local C_MajorFactions_GetMajorFactionData = E.Retail and _G.C_MajorFactions.GetMajorFactionData
+local C_MajorFactions_HasMaximumRenown = E.Retail and _G.C_MajorFactions.HasMaximumRenown
 local BLUE_FONT_COLOR = _G.BLUE_FONT_COLOR
 local RENOWN_LEVEL_LABEL = _G.RENOWN_LEVEL_LABEL
 
@@ -43,23 +43,25 @@ function REP:Update(bar)
     local isParagon = false
     local showReward = false
     local isMajorFaction = false
-    if C_Reputation_IsFactionParagon(factionID) then
-        local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
-        min, max = 0, threshold
-        value = currentValue % threshold
-        if hasRewardPending then
-            value = value + threshold
-            showReward = true
+    if E.Retail then
+        if C_Reputation_IsFactionParagon(factionID) then
+            local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
+            min, max = 0, threshold
+            value = currentValue % threshold
+            if hasRewardPending then
+                value = value + threshold
+                showReward = true
+            end
+            isParagon = true
         end
-        isParagon = true
-    end
-    if C_Reputation_IsMajorFaction(factionID) then
-        local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
-        local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
-        if not majorFactionData then return end
-        min, max = 0, majorFactionData.renownLevelThreshold
-        value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
-        isMajorFaction = true
+        if C_Reputation_IsMajorFaction(factionID) then
+            local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+            local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+            if not majorFactionData then return end
+            min, max = 0, majorFactionData.renownLevelThreshold
+            value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
+            isMajorFaction = true
+        end
     end
     local numFactions = GetNumFactions()
 

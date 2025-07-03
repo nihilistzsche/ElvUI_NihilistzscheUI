@@ -1,5 +1,5 @@
 local NUI, E, _, _, P = unpack((select(2, ...)))
-if not E.Retail then return end
+if E.Classic then return end
 local DT = E.DataTexts
 local PBCDT = NUI.DataTexts.PetBattleChallengeDataText
 local COMP = NUI.Compatibility

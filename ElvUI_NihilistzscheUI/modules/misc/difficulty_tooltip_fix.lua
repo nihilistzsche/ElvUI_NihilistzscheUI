@@ -31,6 +31,8 @@ function DTF.OnEnter()
     DT.tooltip:Show()
 end
 
-function DTF:Initialize() DT.RegisteredDataTexts["Difficulty"].onEnter = DTF.OnEnter end
+function DTF:Initialize()
+    if DT.RegisteredDataTexts["Difficulty"] then DT.RegisteredDataTexts["Difficulty"].onEnter = DTF.OnEnter end
+end
 
 NUI:RegisterModule(DTF:GetName())
