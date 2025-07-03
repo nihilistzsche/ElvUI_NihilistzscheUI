@@ -52,19 +52,6 @@ function VUF.CreateScreenFlash()
     f:SetAlpha(0)
 end
 
-function VUF:PortraitWorkaround()
-    hooksecurefunc(E, "UIFrameFadeIn", function(_, frame)
-        if not VUF.db.hideOOC then return end
-        if frame.__nui__needsVUFPortraitFix then frame.Portrait:SetAlpha(math.min(VUF.db.alpha, 0.35)) end
-    end)
-    hooksecurefunc(E, "UIFrameFadeOut", function(_, frame)
-        if not VUF.db.hideOOC then return end
-        if frame.__nui__needsVUFPortraitFix then frame.Portrait:SetAlpha(VUF.db.alphaOOC) end
-    end)
-end
-
-function VUF:ActivateFrame(frame) E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha) end
-
 local portraitFixClosures = {}
 local function GetPortraitFixClosure(frame)
     if portraitFixClosures[frame] then return portraitFixClosures[frame] end
@@ -73,9 +60,17 @@ local function GetPortraitFixClosure(frame)
     return portraitFix
 end
 
+function VUF:ActivateFrame(frame)
+    E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha)
+    if frame.Portrait then frame.Portrait:SetAlpha(math.min(self.db.alpha, 0.35)) end
+end
+
 function VUF:DeactivateFrame(frame)
     E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC)
-    if frame.Portrait then C_Timer.After(1, GetPortraitFixClosure(frame)) end
+    if frame.Portrait then
+        frame.Portrait:SetAlpha(self.db.alphaOOC)
+        C_Timer.After(0.2, GetPortraitFixClosure(frame))
+    end
 end
 
 function VUF:UpdateHideSetting()
@@ -212,7 +207,6 @@ function VUF:Initialize()
     local ForUpdateAll = function(_self) _self:UpdateAll() end
     self.ForUpdateAll = ForUpdateAll
 
-    self:PortraitWorkaround()
     self.CreateWarningFrame()
     self.CreateScreenFlash()
 

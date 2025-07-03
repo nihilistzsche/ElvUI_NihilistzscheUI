@@ -214,7 +214,6 @@ function VUF:ConstructVerticalUnitFrame(frame, unit)
         end
     end)
 
-    frame.__nui__needsVUFPortraitFix = true
     frame.menu = UF.SpawnMenu
     frame.db = UF.db.units[unit]
     frame.unitframeType = unit
