@@ -233,8 +233,25 @@ function VUF:UpdateClassBar(frame, element)
         else
             if E.myclass == "MONK" then
                 frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors.ClassBars[E.myclass][i]))
-            elseif E.myclass == "PALADIN" or E.myclass == "MAGE" or E.myclass == "WARLOCK" then
+            elseif E.myclass == "MAGE" or E.myclass == "PALADIN" then
                 frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors.ClassBars[E.myclass]))
+            elseif E.myclass == "WARLOCK" then
+                local powerKey, burningEmbers
+                if E.Mists then
+                    local spec = E.myspec
+
+                    powerKey = spec == SPEC_WARLOCK_DEMONOLOGY and "DEMONIC_FURY"
+                        or spec == SPEC_WARLOCK_DESTRUCTION and "BURNING_EMBERS"
+                        or "SOUL_SHARDS"
+                    burningEmbers = SPEC_WARLOCK_DESTRUCTION
+                else
+                    powerKey = "SOUL_SHARDS"
+                end
+                if burningEmbers then
+                    frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors.ClassBars[E.myclass][powerKey][i]))
+                else
+                    frame[e][i]:SetStatusBarColor(unpack(ElvUF.colors.ClassBars[E.myclass][powerKey]))
+                end
             elseif E.myclass == "ROGUE" or E.myclass == "DRUID" then
                 local r1, g1, b1 = unpack(ElvUF.colors.ComboPoints[1])
                 local r2, g2, b2 = unpack(ElvUF.colors.ComboPoints[2])
