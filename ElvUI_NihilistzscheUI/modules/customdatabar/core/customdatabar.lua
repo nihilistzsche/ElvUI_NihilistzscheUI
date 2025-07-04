@@ -101,8 +101,6 @@ function CDB:UpdateTag(frameKey)
 end
 
 function CDB:Initialize()
-    CDB.currQexperience = NUI:GetCurrentQuestXP()
-
     NT:RegisterTag("name", function() return UnitName("player") end)
 
     self.RegisterExperienceTags()

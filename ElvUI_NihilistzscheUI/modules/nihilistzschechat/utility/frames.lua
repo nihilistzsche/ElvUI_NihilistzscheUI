@@ -287,6 +287,8 @@ function NC:OnEnterPressed(editBox) -- Add messages to the text
     editBox.Backdrop:SetBackdropBorderColor(0, 0, 0)
     editBox.Backdrop:Hide()
 
+    NC:ProcessQueuedWhoRequests()
+
     if message == "" or message == " " then
         ChatEdit_DeactivateChat(editBox)
         ChatEdit_ActivateChat(self:GetDefaultEditBox())

@@ -1,4 +1,4 @@
-## Interface: 110107
+## Interface: 110107, 50500, 11507
 ## Title: |cff1784d1ElvUI|r |cffffffffNihilistzsche|cffff2020UI|r |cff1784d1Options|r
 ## IconTexture: Interface\AddOns\ElvUI_NihilistzscheUI\media\textures\nihilistzscheui_logo
 ## Author: Nihilistzsche

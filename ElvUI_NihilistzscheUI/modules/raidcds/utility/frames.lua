@@ -1,5 +1,6 @@
 ---@class NUI
 local NUI, E = _G.unpack((select(2, ...)))
+if not E.Retail then return end
 local RCD = NUI.RaidCDs
 local LSM = E.Libs.LSM
 local CandyBar = NUI.Libs.CandyBar

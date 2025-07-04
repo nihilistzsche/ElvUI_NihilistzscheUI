@@ -3,9 +3,9 @@ local NUI = _G.unpack((select(2, ...)))
 local CB = NUI.CooldownBar
 
 local wipe = _G.wipe
-local Enum_SpellBookSpellBank_Player = Enum.SpellBookSpellBank.Player
-local Enum_SpellBookSpellBank_Pet = Enum.SpellBookSpellBank.Pet
-local C_SpellBook_GetSpellBookItemInfo = _G.C_SpellBook.GetSpellBookItemInfo
+local Enum_SpellBookSpellBank_Player = Enum.SpellBookSpellBank and Enum.SpellBookSpellBank.Player or _G.BOOKTYPE_SPELL
+local Enum_SpellBookSpellBank_Pet = Enum.SpellBookSpellBank and Enum.SpellBookSpellBank.Pet or _G.BOOKTYPE_PET
+local C_SpellBook_GetSpellBookItemInfo = _G.C_SpellBook.GetSpellBookItemInfo or _G.GetSpellBookItemInfo
 
 function CB:ClearCache() wipe(self.cache) end
 
@@ -20,7 +20,7 @@ end
 
 local function checkID(itemInfo)
     if itemInfo.spellID then return itemInfo.spellID end
-    if itemInfo.actionID > 0 then return itemInfo.actionID end
+    if itemInfo.actionID and itemInfo.actionID > 0 then return itemInfo.actionID end
 end
 
 function CB:CacheSpells(book)

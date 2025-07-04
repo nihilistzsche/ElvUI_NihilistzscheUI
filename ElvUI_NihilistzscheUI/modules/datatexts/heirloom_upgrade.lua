@@ -1,7 +1,7 @@
 ---@class NUI
 local NUI, E = _G.unpack((select(2, ...)))
 local DT = E.DataTexts
-if E.Classic then return end
+if not E.Retail then return end
 local HUDT = NUI.DataTexts.HeirloomUpgradeDataText
 
 local C_Item_GetItemInfo = _G.C_Item.GetItemInfo
@@ -69,8 +69,10 @@ do
     for _, key in next, { "Armor", "Weapon" } do
         for i = 1, MAX_HEIRLOOM_UPGRADE do
             local itemID = HUDT.UpgradeItemIDs[key][i]
-            local item = Item:CreateFromItemID(itemID)
-            item:ContinueOnItemLoad(function() HUDT.UpgradeItems[key][i] = item:GetItemLink() end)
+            if C_Item_GetItemInfoInstant(itemID) then
+                local item = Item:CreateFromItemID(itemID)
+                item:ContinueOnItemLoad(function() HUDT.UpgradeItems[key][i] = item:GetItemLink() end)
+            end
         end
     end
 end

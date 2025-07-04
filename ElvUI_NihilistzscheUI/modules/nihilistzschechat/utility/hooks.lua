@@ -4,8 +4,6 @@ local NC = NUI.NihilistzscheChat
 
 function NC:SetUpHooks()
     function ChatEdit_ChooseBoxForSend(preferredChatFrame)
-        NC:ProcessQueuedWhoRequests()
-
         if ChatEdit_GetLastActiveWindow() and ChatEdit_GetLastActiveWindow():GetParent():IsShown() then
             return ChatEdit_GetLastActiveWindow()
         else

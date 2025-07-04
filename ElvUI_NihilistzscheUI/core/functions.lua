@@ -19,15 +19,15 @@ local LE_PET_JOURNAL_FILTER_COLLECTED = _G.LE_PET_JOURNAL_FILTER_COLLECTED
 local LE_PET_JOURNAL_FILTER_NOT_COLLECTED = _G.LE_PET_JOURNAL_FILTER_NOT_COLLECTED
 local UnitAffectingCombat = _G.UnitAffectingCombat
 local wipe = _G.wipe
-local C_AzeriteItem_FindActiveAzeriteItem = _G.C_AzeriteItem.FindActiveAzeriteItem
-local C_AzeriteItem_GetAzeriteItemXPInfo = _G.C_AzeriteItem.GetAzeriteItemXPInfo
-local C_AzeriteItem_GetPowerLevel = _G.C_AzeriteItem.GetPowerLevel
+local C_AzeriteItem_FindActiveAzeriteItem = E.Retail and _G.C_AzeriteItem.FindActiveAzeriteItem
+local C_AzeriteItem_GetAzeriteItemXPInfo = E.Retail and _G.C_AzeriteItem.GetAzeriteItemXPInfo
+local C_AzeriteItem_GetPowerLevel = E.Retail and _G.C_AzeriteItem.GetPowerLevel
 local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
-local C_MajorFactions_HasMaximumRenown = _G.C_MajorFactions.HasMaximumRenown
-local C_MajorFactions_GetMajorFactionData = _G.C_MajorFactions.GetMajorFactionData
+local C_MajorFactions_HasMaximumRenown = E.Retail and _G.C_MajorFactions.HasMaximumRenown
+local C_MajorFactions_GetMajorFactionData = E.Retail and _G.C_MajorFactions.GetMajorFactionData
 local C_Reputation_GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
 local hooksecurefunc = _G.hooksecurefunc
 local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
@@ -273,21 +273,23 @@ function NUI.CPW(func)
     return function() return func("player") end
 end
 
-local function _GetAzeriteXP()
-    local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
-    if not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot() then return 0, 0, 0 end
+if E.Retail then
+    local function _GetAzeriteXP()
+        local azeriteItemLocation = C_AzeriteItem_FindActiveAzeriteItem()
+        if not azeriteItemLocation or not azeriteItemLocation:IsEquipmentSlot() then return 0, 0, 0 end
 
-    local x, m = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
-    local l = C_AzeriteItem_GetPowerLevel(azeriteItemLocation)
+        local x, m = C_AzeriteItem_GetAzeriteItemXPInfo(azeriteItemLocation)
+        local l = C_AzeriteItem_GetPowerLevel(azeriteItemLocation)
 
-    return x, m, l
+        return x, m, l
+    end
+
+    function NUI.UnitAzeriteXP() return (_GetAzeriteXP()) end
+
+    function NUI.UnitAzeriteXPMax() return (select(2, _GetAzeriteXP())) end
+
+    function NUI.UnitAzeriteLevel() return (select(3, _GetAzeriteXP())) end
 end
-
-function NUI.UnitAzeriteXP() return (_GetAzeriteXP()) end
-
-function NUI.UnitAzeriteXPMax() return (select(2, _GetAzeriteXP())) end
-
-function NUI.UnitAzeriteLevel() return (select(3, _GetAzeriteXP())) end
 
 -- Code from LibCandyBar-3.0
 function NUI.ResetCandyBarLabelDurationAnchors(bar)
@@ -347,16 +349,20 @@ function NUI.GetFriendshipInfo(factionID)
     end
 end
 
-function NUI.GetMajorFactionInfo(factionID)
-    if C_Reputation_IsMajorFaction(factionID) then
-        local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
-        if not majorFactionData then return false end
-        local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
-        local min, max = 0, majorFactionData.renownLevelThreshold
-        local value = isCapped and majorFactionData.renownLevelThreshold or majorFactionData.renownReputationEarned or 0
-        return true, min, max, value
+if E.Retail then
+    function NUI.GetMajorFactionInfo(factionID)
+        if C_Reputation_IsMajorFaction(factionID) then
+            local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
+            if not majorFactionData then return false end
+            local isCapped = C_MajorFactions_HasMaximumRenown(factionID)
+            local min, max = 0, majorFactionData.renownLevelThreshold
+            local value = isCapped and majorFactionData.renownLevelThreshold
+                or majorFactionData.renownReputationEarned
+                or 0
+            return true, min, max, value
+        end
+        return false
     end
-    return false
 end
 
 function NUI.GetFactionValues()
