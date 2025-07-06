@@ -186,7 +186,7 @@ function REP:Notify()
                 local diff = barValue - db[name].Value
                 local skipMessage = false
                 if diff ~= 0 then
-                    if standingID > db[name].Standing or hasParagonReward ~= db[name].HasParagonReward then
+                    if (standingID or 0) > db[name].Standing or hasParagonReward ~= db[name].HasParagonReward then
                         local newfaction = friendID and friendID ~= 0 and friendRep
                             or _G["FACTION_STANDING_LABEL" .. standingID]
 
@@ -291,7 +291,7 @@ function REP:Notify()
                         IsMajorFaction = isMajorFaction,
                         IsFriend = isFriend,
                     }
-                    if isParagon or standingID > db[name].Standing then
+                    if isParagon or (standingID or 0) > db[name].Standing then
                         values.Standing = isParagon and 999 or standingID
                     end
                     self:UpdateDBValues(name, values)
