@@ -55,6 +55,11 @@ function NM:Initialize()
             "ALL,SOLO,NIHILISTZSCHEUI"
         )
     end
+    if COMP.SLE then
+        CharacterStatsPane.OffenseCategory:Kill()
+        CharacterStatsPane.DefenseCategory:Kill()
+    end
+
     --if COMP.PAWN and COMP.IMMERSION then self:HookImmersionRewards() end
 end
 

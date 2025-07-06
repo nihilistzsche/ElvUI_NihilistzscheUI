@@ -1,8 +1,9 @@
 ---@class NUI
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 
-local PRB = NUI.UtilityBars.PortalBar
 local NUB = NUI.UtilityBars
+local PRB = NUB.PortalBar
+local PB = NUB.ProfessionBar
 local COMP = NUI.Compatibility
 
 local PT = NUI.Libs.PT
@@ -17,7 +18,7 @@ function PRB:CreateBar()
         self,
         "NihilistzscheUI_PortalBar",
         "portalBar",
-        { "BOTTOMRIGHT", _G.NihilistzscheUI_ProfessionBar, "TOPRIGHT", 0, 2 },
+        { "BOTTOMRIGHT", PB.bar, "TOPRIGHT", 0, 2 },
         "Portal Bar"
     )
     if COMP.SLE then NUB.RegisterUpdateButtonHook(bar, function(button) PRB.UpdateButtonHook(button) end) end

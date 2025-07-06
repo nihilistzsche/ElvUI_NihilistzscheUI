@@ -2,8 +2,8 @@
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 if not E.Retail then return end
 
-local ETOYB = NUI.UtilityBars.EngineerToyBar
 local NUB = NUI.UtilityBars
+local ETOYB = NUB.EngineerToyBar
 
 local C_ToyBox_GetNumToys = _G.C_ToyBox.GetNumToys
 local C_ToyBox_GetToyFromIndex = _G.C_ToyBox.GetToyFromIndex
@@ -76,10 +76,10 @@ end
 
 function ETOYB:UpdateBar(bar)
     if not self:IsEngineer() then
-        _G.RegisterStateDriver(bar, "visibility", "hide")
+        _G.RegisterAttributeDriver(bar, "state-visibility", "hide")
         return
     else
-        _G.RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+        _G.RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
     end
 
     local toys = self:GetToys(bar)

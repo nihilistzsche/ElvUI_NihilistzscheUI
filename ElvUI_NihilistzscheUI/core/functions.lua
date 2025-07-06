@@ -23,6 +23,7 @@ local C_AzeriteItem_FindActiveAzeriteItem = E.Retail and _G.C_AzeriteItem.FindAc
 local C_AzeriteItem_GetAzeriteItemXPInfo = E.Retail and _G.C_AzeriteItem.GetAzeriteItemXPInfo
 local C_AzeriteItem_GetPowerLevel = E.Retail and _G.C_AzeriteItem.GetPowerLevel
 local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
+local C_GossipInfo_GetFriendshipReputationRanks = _G.C_GossipInfo.GetFriendshipReputationRanks
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
@@ -81,6 +82,7 @@ NUI.SpecialChatIcons = {
         Marittie = true,
         Shanisami = true,
         Tasibyl = true,
+        Ardande = true,
     },
 }
 
@@ -345,7 +347,8 @@ function NUI.GetFriendshipInfo(factionID)
     if not data or data.friendshipFactionID == 0 then
         return false
     else
-        return true, data
+        local rankData = C_GossipInfo_GetFriendshipReputationRanks(data.friendshipFactionID)
+        return true, data, rankData
     end
 end
 

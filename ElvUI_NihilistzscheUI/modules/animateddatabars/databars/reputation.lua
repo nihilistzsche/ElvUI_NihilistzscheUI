@@ -7,19 +7,11 @@ local COMP = NUI.Compatibility
 local REP = ADB:NewDataBar()
 
 local GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
-local GetNumFactions = _G.C_Reputation.GetNumFactions
+local C_Reputation_GetNumFactions = _G.C_Reputation.GetNumFactions
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
-local C_Reputation_GetWatchedFactionData = _G.C_Reputation.GetWatchedFactionData
 local GetFactionDataByIndex = _G.C_Reputation.GetFactionDataByIndex
-local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
-local C_GossipInfo_GetFriendshipReputationRanks = _G.C_GossipInfo.GetFriendshipReputationRanks
 local FACTION_BAR_COLORS = _G.FACTION_BAR_COLORS
-local GameTooltip = _G.GameTooltip
-local STANDING = _G.STANDING
-local REPUTATION = _G.REPUTATION
-local format = _G.format
-local xpcall = _G.xpcall
 local C_Reputation_IsMajorFaction = E.Retail and _G.C_Reputation.IsMajorFaction
 local C_MajorFactions_GetMajorFactionData = E.Retail and _G.C_MajorFactions.GetMajorFactionData
 local C_MajorFactions_HasMaximumRenown = E.Retail and _G.C_MajorFactions.HasMaximumRenown
@@ -63,7 +55,7 @@ function REP:Update(bar)
             isMajorFaction = true
         end
     end
-    local numFactions = GetNumFactions()
+    local numFactions = C_Reputation_GetNumFactions()
 
     local reaction
 
@@ -72,25 +64,27 @@ function REP:Update(bar)
         if _data then
             local _factionID = _data.factionID
             local standingID = _data.currentStanding
-            local success, fdata = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, _factionID)
+            local isFriend, fdata, rankData = NUI.GetFriendshipInfo(_factionID)
             local friendID, friendRep, friendThreshold, nextFriendThreshold
-            if success and fdata then
+            if isFriend and fdata then
                 friendID, friendRep, friendThreshold, nextFriendThreshold =
                     fdata.friendshipFactionID, fdata.standing, fdata.reactionThreshold, fdata.nextThreshold
             end
             if _data.name == name then
-                if friendID and friendID ~= 0 then
+                if isFriend then
                     -- do something different for friendships
-                    local rankData = C_GossipInfo_GetFriendshipReputationRanks(friendID)
                     level = rankData.currentLevel
-                    local offset = 8 - rankData.maxLevel
+                    local offset = 0
+                    if rankData.maxLevel < #DB.db.colors.factionColors then
+                        offset = #DB.db.colors.factionColors - rankData.maxLevel
+                    end
                     if nextFriendThreshold then
                         min, max, value = friendThreshold, nextFriendThreshold, friendRep
                     else
                         -- max rank, make it look like a full bar
                         min, max, value = 0, 1, 1
                     end
-                    reaction = level + offset
+                    reaction = math.min(#DB.db.colors.factionColors, level + offset)
                     ID = friendID
                 else
                     ID = standingID
@@ -110,7 +104,7 @@ function REP:Update(bar)
         bar.animatedStatusBar:SetStatusBarColor(color.r, color.g, color.b)
         bar.animatedStatusBar:SetAnimatedTextureColors(color.r, color.g, color.b)
     else
-        local color = FACTION_BAR_COLORS[reaction] or FACTION_BAR_COLORS[1]
+        local color = DB.db.colors.factionColors[reaction] or DB.db.colors.factionColors[1]
         bar.animatedStatusBar:SetStatusBarColor(color.r, color.g, color.b)
         bar.animatedStatusBar:SetAnimatedTextureColors(color.r, color.g, color.b)
     end

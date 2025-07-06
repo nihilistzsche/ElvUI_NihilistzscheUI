@@ -286,7 +286,7 @@ end
 local function OnEnter(self)
     DT:SetupTooltip(self)
     local _, numOwned = C_PetJournal_GetNumPets()
-    DT.tooltip:AddLine((L["%sElvUI|r NihilistzscheUI - Companions Datatext"]):format(hexColor), 1, 1, 1)
+    DT.tooltip:AddLine((L["%sElvUI|r - Companions Datatext"]):format(hexColor), 1, 1, 1)
     DT.tooltip:AddLine(("     %s"):format(L["<Left Click> to resummon/dismiss pet"]))
     DT.tooltip:AddLine(("     %s"):format(L["<Right Click> to open pet list"]))
     DT.tooltip:AddLine(("     %s"):format(L["<Shift + Left Click> to open pet journal"]))

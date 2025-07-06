@@ -3,6 +3,7 @@
 	<Script file="bobberbar.lua"/>
 	<Script file="engineertoybar.lua"/>
 	<Script file="equipmentmanagerbar.lua"/>
+	<Script file="trackerbar.lua"/>
 	<Script file="farmbar.lua"/>
 	<Script file="portalbar.lua"/>
 	<Script file="professionbar.lua"/>
@@ -10,5 +11,4 @@
 	<Script file="specswitchbar.lua"/>
 	<Script file="toolsofthetradebar.lua"/>
 	<Script file="toybar.lua"/>
-	<Script file="trackerbar.lua"/>
 </Ui>

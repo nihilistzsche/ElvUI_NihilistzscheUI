@@ -151,11 +151,12 @@ local function OnEvent(self)
 end
 
 DT:RegisterDatatext(
-    "NihilistzscheUI Azerite Powers",
+    "Azerite Powers",
     "NihilistzscheUI",
     { "PLAYER_ENTERING_WORLD", "PLAYER_EQUIPMENT_CHANGED" },
     OnEvent,
     UpdateDisplay,
+    nil,
     OnEnter,
     nil,
     nil,

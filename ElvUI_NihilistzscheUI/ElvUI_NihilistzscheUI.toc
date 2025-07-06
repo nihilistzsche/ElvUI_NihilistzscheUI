@@ -6,7 +6,7 @@
 ## Notes: An external edit for ElvUI and ElvUI Shadow & Light
 ## RequiredDeps: ElvUI
 ## OptionalDeps: ElvUI_SLE, ElvUI_BenikUI, ElvUI_MerathilisUI, ProjectAzilroka
-## OptionalDeps: AddOnSkins_NihilistzschezschePrivate, ElvUI_CPU, zPets, Executive_Assistant, TotalRP3, ElvUI_DynamicStatusIcons, Forward, OldGodWhispers, Pawn, Immersion, RP_Tags
+## OptionalDeps: AddOnSkins_NihilistzschezschePrivate, zPets, Executive_Assistant, TotalRP3, ElvUI_DynamicStatusIcons, Forward, OldGodWhispers, Pawn, Immersion, RP_Tags
 ## AddonCompartmentFunc: ElvUI_NihilistzscheUI_AddonCompartmentFunc
 ## X-oUF: ElvUF
 ## X-Curse-Project-ID: 690477
@@ -14,6 +14,7 @@
 ## X-Wago-ID: VBNBz0Nx
 ## X-Tukui-ProjectID: 4
 ## X-Tukui-ProjectFolders: ElvUI_NihilistzscheUI_Installer, ElvUI_NihilistzscheUI_Options, ElvUI_NihilistzscheUI
+## Group: ElvUI_NihilistzscheUI
 
 settings\load_settings.xml
 locales\load_locales.xml

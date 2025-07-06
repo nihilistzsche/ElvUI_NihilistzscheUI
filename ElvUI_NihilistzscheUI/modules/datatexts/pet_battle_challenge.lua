@@ -338,7 +338,7 @@ F:SetScript("OnEvent", function(self)
 end)
 
 DT:RegisterDatatext(
-    "NihilistzscheUI Pet Challenge Tracker",
+    "Pet Challenge Tracker",
     "NihilistzscheUI",
     { "PLAYER_ENTERING_WORLD", "QUEST_LOG_UPDATE" },
     PBCDT.Update,

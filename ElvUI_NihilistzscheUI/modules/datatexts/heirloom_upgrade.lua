@@ -125,19 +125,24 @@ function HUDT:OnEnter()
     GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 6)
     GameTooltip:ClearLines()
 
+    GameTooltip:AddLine("Heirloom Upgrades Needed", 1, 1, 1)
     local i = 1
     -- Add heirloom data to tooltip
-    for _, heirloom in next, cache.heirlooms do
-        local line = string.format(
-            "%s%s|r (%d/%d) (%d|TInterface\\MoneyFrame\\UI-GoldIcon:0|t)",
-            color:GenerateHexColorMarkup(),
-            heirloom.name,
-            heirloom.upgradeLevel,
-            heirloom.maxUpgradeLevel,
-            heirloom.cost
-        )
-        GameTooltip:AddLine(line, 1, 1, 1)
-        i = i + 1
+    if #cache.heirlooms > 0 then
+        for _, heirloom in next, cache.heirlooms do
+            local line = string.format(
+                "%s%s|r (%d/%d) (%d|TInterface\\MoneyFrame\\UI-GoldIcon:0|t)",
+                color:GenerateHexColorMarkup(),
+                heirloom.name,
+                heirloom.upgradeLevel,
+                heirloom.maxUpgradeLevel,
+                heirloom.cost
+            )
+            GameTooltip:AddLine(line, 1, 1, 1)
+            i = i + 1
+        end
+    else
+        GameTooltip:AddLine("Complete!", 0, 1, 0)
     end
 
     GameTooltip:Show()
@@ -175,7 +180,7 @@ function HUDT:Update()
 end
 
 DT:RegisterDatatext(
-    "NihilistzscheUI Heirloom Upgrade Cost",
+    "Heirloom Upgrade Cost",
     "NihilistzscheUI",
     { "PLAYER_ENTERING_WORLD", "HEIRLOOMS_UPDATED" },
     HUDT.OnEvent,

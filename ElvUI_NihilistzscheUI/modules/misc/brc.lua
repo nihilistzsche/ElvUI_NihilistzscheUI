@@ -7,7 +7,6 @@ local DB = E.DataBars
 
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionDataByID = _G.C_Reputation.GetFactionDataByID
-local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
 
 function BRC:Initialize()
@@ -34,6 +33,14 @@ function BRC.UpdateReputation(button, elementData)
     local factionInfo = C_Reputation_GetFactionDataByID(factionID)
     if not factionInfo then return end
     local reaction = factionInfo.reaction
+    local isFriend, _, rankData = NUI.GetFriendshipInfo(factionID)
+    if isFriend then
+        local offset = 0
+        if rankData.maxLevel < #DB.db.colors.factionColors then
+            offset = #DB.db.colors.factionColors - rankData.maxLevel
+        end
+        reaction = math.min(#DB.db.colors.factionColors, rankData.currentLevel + offset)
+    end
     if not COMP.PR or not C_Reputation_IsFactionParagon(factionID) then
         local color = DB.db.colors.factionColors[reaction]
         if not color then

@@ -3,9 +3,9 @@ local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales,
 
 local LSM = E.Libs.LSM
 
-local FB = NUI.UtilityBars.FarmBar
 local NUB = NUI.UtilityBars
-
+local FB = NUB.FarmBar
+local TB = NUB.TrackerBar
 local tremove = _G.tremove
 local GameTooltip = _G.GameTooltip
 local C_Item_GetItemCount = _G.C_Item.GetItemCount
@@ -23,7 +23,7 @@ function FB:CreateBar()
         self,
         "NihilistzscheUI_FarmBar",
         "farmBar",
-        { "TOPLEFT", _G.NihilistzscheUI_TrackerBar, "BOTTOMLEFT", 0, -2 },
+        { "TOPLEFT", TB.bar, "BOTTOMLEFT", 0, -2 },
         "Farm Bar"
     )
     NUB.RegisterCreateButtonHook(bar, function(button) self:CreateButtonHook(bar, button) end)
@@ -231,7 +231,7 @@ function FB:UpdateBar(bar)
 
     -- Holy crap why are there strings for the currency ids??
     local fixMePls = {}
-    for i, v in pairs(ElvDB.trackerbar[FB.myname].currency) do
+    for i, v in pairs(ElvDB.farmBar[FB.myname].currency) do
         if type(v) ~= "number" then tinsert(fixMePls, i) end
     end
 

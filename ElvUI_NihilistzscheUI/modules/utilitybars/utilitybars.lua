@@ -9,13 +9,13 @@ local LSM = E.Libs.LSM
 local BS = NUI.ButtonStyle
 local COMP = NUI.Compatibility
 
-local CreateFrame, C_Item_GetItemCount, C_Item_GetItemInfo, C_Spell_GetSpellInfo, InCombatLockdown, RegisterStateDriver, select, unpack, tinsert, ipairs, pairs, floor, format, max =
+local CreateFrame, C_Item_GetItemCount, C_Item_GetItemInfo, C_Spell_GetSpellInfo, InCombatLockdown, RegisterAttributeDriver, select, unpack, tinsert, ipairs, pairs, floor, format, max =
     _G.CreateFrame,
     _G.C_Item.GetItemCount,
     _G.C_Item.GetItemInfo,
     _G.C_Spell.GetSpellInfo,
     _G.InCombatLockdown,
-    _G.RegisterStateDriver,
+    _G.RegisterAttributeDriver,
     _G.select,
     _G.unpack,
     _G.tinsert,
@@ -72,7 +72,7 @@ function NUB:RegisterUtilityBar(tbl)
     self.RegisteredBars[tbl:GetName()] = tbl
     local ForUpdateAll = function(_self) _self:UpdateBar(_self.bar) end
     tbl.ForUpdateAll = ForUpdateAll
-    NUI:RegisterModule(tbl:GetName())
+    NUI:RegisterModule(tbl:GetName(), true)
 end
 
 local nihilistzscheui_ab_id = 770
@@ -82,7 +82,7 @@ NUB.CreatedBars = {}
 function NUB:PLAYER_REGEN_DISABLED()
     if E.db.nihilistzscheui.utilitybars.hideincombat then
         for bar, _ in pairs(self.CreatedBars) do
-            if not bar.doNotHideInCombat then RegisterStateDriver(bar, "visibility", "hide") end
+            if not bar.doNotHideInCombat then RegisterAttributeDriver(bar, "state-visibility", "hide") end
         end
     end
 end
@@ -117,7 +117,7 @@ function NUB:CreateBar(tbl, name, db, point, moverName)
     bar:SetFrameStrata("MEDIUM")
     bar.buttons = {}
 
-    RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+    RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
 
     bar:Size(320, 36)
     if point and type(point) == "table" then
@@ -166,7 +166,7 @@ function NUB.CreateButton(bar)
     button.count:Point("BOTTOMRIGHT", 0, 0)
     AB:StyleButton(button, nil, nil, true)
     button:SetCheckedTexture("")
-    RegisterStateDriver(button, "visibility", "[petbattle] hide; show")
+    RegisterAttributeDriver(button, "state-visibility", "[petbattle] hide; show")
 
     ExecuteHooks(bar.createButtonHooks, button)
 
@@ -213,8 +213,6 @@ local function GenericButtonUpdate(bar, button, ...)
 
     ExecuteHooks(bar.updateButtonHooks, button, ...)
 end
-
-local itemClosureData = {}
 
 local itemClosures = {}
 
@@ -270,14 +268,11 @@ function NUB.UpdateButtonAsItem(bar, button, id, ...)
     end
 end
 
-local spellClosureData = {}
-
 local spellClosures = {}
 
 local function CreateOrGetSpellClosure(id, bar, button, args)
     if spellClosures[id] then return spellClosures[id] end
     local func = function()
-        if not spellClosureData[id] then return end
         local name = C_Spell_GetSpellName(id)
         button:SetAttribute("type", "spell")
         button:SetAttribute("spell", name)
@@ -291,7 +286,6 @@ local function CreateOrGetSpellClosure(id, bar, button, args)
             spellName = name,
             spellTexture = spellTexture,
         }
-        GenericButtonUpdate(bar, button, unpack(args))
     end
     spellClosures[id] = func
     return func
@@ -393,10 +387,10 @@ end
 
 function NUB.UpdateHorizBar(tbl, bar, bindButtons)
     if not bar.db.enabled then
-        RegisterStateDriver(bar, "visibility", "hide")
+        RegisterAttributeDriver(bar, "state-visibility", "hide")
         return
     else
-        RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+        RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
     end
 
     bar.mouseover = bar.db.mouseover
@@ -409,7 +403,7 @@ function NUB.UpdateHorizBar(tbl, bar, bindButtons)
     for i = 1, #bar.buttons do
         local button = bar.buttons[i]
         if button.data then
-            RegisterStateDriver(button, "visibility", "[petbattle] hide; show")
+            RegisterAttributeDriver(button, "state-visibility", "[petbattle] hide; show")
             anchorX = anchorX + 1
             shownButtons = shownButtons + 1
             local xOffset, yOffset
@@ -433,7 +427,7 @@ function NUB.UpdateHorizBar(tbl, bar, bindButtons)
                 if tbl.hooks[button] then tbl:Unhook(button, "OnEnter") end
             end
         else
-            RegisterStateDriver(button, "visibility", "hide")
+            RegisterAttributeDriver(button, "state-visibility", "hide")
         end
     end
     local numRows
@@ -449,13 +443,13 @@ function NUB.UpdateHorizBar(tbl, bar, bindButtons)
     local barHeight = size * numRows + spacing * numRows + spacing
     bar:Size(barWidth, barHeight)
     if shownButtons == 0 or bar.forceHide then
-        RegisterStateDriver(bar, "visibility", "hide")
+        RegisterAttributeDriver(bar, "state-visibility", "hide")
     else
-        RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+        RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
     end
 
     for i = shownButtons + 1, #bar.buttons do
-        RegisterStateDriver(bar.buttons[i], "visibility", "hide")
+        RegisterAttributeDriver(bar.buttons[i], "state-visibility", "hide")
     end
 
     NUB:UpdateButtonConfig(bar, bindButtons)
@@ -464,10 +458,10 @@ end
 
 function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
     if not bar.db.enabled then
-        RegisterStateDriver(bar, "visibility", "hide")
+        RegisterAttributeDriver(bar, "state-visibility", "hide")
         return
     else
-        RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+        RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
     end
 
     bar.mouseover = bar.db.mouseover
@@ -485,7 +479,7 @@ function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
         local button = bar.buttons[i]
         if button.data then
             local row = button.row
-            RegisterStateDriver(button, "visibility", "[petbattle] hide; show")
+            RegisterAttributeDriver(button, "state-visibility", "[petbattle] hide; show")
             if not anchorX[row] then
                 anchorX[row] = 0
                 shownButtons[row] = 0
@@ -517,7 +511,7 @@ function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
                 if tbl.hooks[button] then tbl:Unhook(button, "OnEnter") end
             end
         else
-            RegisterStateDriver(button, "visibility", "hide")
+            RegisterAttributeDriver(button, "state-visibility", "hide")
         end
     end
     local numRows = 0
@@ -534,13 +528,13 @@ function NUB.UpdateHorizBarMultRow(tbl, bar, bindButtons)
     local barHeight = max((spacing * ((numRows * 2) - 1)), spacing * 2) + (size * numRows)
     bar:Size(barWidth, barHeight)
     if not seenButton or bar.forceHide then
-        RegisterStateDriver(bar, "visibility", "hide")
+        RegisterAttributeDriver(bar, "state-visibility", "hide")
     else
-        RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+        RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
     end
 
     for i = totalShown + 1, #bar.buttons do
-        RegisterStateDriver(bar.buttons[i], "visibility", "hide")
+        RegisterAttributeDriver(bar.buttons[i], "state-visibility", "hide")
     end
 
     NUB:UpdateButtonConfig(bar, bindButtons)
@@ -549,10 +543,10 @@ end
 
 function NUB.UpdateVertBar(tbl, bar, bindButtons)
     if not bar.db.enabled then
-        RegisterStateDriver(bar, "visibility", "hide")
+        RegisterAttributeDriver(bar, "state-visibility", "hide")
         return
     else
-        RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+        RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
     end
 
     bar.mouseover = bar.db.mouseover
@@ -565,7 +559,7 @@ function NUB.UpdateVertBar(tbl, bar, bindButtons)
     for i = 1, #bar.buttons do
         local button = bar.buttons[i]
         if button.data then
-            RegisterStateDriver(button, "visibility", "[petbattle] hide; show")
+            RegisterAttributeDriver(button, "state-visibility", "[petbattle] hide; show")
             anchorY = anchorY + 1
             shownButtons = shownButtons + 1
             local xOffset, yOffset
@@ -589,7 +583,7 @@ function NUB.UpdateVertBar(tbl, bar, bindButtons)
                 if tbl.hooks[button] then tbl:Unhook(button, "OnEnter") end
             end
         else
-            RegisterStateDriver(button, "visibility", "hide")
+            RegisterAttributeDriver(button, "state-visibility", "hide")
         end
     end
     local numRows
@@ -605,13 +599,13 @@ function NUB.UpdateVertBar(tbl, bar, bindButtons)
         + ((size * (buttonsPerRow * mult)) + ((spacing * (buttonsPerRow - 1) * mult) + (spacing * mult)))
     bar:Size(barWidth, barHeight)
     if shownButtons == 0 or bar.forceHide then
-        RegisterStateDriver(bar, "visibility", "hide")
+        RegisterAttributeDriver(bar, "state-visibility", "hide")
     else
-        RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+        RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
     end
 
     for i = shownButtons + 1, #bar.buttons do
-        RegisterStateDriver(bar.buttons[i], "visibility", "hide")
+        RegisterAttributeDriver(bar.buttons[i], "state-visibility", "hide")
     end
 
     NUB:UpdateButtonConfig(bar, bindButtons)
@@ -660,7 +654,7 @@ function NUB:UpdateButtonConfig(bar, buttonName)
     end
 end
 
-function NUB.HandleEvent(mod, frame, event)
+function NUB.HandleEvent(mod, frame, event, ...)
     if not mod.bar or mod.__nub_update_locked then return end
 
     if (UnitAffectingCombat("player") or InCombatLockdown()) and not mod.ignoreCombatLockdown then
@@ -670,6 +664,22 @@ function NUB.HandleEvent(mod, frame, event)
 
     if event == "PLAYER_REGEN_ENABLED" then frame:UnregisterEvent(event) end
 
+    if event == "GET_ITEM_INFO_RECEIVED" then
+        local itemID, success = ...
+        if success then
+            local found = false
+            for _, button in pairs(mod.bar.buttons) do
+                if
+                    button:GetAttribute("type") == "item"
+                    and button:GetAttribute("item") == C_Item_GetItemInfo(itemID)
+                then
+                    found = true
+                    break
+                end
+            end
+            if not found then return end
+        end
+    end
     if not mod.updateLock then
         mod.updateLock = true
         mod:UpdateBar(mod.bar)
@@ -709,4 +719,4 @@ function NUB:Initialize()
     self:UpdateAll()
 end
 
-NUI:RegisterModule(NUB:GetName())
+NUI:RegisterModule(NUB:GetName(), true)

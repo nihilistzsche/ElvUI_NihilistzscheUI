@@ -86,7 +86,7 @@ function CB:Enable(fromSettings)
     self.bar:SetScript("OnEnter", function() self:Activate() end)
     self.bar:SetScript("OnLeave", function() self:Deactivate() end)
     self.bar:Show()
-    _G.RegisterStateDriver(self.bar, "visibility", "[petbattle] hide; show")
+    _G.RegisterAttributeDriver(self.bar, "state-visibility", "[petbattle] hide; show")
 
     if not fromSettings then
         if not self.ticker then self.ticker = C_Timer_NewTicker(self.db.switchTime, RotateClosure) end
@@ -109,7 +109,7 @@ function CB:Disable()
     self.bar:SetScript("OnEnter", nil)
     self.bar:SetScript("OnLeave", nil)
     self.bar:Hide()
-    _G.RegisterStateDriver(self.bar, "visibility", "hide")
+    _G.RegisterAttributeDriver(self.bar, "state-visibility", "hide")
     self:Deactivate()
     if self.ticker then self.ticker:Cancel() end
 end

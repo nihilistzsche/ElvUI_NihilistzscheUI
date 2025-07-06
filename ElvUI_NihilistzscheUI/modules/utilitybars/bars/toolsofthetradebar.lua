@@ -1,13 +1,13 @@
 ---@class NUI
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 if not E.Retail then return end
-local TOTTB = NUI.UtilityBars.ToolsOfTheTradeBar
 local NUB = NUI.UtilityBars
+local TOTTB = NUB.ToolsOfTheTradeBar
 
 local PT = NUI.Libs.PT
 
 local C_Item_GetItemCount = _G.C_Item.GetItemCount
-local RegisterStateDriver = _G.RegisterStateDriver
+local RegisterAttributeDriver = _G.RegisterAttributeDriver
 local CreateFrame = _G.CreateFrame
 
 function TOTTB.AddTools()
@@ -84,7 +84,7 @@ function TOTTB:UpdateBar(bar)
     end
 
     NUB.UpdateBar(self, bar, "ELVUIBAR32BINDBUTTON")
-    if not inToolZone then RegisterStateDriver(bar, "visibility", "hide") end
+    if not inToolZone then RegisterAttributeDriver(bar, "state-visibility", "hide") end
 end
 
 function TOTTB:Initialize()

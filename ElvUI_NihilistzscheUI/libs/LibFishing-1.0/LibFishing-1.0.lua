@@ -254,6 +254,10 @@ function FishLib:UpdateLureInventory()
             if (startTime == 0) then
                 -- get the name so we can check enchants
                 local itemInfo = C_Item_GetItemInfo(id)
+                if not itemInfo then 
+                    Item:CreateFromItemID(id):ContinueOnItemLoad(function() FishLib:UpdateLureInventory() end)
+                    return
+                end
                 lure.n = itemInfo.name
                 if (lure.b > b or lure.w) then
                     b = lure.b

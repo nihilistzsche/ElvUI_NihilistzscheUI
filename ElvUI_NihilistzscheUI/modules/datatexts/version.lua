@@ -113,7 +113,7 @@ local function ValueColorUpdate()
 end
 
 DT:RegisterDatatext(
-    "NihilistzscheUI Version",
+    "Version",
     "NihilistzscheUI",
     { "PLAYER_ENTERING_WORLD" },
     OnEvent,

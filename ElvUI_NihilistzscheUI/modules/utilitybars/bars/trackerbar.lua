@@ -3,9 +3,8 @@ local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales,
 
 local LSM = E.Libs.LSM
 
-local TB = NUI.UtilityBars.TrackerBar
 local NUB = NUI.UtilityBars
-local B = E.Bags
+local TB = NUB.TrackerBar
 
 local tremove = _G.tremove
 local GameTooltip = _G.GameTooltip
@@ -21,9 +20,6 @@ local GetContainerNumSlots = _G.C_Container.GetContainerNumSlots
 local GetContainerItemID = _G.C_Container.GetContainerItemID
 local ClearCursor = _G.ClearCursor
 local REAGENTBANK_CONTAINER = _G.REAGENTBANK_CONTAINER
-local HybridScrollFrame_GetOffset = _G.HybridScrollFrame_GetOffset
-local C_CurrencyInfo_GetCurrencyListInfo = _G.C_CurrencyInfo.GetCurrencyListInfo
-local C_CurrencyInfo_GetCurrencyListLink = _G.C_CurrencyInfo.GetCurrencyListLink
 local hooksecurefunc = _G.hooksecurefunc
 
 function TB:CreateBar()
@@ -247,39 +243,6 @@ function TB:AddWatch(item, id)
     self:UpdateBar(self.bar)
 end
 
-function TB:HookElvUIBags()
-    if not B.BagFrames then return end
-    for _, bagFrame in pairs(B.BagFrames) do
-        for _, bagID in pairs(bagFrame.BagIDs) do
-            if not self.hookedBags[bagID] then
-                for slotID = 1, GetContainerNumSlots(bagID) do
-                    local button = bagFrame.Bags[bagID][slotID]
-                    button:RegisterForClicks("AnyUp", "AnyDown")
-                    button:HookScript("OnDoubleClick", function(_, mouseButton)
-                        if mouseButton == "LeftButton" then self:AddWatch(true, GetContainerItemID(bagID, slotID)) end
-                        ClearCursor()
-                    end)
-                end
-                self.hookedBags[bagID] = true
-            end
-        end
-    end
-
-    if _G.ElvUIReagentBankFrameItem1 and not self.hookedBags[REAGENTBANK_CONTAINER] then
-        for slotID = 1, 98 do
-            local button = _G["ElvUIReagentBankFrameItem" .. slotID]
-            button:RegisterForClicks("AnyUp", "AnyDown")
-            button:HookScript("OnDoubleClick", function(_, mouseButton)
-                if mouseButton == "LeftButton" then
-                    self:AddWatch(true, GetContainerItemID(REAGENTBANK_CONTAINER, slotID))
-                end
-                ClearCursor()
-            end)
-        end
-        self.hookedBags[REAGENTBANK_CONTAINER] = true
-    end
-end
-
 function TB:UpdateAndNotify(item, id, count)
     if not id then return end
     local table = item and "items" or "currency"
@@ -303,14 +266,6 @@ end
 function TB.FixDataTable()
     local fixed = false
     return fixed
-end
-
-local function GetNumberOfTokenFrameButtons()
-    local count = 0
-    for _, button in pairs(TokenFrame.ScrollBox.ScrollTarget) do
-        if type(button) == "table" and not button.isHeader then count = count + 1 end
-    end
-    return count
 end
 
 local function AddTrackWatch(msg)
@@ -361,10 +316,6 @@ function TB:Initialize()
     self.hooks = {}
 
     self:UpdateBar(bar)
-
-    self.hookedBags = {}
-    self:HookElvUIBags()
-    hooksecurefunc(B, "Layout", function() self:HookElvUIBags() end)
 
     _G.SLASH_TBADD1 = "/tbadd"
     _G.SlashCmdList.TBADD = AddTrackWatch

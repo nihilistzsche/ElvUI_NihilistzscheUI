@@ -355,7 +355,7 @@ end
 
 local function OnEnter(self)
     DT:SetupTooltip(self)
-    DT.tooltip:AddLine((L["%sElvUI|r NihilistzscheUI - Mounts Datatext"]):format(hexColor), 1, 1, 1)
+    DT.tooltip:AddLine((L["%sElvUI|r - Mounts Datatext"]):format(hexColor), 1, 1, 1)
     DT.tooltip:AddLine(("     %s"):format(L["<Left Click> to open Pet Journal."]))
     DT.tooltip:AddLine(("     %s"):format(L["<Right Click> to open mount list."]))
     DT.tooltip:AddLine(

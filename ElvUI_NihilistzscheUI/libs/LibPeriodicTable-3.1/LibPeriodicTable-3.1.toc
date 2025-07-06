@@ -1,11 +1,11 @@
-## Interface: 100200
+﻿## Interface: 100200
 ## Title: Lib: PeriodicTable-3.1
 ## Notes: Library of compressed itemid sets.
 ## Author: Elkano, MuffinManKen, Nymbia
-## Version: v3.3.0.669
+## Version: v3.3.0.@project-revision@
 ## LoadOnDemand: 1
 
-## X-Date: 2023-12-17T2:12:14Z
+## X-Date: @project-date-iso@
 ## X-Website: http://www.wowace.com/projects/libperiodictable-3-1/
 ## X-Category: Library
 ## X-License: LGPL v2.1

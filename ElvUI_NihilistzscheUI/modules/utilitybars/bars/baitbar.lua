@@ -1,8 +1,8 @@
 ---@class NUI
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 if not E.Retail then return end
-local BB = NUI.UtilityBars.BaitBar
 local NUB = NUI.UtilityBars
+local BB = NUB.BaitBar
 local FL = NUI.Libs.FL
 
 local PT = NUI.Libs.PT

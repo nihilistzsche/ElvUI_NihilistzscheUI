@@ -187,12 +187,16 @@ end
 
 function NI.Install() tryInstall() end
 
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_ENTERING_WORLD")
-f:SetScript("OnEvent", function()
-    C_Timer_After(5, NI.BaseElvUISetup)
-    f:UnregisterEvent("PLAYER_ENTERING_WORLD")
-end)
+if not NUIIDB.baseElvUISet or not NUIIDB.baseElvUISet[E.myname .. "-" .. E.myrealm] then
+    local f = CreateFrame("Frame")
+    f:RegisterEvent("PLAYER_LOGIN")
+    f:SetScript("OnEvent", function()
+        C_Timer_After(5, NI.BaseElvUISetup)
+        NUIIDB.baseElvUISet = NUIIDB.baseElvUISet or {}
+        NUIIDB.baseElvUISet[E.myname .. "-" .. E.myrealm] = true
+        f:UnregisterEvent("PLAYER_LOGIN")
+    end)
+end
 
 function NI:Initialize()
     self.initialized = true

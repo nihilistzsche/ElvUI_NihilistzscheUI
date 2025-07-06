@@ -1,9 +1,10 @@
 ---@class NUI
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 
-local RPB = NUI.UtilityBars.RaidPrepBar
 local NUB = NUI.UtilityBars
+local RPB = NUB.RaidPrepBar
 local COMP = NUI.Compatibility
+local TB = NUB.TrackerBar
 
 local PT = NUI.Libs.PT
 
@@ -18,7 +19,7 @@ function RPB:CreateBar()
         self,
         "NihilistzscheUI_RaidPrepBar",
         "raidPrepBar",
-        { "TOPRIGHT", _G.NihilistzscheUI_TrackerBar, "BOTTOMRIGHT", 0, -2 },
+        { "TOPRIGHT", TB.bar, "BOTTOMRIGHT", 0, -2 },
         "Raid Prep Bar"
     )
 end
@@ -132,6 +133,21 @@ RPB.DataKeys = {
         key = "NihilistzscheUI.RaidPrep.DragonflightVantus",
     },
     {
+        key = "NihilistzscheUI.RaidPrep.TheWarWithinAugmentRunes",
+    },
+    {
+        key = "NihilistzscheUI.RaidPrep.TheWarWithinFood",
+    },
+    {
+        key = "NihilistzscheUI.RaidPrep.TheWarWithinFlasks",
+    },
+    {
+        key = "NihilistzscheUI.RaidPrep.TheWarWithinOils",
+    },
+    {
+        key = "NihilistzscheUI.RaidPrep.TheWarWithinVantus",
+    },
+    {
         key = "NihilistzscheUI.RaidPrep.PermanentFlasks",
     },
     {
@@ -144,7 +160,6 @@ function RPB.CreateButtons(bar)
 
     local function addButton(itemID)
         local count = C_Item_GetItemCount(itemID)
-
         if count > 0 then
             local button = bar.buttons[j]
             if not button then
@@ -185,9 +200,6 @@ function RPB.CreateButtons(bar)
 end
 
 function RPB:UpdateBar(bar)
-    if bar.updateTime and time() - bar.updateTime < 1 then return end
-    bar.updateTime = time()
-
     NUB.WipeButtons(bar)
     RPB.CreateButtons(bar)
     NUB.UpdateBar(self, bar, "ELVUIBAR26BINDBUTTON")
@@ -213,12 +225,17 @@ function RPB.AddNihilistzscheUIData()
         ["NihilistzscheUI.RaidPrep.ShadowlandsFood"] = "172040,172041,172043,172044,172045,172048,172049,172050,172051,172060,172061,172062,172063,172068,172069",
         ["NihilistzscheUI.RaidPrep.ShadowlandsVantus"] = "173067,186662,187805",
         ["NihilistzscheUI.RaidPrep.PermanentFlasks"] = "118922,147707",
-        ["NihilistzscheUI.RaidPrep.DragonflightAugmentRunes"] = "201325",
+        ["NihilistzscheUI.RaidPrep.DragonflightAugmentRunes"] = "201325,211495",
         ["NihilistzscheUI.RaidPrep.DragonflightFood"] = "197772,197774,197775,197776,197777,197778,197779,197780,197781,197782,197783,197784,197785,197786,197787,197788,197789,197790,197791,197792,197793,197794,197795",
         ["NihilistzscheUI.RaidPrep.DragonflightFlasks"] = "191318,191319,191320,191321,191322,191323,191324,191325,191326,191327,191328,191329,191330,191331,191332,191333,191334,191335,191336,191337,191338,191339,191340,191341,191342,191343,191344,191345,191346,191347,191348,191349,191350,191354,191355,191356,191357,191358,191359,195580,197720,197721,197722",
         ["NihilistzscheUI.RaidPrep.DragonflightRunes"] = "194817,194819,194820,194821,194822,194823,194824,194825,194826",
         ["NihilistzscheUI.RaidPrep.DragonflightVantus"] = "198491,198492,198493",
         ["NihilistzscheUI.RaidPrep.FishingFood"] = "34832",
+        ["NihilistzscheUI.RaidPrep.TheWarWithinAugmentRunes"] = "224572",
+        ["NihilistzscheUI.RaidPrep.TheWarWithinFood"] = "222733,222732,222720,222727,222713,222725,222711,222726,222712,222724,222710,222728,222731,222729,222730,222735,222716,222714,222715,222717,222721,222723,222719,222736,222718,222722,235853,233118",
+        ["NihilistzscheUI.RaidPrep.TheWarWithinFlasks"] = "212283,212280,212274,212277,212271,212301,212310,212316,212307,212313.212292,212289,212295,212298",
+        ["NihilistzscheUI.RaidPrep.TheWarWithinOils"] = "222510,222504,222507,224107,224113,224110",
+        ["NihilistzscheUI.RaidPrep.TheWarWithinVantus"] = "226036,232936",
     })
 end
 

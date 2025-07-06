@@ -23,7 +23,7 @@ function CDB.RegisterRepTags()
         local data = C_Reputation_GetWatchedFactionData()
         if not data then return "" end
 
-        local isFriend, friendData = NUI.GetFriendshipInfo(data.factionID)
+        local isFriend, _, rankData = NUI.GetFriendshipInfo(data.factionID)
         if NUI.GetParagonInfo(data.factionID) then return "Paragon" end
         if E.Retail then
             if not isFriend and C_Reputation_IsMajorFaction(data.factionID) then
@@ -32,7 +32,8 @@ function CDB.RegisterRepTags()
                 return RENOWN_LEVEL_LABEL:format(majorFactionData.renownLevel)
             end
         end
-        return isFriend and friendData and friendData.reaction or _G["FACTION_STANDING_LABEL" .. data.reaction]
+---@diagnostic disable-next-line: need-check-nil
+        return isFriend and rankData.currentLevel or _G["FACTION_STANDING_LABEL" .. data.reaction]
     end, "UPDATE_FACTION")
     NT:RegisterTag("rep:account-wide", function()
         local watchedData = C_Reputation_GetWatchedFactionData()

@@ -7,7 +7,7 @@ local ES = NUI.EnhancedShadows
 
 local UnitAffectingCombat = _G.UnitAffectingCombat
 local CreateFrame = _G.CreateFrame
-local RegisterStateDriver = _G.RegisterStateDriver
+local RegisterAttributeDriver = _G.RegisterAttributeDriver
 local tremove = _G.tremove
 local GameTooltip = _G.GameTooltip
 local GameTooltip_Hide = _G.GameTooltip_Hide
@@ -109,7 +109,7 @@ function CB:CreateBar()
     bar:SetHeight(_G.ElvUI_Bar1Button1:GetHeight())
     bar:SetPoint("CENTER")
     E:CreateMover(bar, "CooldownBarMover", "Cooldown Bar", nil, nil, nil, "ALL,ACTIONBARS,NIHILISTZSCHEUI")
-    RegisterStateDriver(bar, "visibility", "[petbattle] hide; show")
+    RegisterAttributeDriver(bar, "state-visibility", "[petbattle] hide; show")
     bar:SetTemplate("Transparent")
     bar:SetAlpha(self.db.alpha)
     if ES then
@@ -199,7 +199,7 @@ end
 function CB:OnFrameUpdate(t)
     self.delta = self.delta + t
 
-    if self.delta < 0.05 then return end
+    if self.delta < 5 then return end
 
     self.delta = 0
 

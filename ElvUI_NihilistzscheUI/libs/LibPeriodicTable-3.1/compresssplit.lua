@@ -1,33 +1,33 @@
 -- (c) 2007 Nymbia.  see LGPLv2.1.txt for full details.
 local sets = {}
 local function update(filename)
-    print("updating file:", filename)
-    local f = assert(io.open(filename, "r"))
-    local file = f:read("*all")
-    f:close()
-    local f = assert(io.open(filename, "w"))
-    for line in string.gmatch(file, "([^\n]-\n)") do
-        local setname, data = string.match(line, '\t%[%"([^\n^"]+)%"%][^\n]-=[^\n]-"([^\n]-)",')
-        if setname and sets[setname] then
-            f:write('\t["' .. setname .. '"]="' .. sets[setname] .. '",\n')
-        else
-            if setname then
-                print("Set " .. setname .. " not found in latest data.")
-            end
-            f:write(line)
-        end
-    end
-    f:close()
+	print("updating file:", filename)
+	local f = assert(io.open(filename, "r"))
+	local file = f:read("*all")
+	f:close()
+	local f = assert(io.open(filename, "w"))
+	for line in string.gmatch(file, '([^\n]-\n)') do
+		local setname, data = string.match(line, '\t%[%"([^\n^"]+)%"%][^\n]-=[^\n]-"([^\n]-)",')
+		if setname and sets[setname] then
+			f:write('\t["'..setname..'"]="'..sets[setname]..'",\n')
+		else
+			if setname then
+				print("Set "..setname.." not found in latest data.")
+			end
+			f:write(line)
+		end
+	end
+	f:close()
 end
 local f = assert(io.open("data.lua", "r"))
 local file = f:read("*all")
 f:close()
 
-for line in string.gmatch(file, "([^\n]-\n)") do
-    local setname, data = string.match(line, '\t%[%"([^\n^"]+)%"%][^\n]-=[^\n]-"([^\n]-)",')
-    if data then
-        sets[setname] = data
-    end
+for line in string.gmatch(file, '([^\n]-\n)') do
+	local setname, data = string.match(line, '\t%[%"([^\n^"]+)%"%][^\n]-=[^\n]-"([^\n]-)",')
+	if data then
+		sets[setname] = data
+	end
 end
 
 update("./LibPeriodicTable-3.1-ClassSpell/LibPeriodicTable-3.1-ClassSpell.lua")

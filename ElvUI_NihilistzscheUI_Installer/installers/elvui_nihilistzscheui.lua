@@ -191,7 +191,7 @@ function NI:NihilistzscheUIGlobalNameplateSetup()
                 tags = {
                     name = "[pbuf:qualitycolor][pbuf:name]",
                     level = "[pbuf:qualitycolor][pbuf:level]",
-                    title = "[pbuf:breed]",
+                    title = "[pbuf:breedicon][pbuf:breed]",
                     health = "[pbuf:health:percent]",
                     power = "[pbuf:xp:current-max-percent]",
                 },

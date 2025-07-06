@@ -959,8 +959,8 @@ function NI:ElvUISetup(role, isSpec)
     }
     self:EDB().datatexts.panels.NUI_DataPanel_1 = {
         enable = true,
-        "NihilistzscheUI Account Item Level",
-        "NihilistzscheUI Heirloom Upgrade Cost",
+        "Account Item Level",
+        "Heirloom Upgrade Cost",
         "LDB_Broker_TimeToExecute_kill",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_2 = {
@@ -971,7 +971,7 @@ function NI:ElvUISetup(role, isSpec)
     }
     self:EDB().datatexts.panels.NUI_DataPanel_3 = {
         enable = true,
-        "NihilistzscheUI Version",
+        "Version",
     }
     self:EDB().datatexts.panels.NUI_DataPanel_4 = {
         enable = true,
@@ -981,7 +981,7 @@ function NI:ElvUISetup(role, isSpec)
     }
     self:EDB().datatexts.panels.NUI_DataPanel_5 = {
         enable = true,
-        "NihilistzscheUI Heritage Armor Tracker",
+        "Heritage Armor Tracker",
         "LDB_DungeonHelper",
         "WarMode",
     }
@@ -1003,7 +1003,7 @@ function NI:ElvUISetup(role, isSpec)
     }
     self:EDB().datatexts.panels.DTB2_NihilistzscheUIUR = {
         enable = true,
-        [1] = "NihilistzscheUI Pet Challenge Tracker",
+        [1] = "Pet Challenge Tracker",
     }
     local bar7enabled = true
     if

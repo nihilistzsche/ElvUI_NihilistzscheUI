@@ -5,15 +5,14 @@ local DBN = NUI.DataBarNotifier
 local COMP = NUI.Compatibility
 
 local REP = DBN:NewNotifier("Reputation")
-local DB
+local DB = E.DataBars
+local SDB
 
-local GetNumFactions = _G.C_Reputation.GetNumFactions
-local GetFactionDataByIndex = _G.C_Reputation.GetFactionDataByIndex
+local C_Reputation_GetNumFactions = _G.C_Reputation.GetNumFactions
+local C_Reputation_GetFactionDataByIndex = _G.C_Reputation.GetFactionDataByIndex
 local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
 local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
 local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
-local C_GossipInfo_GetFriendshipReputation = _G.C_GossipInfo.GetFriendshipReputation
-local C_GossipInfo_GetFriendshipReputationRanks = _G.C_GossipInfo.GetFriendshipReputationRanks
 local C_MajorFactions_GetMajorFactionData = E.Retail and _G.C_MajorFactions.GetMajorFactionData
 local C_MajorFactions_HasMaximumRenown = E.Retail and _G.C_MajorFactions.HasMaximumRenown
 
@@ -60,25 +59,23 @@ end
 
 function REP:ScanFactions()
     local db = self:GetDB()
-    local numFactions = GetNumFactions()
+    local numFactions = C_Reputation_GetNumFactions()
     local standingID
     for i = 1, numFactions do
-        local factionData = GetFactionDataByIndex(i)
+        local factionData = C_Reputation_GetFactionDataByIndex(i)
         if factionData and not (factionData.isHeader or factionData.isHeaderWithRep) then
             local barValue = factionData.currentStanding
             local factionID = factionData.factionID
             local hasParagonReward = false
             local isParagon = C_Reputation_IsFactionParagon(factionID)
             local isMajorFaction = E.Retail and C_Reputation_IsMajorFaction(factionID)
-            local friendData = C_GossipInfo_GetFriendshipReputation(factionID)
-            local isFriend = friendData and friendData.friendshipFactionID ~= 0
+            local isFriend, friendData, rankData = NUI.GetFriendshipInfo(factionID)
             if isParagon then
                 local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
                 barValue = currentValue % threshold
                 hasParagonReward = hasRewardPending
             elseif isFriend then
                 barValue = friendData.standing
-                local rankData = C_GossipInfo_GetFriendshipReputationRanks(friendData.friendshipFactionID)
                 standingID = rankData.currentLevel
             elseif isMajorFaction then
                 local majorFactionData = C_MajorFactions_GetMajorFactionData(factionID)
@@ -105,8 +102,8 @@ end
 
 function REP:Initialize()
     if COMP.SLE then
-        if not DB then DB = _G["ElvUI_SLE"][1].DataBars or _G["ElvUI_SLE"][1]:GetModule("DataBars") end
-        local Icon = DB.Icons.Rep
+        if not SDB then SDB = _G["ElvUI_SLE"][1].DataBars or _G["ElvUI_SLE"][1]:GetModule("DataBars") end
+        local Icon = SDB.Icons.Rep
         self.textureMarkup = "|T" .. Icon .. ":12|t"
     end
     self:InitializeDB()
@@ -137,26 +134,24 @@ function REP:Notify()
     local chatframe = _G["ChatFrame" .. tonumber(DBN.db.repchatframe)]
 
     local db = self:GetDB()
-    local tempfactions = GetNumFactions()
+    local tempfactions = C_Reputation_GetNumFactions()
     if tempfactions > db.numFactions then
         self:ScanFactions()
         db.numFactions = tempfactions
     end
     for factionIndex = 1, tempfactions do
-        local factionData = GetFactionDataByIndex(factionIndex)
+        local factionData = C_Reputation_GetFactionDataByIndex(factionIndex)
         if factionData then
             local barValue = factionData.currentStanding
             local barMin = factionData.currentReactionThreshold
             local barMax = factionData.nextReactionThreshold
             local factionID = factionData.factionID
             local standingID = factionData.reaction
-            local _, friendData = xpcall(C_GossipInfo_GetFriendshipReputation, E.noop, factionID)
-            local isFriend = friendData and friendData.friendshipFactionID ~= 0
+            local isFriend, friendData, rankData = NUI.GetFriendshipInfo(factionID)
             local friendID, friendRep
             local isParagon = false
             local hasParagonReward = false
             local isMajorFaction = false
-            local rankData
             local name = factionData.name
 
             if factionID and C_Reputation_IsFactionParagon(factionID) then
@@ -178,7 +173,6 @@ function REP:Notify()
                 isMajorFaction = true
             end
             if isFriend and not isParagon then
-                rankData = C_GossipInfo_GetFriendshipReputationRanks(friendData.friendshipFactionID)
                 barMin, barMax, barValue =
                     friendData.reactionThreshold,
                     friendData.nextThreshold or friendData.reactionThreshold,
@@ -255,8 +249,14 @@ function REP:Notify()
                             color = E:RGBToHex(r, g, b)
                             basecolor = color
                         elseif isFriend then
-                            local offset = standingmax - rankData.maxLevel
-                            local _color = FACTION_BAR_COLORS[rankData.currentLevel + offset]
+                            local offset = 0
+                            if rankData.maxLevel < #DB.db.colors.factionColors then
+                                offset = #DB.db.colors.factionColors - rankData.maxLevel
+                            end
+                            local _color = DB.db.colors.factionColors[math.min(
+                                #DB.db.colors.factionColors,
+                                rankData.currentLevel + offset
+                            )]
                             color = E:RGBToHex(_color.r, _color.g, _color.b)
                             basecolor = color
                         elseif isMajorFaction then

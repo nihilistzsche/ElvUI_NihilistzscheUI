@@ -3,18 +3,16 @@ local _G = _G
 local E, L, V, P, G = _G.unpack(_G.ElvUI)
 local CH = E.Chat
 local DB = E.DataBars
+local CallbackHandler = _G.LibStub("CallbackHandler-1.0")
 
 engine.oUF = _G.ElvUF
 
----@class NUI : AceAddon-3.0, AceEvent-3.0, AceHook-3.0
+---@class NUI : AceAddon-3.0, AceEvent-3.0, AceHook-3.0, CallbackHandler-1.0
 local NUI = E.Libs.AceAddon:NewAddon(addon, "AceEvent-3.0", "AceHook-3.0")
+NUI.callbacks = NUI.callbacks or CallbackHandler:New(NUI)
 
 local LibStub = _G.LibStub
 local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
-local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
-local ElvUI_CPU = _G.ElvUI_CPU
-local hooksecurefunc = _G.hooksecurefunc
-local geterrorhandler = _G.geterrorhandler
 
 NUI.Libs = {
     NT = LibStub("LibNihilistzscheUITags-1.0"),
@@ -108,36 +106,43 @@ _G.BINDING_HEADER_NIHILISTZSCHEUI = "|cffff2020NihilistzscheUI|r"
 -- GLOBALS: ElvDB, LibStub
 
 NUI.RegisteredModules = {}
-function NUI:RegisterModule(name)
+NUI.DelayedRegisteredModules = {}
+
+function NUI:RegisterModule(name, delayed)
     if self.initialized then
         local module = self:GetModule(name)
-        if module and module.Initialize then
-            xpcall(function() module:Initialize() end, geterrorhandler())
-            if ElvUI_CPU then ElvUI_CPU:RegisterPluginModule("ElvUI_NihilistzscheUI", name, module) end
-        end
+        if module and module.Initialize then module:Initialize() end
     end
     self.RegisteredModules[#self.RegisteredModules + 1] = name
+    if not self.initialized and delayed then
+        self.DelayedRegisteredModules[#self.DelayedRegisteredModules + 1] = name
+    end
 end
 
 function NUI:GetRegisteredModules() return self.RegisteredModules end
-
-function NUI:ADDON_LOADED(addonName)
-    if addonName == "ElvUI_CPU" then
-        ElvUI_CPU:RegisterPlugin(addon)
-        for _, moduleName in pairs(self.RegisteredModules) do
-            ElvUI_CPU:RegisterPluginModule(addon, moduleName, NUI:GetModule(moduleName))
-        end
-    end
-end
 
 function NUI:DebugPrint(...)
     if self.Debug then print(...) end
 end
 
-function NUI:InitializeModules()
-    for _, moduleName in next, self.RegisteredModules do
-        local module = self:GetModule(moduleName)
-        if module.Initialize then xpcall(function() module:Initialize() end, geterrorhandler()) end
+do
+    function NUI:InitializeModules()
+        for _, moduleName in ipairs(self.RegisteredModules) do
+            local module = self:GetModule(moduleName)
+
+            if module.Initialize and not tContains(self.DelayedRegisteredModules, moduleName) then
+                module:Initialize()
+            end
+        end
+    end
+
+    function NUI:DelayedInitialize()
+        for _, moduleName in ipairs(self.DelayedRegisteredModules) do
+            local module = self:GetModule(moduleName)
+
+            -- Whgy would a module say it was delayed without Initialize, but just to be safe
+            if module.Initialize then module:Initialize() end
+        end
     end
 end
 
@@ -156,9 +161,10 @@ function NUI:Initialize()
 
     self:AddMoverCategories()
     self:SetupProfileCallbacks()
-    self:InitializeModules()
+    NUI:InitializeModules()
     self.Installer:Initialize()
-    if self.Compatibility.DEV then self:RegisterEvent("ADDON_LOADED") end
+
+    C_Timer.After(3, function() NUI:DelayedInitialize() end)
 end
 
 E.Libs.EP:HookInitialize(NUI, NUI.Initialize)

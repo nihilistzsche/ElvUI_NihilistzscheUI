@@ -2,8 +2,8 @@
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 if E.Classic then return end
 
-local EM = NUI.UtilityBars.EquipmentManagerBar
 local NUB = NUI.UtilityBars
+local EM = NUB.EquipmentManagerBar
 local LSM = E.Libs.LSM
 
 local CreateFrame = _G.CreateFrame

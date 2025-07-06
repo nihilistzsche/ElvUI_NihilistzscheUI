@@ -165,11 +165,12 @@ _G.SLASH_RMILVLWATCH1 = "/rmilvlwatch"
 _G.SlashCmdList.RMILVLWATCH = RmTrackedCharacter
 
 DT:RegisterDatatext(
-    "NihilistzscheUI Account Item Level",
+    "Account Item Level",
     "NihilistzscheUI",
     { "PLAYER_ENTERING_WORLD", "PLAYER_EQUIPMENT_CHANGED", "PLAYER_AVG_ITEM_LEVEL_UPDATE" },
     OnEvent,
     UpdateDisplay,
+    nil,
     OnEnter,
     nil,
     nil,

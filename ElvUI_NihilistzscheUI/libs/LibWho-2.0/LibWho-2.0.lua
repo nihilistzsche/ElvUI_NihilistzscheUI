@@ -977,16 +977,16 @@ function lib:ProcessWhoResults()
     local num
     self.Total, num = C_FriendList.GetNumWhoResults()
     for i = 1, num do
-        local charname, guildname, level, race, class, zone, nonlocalclass, sex = GetWhoInfo(i)
+        local whoInfo = C_FriendList.GetWhoInfo(i)
         self.Result[i] = {
-            Name = charname,
-            Guild = guildname,
-            Level = level,
-            Race = race,
-            Class = class,
-            Zone = zone,
-            NoLocaleClass = nonlocalclass,
-            Sex = sex
+            Name = whoInfo.fullName,
+            Guild = whoInfo.fullGuildName,
+            Level = whoInfo.level,
+            Race = whoInfo.raceStr,
+            Class = whoInfo.classStr,
+            Zone = whoInfo.area,
+            NoLocaleClass = whoInfo.filename,
+            Sex = whoInfo.gender
         }
     end
 

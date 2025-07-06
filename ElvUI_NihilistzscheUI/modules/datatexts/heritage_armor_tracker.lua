@@ -44,7 +44,7 @@ HATDT.UnlockRequirements = {
 function HATDT:SortUnlockTable()
     local sorted_allied = {}
     local sorted_core = {}
-    local aoffset = 5
+    local aoffset = 6
     local coffset = 4
     for k, info in next, self.UnlockRequirements do
         local isMyFaction = C_CreatureInfo_GetFactionInfo(k).groupTag == E.myfaction
@@ -148,7 +148,7 @@ function HATDT:Initialize()
 end
 
 DT:RegisterDatatext(
-    "NihilistzscheUI Heritage Armor Tracker",
+    "Heritage Armor Tracker",
     "NihilistzscheUI",
     { "PLAYER_ENTERING_WORLD", "ACHIEVEMENT_EARNED", "TRANSMOG_COLLECTION_LOADED", "TRANSMOG_COLLECTION_UPDATED" },
     HATDT.Update,

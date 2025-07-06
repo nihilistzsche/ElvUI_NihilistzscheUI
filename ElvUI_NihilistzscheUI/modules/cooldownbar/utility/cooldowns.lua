@@ -21,9 +21,9 @@ end
 function CB:ItemIsOnCooldown(itemID)
     if self.db.blacklist.items[itemID] then return false end
 
-    local start, duration = C_Container_GetItemCooldown(itemID)
+    local start, duration, enable = C_Container_GetItemCooldown(itemID)
 
-    if start ~= 0 and duration > 1.5 then return true end
+    if enable and start and duration and start ~= 0 and duration > 1.5 then return true end
 
     return false
 end

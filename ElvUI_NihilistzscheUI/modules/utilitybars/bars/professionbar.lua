@@ -2,8 +2,8 @@
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local LSM = E.Libs.LSM
 
-local PB = NUI.UtilityBars.ProfessionBar
 local NUB = NUI.UtilityBars
+local PB = NUB.ProfessionBar
 
 local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
 local GetProfessionInfo = _G.GetProfessionInfo
