@@ -30,20 +30,6 @@ function REP:InitializeDB()
 end
 
 function REP:GetDB() return E.global.nihilistzscheui.reputations[self.dbKey] end
-function REP:CheckMetatable(db)
-    if not getmetatable(db) then
-        setmetatable(db, {
-            __eq = function(a, b)
-                return a.Standing == b.Standing
-                    and a.Value == b.Value
-                    and a.HasParagonReward == b.HasParagonReward
-                    and a.WasParagon == b.WasParagon
-                    and a.IsMajorFaction == b.IsMajorFaction
-                    and a.IsFriend == b.IsFriend
-            end,
-        })
-    end
-end
 
 function REP:UpdateDBValues(name, values)
     local db = self:GetDB()
@@ -51,9 +37,9 @@ function REP:UpdateDBValues(name, values)
     if not db[name] then
         db[name] = values
     else
-        self:CheckMetatable(db[name])
-        self:CheckMetatable(values)
-        if db[name] ~= values then db[name] = values end
+        for k, v in pairs(values) do
+            db[name][k] = v
+        end
     end
 end
 
@@ -70,6 +56,7 @@ function REP:ScanFactions()
             local isParagon = C_Reputation_IsFactionParagon(factionID)
             local isMajorFaction = E.Retail and C_Reputation_IsMajorFaction(factionID)
             local isFriend, friendData, rankData = NUI.GetFriendshipInfo(factionID)
+            standingID = factionData.reaction
             if isParagon then
                 local currentValue, threshold, _, hasRewardPending = C_Reputation_GetFactionParagonInfo(factionID)
                 barValue = currentValue % threshold
