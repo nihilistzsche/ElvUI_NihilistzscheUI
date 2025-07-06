@@ -32,7 +32,7 @@ function CDB.RegisterRepTags()
                 return RENOWN_LEVEL_LABEL:format(majorFactionData.renownLevel)
             end
         end
----@diagnostic disable-next-line: need-check-nil
+        ---@diagnostic disable-next-line: need-check-nil
         return isFriend and rankData.currentLevel or _G["FACTION_STANDING_LABEL" .. data.reaction]
     end, "UPDATE_FACTION")
     NT:RegisterTag("rep:account-wide", function()
