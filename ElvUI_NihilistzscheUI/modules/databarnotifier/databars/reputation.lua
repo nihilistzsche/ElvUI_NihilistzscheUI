@@ -186,7 +186,7 @@ function REP:Notify()
                 local diff = barValue - db[name].Value
                 local skipMessage = false
                 if diff ~= 0 then
-                    if standingID ~= db[name].Standing or hasParagonReward ~= db[name].HasParagonReward then
+                    if standingID > db[name].Standing or hasParagonReward ~= db[name].HasParagonReward then
                         local newfaction = friendID and friendID ~= 0 and friendRep
                             or _G["FACTION_STANDING_LABEL" .. standingID]
 
@@ -268,28 +268,32 @@ function REP:Notify()
                             color = E:RGBToHex(_color.r, _color.g, _color.b)
                             basecolor = E:RGBToHex(_basecolor.r, _basecolor.g, _basecolor.b)
                         end
-                        chatframe:AddMessage(
-                            self:GetParent():GenerateNotification(
-                                self.textureMarkup,
-                                basecolor,
-                                name,
-                                change,
-                                remaining,
-                                color,
-                                nextstanding,
-                                repetitions
+                        if repetitions >= 1 then
+                            chatframe:AddMessage(
+                                self:GetParent():GenerateNotification(
+                                    self.textureMarkup,
+                                    basecolor,
+                                    name,
+                                    change,
+                                    remaining,
+                                    color,
+                                    nextstanding,
+                                    repetitions
+                                )
                             )
-                        )
+                        end
                     end
 
                     local values = {
-                        Standing = isParagon and 999 or standingID,
                         Value = barValue,
                         HasParagonReward = hasParagonReward,
                         WasParagon = isParagon,
                         IsMajorFaction = isMajorFaction,
                         IsFriend = isFriend,
                     }
+                    if isParagon or standingID > db[name].Standing then
+                        values.Standing = isParagon and 999 or standingID
+                    end
                     self:UpdateDBValues(name, values)
                 end
             end
