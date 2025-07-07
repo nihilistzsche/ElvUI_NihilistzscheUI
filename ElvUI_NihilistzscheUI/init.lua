@@ -36,6 +36,7 @@ NUI.ShortTitle = "|cffff2020NihiUI|r"
 
 NUI.AnimatedDataBars = NUI:NewModule("AnimatedDataBars")
 NUI.AutoLog = NUI:NewModule("AutoLog", "AceEvent-3.0")
+NUI.BagEquipmentSetIcon = NUI:NewModule("BagEquipmentSetIcon")
 NUI.ButtonStyle = NUI:NewModule("ButtonStyle")
 NUI.Compatibility = NUI:NewModule("Compatibility")
 NUI.CooldownBar = NUI:NewModule("CooldownBar", "AceTimer-3.0", "AceEvent-3.0")
@@ -161,8 +162,10 @@ function NUI:Initialize()
 
     self:AddMoverCategories()
     self:SetupProfileCallbacks()
-    NUI:InitializeModules()
-    self.Installer:Initialize()
+    self:InitializeModules()
+    if self.Installer then
+        self.Installer:Initialize()
+    end
 
     C_Timer.After(3, function() NUI:DelayedInitialize() end)
 end

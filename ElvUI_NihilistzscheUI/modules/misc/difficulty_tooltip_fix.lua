@@ -23,9 +23,13 @@ function DTF.OnEnter()
 
     DT.tooltip:SetText(L["Current Difficulties:"])
     DT.tooltip:AddLine(" ")
-    if dungeonDifficultyID then DT.tooltip:AddLine(("%s %s"):format(DungeonTexture, DiffLabel[dungeonDifficultyID])) end
-    if raidDifficultyID then DT.tooltip:AddLine(("%s %s"):format(RaidTexture, DiffLabel[raidDifficultyID])) end
-    if legacyRaidDifficultyID then
+    if dungeonDifficultyID and DiffLabel[dungeonDifficultyID] then
+        DT.tooltip:AddLine(("%s %s"):format(DungeonTexture, DiffLabel[dungeonDifficultyID]))
+    end
+    if raidDifficultyID and DiffLabel[raidDifficultyID] then
+        DT.tooltip:AddLine(("%s %s"):format(RaidTexture, DiffLabel[raidDifficultyID]))
+    end
+    if legacyRaidDifficultyID and DiffLabel[legacyRaidDifficultyID] then
         DT.tooltip:AddLine(("%s %s"):format(LegacyTexture, DiffLabel[legacyRaidDifficultyID]))
     end
     DT.tooltip:Show()

@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="animateddatabars_options.lua"/>
   <Script file="autolog_options.lua"/>
+  <Script file="bagequipmentseticon_options.lua"/>
   <Script file="buttonstyle_options.lua"/>
   <Script file="cardinalpoints_options.lua"/>
   <Script file="cooldownbar_options.lua"/>

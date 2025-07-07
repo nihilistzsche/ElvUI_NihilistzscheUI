@@ -16,7 +16,7 @@ NP.autolog = {
     raid = true,
 }
 NP.bagequipmentseticon = {
-    enable = true,
+    enabled = true,
 }
 NP.buttonStyle = {
     enabled = true,

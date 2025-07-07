@@ -8,24 +8,32 @@ local C_EquipmentSet_GetEquipmentSetIDs = _G.C_EquipmentSet.GetEquipmentSetIDs
 local C_EquipmentSet_GetItemIDs = _G.C_EquipmentSet.GetItemIDs
 local C_EquipmentSet_GetEquipmentSetInfo = _G.C_EquipmentSet.GetEquipmentSetInfo
 
-function BESI:UpdateSlot(bagID, slotID)
-    if not self.db.enabled then return end
+function BESI:UpdateSlot(bagFrame, bagID, slotID)
     if
-        (self.Bags[bagID] and self.Bags[bagID].numSlots ~= C_Container_GetContainerNumSlots(bagID))
-        or not self.Bags[bagID]
-        or not self.Bags[bagID][slotID]
+        (bagFrame.Bags[bagID] and bagFrame.Bags[bagID].numSlots ~= C_Container_GetContainerNumSlots(bagID))
+        or not bagFrame.Bags[bagID]
+        or not bagFrame.Bags[bagID][slotID]
     then
         return
     end
 
-    local slot = self.Bags[bagID][slotID]
+    local slot = bagFrame.Bags[bagID][slotID]
     if not slot then return end
 
+    if not BESI.db.enabled then
+        if slot.eqSetIcon then slot.eqSetIcon:Hide() end
+        return
+    end
+
     if not slot.eqSetIcon then
-        local eqSetIcon = slot:CreateTexture(nil, "OVERLAY")
-        eqSetIcon:Size(20, 20)
-        eqSetIcon:Point("BOTTOMRIGHT")
-        eqSetIcon:SetTexCoord(E.TexCoords)
+        local eqSetIcon = CreateFrame("Frame", nil, slot)
+        local tex = eqSetIcon:CreateTexture(nil, "OVERLAY")
+        eqSetIcon:SetTemplate()
+        eqSetIcon:Size(14, 14)
+        eqSetIcon:Point("TOPRIGHT", -2, -2)
+        tex:SetTexCoord(unpack(E.TexCoords))
+        tex:SetInside()
+        eqSetIcon.texture = tex
         slot.eqSetIcon = eqSetIcon
     end
 
@@ -43,27 +51,16 @@ function BESI:UpdateSlot(bagID, slotID)
         end
     end
     if setIcon then
-        eqSetIcon:SetTexture(setIcon)
+        eqSetIcon.texture:SetTexture(setIcon)
         eqSetIcon:Show()
     else
         eqSetIcon:Hide()
     end
 end
 
-function BESI:HookElvUIBags()
-    if not B.BagFrames then return end
-    for _, bagFrame in pairs(B.BagFrames) do
-        for _, bagID in pairs(bagFrame.BagIDs) do
-            for slotID = 1, C_Container_GetContainerNumSlots(bagID) do
-                self:UpdateSlot(bagID, slotID)
-            end
-        end
-    end
-end
-
 function BESI:Initialize()
     NUI:RegisterDB(self, "bagequipmentseticon")
-    hooksecurefunc(B, "Layout", function(self) BESI:HookElvUIBags() end)
+    hooksecurefunc(B, "UpdateSlot", BESI.UpdateSlot)
 end
 
 NUI:RegisterModule(BESI:GetName())

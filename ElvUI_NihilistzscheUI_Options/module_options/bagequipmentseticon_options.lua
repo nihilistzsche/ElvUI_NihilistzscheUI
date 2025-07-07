@@ -1,14 +1,18 @@
 ---@class NUI
-local NUI, _, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
+local NUI, E, L = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local BESI = NUI.BagEquipmentSetIcon
-if not BESI then return end
+local B = E.Bags
 
 function BESI:GenerateOptions()
     local options = {
         type = "group",
         name = L.BagEquipmentSetIcon,
         get = function(info) return self.db[info[#info]] end,
-        set = function(info, value) self.db[info[#info]] = value end,
+        set = function(info, value)
+            self.db[info[#info]] = value
+            B:UpdateAllSlots(B.BagFrame)
+            B:UpdateAllSlots(B.BankFrame)
+        end,
         args = {
             header = {
                 order = 1,
