@@ -163,9 +163,7 @@ function NUI:Initialize()
     self:AddMoverCategories()
     self:SetupProfileCallbacks()
     self:InitializeModules()
-    if self.Installer then
-        self.Installer:Initialize()
-    end
+    if self.Installer then self.Installer:Initialize() end
 
     C_Timer.After(3, function() NUI:DelayedInitialize() end)
 end
