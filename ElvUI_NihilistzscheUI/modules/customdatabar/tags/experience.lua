@@ -180,7 +180,7 @@ f:RegisterEvent("QUEST_LOG_UPDATE")
 f:RegisterEvent("QUEST_COMPLETE")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function(self, event)
-    if event == "PLAYER_ENTERING_WORLD" then self:UnregisterEvent("PLAAYER_ENTERING_WORLD") end
+    if event == "PLAYER_ENTERING_WORLD" then self:UnregisterEvent("PLAYER_ENTERING_WORLD") end
     CDB:UpdateTag("experience")
 end)
 f:Show()
