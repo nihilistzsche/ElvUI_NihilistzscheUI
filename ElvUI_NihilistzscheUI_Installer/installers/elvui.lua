@@ -1189,6 +1189,7 @@ function NI:ElvUISetup(role, isSpec)
     self:SaveMoverPosition("MicrobarMover", "TOPLEFT", E.UIParent, "TOPLEFT", 0, -30)
     self:SaveMoverPosition("VehicleSeatMover", "TOPLEFT", E.UIParent, "TOPLEFT", 490, -45)
     self:SaveMoverPosition("MinimapMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", 0, -30)
+    self:SaveMoverPosition("TopCenterContainerMover", "TOP", E.UIParent, "TOP", 0, -93)
 
     self:SaveMoverPosition("ExperienceBarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 97)
     self:SaveMoverPosition("HonorBarMover", "BOTTOM", E.UIParent, "BOTTOM", 0, 97)

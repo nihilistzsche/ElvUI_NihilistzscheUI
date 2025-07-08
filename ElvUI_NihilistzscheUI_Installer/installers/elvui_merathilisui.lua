@@ -71,7 +71,7 @@ function NI:MerathilisUISetup(isSpec)
     }
 
     self:EDB().mui.bags = {
-        Enable = false,
+        equipOverlay = false,
     }
     self:EDB().mui.autoButtons.bar2 = {
         include = "POTIONSL,FLASKSL,UTILITY,CUSTOM",
