@@ -107,21 +107,7 @@ function CDB:Initialize()
     self.RegisterRepTags()
 
     self:RegisterDataBar("experience", DB.StatusBars.Experience)
-    self:RegisterCustomTagFunction("experience", function()
-        local questXP = NUI:GetCurrentQuestXP() or 0
-        local restedXP = GetXPExhaustion() or 0
-
-        if restedXP > 0 and questXP == 0 then
-            return E.db.databars.experience.noQuestTag
-        elseif questXP > 0 and restedXP == 0 then
-            return E.db.databars.experience.noRestedTag
-        elseif restedXP == 0 and questXP == 0 then
-            return E.db.databars.experience.noQuestNoRestedTag
-        else
-            return E.db.databars.experience.tag
-        end
-    end)
-
+    self:RegisterCustomTagFunction("experience", self.UpdateExperienceTags)
     self:RegisterDataBar("reputation", DB.StatusBars.Reputation)
 
     self:UpdateTag("experience")

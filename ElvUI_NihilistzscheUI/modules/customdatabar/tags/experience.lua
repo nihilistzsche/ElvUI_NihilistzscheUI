@@ -1,5 +1,5 @@
 ---@class NUI
-local NUI = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
+local NUI, E = _G.unpack((select(2, ...))) --Inport: Engine, Locales, ProfileDB, GlobalDB
 local CDB = NUI.CustomDataBar
 local NT = NUI.Libs.NT
 
@@ -157,3 +157,31 @@ function CDB.RegisterExperienceTags()
         "QUEST_ITEM_UPDATE UNIT_QUEST_LOG_CHANGED QUEST_LOG_UPDATE PLAYER_XP_UPDATE UNIT_PORTRAIT_UPDATE PLAYER_ENTERING_WORLD"
     )
 end
+
+function CDB.UpdateExperienceTags()
+    local questXP = NUI:GetCurrentQuestXP() or 0
+    local restedXP = GetXPExhaustion() or 0
+
+    if restedXP > 0 and questXP == 0 then
+        return E.db.databars.experience.noQuestTag
+    elseif questXP > 0 and restedXP == 0 then
+        return E.db.databars.experience.noRestedTag
+    elseif restedXP == 0 and questXP == 0 then
+        return E.db.databars.experience.noQuestNoRestedTag
+    else
+        return E.db.databars.experience.tag
+    end
+end
+
+local f = CreateFrame("Frame")
+f:RegisterEvent("QUEST_ITEM_UPDATE")
+f:RegisterEvent("UNIT_QUEST_LOG_CHANGED")
+f:RegisterEvent("QUEST_LOG_UPDATE")
+f:RegisterEvent("QUEST_COMPLETE")
+f:RegisterEvent("PLAYER_ENTERING_WORLD")
+f:SetScript("OnEvent", function(self, event)
+    if event == "PLAYER_ENTERING_WORLD" then self:UnregisterEvent("PLAAYER_ENTERING_WORLD") end
+    CDB:UpdateTag("experience")
+end)
+f:Show()
+CDB.ExperienceDriveFrame = f
