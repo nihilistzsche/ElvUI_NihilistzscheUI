@@ -79,17 +79,18 @@ NUI.UtilityBars.ProfessionBar = NUI:NewModule("ProfessionBar", "AceHook-3.0", "A
 NUI.UtilityBars.RaidPrepBar = NUI:NewModule("RaidPrepBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
 NUI.VerticalUnitFrames = NUI:NewModule("VerticalUnitFrames", "AceTimer-3.0", "AceEvent-3.0")
 
-if E.Retail or E.Wrath then
-    NUI.SetTransfer = NUI:NewModule("SetTransfer", "AceHook-3.0", "AceEvent-3.0")
-    NUI.UtilityBars.EquipmentManagerBar =
-        NUI:NewModule("EquipmentManagerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+NUI.SetTransfer = NUI:NewModule("SetTransfer", "AceHook-3.0", "AceEvent-3.0")
+NUI.UtilityBars.EquipmentManagerBar =
+    NUI:NewModule("EquipmentManagerBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
+
+if not E.Classic then
+    NUI.PetBattleAutoStart = NUI:NewModule("PetBattleAutoStart", "AceEvent-3.0")
+    NUI.PetBattleNameplates = NUI:NewModule("PetBattleNameplates", "AceEvent-3.0")
+    NUI.PetBattleVerticalUnitFrames = NUI:NewModule("PetBattleVerticalUnitFrames", "AceHook-3.0", "AceEvent-3.0")
 end
 
 if E.Retail then
     NUI.HiddenArtifactTracker = NUI:NewModule("HiddenArtifactTracker", "AceEvent-3.0")
-    NUI.PetBattleAutoStart = NUI:NewModule("PetBattleAutoStart", "AceEvent-3.0")
-    NUI.PetBattleNameplates = NUI:NewModule("PetBattleNameplates", "AceEvent-3.0")
-    NUI.PetBattleVerticalUnitFrames = NUI:NewModule("PetBattleVerticalUnitFrames", "AceHook-3.0", "AceEvent-3.0")
     NUI.RaidCDs = NUI:NewModule("RaidCDs", "AceEvent-3.0")
     NUI.UtilityBars.BaitBar = NUI:NewModule("BaitBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
     NUI.UtilityBars.BobberBar = NUI:NewModule("BobberBar", "AceHook-3.0", "AceTimer-3.0", "AceEvent-3.0")
@@ -147,6 +148,12 @@ do
     end
 end
 
+function NUI:SaveGUID()
+    ElvDB.guidMap = ElvDB.guidMap or {}
+    local key = ("%s-%s"):format(E.myname, E.myrealm)
+    ElvDB.guidMap[key] = E.myguid
+end
+
 function NUI:Initialize()
     self.initialized = true
 
@@ -163,6 +170,9 @@ function NUI:Initialize()
     self:AddMoverCategories()
     self:SetupProfileCallbacks()
     self:InitializeModules()
+    self:SaveGUID()
+
+    self.Migration:CheckMigrations()
     if self.Installer then self.Installer:Initialize() end
 
     C_Timer.After(3, function() NUI:DelayedInitialize() end)

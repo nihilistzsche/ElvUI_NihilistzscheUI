@@ -10,10 +10,6 @@ function NI:SLESetup(isSpec)
         self:EPRV().sle = self:EPRV().sle or {}
         self:EPRV().sle.install_complete = ic
     end
-    if NUI.Lulupeep then
-        self:SLELuluSetup()
-        return
-    end
 
     self:EDB().sle = {
         databars = {

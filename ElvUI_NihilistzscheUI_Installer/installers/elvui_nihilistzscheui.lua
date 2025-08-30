@@ -21,7 +21,7 @@ NI.ClassMountIDs = {
 NI.SpecIDs = {
     DEATHKNIGHT = { 250, 251, 252 },
     DEMONHUNTER = { 577, 581 },
-    -- DRUID = { 102, 103, 104, 105 }, # Not Set
+    -- DRUID = { 102, 103, 104, 105 }, # Not Set (Travel Form)
     -- EVOKER = { 1467, 1468 }, # Manually filled
     HUNTER = { 253, 254, 255 },
     MAGE = { 62, 63, 64 },
@@ -44,6 +44,10 @@ NI.ClassMountFavorites = {
             favFlyer = 262,
             favGround = 496,
         },
+        [1473] = {
+            favFlyer = 262,
+            favGround = 496,
+        },
     },
     WARLOCK = {
         [265] = {
@@ -62,6 +66,7 @@ NI.ClassMountFavorites = {
 }
 
 NI.ClassMountSkyridingFavorite = {
+    DEATHKNIGHT = 866,
     WARLOCK = 416,
 }
 
@@ -258,7 +263,7 @@ function NI:NihilistzscheUISetup(isSpec)
         },
     }
     self:EDB().nihilistzscheui.cooldownBar = {
-        autohide = not NUI.Lulupeep,
+        autohide = true,
     }
     self:EDB().nihilistzscheui.enhancedshadows = {
         shadowcolor = self:Color(),
@@ -285,41 +290,41 @@ function NI:NihilistzscheUISetup(isSpec)
     self:EDB().nihilistzscheui.utilitybars = {
         hideincombat = true,
         baitBar = {
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
         bobberbar = {
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
         equipmentManagerBar = {
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
         engineertoybar = {
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
             toys = {
                 [60854] = false,
             },
         },
         portalBar = {
             enabled = true,
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
         professionBar = {
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
         raidPrPBNar = {
             enabled = true,
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
         specSwitchBar = {
             enabled = true,
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
         toybar = {
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
             buttonsPerRow = 6,
         },
         toolsOfTheTradeBar = {
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
         farmBar = {
             notify = not COMP.LST,
@@ -348,7 +353,7 @@ function NI:NihilistzscheUISetup(isSpec)
     }
 
     self:EDB().nihilistzscheui.vuf = {
-        hideOOC = not NUI.Lulupeep,
+        hideOOC = true,
         units = {
             pettarget = { enabled = false },
             player = {
@@ -369,24 +374,25 @@ function NI:NihilistzscheUISetup(isSpec)
 
     for unit, tbl in pairs(P.nihilistzscheui.vuf.units) do
         for element, etbl in pairs(tbl) do
+            self:EDB().nihilistzscheui.vuf.units[unit] = self:EDB().nihilistzscheui.vuf.units[unit] or {}
+            self:EDB().nihilistzscheui.vuf.units[unit][element] = self:EDB().nihilistzscheui.vuf.units[unit][element]
+                or {}
             if etbl and type(etbl) == "table" and etbl.value and etbl.value.tag then
-                self:EDB().nihilistzscheui.vuf.units[unit] = self:EDB().nihilistzscheui.vuf.units[unit] or {}
-                self:EDB().nihilistzscheui.vuf.units[unit][element] = self:EDB().nihilistzscheui.vuf.units[unit][element]
-                    or {}
                 self:EDB().nihilistzscheui.vuf.units[unit][element].value = self:EDB().nihilistzscheui.vuf.units[unit][element].value
                     or {}
                 self:EDB().nihilistzscheui.vuf.units[unit][element].value.tag = "" .. etbl.value.tag
             end
+            if element == "portrait" then self:EDB().nihilistzscheui.vuf.units[unit][element].paused = false end
         end
     end
-    if not NUI.Lulupeep and COMP.TT then
+    if COMP.TT then
         for unit, tbl in pairs(P.nihilistzscheui.vuf.units) do
             self:EDB().nihilistzscheui.vuf.units[unit].health = {
                 value = { tag = "[healthcolor][health:current-percent][nui:absorbs]" },
             }
         end
     end
-    if not isSpec and NUI.Private and not NUI.Lulupeep then
+    if not isSpec and NUI.Private then
         BuildClassFavorites(self.currentClass)
         self:EPRV().nihilistzscheui = self:EPRV().nihilistzscheui or {}
         if self.ClassMountFavorites[self.currentClass] then

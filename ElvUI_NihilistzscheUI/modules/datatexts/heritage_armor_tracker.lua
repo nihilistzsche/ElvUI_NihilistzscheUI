@@ -33,19 +33,29 @@ HATDT.UnlockRequirements = {
     [6] = { appearance_set = 1829, type = HATDT.CoreRace, order = 2 },
     [9] = { appearance_set = 1977, type = HATDT.CoreRace, order = 3 },
     [22] = { appearance_set = 1976, type = HATDT.CoreRace, order = 3 },
-    [2] = { appearance_set = 2830, type = HATDT.CoreRace, order = 4 },
-    [1] = { appearance_set = 2833, type = HATDT.CoreRace, order = 4 },
+    [2] = { appearance_set = 2833, type = HATDT.CoreRace, order = 4 },
+    [1] = { appearance_set = 2830, type = HATDT.CoreRace, order = 4 },
     [4] = { appearance_set = 3121, type = HATDT.CoreRace, order = 5 },
     [5] = { appearance_set = 3086, type = HATDT.CoreRace, order = 5 },
     [11] = { appearance_set = 3346, type = HATDT.CoreRace, order = 6 },
     [8] = { appearance_set = 3350, type = HATDT.CoreRace, order = 6 },
 }
 
+function HATDT:CalculateOffset(type)
+    local offset = 0
+    for k, info in next, self.UnlockRequirements do
+        if info.type == type then offset = math.max(offset, info.order) end
+    end
+
+    return offset
+end
+
 function HATDT:SortUnlockTable()
     local sorted_allied = {}
     local sorted_core = {}
-    local aoffset = 6
-    local coffset = 4
+    local aoffset = self:CalculateOffset(self.AlliedRace)
+    local coffset = self:CalculateOffset(self.CoreRace)
+
     for k, info in next, self.UnlockRequirements do
         local isMyFaction = C_CreatureInfo_GetFactionInfo(k).groupTag == E.myfaction
         local isAlliedRace = info.type == self.AlliedRace
@@ -59,10 +69,10 @@ end
 
 function HATDT:OnEnter()
     GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-    GameTooltip:SetText("Heritage Armors Obtained", 1, 1, 1)
+    GameTooltip:SetText("Heritage Armors collected", 1, 1, 1)
     GameTooltip:AddLine(" ")
-    local completedTxt = GREEN_FONT_COLOR_CODE .. "Obtained|r"
-    local uncompletedTxt = RED_FONT_COLOR_CODE .. "Unobtained|r"
+    local completedTxt = GREEN_FONT_COLOR_CODE .. "Collected|r"
+    local uncompletedTxt = RED_FONT_COLOR_CODE .. "Uncollected|r"
 
     local GetFactionTexture
     if _G["ElvUI_SLE"] then

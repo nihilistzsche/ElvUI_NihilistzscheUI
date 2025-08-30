@@ -199,7 +199,7 @@ end
 function CB:OnFrameUpdate(t)
     self.delta = self.delta + t
 
-    if self.delta < 5 then return end
+    if self.delta < 0.05 then return end
 
     self.delta = 0
 

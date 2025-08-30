@@ -62,8 +62,8 @@ NP.heritageArmorTrackerDataText = {
     [32] = true, -- Kul Tiran
     [35] = true, -- Vulpera
     [37] = true, -- Mechagnome
-    [84] = true, -- Earthen
-    [85] = true, -- Earthen
+    [84] = true, -- EarthenDwarf
+    [85] = true, -- EarthenDwarf
     [3] = true, -- Dwarf
     [7] = true, -- Gnome
     [10] = true, -- Blood Elf
@@ -657,6 +657,7 @@ NP.vuf = {
                 rotation = 0,
                 xOffset = 0,
                 yOffset = 0,
+                paused = false,
             },
             resurrectindicator = {
                 enabled = true,
@@ -853,6 +854,7 @@ NP.vuf = {
                 rotation = 0,
                 xOffset = 0,
                 yOffset = 0,
+                paused = false,
             },
             phaseindicator = {
                 enabled = true,
@@ -1035,6 +1037,7 @@ NP.vuf = {
                 rotation = 0,
                 xOffset = 0,
                 yOffset = 0,
+                paused = false,
             },
             healPrediction = {
                 enabled = true,
@@ -1129,6 +1132,7 @@ NP.vuf = {
                 rotation = 0,
                 xOffset = 0,
                 yOffset = 0,
+                paused = false,
             },
             healPrediction = {
                 enabled = true,
@@ -1221,6 +1225,7 @@ NP.vuf = {
                 rotation = 0,
                 xOffset = 0,
                 yOffset = 0,
+                paused = false,
             },
             healPrediction = {
                 enabled = true,
@@ -1311,6 +1316,7 @@ NP.vuf = {
                 enabled = true,
                 rotation = 0,
                 camDistanceScale = 1,
+                paused = false,
             },
             healPrediction = {
                 enabled = true,
@@ -1466,6 +1472,7 @@ NP.vuf = {
                 enabled = true,
                 rotation = 0,
                 camDistanceScale = 1,
+                paused = false,
             },
             healPrediction = {
                 enabled = true,
@@ -1556,6 +1563,7 @@ NP.vuf = {
                 enabled = true,
                 rotation = 0,
                 camDistanceScale = 1,
+                paused = false,
             },
             healPrediction = {
                 enabled = true,

@@ -2,6 +2,8 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local SSB = NUI.UtilityBars.SpecSwitchBar
 
+if not SSB then return end
+
 function SSB:GenerateUtilityBarOptions()
     local options = {
         type = "group",

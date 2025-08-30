@@ -253,18 +253,15 @@ function NI:ShouldInstall()
 
     local specProfileTbl
     if
-        not NUI.Lulupeep
-        and (
-            _G.ElvDB.namespaces
-            and _G.ElvDB.namespaces["LibDualSpec-1.0"]
-            and _G.ElvDB.namespaces["LibDualSpec-1.0"].char
-        )
+        _G.ElvDB.namespaces
+        and _G.ElvDB.namespaces["LibDualSpec-1.0"]
+        and _G.ElvDB.namespaces["LibDualSpec-1.0"].char
     then
         specProfileTbl = _G.ElvDB.namespaces["LibDualSpec-1.0"].char[self.baseProfile]
     end
 
     if isSpecProfileClass then
-        if not specProfileTbl then return not NUI.Lulupeep end
+        if not specProfileTbl then return true end
         if not specProfileTbl.enabled then return true end
         local profileBase = E.myLocalizedClass .. " - "
         for i = 1, #NI.ClassSpecProfiles[E.myclass] do
@@ -352,7 +349,7 @@ function NI.BaseElvUISetup()
         FCF_StopDragging(frame)
 
         -- set default Elvui font size
-        local fontSize = NUIIDB.fontSize or (NUI.Lulupeep and 16 or 12)
+        local fontSize = NUIIDB.fontSize or 12
         FCF_SetChatWindowFontSize(nil, frame, fontSize)
         NUIIDB.fontSize = fontSize
         -- rename windows general because moved to chat #3

@@ -8,7 +8,16 @@ local UnitLevel = _G.UnitLevel
 local DBN = NUI.DataBarNotifier
 local COMP = NUI.Compatibility
 local DB
-local XP = DBN:NewNotifier("XP", "XP", "xp", DBN.colors.yellow, NUI.CPW(UnitXP), NUI.CPW(UnitXPMax), NUI.CPW(UnitLevel))
+local XP = DBN:NewNotifier(
+    "XP",
+    "XP",
+    "xp",
+    DBN.colors.yellow,
+    NUI.CPW(UnitXP),
+    NUI.CPW(UnitXPMax),
+    NUI.CPW(UnitLevel),
+    "CHAT_MSG_COMBAT_XP_GAIN"
+)
 
 function XP:Initialize()
     if COMP.SLE then

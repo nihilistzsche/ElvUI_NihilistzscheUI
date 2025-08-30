@@ -2,6 +2,8 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local TB = NUI.UtilityBars.TrackerBar
 
+if not TB then return end
+
 function TB:GenerateUtilityBarOptions()
     local options = {
         type = "group",

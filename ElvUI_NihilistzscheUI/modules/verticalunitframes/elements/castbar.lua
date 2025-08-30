@@ -40,7 +40,7 @@ function VUF:ConstructCastbar(frame)
     vcastbar.PostCastNotInterruptible = UF.PostCastNotInterruptible
     vcastbar.UpdatePipStep = UF.UpdatePipStep
     vcastbar.PostUpdatePip = UF.PostUpdatePip
-    vcastbar.CreatePip = UF.CreatePip
+    vcastbar.CreatePip = UF.BuildPip
 
     vcastbar:SetOrientation("VERTICAL")
     vcastbar:SetFrameStrata(frame.Power:GetFrameStrata())
@@ -97,7 +97,7 @@ function VUF:ConstructCastbar(frame)
     hcastbar.PostCastNotInterruptible = UF.PostCastNotInterruptible
     hcastbar.UpdatePipStep = UF.UpdatePipStep
     hcastbar.PostUpdatePip = UF.PostUpdatePip
-    hcastbar.CreatePip = UF.CreatePip
+    hcastbar.CreatePip = UF.BuildPip
 
     hcastbar.Time = self:ConstructFontString(frame, "hcastbar", hcastbar, "time")
     --hcastbar.Time:SetPoint("BOTTOMRIGHT", hcastbar, "TOPRIGHT", -4, -2)

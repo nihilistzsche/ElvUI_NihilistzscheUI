@@ -2,6 +2,8 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local ETOYB = NUI.UtilityBars.EngineerToyBar
 
+if not ETOYB then return end
+
 local C_ToyBox_GetToyInfo = _G.C_ToyBox.GetToyInfo
 
 function ETOYB:GenerateUtilityBarOptions()

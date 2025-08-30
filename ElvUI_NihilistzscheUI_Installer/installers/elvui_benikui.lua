@@ -71,10 +71,10 @@ function NI:BenikUISetup(isSpec)
         tokens = { enable = false },
         reputation = { enable = false },
         professions = {
-            enable = not NUI.Lulupeep,
+            enable = true,
             combat = false,
             width = 414,
-            mouseover = not NUI.Lulupeep,
+            mouseover = true,
         },
     }
     self:EDB().benikui.misc = {

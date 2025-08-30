@@ -48,16 +48,10 @@ function NI:InstallForClass(class)
     local role = type(self.ClassSpecProfiles[class]) == "table" and self.ClassSpecProfiles[class][1]
         or self.ClassSpecProfiles[class]
     self.currentRole = role
-    if NUI.Lulupeep then
-        self:ElvUILuluSetup()
-    else
-        self:ElvUISetup(role)
-    end
+    self:ElvUISetup(role)
     self:NameplateSetup()
     self:NihilistzscheUISetup()
     self:RunAddOnInstallers()
-    local NM = NUI.Migration
-    NM:CheckMigrations()
 end
 
 function NI:SetupForCharacters()
@@ -76,7 +70,7 @@ function NI:SetupForCharacters()
                 self:AddProfileKey(db, self.baseProfile, self.profileKey)
             end
             self:RunCharacterSpecificAddOnInstallers()
-            if not NUI.Lulupeep then self:SetupSpecProfiles() end
+            self:SetupSpecProfiles()
         end
     end
 end

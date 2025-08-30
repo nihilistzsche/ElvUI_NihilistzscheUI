@@ -15,6 +15,7 @@ function NI:ElvUINonHealerSetup()
             overlay = true,
             enable = true,
             fullOverlay = true,
+            paused = true,
         },
     }
     self:EDB().unitframe.units.raid = {
@@ -25,6 +26,7 @@ function NI:ElvUINonHealerSetup()
             overlay = true,
             enable = true,
             fullOverlay = true,
+            paused = true,
         },
     }
     self:EDB().unitframe.units.party = {
@@ -37,6 +39,7 @@ function NI:ElvUINonHealerSetup()
             overlay = true,
             enable = true,
             fullOverlay = true,
+            paused = true,
         },
     }
 
@@ -100,6 +103,7 @@ function NI:ElvUIHealerSetup()
             overlay = true,
             enable = true,
             fullOverlay = true,
+            paused = true,
         },
     }
     self:EDB().unitframe.units.raid40 = {
@@ -115,6 +119,7 @@ function NI:ElvUIHealerSetup()
             overlay = true,
             enable = true,
             fullOverlay = true,
+            paused = true,
         },
     }
     self:EDB().unitframe.units.raidpet = { enabled = true, colorPetByUnitClass = true }
@@ -157,6 +162,7 @@ function NI:ElvUIHealerSetup()
             overlay = true,
             enable = true,
             fullOverlay = true,
+            paused = true,
         },
     }
 
@@ -173,7 +179,7 @@ function NI:NameplateSetup()
     local needsPetFilterClasses = { "DEATHKNIGHT", "MAGE", "HUNTER", "WARLOCK" }
     local filterClassName = self.currentLocalizedClass
     local nameFormat = "[namecolor][name]"
-    if not NUI.Lulupeep and COMP.TT then
+    if COMP.TT then
         nameFormat = "[name:title:health:classcolors]"
         if NUI.Private then nameFormat = "[pvp:icon]" .. nameFormat end
     end
@@ -194,7 +200,7 @@ function NI:NameplateSetup()
         filters = {
             Friendly_NameHealth_NonTarget = {
                 triggers = {
-                    enable = not NUI.Lulupeep,
+                    enable = true,
                 },
             },
             Enemy_Player = {
@@ -209,7 +215,7 @@ function NI:NameplateSetup()
             },
             Player_NameHealth_NonTarget = {
                 triggers = {
-                    enable = not NUI.Lulupeep,
+                    enable = true,
                 },
             },
         },
@@ -547,36 +553,34 @@ function NI:GlobalNameplateSetup()
         }
     end
 
-    if not NUI.Lulupeep then
-        E.global.nameplates.filters.Player_NameHealth_NonTarget = {
-            actions = {
-                nameOnly = true,
+    E.global.nameplates.filters.Player_NameHealth_NonTarget = {
+        actions = {
+            nameOnly = true,
+        },
+        triggers = {
+            notTarget = true,
+            nameplateType = {
+                player = true,
+                enable = true,
             },
-            triggers = {
-                notTarget = true,
-                nameplateType = {
-                    player = true,
-                    enable = true,
-                },
-                priority = 6,
+            priority = 6,
+        },
+    }
+    E.global.nameplates.filters.Friendly_NameHealth_NonTarget = {
+        actions = {
+            nameOnly = true,
+        },
+        triggers = {
+            priority = 6,
+            notTarget = true,
+            isNotOwnedByPlayer = true,
+            nameplateType = {
+                enable = true,
+                friendlyPlayer = true,
+                friendlyNPC = true,
             },
-        }
-        E.global.nameplates.filters.Friendly_NameHealth_NonTarget = {
-            actions = {
-                nameOnly = true,
-            },
-            triggers = {
-                priority = 6,
-                notTarget = true,
-                isNotOwnedByPlayer = true,
-                nameplateType = {
-                    enable = true,
-                    friendlyPlayer = true,
-                    friendlyNPC = true,
-                },
-            },
-        }
-    end
+        },
+    }
     if COMP.TT and COMP.IsAddOnEnabled("TotalRP3") and COMP.IsAddOnEnabled("RP_Tags") then
         E.global.nameplates.filters.PlayerHasRPProfile = {
             actions = {
@@ -711,6 +715,12 @@ function NI:ElvUISetup(role, isSpec)
             statusBar = self.db.texture,
             font = self.db.font,
         },
+        customGlow = {
+            useColor = true,
+            color = self:Color(true),
+            nextcast = self:ModColor(function(x) return math.max(1 - x, 0.15) end, true),
+            alternative = { r = 128, g = 128, b = 128, a = 1 },
+        },
         topPanel = false,
         bottomPanel = false,
         autoTrackReputation = true,
@@ -810,6 +820,7 @@ function NI:ElvUISetup(role, isSpec)
         scrapIcon = true,
         showBindType = true,
         countFont = self.db.font,
+        bankCombined = true,
         vendorGrays = {
             details = true,
             enable = true,
@@ -895,6 +906,7 @@ function NI:ElvUISetup(role, isSpec)
                     overlay = true,
                     enable = true,
                     fullOverlay = true,
+                    paused = true,
                 },
             },
             boss = {
@@ -908,6 +920,7 @@ function NI:ElvUISetup(role, isSpec)
                     overlay = true,
                     enable = true,
                     fullOverlay = true,
+                    paused = true,
                 },
             },
         },
@@ -1014,6 +1027,8 @@ function NI:ElvUISetup(role, isSpec)
     then
         bar7enabled = false
     end
+    self:EDB().convertPages = true
+
     self:EDB().actionbar = {
         font = self.db.font,
         ["bar1"] = {
@@ -1113,6 +1128,7 @@ function NI:ElvUISetup(role, isSpec)
             questChoice = true,
             alertframes = true,
             objectiveTracker = false,
+            dressingroom = false,
         }
         self:EPRV().auras = {
             masque = {
@@ -1584,7 +1600,7 @@ end
 function NI:ElvUIGlobalSetup()
     self:DatatextPanelSetup()
     self:GlobalNameplateSetup()
-    if not NUI.Lulupeep then self:NihilistzscheDatatextPanelSetup() end
+    self:NihilistzscheDatatextPanelSetup()
 end
 
 NI:RegisterGlobalAddOnInstaller("ElvUI", NI.ElvUIGlobalSetup)

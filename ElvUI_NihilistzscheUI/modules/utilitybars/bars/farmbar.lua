@@ -51,7 +51,7 @@ function FB:CreateButtonHook(bar, button)
     button:RegisterForClicks("AnyDown")
     button:SetScript("OnClick", function(_self, mouseButton)
         if mouseButton == "RightButton" then
-            local tbl = _G.ElvDB.farmBar[self.myname][button.table]
+            local tbl = _G.ElvDB.farmBar[E.myguid][button.table]
             tremove(tbl, NUI.InvertTable(tbl)[button])
             self.sessionDB[button.table][button.data] = nil
             self:UpdateBar(bar)
@@ -63,7 +63,7 @@ end
 local boaStr = _G.ITEM_BNETACCOUNTBOUND
 local DataStore
 function FB:GetItemCount(itemID)
-    local count = _G.ElvDB.farmBar[self.myname].count.items[itemID]
+    local count = _G.ElvDB.farmBar[E.myguid].count.items[itemID]
     E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
     E.ScanTooltip:SetItemByID(itemID)
     E.ScanTooltip:Show()
@@ -107,7 +107,7 @@ function FB:SetItemTooltip(itemID)
         GameTooltip:AddDoubleLine(L["Profit:"], change, 0, 1, 0, 1, 1, 1)
     end
     local count = FB:GetItemCount(itemID)
-    local target = _G.ElvDB.farmBar[FB.myname].target.items[itemID]
+    local target = _G.ElvDB.farmBar[E.myguid].target.items[itemID]
 
     GameTooltip:AddDoubleLine(L["Total: "], count, 1, 1, 1, 1, 1, 1)
 
@@ -146,8 +146,8 @@ function FB:SetCurrencyTooltip(currencyID)
     elseif change > 0 then
         GameTooltip:AddDoubleLine(L["Profit:"], change, 0, 1, 0, 1, 1, 1)
     end
-    local count = _G.ElvDB.farmBar[FB.myname].count.currency[currencyID]
-    local target = _G.ElvDB.farmBar[FB.myname].target.currency[currencyID]
+    local count = _G.ElvDB.farmBar[E.myguid].count.currency[currencyID]
+    local target = _G.ElvDB.farmBar[E.myguid].target.currency[currencyID]
 
     GameTooltip:AddDoubleLine(L["Total: "], count, 1, 1, 1, 1, 1, 1)
 
@@ -175,7 +175,7 @@ function FB:UpdateItemButton(button)
     local count = C_Item_GetItemCount(v, true)
     self:UpdateAndNotify(true, v, count)
     button.farmed:SetText(FB:GetItemCount(v))
-    local target = _G.ElvDB.farmBar[FB.myname].target.items[v]
+    local target = _G.ElvDB.farmBar[E.myguid].target.items[v]
     button.target:SetText(target)
     if count < target then
         button.target:SetTextColor(1.0, 0.2, 0.2)
@@ -193,7 +193,7 @@ function FB:UpdateCurrencyButton(button)
     local _, amount = C_CurrencyInfo_GetCurrencyInfo(v)
     self:UpdateAndNotify(false, v, amount)
     button.farmed:SetText(amount)
-    local target = _G.ElvDB.farmBar[FB.myname].target.currency[v]
+    local target = _G.ElvDB.farmBar[E.myguid].target.currency[v]
     button.target:SetText(target)
     if amount < target then
         button.target:SetTextColor(1.0, 0.2, 0.2)
@@ -215,8 +215,8 @@ function FB:UpdateButtonHook(button, type, index)
 end
 
 function FB:UpdateBar(bar)
-    local items = _G.ElvDB.farmBar[FB.myname].items
-    local currency = _G.ElvDB.farmBar[FB.myname].currency
+    local items = _G.ElvDB.farmBar[E.myguid].items
+    local currency = _G.ElvDB.farmBar[E.myguid].currency
 
     NUB.CreateButtons(bar, #items + #currency)
 
@@ -231,12 +231,12 @@ function FB:UpdateBar(bar)
 
     -- Holy crap why are there strings for the currency ids??
     local fixMePls = {}
-    for i, v in pairs(ElvDB.farmBar[FB.myname].currency) do
+    for i, v in pairs(ElvDB.farmBar[E.myguid].currency) do
         if type(v) ~= "number" then tinsert(fixMePls, i) end
     end
 
     for _, v in ipairs(fixMePls) do
-        ElvDB.farmBar[FB.myname].currency[v] = tonumber(ElvDB.farmBar[FB.myname].currency[v])
+        ElvDB.farmBar[E.myguid].currency[v] = tonumber(ElvDB.farmBar[E.myguid].currency[v])
     end
 
     table.sort(currency, function(a, b) return a > b end)
@@ -267,10 +267,10 @@ function FB:AddWatch(item, id, target)
     local notificationItem = L["Added item watch for %s"]
     local notificationCurrency = L["Added currency watch for %s"]
 
-    if not tContains(_G.ElvDB.farmBar[self.myname][table], id) then
-        _G.ElvDB.farmBar[self.myname].count[table][id] = item and C_Item_GetItemCount(id, true)
+    if not tContains(_G.ElvDB.farmBar[E.myguid][table], id) then
+        _G.ElvDB.farmBar[E.myguid].count[table][id] = item and C_Item_GetItemCount(id, true)
             or select(2, C_CurrencyInfo_GetCurrencyInfo(id))
-        tinsert(_G.ElvDB.farmBar[self.myname][table], id)
+        tinsert(_G.ElvDB.farmBar[E.myguid][table], id)
         if E.db.nihilistzscheui.utilitybars.farmBar.notify then
             local string = item and notificationItem or notificationCurrency
             if not item or C_Item_GetItemInfo(id) then
@@ -280,14 +280,14 @@ function FB:AddWatch(item, id, target)
             end
         end
     end
-    _G.ElvDB.farmBar[FB.myname].target[table][id] = target
+    _G.ElvDB.farmBar[E.myguid].target[table][id] = target
     FB:UpdateBar(FB.bar)
 end
 
 function FB:UpdateAndNotify(item, id, count)
     local table = item and "items" or "currency"
-    local oldCount = _G.ElvDB.farmBar[FB.myname].count[table][id] or 0
-    local target = _G.ElvDB.farmBar[FB.myname].target[table][id] or 0
+    local oldCount = _G.ElvDB.farmBar[E.myguid].count[table][id] or 0
+    local target = _G.ElvDB.farmBar[E.myguid].target[table][id] or 0
 
     local earned = "You have |cff00ff00earned|r %d %s (|cff00ffffcurrently|r %d, |cff0000ffTarget|r %d)"
     local repstr = "%d |cffff00ffRepetitions|r"
@@ -304,7 +304,7 @@ function FB:UpdateAndNotify(item, id, count)
             UIErrorsFrame:AddMessage(earned:format(change, link, count, target))
         end
     end
-    _G.ElvDB.farmBar[FB.myname].count[table][id] = count
+    _G.ElvDB.farmBar[E.myguid].count[table][id] = count
 end
 
 local function AddFarmWatch(msg)
@@ -325,18 +325,17 @@ function FB:Initialize()
     FB.sessionDB.items = {}
     FB.sessionDB.currency = {}
 
-    FB.myname = ("%s-%s"):format(E.myname, E.myrealm)
     local ElvDB = _G.ElvDB
     ElvDB.farmBar = ElvDB.farmBar or {}
-    ElvDB.farmBar[FB.myname] = _G.ElvDB.farmBar[FB.myname] or {}
-    ElvDB.farmBar[FB.myname].items = _G.ElvDB.farmBar[FB.myname].items or {}
-    ElvDB.farmBar[FB.myname].currency = _G.ElvDB.farmBar[FB.myname].currency or {}
-    ElvDB.farmBar[FB.myname].count = _G.ElvDB.farmBar[FB.myname].count or {}
-    ElvDB.farmBar[FB.myname].count.items = _G.ElvDB.farmBar[FB.myname].count.items or {}
-    ElvDB.farmBar[FB.myname].count.currency = _G.ElvDB.farmBar[FB.myname].count.currency or {}
-    ElvDB.farmBar[FB.myname].target = _G.ElvDB.farmBar[FB.myname].target or {}
-    ElvDB.farmBar[FB.myname].target.items = _G.ElvDB.farmBar[FB.myname].target.items or {}
-    ElvDB.farmBar[FB.myname].target.currency = _G.ElvDB.farmBar[FB.myname].target.currency or {}
+    ElvDB.farmBar[E.myguid] = _G.ElvDB.farmBar[E.myguid] or {}
+    ElvDB.farmBar[E.myguid].items = _G.ElvDB.farmBar[E.myguid].items or {}
+    ElvDB.farmBar[E.myguid].currency = _G.ElvDB.farmBar[E.myguid].currency or {}
+    ElvDB.farmBar[E.myguid].count = _G.ElvDB.farmBar[E.myguid].count or {}
+    ElvDB.farmBar[E.myguid].count.items = _G.ElvDB.farmBar[E.myguid].count.items or {}
+    ElvDB.farmBar[E.myguid].count.currency = _G.ElvDB.farmBar[E.myguid].count.currency or {}
+    ElvDB.farmBar[E.myguid].target = _G.ElvDB.farmBar[E.myguid].target or {}
+    ElvDB.farmBar[E.myguid].target.items = _G.ElvDB.farmBar[E.myguid].target.items or {}
+    ElvDB.farmBar[E.myguid].target.currency = _G.ElvDB.farmBar[E.myguid].target.currency or {}
 
     local frame = CreateFrame("Frame", "NihilistzscheUI_FarmBarController")
     frame:RegisterEvent("BAG_UPDATE")

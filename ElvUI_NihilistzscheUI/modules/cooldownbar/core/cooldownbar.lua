@@ -64,9 +64,9 @@ end
 
 -- luacheck: no self
 function CB:GetTexture(frame)
-    if frame.type == "spell" and frame.SpellID then
-        return C_Spell_GetSpellTexture(frame.SpellID)
-    elseif frame.itemID then
+    if frame.type == "spell" and frame.spellID then
+        return C_Spell_GetSpellTexture(frame.spellID)
+    else
         return C_Item_GetItemIconByID(frame.itemID)
     end
 end

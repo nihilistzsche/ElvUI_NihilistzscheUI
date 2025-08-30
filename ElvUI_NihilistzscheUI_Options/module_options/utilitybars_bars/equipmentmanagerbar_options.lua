@@ -2,6 +2,8 @@
 local NUI, E, L, _, P, _ = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local EM = NUI.UtilityBars.EquipmentManagerBar
 
+if not EM then return end
+
 function EM:GenerateUtilityBarOptions()
     local options = {
         type = "group",

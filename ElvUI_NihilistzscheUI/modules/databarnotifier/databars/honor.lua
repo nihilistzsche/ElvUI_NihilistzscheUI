@@ -11,8 +11,16 @@ local UnitHonorLevel = _G.UnitHonorLevel
 DBN.colors.alliance = E:RGBToHex(0.29, 0.33, 0.91)
 DBN.colors.horde = E:RGBToHex(0.90, 0.05, 0.07)
 
-local HN =
-    DBN:NewNotifier("Honor", "Honor", "honor", nil, NUI.CPW(UnitHonor), NUI.CPW(UnitHonorMax), NUI.CPW(UnitHonorLevel))
+local HN = DBN:NewNotifier(
+    "Honor",
+    "Honor",
+    "honor",
+    nil,
+    NUI.CPW(UnitHonor),
+    NUI.CPW(UnitHonorMax),
+    NUI.CPW(UnitHonorLevel),
+    "CHAT_MSG_COMBAT_HONOR_GAIN"
+)
 
 function HN:Initialize()
     if COMP.SLE then

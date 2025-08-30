@@ -10,9 +10,9 @@ local SDB
 
 local C_Reputation_GetNumFactions = _G.C_Reputation.GetNumFactions
 local C_Reputation_GetFactionDataByIndex = _G.C_Reputation.GetFactionDataByIndex
-local C_Reputation_IsFactionParagon = _G.C_Reputation.IsFactionParagon
-local C_Reputation_GetFactionParagonInfo = _G.C_Reputation.GetFactionParagonInfo
-local C_Reputation_IsMajorFaction = _G.C_Reputation.IsMajorFaction
+local C_Reputation_IsFactionParagon = E.Retail and _G.C_Reputation.IsFactionParagon
+local C_Reputation_GetFactionParagonInfo = E.Retail and _G.C_Reputation.GetFactionParagonInfo
+local C_Reputation_IsMajorFaction = E.Retail and _G.C_Reputation.IsMajorFaction
 local C_MajorFactions_GetMajorFactionData = E.Retail and _G.C_MajorFactions.GetMajorFactionData
 local C_MajorFactions_HasMaximumRenown = E.Retail and _G.C_MajorFactions.HasMaximumRenown
 
@@ -23,13 +23,12 @@ local standingmax = 8
 local standingmin = 1
 
 function REP:InitializeDB()
-    self.dbKey = E.myguid
     E.global.nihilistzscheui = E.global.nihilistzscheui or {}
     E.global.nihilistzscheui.reputations = E.global.nihilistzscheui.reputations or {}
-    E.global.nihilistzscheui.reputations[self.dbKey] = E.global.nihilistzscheui.reputations[self.dbKey] or {}
+    E.global.nihilistzscheui.reputations[E.myguid] = E.global.nihilistzscheui.reputations[E.myguid] or {}
 end
 
-function REP:GetDB() return E.global.nihilistzscheui.reputations[self.dbKey] end
+function REP:GetDB() return E.global.nihilistzscheui.reputations[E.myguid] end
 
 function REP:UpdateDBValues(id, values)
     local db = self:GetDB()
@@ -98,6 +97,7 @@ function REP:Initialize()
     self:InitializeDB()
     self:ScanFactions()
     self:GetParent():RegisterNotifierEvent(self, "UPDATE_FACTION")
+    DBN:ToggleChatFilter("CHAT_MSG_COMBAT_FACTION_CHANGE", true)
 end
 
 -- luacheck: no self
@@ -117,10 +117,15 @@ function REP:GenText(texts)
 end
 
 function REP:Notify()
-    if not DBN.db.enabled then return end
-    if tonumber(DBN.db.repchatframe) == 0 then return end
+    local chatFrameID = tonumber(DBN.db.repchatframe)
+    if not DBN.db.enabled or chatFrameID == 0 then
+        DBN:ToggleChatFilter("CHAT_MSG_COMBAT_FACTION_CHANGE", false)
+        return
+    end
 
-    local chatframe = _G["ChatFrame" .. tonumber(DBN.db.repchatframe)]
+    DBN:ToggleChatFilter("CHAT_MSG_COMBAT_FACTION_CHANGE", true)
+
+    local chatframe = _G["ChatFrame" .. chatFrameID]
 
     local db = self:GetDB()
     local tempfactions = C_Reputation_GetNumFactions()

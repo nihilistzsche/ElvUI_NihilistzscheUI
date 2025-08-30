@@ -12,6 +12,7 @@
     <Script file="inflight.lua" />
     <Script file="wowpro.lua" />
     <Script file="elvui_benikui.lua" />
+    <Script file="elvui_chattweaks.lua" />
     <Script file="elvui_tinkertoolbox.lua" />
     <Script file="elvui_fct.lua" />
     <Script file="elvui_merathilisui.lua" />
@@ -21,7 +22,7 @@
     <Script file="elvui_mmediatag.lua" />
     <Script file="elvui_dynamicstatusicons.lua" />
     <Script file="hekili.lua"/>
-    <Script file="opie_elvui.lua" />
+    <Script file="opie_elvui.lua" />www
     <Script file="kaliels_tracker.lua" />
     <Script file="pettracker.lua" />
     <Script file="projectazilroka.lua" />

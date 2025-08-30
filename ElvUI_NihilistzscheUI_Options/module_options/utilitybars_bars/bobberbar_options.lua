@@ -1,6 +1,8 @@
 ---@class NUI
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local BOBB = NUI.UtilityBars.BobberBar
+if not BOBB then return end
+
 local C_ToyBox_GetToyInfo = _G.C_ToyBox.GetToyInfo
 local tinsert = _G.tinsert
 local PlayerHasToy = _G.PlayerHasToy

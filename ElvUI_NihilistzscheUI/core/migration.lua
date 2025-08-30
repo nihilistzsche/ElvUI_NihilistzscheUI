@@ -155,4 +155,21 @@ function NM:CheckMigrations()
         E.private.nihilistzscheui.mounts.favSkyridingMount = E.private.nihilistzscheui.mounts.favDragonridingMount
         E.private.nihilistzscheui.mounts.favDragonridingMount = nil
     end
+
+    local oldDbKey = E.myname .. "-" .. E.myrealm
+    if E.global.nihilistzscheui.reputations[oldDbKey] then
+        E.global.nihilistzscheui.reputations[E.myguid] = E:CopyTable(E.global.nihilistzscheui[oldDbKey])
+        E.global.nihilistzscheui.reputations[oldDbKey] = nil
+    end
+
+    oldDbKey = ("%s-%s"):format(E.myname, E.myrealm)
+    if ElvDB.farmBar[oldDbKey] then
+        ElvDB.farmBar[E.myguid] = E:CopyTable(ElvDB.farmBar[oldDbKey])
+        ElvDB.farmBar[oldDbKey] = nil
+    end
+
+    if ElvDB.trackerbar[oldDbKey] then
+        ElvDB.trackerbar[E.myguid] = E:CopyTable(ElvDB.trackerbar[oldDbKey])
+        ElvDB.trackerbar[oldDbKey] = nil
+    end
 end

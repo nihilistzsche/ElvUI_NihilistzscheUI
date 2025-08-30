@@ -2,6 +2,8 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local RPB = NUI.UtilityBars.RaidPrepBar
 
+if not RPB then return end
+
 function RPB:GenerateUtilityBarOptions()
     local options = {
         type = "group",

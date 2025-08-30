@@ -48,7 +48,7 @@ function TB:CreateButtonHook(bar, button)
     button:RegisterForClicks("AnyDown")
     button:SetScript("OnClick", function(_self, mouseButton)
         if mouseButton == "RightButton" then
-            tremove(_G.ElvDB.trackerbar[TB.myname][button.table], button.index)
+            tremove(_G.ElvDB.trackerbar[E.myguid][button.table], button.index)
             self:UpdateBar(bar)
         end
         _self:SetChecked(false)
@@ -58,7 +58,7 @@ end
 local boaStr = _G.ITEM_BNETACCOUNTBOUND
 local DataStore
 function TB:GetItemCount(itemID)
-    local count = _G.ElvDB.trackerbar[self.myname].count.items[itemID]
+    local count = _G.ElvDB.trackerbar[E.myguid].count.items[itemID]
     E.ScanTooltip:SetOwner(_G.UIParent, "ANCHOR_NONE")
     E.ScanTooltip:SetItemByID(itemID)
     E.ScanTooltip:Show()
@@ -129,7 +129,7 @@ function TB:SetCurrencyTooltip(currencyID)
     elseif change > 0 then
         GameTooltip:AddDoubleLine(L["Profit:"], change, 0, 1, 0, 1, 1, 1)
     end
-    local count = _G.ElvDB.trackerbar[TB.myname].count.currency[currencyID]
+    local count = _G.ElvDB.trackerbar[E.myguid].count.currency[currencyID]
 
     GameTooltip:AddDoubleLine(L["Total: "], count, 1, 1, 1, 1, 1, 1)
 
@@ -175,8 +175,8 @@ end
 
 function TB:UpdateBar(bar)
     local ElvDB = _G.ElvDB
-    local items = ElvDB.trackerbar[TB.myname].items
-    local currency = ElvDB.trackerbar[TB.myname].currency
+    local items = ElvDB.trackerbar[E.myguid].items
+    local currency = ElvDB.trackerbar[E.myguid].currency
 
     NUB.CreateButtons(bar, #items + #currency)
 
@@ -191,12 +191,12 @@ function TB:UpdateBar(bar)
 
     -- Holy crap why are there strings for the currency ids??
     local fixMePls = {}
-    for i, v in pairs(ElvDB.trackerbar[TB.myname].currency) do
+    for i, v in pairs(ElvDB.trackerbar[E.myguid].currency) do
         if type(v) ~= "number" then tinsert(fixMePls, i) end
     end
 
     for _, v in ipairs(fixMePls) do
-        ElvDB.trackerbar[TB.myname].currency[v] = tonumber(ElvDB.trackerbar[TB.myname].currency[v])
+        ElvDB.trackerbar[E.myguid].currency[v] = tonumber(ElvDB.trackerbar[E.myguid].currency[v])
     end
 
     table.sort(currency, function(a, b) return a > b end)
@@ -228,10 +228,10 @@ function TB:AddWatch(item, id)
     local notificationItem = L["Added item watch for %s"]
     local notificationCurrency = L["Added currency watch for %s"]
 
-    if not tContains(ElvDB.trackerbar[TB.myname][table], id) then
-        ElvDB.trackerbar[TB.myname].count[table][id] = item and C_Item_GetItemCount(id, true)
+    if not tContains(ElvDB.trackerbar[E.myguid][table], id) then
+        ElvDB.trackerbar[E.myguid].count[table][id] = item and C_Item_GetItemCount(id, true)
             or (C_CurrencyInfo_GetCurrencyInfo(id)).quantity
-        tinsert(ElvDB.trackerbar[TB.myname][table], id)
+        tinsert(ElvDB.trackerbar[E.myguid][table], id)
         if E.db.nihilistzscheui.utilitybars.trackerbar.notify then
             local string = item and notificationItem or notificationCurrency
             UIErrorsFrame:AddMessage(
@@ -246,7 +246,7 @@ end
 function TB:UpdateAndNotify(item, id, count)
     if not id then return end
     local table = item and "items" or "currency"
-    local oldCount = _G.ElvDB.trackerbar[TB.myname].count[table][id] or 0
+    local oldCount = _G.ElvDB.trackerbar[E.myguid].count[table][id] or 0
 
     local earned = L["You have |cff00ff00earned|r %d %s (|cff00ffffcurrently|r %d)"]
     local lost = L["You have |cffff0000lost|r %d %s (|cff00ffffcurrently|r %d)"]
@@ -260,7 +260,7 @@ function TB:UpdateAndNotify(item, id, count)
         self.sessionDB[table][id].lost = self.sessionDB[table][id].lost + -change
         if notify then UIErrorsFrame:AddMessage(lost:format(-change, link, count)) end
     end
-    _G.ElvDB.trackerbar[TB.myname].count[table][id] = count
+    _G.ElvDB.trackerbar[E.myguid].count[table][id] = count
 end
 
 function TB.FixDataTable()
@@ -289,17 +289,16 @@ function TB:Initialize()
     TB.sessionDB.items = {}
     TB.sessionDB.currency = {}
 
-    TB.myname = ("%s-%s"):format(E.myname, E.myrealm)
     _G.ElvDB = _G.ElvDB or {}
     local ElvDB = _G.ElvDB
     if not self.FixDataTable() then
         ElvDB.trackerbar = ElvDB.trackerbar or {}
-        ElvDB.trackerbar[TB.myname] = ElvDB.trackerbar[TB.myname] or {}
-        ElvDB.trackerbar[TB.myname].items = ElvDB.trackerbar[TB.myname].items or {}
-        ElvDB.trackerbar[TB.myname].currency = ElvDB.trackerbar[TB.myname].currency or {}
-        ElvDB.trackerbar[TB.myname].count = ElvDB.trackerbar[TB.myname].count or {}
-        ElvDB.trackerbar[TB.myname].count.items = ElvDB.trackerbar[TB.myname].count.items or {}
-        ElvDB.trackerbar[TB.myname].count.currency = ElvDB.trackerbar[TB.myname].count.currency or {}
+        ElvDB.trackerbar[E.myguid] = ElvDB.trackerbar[E.myguid] or {}
+        ElvDB.trackerbar[E.myguid].items = ElvDB.trackerbar[E.myguid].items or {}
+        ElvDB.trackerbar[E.myguid].currency = ElvDB.trackerbar[E.myguid].currency or {}
+        ElvDB.trackerbar[E.myguid].count = ElvDB.trackerbar[E.myguid].count or {}
+        ElvDB.trackerbar[E.myguid].count.items = ElvDB.trackerbar[E.myguid].count.items or {}
+        ElvDB.trackerbar[E.myguid].count.currency = ElvDB.trackerbar[E.myguid].count.currency or {}
     end
 
     local frame = CreateFrame("Frame", "NihilistzscheUI_TrackerBarController")

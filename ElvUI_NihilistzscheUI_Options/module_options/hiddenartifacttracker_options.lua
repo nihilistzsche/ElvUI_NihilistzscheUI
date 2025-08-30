@@ -2,6 +2,8 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local HAT = NUI.HiddenArtifactTracker
 
+if not HAT then return end
+
 function HAT:GenerateOptions()
     local options = {
         type = "group",

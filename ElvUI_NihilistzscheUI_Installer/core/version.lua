@@ -2,11 +2,10 @@
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
 
-local installVersion = { 13.00, 3 }
-local lulupeepInstallVersion = { 11.03, 1 }
+local installVersion = { 13.00, 4 }
 
 function NI.GetInstallInfo(idx)
-    local tbl = NUI.Lulupeep and lulupeepInstallVersion or installVersion
+    local tbl = installVersion
     return (tbl.classes and tbl.classes[E.myclass] and tbl.classes[E.myclass][idx]) or tbl[idx]
 end
 

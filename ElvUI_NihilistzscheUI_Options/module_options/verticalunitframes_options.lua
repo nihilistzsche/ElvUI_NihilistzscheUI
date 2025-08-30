@@ -455,6 +455,12 @@ function VUF:GenerateElementOptionsTable(
             max = 1,
             step = 0.01,
         }
+
+        options.args.paused = {
+            order = 8,
+            type = "toggle",
+            name = L.Pause,
+        }
     end
 
     if element == "phaseindicator" then

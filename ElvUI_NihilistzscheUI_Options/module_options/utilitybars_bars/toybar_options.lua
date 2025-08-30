@@ -2,6 +2,8 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local TOYB = NUI.UtilityBars.ToyBar
 
+if not TOYB then return end
+
 function TOYB:GenerateUtilityBarOptions()
     local options = {
         type = "group",

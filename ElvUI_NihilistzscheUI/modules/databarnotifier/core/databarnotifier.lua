@@ -17,6 +17,19 @@ function DBN:InitializeRegisteredNotifiers()
     end
 end
 
+DBN.ChatFilterFuncs = {}
+
+function DBN:ToggleChatFilter(event, state)
+    if not event then return end
+    if not self.ChatFilterFuncs[event] then self.ChatFilterFuncs[event] = function() return true end end
+
+    if state then
+        ChatFrame_AddMessageEventFilter(event, self.ChatFilterFuncs[event])
+    else
+        ChatFrame_RemoveMessageEventFilter(event, self.ChatFilterFuncs[event])
+    end
+end
+
 function DBN:Initialize()
     NUI:RegisterDB(self, "databarnotifier")
     self:InitializeRegisteredNotifiers()
@@ -37,11 +50,12 @@ function prototype:Notify()
     self:GetParent():BaseNotification(self, c, max)
 end
 
-function DBN:NewNotifier(name, label, chatFrameKey, color, curFunc, maxFunc, levelFunc)
+function DBN:NewNotifier(name, label, chatFrameKey, color, curFunc, maxFunc, levelFunc, event)
     if not label then return {
         name = name,
         GetParent = function() return self end,
     } end
+    if event then DBN:ToggleChatFilter(event, true) end
     return Mixin({
         name = name,
         label = label,
@@ -50,6 +64,7 @@ function DBN:NewNotifier(name, label, chatFrameKey, color, curFunc, maxFunc, lev
         maxFunc = maxFunc,
         levelFunc = levelFunc,
         chatFrameKey = chatFrameKey,
+        event = event,
     }, prototype)
 end
 
@@ -97,7 +112,12 @@ end
 
 function DBN:BaseNotification(module, c, max)
     local chatframeID = tonumber(DBN.db[module.chatFrameKey .. "chatframe"])
-    if chatframeID == 0 then return end
+    if not DBN.db.enabled or chatframeID == 0 then
+        DBN:ToggleChatFilter(module.event, false)
+        return
+    end
+    DBN:ToggleChatFilter(module.event, true)
+
     local chatframe = _G["ChatFrame" .. chatframeID]
     local values = module.values
     local change, remaining, repetitions, level
@@ -106,7 +126,7 @@ function DBN:BaseNotification(module, c, max)
         values.max = self.SaveXP(max)
         remaining = self.GetXP(values.max) - c
         repetitions = math.ceil(remaining / change)
-        level = values.level + 1
+        level = module.levelFunc()
         values.level = level
     else
         change = math.abs(c - self.GetXP(values.last))

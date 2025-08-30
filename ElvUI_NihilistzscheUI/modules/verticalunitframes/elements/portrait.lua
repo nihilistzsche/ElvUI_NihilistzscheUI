@@ -20,27 +20,25 @@ function VUF:ConstructPortrait(frame)
     return portrait
 end
 
-function VUF:PortraitUpdate(unit, event, shouldUpdate)
+function VUF:PortraitUpdate(unit, hasStateChanged, texCoords)
     if unit == "vehicle" then unit = "player" end
     local db = E.db.nihilistzscheui.vuf.units[unit]
 
-    if not db then return end
+    if not hasStateChanged or not db then return end
 
-    if shouldUpdate or (event == "ElvUI_UpdateAllElements" and self:IsObjectType("Model")) then
-        local portrait = db.portrait
+    local portrait = db.portrait
 
-        local rotation = portrait.rotation or 0
-        local camDistanceScale = portrait.camDistanceScale or 1
-        local xOffset, yOffset = (portrait.xOffset or 0), (portrait.yOffset or 0)
+    local rotation = portrait.rotation or 0
+    local camDistanceScale = portrait.camDistanceScale or 1
+    local xOffset, yOffset = (portrait.xOffset or 0), (portrait.yOffset or 0)
+    local pause = portrait.paused or false
 
+    if self.state then
         if self:GetFacing() ~= (rotation / 60) then self:SetFacing(rotation / 60) end
 
         self:SetCamDistanceScale(camDistanceScale)
         self:SetPosition(0, xOffset, yOffset)
-
-        --Refresh model to fix incorrect display issues
-        self:ClearModel()
-        self:SetUnit(unit)
+        self:SetPaused(pause)
     end
 end
 

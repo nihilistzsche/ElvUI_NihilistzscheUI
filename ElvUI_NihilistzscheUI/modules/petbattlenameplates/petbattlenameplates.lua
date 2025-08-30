@@ -1,6 +1,6 @@
 ---@class NUI
 local NUI, E = _G.unpack((select(2, ...)))
-if not E.Retail then return end
+if E.Classic then return end
 
 local PBN = NUI.PetBattleNameplates
 local NP = E.NamePlates
@@ -24,19 +24,28 @@ local UnitGUID = _G.UnitGUID
 local hooksecurefunc = _G.hooksecurefunc
 
 PBN.CVarCache = {}
+PBN.state = {}
+
+local function repeatToggleCVar(cvar, desiredValue, startValue, iterations)
+    C_Timer.NewTicker(0.02, function()
+        SetCVar(cvar, startValue)
+        E:Delay(0.01, SetCVar, cvar, desiredValue)
+    end, iterations)
+end
 
 function PBN:PET_BATTLE_CLOSE()
     for cvar, value in next, self.CVarCache do
         SetCVar(cvar, value)
     end
     wipe(self.CVarCache)
+    repeatToggleCVar("nameplateShowAll", "1", "0", 50)
 end
 
 function PBN:PET_BATTLE_OPENING_START()
     local function CacheCVarAndSet(cvar, newValue, firstValue)
         if not self.CVarCache[cvar] then self.CVarCache[cvar] = GetCVar(cvar) end
         SetCVar(cvar, firstValue or newValue)
-        if firstValue then C_Timer_After(3, function() SetCVar(cvar, newValue) end) end
+        if firstValue then repeatToggleCVar(cvar, newValue, firstValue, 50) end
     end
     local cvarValue = self.db.enabled and "1" or "0"
     CacheCVarAndSet("nameplateShowFriendlyNPCs", cvarValue, "0")
@@ -384,7 +393,10 @@ function PBN:ResetNameplates()
         local h = np.Cutaway.Health
         if h.FadeObject and h.FadeObject.__nui_pbn_fadeobject then h.FadeObject = nil end
         h.GetHealthMax = nil
-        if np.Power.Text.__nui_Show then np.Power.Text.Show = np.Power.Text.__nui_Show end
+        if np.Power.Text.__nui_Show then
+            np.Power.Text.Show = np.Power.Text.__nui_Show
+            np.Power.Text.__nui_Show = nil
+        end
         np.pbouf_petinfo = nil
         np.__nui_pbn_init = nil
     end

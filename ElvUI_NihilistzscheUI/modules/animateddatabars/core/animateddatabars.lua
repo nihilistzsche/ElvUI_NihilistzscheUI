@@ -91,6 +91,7 @@ function ADB:CreateAnimatedBar(tbl, key)
     self:CreateTicks(holder)
     hooksecurefunc(DB, key .. "Bar_Update", function() tbl:Update(bar) end)
     C_Timer_After(2, function() tbl:Update(bar) end)
+    return bar
 end
 
 ADB.RegisteredDataBars = {}

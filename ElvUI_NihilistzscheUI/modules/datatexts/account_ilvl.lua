@@ -87,6 +87,15 @@ local function OnEnter(self)
     DT.tooltip:Show()
 end
 
+local function sanitizeDB(name)
+    for i, e in ipairs(E.global.nihilistzscheui.accountilvl[E.myrealm]) do
+        if not e.guid and e.name == name then
+            tremove(E.global.nihilistzscheui.accountilvl[E.myrealm], i)
+            break
+        end
+    end
+end
+
 local function addOrUpdateIlvlEntry()
     if not E.global.nihilistzscheui then E.global.nihilistzscheui = {} end
 
@@ -94,6 +103,7 @@ local function addOrUpdateIlvlEntry()
 
     if not E.global.nihilistzscheui.accountilvl[E.myrealm] then E.global.nihilistzscheui.accountilvl[E.myrealm] = {} end
 
+    local guid = E.myguid
     local name = E.myname
     local class = E.myclass
     local faction = E.myfaction
@@ -102,13 +112,22 @@ local function addOrUpdateIlvlEntry()
 
     local entry = nil
     for _, e in ipairs(E.global.nihilistzscheui.accountilvl[E.myrealm]) do
-        if e.name == name then
+        if e.guid == guid then
             entry = e
+            sanitizeDB(name)
+            if e.name ~= name then e.name = name end
             break
         end
     end
     if not entry then
-        entry = { name = name, class = class, faction = faction, ilvl = GetAverageItemLevel(), color = { r, g, b } }
+        entry = {
+            guid = guid,
+            name = name,
+            class = class,
+            faction = faction,
+            ilvl = GetAverageItemLevel(),
+            color = { r, g, b },
+        }
         tinsert(E.global.nihilistzscheui.accountilvl[E.myrealm], entry)
     else
         entry.ilvl = GetAverageItemLevel()

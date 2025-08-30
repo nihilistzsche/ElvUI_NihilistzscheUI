@@ -1,6 +1,8 @@
 ---@class NUI
 local NUI, E, L = _G.unpack((select(2, ...)))
 
+if not E.Retail then return end
+
 local WD = NUI.WarlockDemons
 local CandyBar = NUI.Libs.CandyBar
 local LSM = E.Libs.LSM
@@ -444,6 +446,7 @@ function WD:Initialize()
         ["Wild Imp"] = { icon = C_Spell_GetSpellTexture(205145), priority = 4, optionOrder = 2 },
         ["Demonic Tyrant"] = { icon = C_Spell_GetSpellTexture(265187), priority = 1, optionOrder = 1 },
         Dreadstalker = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
+        ["Greater Dreadstalker"] = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
         Felguard = { icon = C_Spell_GetSpellTexture(111898), priority = 6, optionOrder = 11 },
         Bilescourge = { icon = C_Spell_GetSpellTexture(267992), priority = 9, optionOrder = 14 },
         Vilefiend = { icon = C_Spell_GetSpellTexture(264119), priority = 10, optionOrder = 13 },

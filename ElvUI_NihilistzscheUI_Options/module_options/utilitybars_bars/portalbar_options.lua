@@ -2,6 +2,8 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local PRB = NUI.UtilityBars.PortalBar
 
+if not PRB then return end
+
 function PRB:GenerateUtilityBarOptions()
     local options = {
         type = "group",

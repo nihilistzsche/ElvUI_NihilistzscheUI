@@ -368,6 +368,20 @@ if E.Retail then
     end
 end
 
+if E.Classic or E.Mists then
+    C_Reputation.GetWatchedFactionData = function()
+        local name, standing, min, max, value, factionID = _G.GetWatchedFactionInfo()
+        return {
+            name = name,
+            reaction = standing,
+            currentReactionThreshold = min,
+            nextReactionThreshold = max,
+            currentStanding = value,
+            factionID = factionID,
+        }
+    end
+end
+
 function NUI.GetFactionValues()
     local data = C_Reputation_GetWatchedFactionData()
     if not data then return end

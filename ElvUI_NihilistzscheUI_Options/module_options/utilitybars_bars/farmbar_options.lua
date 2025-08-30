@@ -2,6 +2,8 @@
 local NUI, E, L, _, P = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local FB = NUI.UtilityBars.FarmBar
 
+if not FB then return end
+
 local itemID, currencyID, itemTarget, currencyTarget, itemLink, currencyLink
 
 function FB:UpdateWatchOptions(options)

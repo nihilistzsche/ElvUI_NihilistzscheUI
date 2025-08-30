@@ -39,8 +39,8 @@ local displayString = ""
 local hexColor = "|cff00ff96"
 local DRAGON_ISLES_CONTINENT_ID = 1978
 local NOKHUD_OFFENSIVE_MAP_ID = 2093
-local SKYRIDING_BUFF_ID = 404464
-local SKYRIDING_BUFF_NAME
+local STEADYFLYING_BUFF_ID = 404468
+local STEADYFLYING_BUFF_NAME
 
 local db = {}
 
@@ -147,14 +147,12 @@ _G.SummonFavoriteMount = function()
         end
         return
     end
-    if not SKYRIDING_BUFF_NAME then SKYRIDING_BUFF_NAME = C_Spell_GetSpellName(SKYRIDING_BUFF_ID) end
+    if not STEADYFLYING_BUFF_NAME then STEADYFLYING_BUFF_NAME = C_Spell_GetSpellName(STEADYFLYING_BUFF_ID) end
     if
         IsSpellKnown(skyridingSpellID)
+        and IsFlyableArea()
         and db.favSkyridingMount
-        and (
-            E.MapInfo.mapID == NOKHUD_OFFENSIVE_MAP_ID
-            or not IsInInstance() and AuraUtil_FindAuraByName(SKYRIDING_BUFF_NAME, "player")
-        )
+        and not AuraUtil_FindAuraByName(STEADYFLYING_BUFF_NAME, "player")
     then
         C_MountJournal_SummonByID(db.favSkyridingMount)
         return
