@@ -9,14 +9,14 @@ local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
 function NI:KalielSetup()
     local modulesOrder
 
-    if COMP.WQT and GetAddOnMetadata("!KalielsTracker", "X-WQTSupport") then
+    if NUI.Private and NUI.Private.KTHasWQTSupport() then
         modulesOrder = {
             "KT_ScenarioObjectiveTracker",
             "KT_UIWidgetObjectiveTracker",
+            "KT_BonusObjectiveTracker",
             "KT_RareScannerObjectiveTracker",
             "KT_CampaignQuestObjectiveTracker",
             "KT_WorldQuestObjectiveTracker",
-            "KT_BonusObjectiveTracker",
             "KT_WorldQuestTrackerObjectiveTracker",
             "KT_QuestObjectiveTracker",
             "KT_AdventureObjectiveTracker",
@@ -29,9 +29,10 @@ function NI:KalielSetup()
         modulesOrder = {
             "KT_ScenarioObjectiveTracker",
             "KT_UIWidgetObjectiveTracker",
+            "KT_BonusObjectiveTracker",
+            "KT_RareScannerObjectiveTracker",
             "KT_CampaignQuestObjectiveTracker",
             "KT_WorldQuestObjectiveTracker",
-            "KT_BonusObjectiveTracker",
             "KT_QuestObjectiveTracker",
             "KT_AdventureObjectiveTracker",
             "KT_MonthlyActivitiesObjectiveTracker",
@@ -58,7 +59,7 @@ function NI:KalielSetup()
         border = "1 Pixel",
         hdrBgrColorShare = true,
         colorDifficulty = true,
-        addonWorldQuestTracker = true,
+        addonWorldQuestTracker = NUI.Private and NUI.Private.KTHasWQTSupport() or nil,
         addonAuctionator = true,
         addonRareScanner = true,
         addonTomTom = true,
