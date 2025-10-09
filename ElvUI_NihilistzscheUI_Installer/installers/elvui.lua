@@ -11,35 +11,17 @@ local tFilter = _G.tFilter
 function NI:ElvUINonHealerSetup()
     self:EDB().unitframe.units.raid40 = {
         visibility = "[@raid31,noexists] hide;show",
-        portrait = {
-            overlay = true,
-            enable = true,
-            fullOverlay = true,
-            paused = true,
-        },
     }
     self:EDB().unitframe.units.raid = {
         raidWideSorting = false,
         numGroups = 6,
         visibility = "[@raid6,noexists][@raid31,exists] hide;show",
-        portrait = {
-            overlay = true,
-            enable = true,
-            fullOverlay = true,
-            paused = true,
-        },
     }
     self:EDB().unitframe.units.party = {
         roleIcon = {
             yOffset = -4,
             attachTo = "Frame",
             position = "TOP",
-        },
-        portrait = {
-            overlay = true,
-            enable = true,
-            fullOverlay = true,
-            paused = true,
         },
     }
 
@@ -99,12 +81,6 @@ function NI:ElvUIHealerSetup()
             sizeOverride = 22,
             enable = true,
         },
-        portrait = {
-            overlay = true,
-            enable = true,
-            fullOverlay = true,
-            paused = true,
-        },
     }
     self:EDB().unitframe.units.raid40 = {
         growthDirection = "LEFT_UP",
@@ -115,12 +91,6 @@ function NI:ElvUIHealerSetup()
             frequentUpdates = true,
         },
         height = 30,
-        portrait = {
-            overlay = true,
-            enable = true,
-            fullOverlay = true,
-            paused = true,
-        },
     }
     self:EDB().unitframe.units.raidpet = { enabled = true, colorPetByUnitClass = true }
     self:EDB().unitframe.units.raid = {
@@ -158,12 +128,6 @@ function NI:ElvUIHealerSetup()
             sizeOverride = 22,
             enable = true,
         },
-        portrait = {
-            overlay = true,
-            enable = true,
-            fullOverlay = true,
-            paused = true,
-        },
     }
 
     self:SaveMoverPosition("ElvUF_Raid1Mover", "BOTTOMRIGHT", E.UIParent, "BOTTOMLEFT", 465, 343)
@@ -180,7 +144,7 @@ function NI:NameplateSetup()
     local filterClassName = self.currentLocalizedClass
     local nameFormat = "[namecolor][name]"
     if COMP.TT then
-        nameFormat = "[name:title:health:classcolors]"
+        nameFormat = "[timerunning][name:title:health:classcolors]"
         if NUI.Private then nameFormat = "[pvp:icon]" .. nameFormat end
     end
     self:EDB()["v11NamePlateReset"] = true
@@ -902,12 +866,6 @@ function NI:ElvUISetup(role, isSpec)
                     height = 6.66664361953735,
                     width = 192.500137329102,
                 },
-                portrait = {
-                    overlay = true,
-                    enable = true,
-                    fullOverlay = true,
-                    paused = true,
-                },
             },
             boss = {
                 growthDirection = "RIGHT",
@@ -915,12 +873,6 @@ function NI:ElvUISetup(role, isSpec)
                 castbar = {
                     width = 190,
                     height = 5,
-                },
-                portrait = {
-                    overlay = true,
-                    enable = true,
-                    fullOverlay = true,
-                    paused = true,
                 },
             },
         },
@@ -1182,6 +1134,7 @@ function NI:ElvUISetup(role, isSpec)
     self:SaveMoverPosition("ElvAB_5", "LEFT", "ElvAB_1", "RIGHT", 2, 0)
     self:SaveMoverPosition("ElvAB_6", "BOTTOM", "ElvAB_5", "TOP", 0, 2)
     self:SaveMoverPosition("ElvAB_7", "BOTTOM", "ElvAB_3", "TOP", 0, 2)
+    self:SaveMoverPosition("PetAB", "RIGHT", "ElvAB_4", "LEFT", -4, 0)
     self:SaveMoverPosition("ShiftAB", "BOTTOM", bar7enabled and "ElvAB_7" or "ElvAB_3", "TOP", 0, 16)
     self:SaveMoverPosition("TotemBarMover", "BOTTOMLEFT", E.UIParent, "BOTTOMLEFT", 415, 0)
     self:SaveMoverPosition("BossButton", "BOTTOM", E.UIParent, "BOTTOM", 0, 192)

@@ -13,6 +13,7 @@ function NI:KalielSetup()
         modulesOrder = {
             "KT_ScenarioObjectiveTracker",
             "KT_UIWidgetObjectiveTracker",
+            "KT_RareScannerObjectiveTracker",
             "KT_CampaignQuestObjectiveTracker",
             "KT_WorldQuestObjectiveTracker",
             "KT_BonusObjectiveTracker",
@@ -58,6 +59,8 @@ function NI:KalielSetup()
         hdrBgrColorShare = true,
         colorDifficulty = true,
         addonWorldQuestTracker = true,
+        addonAuctionator = true,
+        addonRareScanner = true,
         addonTomTom = true,
         hdrTxtColorShare = true,
         textWordWrap = true,
@@ -68,8 +71,6 @@ function NI:KalielSetup()
         soundQuest = false,
         modulesOrder = E:CopyTable({}, modulesOrder),
     })
-
-    self:SaveMoverPosition("NUIKalielsTrackerMover", "TOPRIGHT", E.UIParent, "TOPRIGHT", -82, -335)
 end
 
 NI:RegisterAddOnInstaller("!KalielsTracker", NI.KalielSetup)

@@ -249,7 +249,7 @@ function VUF:Initialize()
 
     self:RegisterEvent("UNIT_HEALTH")
     self:RegisterEvent("PET_BATTLE_CLOSE", "UpdateAllFrames")
-    if COMP.FCT then self:RegisterEvent("PLAYER_TARGET_CHANGED") end
+    self:RegisterEvent("PLAYER_TARGET_CHANGED")
     self.version = GetAddOnMetadata(addon, "Version")
 end
 

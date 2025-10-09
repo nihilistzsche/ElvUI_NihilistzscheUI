@@ -469,6 +469,7 @@ function WD:Initialize()
         Gloomhound = { icon = C_Spell_GetSpellTexture(455465), priority = 10, optionsOrder = 31 },
         Charhound = { icon = C_Spell_GetSpellTexture(455476), priority = 10, optionsOrder = 32 },
         Doomguard = { icon = C_Spell_GetSpellTexture(18540), priority = 11, optionsOrder = 33 },
+        ["Infernal Dreadlord"] = { icon = C_Spell_GetSpellTexture(1237711), priority = 12, optionsOrder = 34 },
     }
 
     self.header = self:CreateHeader()

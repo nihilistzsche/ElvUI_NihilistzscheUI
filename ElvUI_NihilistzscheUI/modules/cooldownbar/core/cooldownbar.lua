@@ -127,10 +127,8 @@ function CB:UpdateSettings()
     self.ticker = C_Timer_NewTicker(self.db.switchTime, RotateClosure)
 end
 
-local function UpdateToysClosure() CB:UpdateToys() end
-
 local function UseToyClosure()
-    if CB.db.enabled then C_Timer_After(1.5, UpdateToysClosure) end
+    if CB.db.enabled then E:Delay(1.5, CB.UpdateToys, CB) end
 end
 
 function CB:Initialize()

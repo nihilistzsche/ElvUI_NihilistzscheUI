@@ -30,6 +30,7 @@ function NI.TinkerToolboxSetup()
     E.global.CustomVars = E.global.CustomVars or {}
     E.global.CustomVars.utf8sub = "string.utf8sub"
     E.global.CustomVars.utf8len = "string.utf8len"
+    E.global.CustomVars.GetTimerunningAtlas = "ElvUI_NihilistzscheUI[1].GetTimerunningAtlas"
     E.global.CustomTags["name:health:classcolors"] = {
         vars = "",
         description = "",
@@ -66,6 +67,12 @@ function NI.TinkerToolboxSetup()
             events = "UNIT_FLAGS",
         }
     end
+    E.global.CustomTags["timerunning"] = {
+        vars = "",
+        description = "",
+        func = "function(unit, _, args)\n    local _V = _VARS\n    if _V.E.Retail then\n        return _V.GetTimerunningAtlas(unit)\n    else\n        return nil\n    end\nend",
+        events = "UNIT_FLAGS",
+    }
     if COMP.IsAddOnEnabled("TotalRP3") and COMP.IsAddOnEnabled("RP_Tags") then
         E.global.CustomTags["rp:title:name:colors"] = {
             vars = "",

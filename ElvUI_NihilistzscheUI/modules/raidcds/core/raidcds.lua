@@ -122,7 +122,7 @@ function RCD:CheckRaidBattleRes()
     for _, bar in ipairs(self.bars.battleRes) do
         if bar.info.raidBattleRes then
             local chargeInfo = C_Spell_GetSpellCharges(bar.info.id)
-            bar.candyBarDuration:SetText(("%d RDY"):format(chargeInfo.currentCharges))
+            if chargeInfo then bar.candyBarDuration:SetText(("%d RDY"):format(chargeInfo.currentCharges)) end
         end
     end
 end

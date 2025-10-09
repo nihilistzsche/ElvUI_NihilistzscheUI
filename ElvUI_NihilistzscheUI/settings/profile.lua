@@ -1617,6 +1617,7 @@ NP.warlockdemons = {
         Gloomhound = { enable = true },
         Charhound = { enable = true },
         Doomguard = { enable = true },
+        ["Infernal Dreadlord"] = { enable = true },
     },
 }
 

@@ -17,6 +17,14 @@ local C_Item_GetItemNameByID = _G.C_Item.GetItemIconByID
 local C_Item_GetItemIconByID = _G.C_Item.GetItemIconByID
 local tinsert = _G.tinsert
 
+local function abs(n)
+    if n >= 0 then
+        return math.floor(n)
+    else
+        return math.ceil(n)
+    end
+end
+
 function CB:UpdateFrame(frame)
     local cd, s, d = self:GetCooldown(frame)
     local tex = self:GetTexture(frame)
@@ -25,7 +33,7 @@ function CB:UpdateFrame(frame)
 
     local w = self.bar:GetWidth() - (self.bar:GetHeight() / 2)
 
-    local pos = self:GetPosition(cd) * w
+    local pos = abs(self:GetPosition(cd) * w)
 
     if cd > 0 then
         frame.cooldown:SetCooldown(s, d)
@@ -33,9 +41,11 @@ function CB:UpdateFrame(frame)
     end
 
     frame.tex:SetTexture(tex)
-
-    frame:ClearAllPoints()
-    frame:SetPoint("CENTER", self.bar, "LEFT", pos, 0)
+    if not frame.pos or pos ~= frame.pos then
+        frame:ClearAllPoints()
+        frame:SetPoint("CENTER", self.bar, "LEFT", pos, 0)
+        frame.pos = pos
+    end
     frame:SetAlpha(1)
     frame:Show()
 

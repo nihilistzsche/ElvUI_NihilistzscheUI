@@ -179,7 +179,7 @@ function NI:MerathilisUISetup(isSpec)
         self:EDB().mui.locPanel = {
             enable = false,
         }
-        self:SaveMoverPosition("MicroBarAnchor", "TOP", "LocationPlusPanel", "BOTTOM", 0, -2)
+        self:SaveMoverPosition("MER_MicroBarAnchor", "TOP", "LocationPlusPanel", "BOTTOM", 0, -2)
     end
 end
 

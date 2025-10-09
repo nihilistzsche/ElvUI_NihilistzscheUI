@@ -366,6 +366,20 @@ if E.Retail then
         end
         return false
     end
+
+    local IsTimerunningPlayer = C_ChatInfo.IsTimerunningPlayer
+    local TIMERUNNING_ATLAS = "|A:timerunning-glues-icon-small:%s:%s:0:0|a"
+    local TIMERUNNING_SMALL = format(TIMERUNNING_ATLAS, 12, 10)
+    function NUI.GetTimerunningAtlas(unit)
+        local unitGUID = UnitGUID(unit)
+        if not unitGUID then return end
+
+        if IsTimerunningPlayer(unitGUID) then
+            return TIMERUNNING_SMALL
+        else
+            return
+        end
+    end
 end
 
 if E.Classic or E.Mists then

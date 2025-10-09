@@ -9,9 +9,6 @@ local UnitAffectingCombat = _G.UnitAffectingCombat
 
 function VUF:PLAYER_TARGET_CHANGED()
     local frame = self.units.target
-    if COMP.FCT then
-        if frame and frame.ElvFCT and self.FCT then self.FCT:Disable(frame) end
-    end
     if frame then
         frame.Cutaway.Health:SetAlpha(0)
         frame.Cutaway.Power:SetAlpha(0)

@@ -26,26 +26,18 @@ local hooksecurefunc = _G.hooksecurefunc
 PBN.CVarCache = {}
 PBN.state = {}
 
-local function repeatToggleCVar(cvar, desiredValue, startValue, iterations)
-    C_Timer.NewTicker(0.02, function()
-        SetCVar(cvar, startValue)
-        E:Delay(0.01, SetCVar, cvar, desiredValue)
-    end, iterations)
-end
-
 function PBN:PET_BATTLE_CLOSE()
     for cvar, value in next, self.CVarCache do
         SetCVar(cvar, value)
     end
     wipe(self.CVarCache)
-    repeatToggleCVar("nameplateShowAll", "1", "0", 50)
 end
 
 function PBN:PET_BATTLE_OPENING_START()
     local function CacheCVarAndSet(cvar, newValue, firstValue)
         if not self.CVarCache[cvar] then self.CVarCache[cvar] = GetCVar(cvar) end
         SetCVar(cvar, firstValue or newValue)
-        if firstValue then repeatToggleCVar(cvar, newValue, firstValue, 50) end
+        if firstValue then C_Timer.After(3, function() SetCVar(cvar, newValue) end) end
     end
     local cvarValue = self.db.enabled and "1" or "0"
     CacheCVarAndSet("nameplateShowFriendlyNPCs", cvarValue, "0")
@@ -268,7 +260,7 @@ function PBN.NamePlate_UpdateAuras(pet, np)
             ix = DebuffIndex
             DebuffIndex = DebuffIndex + 1
         end
-        if not f then return end
+        if not f or not f[ix] then return end
         f[ix].Icon:SetTexture(icon)
         f[ix].Count:SetText(turnsRemaining > 0 and turnsRemaining or "")
         f[ix].Cooldown:Hide()
