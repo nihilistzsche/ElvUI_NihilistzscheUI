@@ -4,43 +4,23 @@ local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
 local COMP = NUI.Compatibility
 
-local GetAddOnMetadata = (_G.C_AddOns or _G).GetAddOnMetadata
-
 function NI:KalielSetup()
-    local modulesOrder
+    local modulesOrder = NUI.Private and NUI.Private.GetKTModuleOrder()
+        or {
+            "KT_ScenarioObjectiveTracker",
+            "KT_UIWidgetObjectiveTracker",
+            "KT_BonusObjectiveTracker",
+            "KT_RareScannerObjectiveTracker",
+            "KT_CampaignQuestObjectiveTracker",
+            "KT_WorldQuestObjectiveTracker",
+            "KT_QuestObjectiveTracker",
+            "KT_AdventureObjectiveTracker",
+            "KT_MonthlyActivitiesObjectiveTracker",
+            "KT_PetTrackerObjectiveTracker",
+            "KT_ProfessionsRecipeTracker",
+            "KT_AchievementObjectiveTracker",
+        }
 
-    if NUI.Private and NUI.Private.KTHasWQTSupport() then
-        modulesOrder = {
-            "KT_ScenarioObjectiveTracker",
-            "KT_UIWidgetObjectiveTracker",
-            "KT_BonusObjectiveTracker",
-            "KT_RareScannerObjectiveTracker",
-            "KT_CampaignQuestObjectiveTracker",
-            "KT_WorldQuestObjectiveTracker",
-            "KT_WorldQuestTrackerObjectiveTracker",
-            "KT_QuestObjectiveTracker",
-            "KT_AdventureObjectiveTracker",
-            "KT_MonthlyActivitiesObjectiveTracker",
-            "KT_PetTrackerObjectiveTracker",
-            "KT_ProfessionsRecipeTracker",
-            "KT_AchievementObjectiveTracker",
-        }
-    else
-        modulesOrder = {
-            "KT_ScenarioObjectiveTracker",
-            "KT_UIWidgetObjectiveTracker",
-            "KT_BonusObjectiveTracker",
-            "KT_RareScannerObjectiveTracker",
-            "KT_CampaignQuestObjectiveTracker",
-            "KT_WorldQuestObjectiveTracker",
-            "KT_QuestObjectiveTracker",
-            "KT_AdventureObjectiveTracker",
-            "KT_MonthlyActivitiesObjectiveTracker",
-            "KT_PetTrackerObjectiveTracker",
-            "KT_ProfessionsRecipeTracker",
-            "KT_AchievementObjectiveTracker",
-        }
-    end
     self:SetProfile(_G.KalielsTrackerDB, {
         classBorder = true,
         borderThickness = 2,
@@ -59,7 +39,6 @@ function NI:KalielSetup()
         border = "1 Pixel",
         hdrBgrColorShare = true,
         colorDifficulty = true,
-        addonWorldQuestTracker = NUI.Private and NUI.Private.KTHasWQTSupport() or nil,
         addonAuctionator = true,
         addonRareScanner = true,
         addonTomTom = true,
@@ -72,6 +51,7 @@ function NI:KalielSetup()
         soundQuest = false,
         modulesOrder = E:CopyTable({}, modulesOrder),
     })
+    if NUI.Private then NUI.Private.SetKTOption(_G.KalielsTrackerDB, self.profileKey) end
 end
 
 NI:RegisterAddOnInstaller("!KalielsTracker", NI.KalielSetup)
