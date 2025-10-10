@@ -33,7 +33,7 @@ function CB:UpdateFrame(frame)
 
     local w = self.bar:GetWidth() - (self.bar:GetHeight() / 2)
 
-    local pos = abs(self:GetPosition(cd) * w)
+    local pos = self:GetPosition(cd) * w
 
     if cd > 0 then
         frame.cooldown:SetCooldown(s, d)
@@ -41,10 +41,10 @@ function CB:UpdateFrame(frame)
     end
 
     frame.tex:SetTexture(tex)
-    if not frame.pos or pos ~= frame.pos then
+    if not frame.pos or abs(pos) ~= frame.pos then
         frame:ClearAllPoints()
         frame:SetPoint("CENTER", self.bar, "LEFT", pos, 0)
-        frame.pos = pos
+        frame.pos = abs(pos)
     end
     frame:SetAlpha(1)
     frame:Show()
@@ -72,7 +72,7 @@ function CB:Activate()
     if self.db.autohide then
         if self.bar:IsVisible() then E:UIFrameFadeIn(self.bar, 0.2, self.bar:GetAlpha(), self.db.alpha) end
     end
-    self.bar:SetScript("OnUpdate", function(_, e) CB:OnFrameUpdate(e) end)
+    self.bar:SetScript("OnUpdate", CB.OnFrameUpdate)
 end
 
 function CB:Deactivate()
@@ -207,11 +207,11 @@ function CB:CreateFrame(type, id)
 end
 
 function CB:OnFrameUpdate(t)
-    self.delta = self.delta + t
+    self.delta = (self.delta or 0) + t
 
     if self.delta < 0.05 then return end
 
     self.delta = 0
 
-    self:Update()
+    CB:Update()
 end
