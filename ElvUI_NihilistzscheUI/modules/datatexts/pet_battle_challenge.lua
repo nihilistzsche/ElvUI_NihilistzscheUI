@@ -1,4 +1,4 @@
-local NUI, E, _, _, P = unpack((select(2, ...)))
+local NUI, E = unpack((select(2, ...)))
 if E.Classic then return end
 local DT = E.DataTexts
 local PBCDT = NUI.DataTexts.PetBattleChallengeDataText
