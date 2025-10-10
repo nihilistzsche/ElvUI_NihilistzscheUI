@@ -1,5 +1,5 @@
 ---@class NUI
-local NUI, E, L = _G.unpack((select(2, ...)))
+local NUI, E, L, _, P = _G.unpack((select(2, ...)))
 
 if not E.Retail then return end
 
@@ -433,6 +433,41 @@ function WD.StyleFilterCustomCheck(frame, _, trigger)
     return passed
 end
 
+WD.demons = {
+    ["Wild Imp"] = { icon = C_Spell_GetSpellTexture(205145), priority = 4, optionOrder = 2 },
+    ["Demonic Tyrant"] = { icon = C_Spell_GetSpellTexture(265187), priority = 1, optionOrder = 1 },
+    Dreadstalker = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
+    ["Greater Dreadstalker"] = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
+    Felguard = { icon = C_Spell_GetSpellTexture(111898), priority = 6, optionOrder = 11 },
+    Bilescourge = { icon = C_Spell_GetSpellTexture(267992), priority = 9, optionOrder = 14 },
+    Vilefiend = { icon = C_Spell_GetSpellTexture(264119), priority = 10, optionOrder = 13 },
+    ["Prince Malchezaar"] = { icon = C_Spell_GetSpellTexture(267986), priority = 2, optionOrder = 4 },
+    ["Illidari Satyr"] = { icon = C_Spell_GetSpellTexture(267987), priority = 7, optionOrder = 15 },
+    ["Vicious Hellhound"] = { icon = C_Spell_GetSpellTexture(267988), priority = 8, optionOrder = 16 },
+    ["Eye of Gul'dan"] = { icon = C_Spell_GetSpellTexture(267989), priority = 11, optionOrder = 17 },
+    ["Void Terror"] = { icon = C_Spell_GetSpellTexture(267991), priority = 12, optionOrder = 18 },
+    Shivarra = { icon = C_Spell_GetSpellTexture(267994), priority = 14, optionOrder = 20 },
+    Wrathguard = { icon = C_Spell_GetSpellTexture(267995), priority = 15, optionOrder = 21 },
+    Darkhound = { icon = C_Spell_GetSpellTexture(267996), priority = 16, optionOrder = 22 },
+    ["Ur'zul"] = { icon = C_Spell_GetSpellTexture(268001), priority = 17, optionOrder = 23 },
+    ["Fel Lord"] = { icon = C_Spell_GetSpellTexture(212459), priority = 18, optionOrder = 24 },
+    Observer = { icon = C_Spell_GetSpellTexture(201996), priority = 19, optionOrder = 25 },
+    ["Imp Gang Boss"] = { icon = C_Spell_GetSpellTexture(387445), priority = 3, optionsOrder = 26 },
+    Soulkeeper = { icon = C_Spell_GetSpellTexture(386244), priority = 2, optionsOrder = 27 },
+    ["Pit Lord"] = { icon = C_Spell_GetSpellTexture(138787), priority = 1, optionsOrder = 28 },
+    ["Mother of Chaos"] = { icon = C_Spell_GetSpellTexture(432794), priority = 1, optionsOrder = 29 },
+    Overlord = { icon = C_Spell_GetSpellTexture(428524), priority = 1, optionsOrder = 30 },
+    Gloomhound = { icon = C_Spell_GetSpellTexture(455465), priority = 10, optionsOrder = 31 },
+    Charhound = { icon = C_Spell_GetSpellTexture(455476), priority = 10, optionsOrder = 32 },
+    Doomguard = { icon = C_Spell_GetSpellTexture(18540), priority = 11, optionsOrder = 33 },
+    ["Infernal Dreadlord"] = { icon = C_Spell_GetSpellTexture(1237711), priority = 1, optionsOrder = 34 },
+    ["Dreamweaver"] = { icon = C_Spell_GetSpellTexture(1242114), priority = 1, optionsOrder = 35 },
+}
+
+for k, _ in next, WD.demons do
+    P.nihilistzscheui.warlockdemons.demons[k] = { enable = true }
+end
+
 function WD:Initialize()
     if E.myclass ~= "WARLOCK" or not COMP.ZP then return end
     NUI:RegisterDB(self, "warlockdemons")
@@ -441,36 +476,6 @@ function WD:Initialize()
 
     self.activeBars = {}
     self.attachedNPs = {}
-
-    self.demons = {
-        ["Wild Imp"] = { icon = C_Spell_GetSpellTexture(205145), priority = 4, optionOrder = 2 },
-        ["Demonic Tyrant"] = { icon = C_Spell_GetSpellTexture(265187), priority = 1, optionOrder = 1 },
-        Dreadstalker = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
-        ["Greater Dreadstalker"] = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
-        Felguard = { icon = C_Spell_GetSpellTexture(111898), priority = 6, optionOrder = 11 },
-        Bilescourge = { icon = C_Spell_GetSpellTexture(267992), priority = 9, optionOrder = 14 },
-        Vilefiend = { icon = C_Spell_GetSpellTexture(264119), priority = 10, optionOrder = 13 },
-        ["Prince Malchezaar"] = { icon = C_Spell_GetSpellTexture(267986), priority = 2, optionOrder = 4 },
-        ["Illidari Satyr"] = { icon = C_Spell_GetSpellTexture(267987), priority = 7, optionOrder = 15 },
-        ["Vicious Hellhound"] = { icon = C_Spell_GetSpellTexture(267988), priority = 8, optionOrder = 16 },
-        ["Eye of Gul'dan"] = { icon = C_Spell_GetSpellTexture(267989), priority = 11, optionOrder = 17 },
-        ["Void Terror"] = { icon = C_Spell_GetSpellTexture(267991), priority = 12, optionOrder = 18 },
-        Shivarra = { icon = C_Spell_GetSpellTexture(267994), priority = 14, optionOrder = 20 },
-        Wrathguard = { icon = C_Spell_GetSpellTexture(267995), priority = 15, optionOrder = 21 },
-        Darkhound = { icon = C_Spell_GetSpellTexture(267996), priority = 16, optionOrder = 22 },
-        ["Ur'zul"] = { icon = C_Spell_GetSpellTexture(268001), priority = 17, optionOrder = 23 },
-        ["Fel Lord"] = { icon = C_Spell_GetSpellTexture(212459), priority = 18, optionOrder = 24 },
-        Observer = { icon = C_Spell_GetSpellTexture(201996), priority = 19, optionOrder = 25 },
-        ["Imp Gang Boss"] = { icon = C_Spell_GetSpellTexture(387445), priority = 3, optionsOrder = 26 },
-        Soulkeeper = { icon = C_Spell_GetSpellTexture(386244), priority = 2, optionsOrder = 27 },
-        ["Pit Lord"] = { icon = C_Spell_GetSpellTexture(138787), priority = 1, optionsOrder = 28 },
-        ["Mother of Chaos"] = { icon = C_Spell_GetSpellTexture(432794), priority = 1, optionsOrder = 29 },
-        Overlord = { icon = C_Spell_GetSpellTexture(428524), priority = 1, optionsOrder = 30 },
-        Gloomhound = { icon = C_Spell_GetSpellTexture(455465), priority = 10, optionsOrder = 31 },
-        Charhound = { icon = C_Spell_GetSpellTexture(455476), priority = 10, optionsOrder = 32 },
-        Doomguard = { icon = C_Spell_GetSpellTexture(18540), priority = 11, optionsOrder = 33 },
-        ["Infernal Dreadlord"] = { icon = C_Spell_GetSpellTexture(1237711), priority = 12, optionsOrder = 34 },
-    }
 
     self.header = self:CreateHeader()
 
