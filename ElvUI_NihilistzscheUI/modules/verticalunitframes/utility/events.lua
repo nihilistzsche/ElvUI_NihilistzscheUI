@@ -47,7 +47,7 @@ function VUF:UNIT_HEALTH(_, unit)
 
     local f = self.units[unit]
     local healthSeen = UnitHealth(unit)
-    if healthSeen == UnitHealthMax(unit) or healthSeen == f.healthSeen and not f.isCasting then
+    if healthSeen == UnitHealthMax(unit) or healthSeen == f.healthSeen and not self.VerifyCasting(f) then
         if not UnitAffectingCombat("player") and not UnitAffectingCombat("pet") then
             VUF:UpdateHiddenStatus(f, "PLAYER_REGEN_ENABLED")
         end

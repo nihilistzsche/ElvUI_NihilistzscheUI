@@ -20,10 +20,7 @@ function VUF:ConstructTargetTargetTargetFrame(frame, unit)
 
     frame.colors = _G.ElvUF.colors
 
-    frame.OnFirstUpdateFinish = function()
-        frame:SetAlpha(self.db.alpha)
-        VUF:HookSetAlpha(frame)
-    end
+    frame.OnFirstUpdateFinish = function() frame:SetAlpha(self.db.alpha) end
 
     frame:Point("TOP", _G.NihilistzscheUF_TargetTarget, "BOTTOM", 0, -50)
     -- stylua: ignore start

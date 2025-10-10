@@ -133,10 +133,7 @@ function VUF:ConstructPlayerFrame(frame, unit)
 
     frame.colors = _G.ElvUF.colors
 
-    frame.OnFirstUpdateFinish = function()
-        frame:SetAlpha(self.db.alpha)
-        VUF:HookSetAlpha(frame)
-    end
+    frame.OnFirstUpdateFinish = function() frame:SetAlpha(self.db.alpha) end
 
     frame:Point("RIGHT", E.UIParent, "CENTER", -275, 0) --Set to default position
     -- stylua: ignore start

@@ -20,10 +20,7 @@ function VUF:ConstructPetTargetFrame(frame, unit)
 
     frame.colors = _G.ElvUF.colors
 
-    frame.OnFirstUpdateFinish = function()
-        frame:SetAlpha(self.db.alpha)
-        VUF:HookSetAlpha(frame)
-    end
+    frame.OnFirstUpdateFinish = function() frame:SetAlpha(self.db.alpha) end
 
     frame:Point("BOTTOMRIGHT", _G.NihilistzscheUF_Pet, "BOTTOMLEFT", -150, 0)
     -- stylua: ignore start

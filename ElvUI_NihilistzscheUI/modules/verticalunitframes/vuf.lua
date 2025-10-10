@@ -86,7 +86,7 @@ function VUF:UpdateHiddenStatus(frame, event)
 
     local combatEnded = event == "PLAYER_REGEN_ENABLED"
     local inCombat = event == "PLAYER_REGEN_DISABLED" or UnitAffectingCombat("player") or UnitAffectingCombat("pet")
-    local isCasting = frame.isCasting
+    local isCasting = self.VerifyCasting(frame)
     local isMouseOver = frame:IsMouseMotionFocus()
     local isHealing = frame.healthSeen
     local overrideHide = (inCombat and not combatEnded) or isCasting or isHealing or isMouseOver

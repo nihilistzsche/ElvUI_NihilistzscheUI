@@ -21,10 +21,7 @@ function VUF:ConstructFocusTargetFrame(frame, unit)
 
     frame.colors = _G.ElvUF.colors
 
-    frame.OnFirstUpdateFinish = function()
-        frame:SetAlpha(self.db.alpha)
-        VUF:HookSetAlpha(frame)
-    end
+    frame.OnFirstUpdateFinish = function() frame:SetAlpha(self.db.alpha) end
 
     frame:Point("BOTTOMLEFT", _G.NihilistzscheUF_Focus, "BOTTOMRIGHT", 110, 0)
     -- stylua: ignore start

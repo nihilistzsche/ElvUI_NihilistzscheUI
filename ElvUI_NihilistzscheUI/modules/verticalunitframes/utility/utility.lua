@@ -301,30 +301,17 @@ function VUF:UpdateFrame(unit)
         if frame:IsVisible() then frame:Hide() end
         frame:SetAlpha(0)
         frame:Disable()
-        VUF:ScheduleTimer("DisableThisShit", 1)
+        VUF:ScheduleTimer("DisableAllFrames", 1)
     end
 end
 
-function VUF:HookSetAlpha(frame)
-    if frame._NihilistzscheUI_SetAlpha then return end
-    frame._NihilistzscheUI_SetAlpha = frame.SetAlpha
-    frame.SetAlpha = function(_self, alpha)
-        if not alpha then return end
-        if InCombatLockdown() then
-            _self:_NihilistzscheUI_SetAlpha(self.db.alpha)
-        else
-            _self:_NihilistzscheUI_SetAlpha(alpha)
-        end
-    end
-end
-
-function VUF:DisableThisShit()
+function VUF:DisableAllFrames()
     if not VUF.db or not VUF.db.units then
-        VUF:ScheduleTimer("DisableThisShit", 1)
+        VUF:ScheduleTimer("DisableAllFrames", 1)
         return
     end
     if UnitAffectingCombat("player") or UnitAffectingCombat("pet") then
-        NUI:RegenWait(self.DisableThisShit, self)
+        NUI:RegenWait(self.DisableAllFrames, self)
         return
     end
     for _, f in pairs(VUF.units) do
@@ -332,6 +319,11 @@ function VUF:DisableThisShit()
         if unit == "vehicle" then unit = "player" end
         if not VUF.db.units[unit].enabled then f:Disable() end
     end
+end
+
+function VUF.VerifyCasting(frame)
+    if frame.isCasting and not frame.Castbar:IsShown() then frame.isCasting = nil end
+    return frame.isCasting
 end
 
 function VUF:UpdateAllFrames()
