@@ -61,12 +61,12 @@ local function GetPortraitFixClosure(frame)
 end
 
 function VUF:ActivateFrame(frame)
-    E:UIFrameFadeIn(frame, 0.2, self.db.alphaOOC, self.db.alpha)
+    E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha)
     if frame.Portrait then frame.Portrait:SetAlpha(math.min(self.db.alpha, 0.35)) end
 end
 
 function VUF:DeactivateFrame(frame)
-    E:UIFrameFadeOut(frame, 0.2, self.db.alpha, self.db.alphaOOC)
+    E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC)
     if frame.Portrait then
         frame.Portrait:SetAlpha(self.db.alphaOOC)
         C_Timer.After(0.2, GetPortraitFixClosure(frame))
@@ -86,7 +86,7 @@ function VUF:UpdateHiddenStatus(frame, event)
 
     local combatEnded = event == "PLAYER_REGEN_ENABLED"
     local inCombat = event == "PLAYER_REGEN_DISABLED" or UnitAffectingCombat("player") or UnitAffectingCombat("pet")
-    local isCasting = frame.isCasting
+    local isCasting = self.VerifyCasting(frame)
     local isMouseOver = frame:IsMouseMotionFocus()
     local isHealing = frame.healthSeen
     local overrideHide = (inCombat and not combatEnded) or isCasting or isHealing or isMouseOver
