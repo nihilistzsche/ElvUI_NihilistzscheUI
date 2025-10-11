@@ -1,6 +1,6 @@
 [submodule "ElvUI_NihilistzscheUI_Private"]
 	path = ElvUI_NihilistzscheUI_Private
 	url = git@github.com:nihilistzsche/ElvUI_NihilistzscheUI_Private
-[submodule "ElvUI_NihilistzscheUI_NihilPrivate"]
-	path = ElvUI_NihilistzscheUI_NihilPrivate
-	url = git@github.com:nihilistzsche/ElvUI_NihilistzscheUI_NihilPrivate
+[submodule "ElvUI_NihilistzscheUI_Debug"]
+	path = ElvUI_NihilistzscheUI_Debug
+	url = git@github.com:nihilistzsche/ElvUI_NihilistzscheUI_Debug
