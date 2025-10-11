@@ -223,6 +223,8 @@ function NI.AreInstalledAddOnsEqual(installedAddOnSetA, installedAddOnSetB)
     return true
 end
 
+local profileKey = "- NihilistzscheUI"
+
 function NI:ShouldInstall()
     if _G.NUIIDB and _G.NUIIDB.skipped then return false end
 
@@ -270,7 +272,11 @@ function NI:ShouldInstall()
         return false
     end
 
-    if _G.ElvDB.profileKeys[self.baseProfile] ~= self.baseProfileKey then return true end
+    for s, l in pairs(_G.ElvDB.class) do
+        for n in pairs(l) do
+            if _G.ElvDB.profileKeys[n .. " - " .. s]:sub(-(profileKey:len())) ~= profileKey then return true end
+        end
+    end
 
     return false
 end
