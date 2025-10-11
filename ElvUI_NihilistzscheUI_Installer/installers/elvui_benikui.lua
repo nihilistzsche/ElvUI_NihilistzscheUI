@@ -62,6 +62,10 @@ function NI:BenikUISetup(isSpec)
         [2] = { enable = false },
     }
 
+    self:EDB().datatexts.panels["BuiLeftChatDTPPanel"] = { enable = false }
+    self:EDB().datatexts.panels["BuiRightChatDTPanel"] = { enable = false }
+    self:EDB().datatexts.panels["BuiMiddleDTPanel"] = { enable = false }
+
     self:EDB().benikui.dashboards = {
         dashFont = {
             dbfont = self.db.font,

@@ -2,7 +2,7 @@
 local NUI, E = _G.unpack(_G.ElvUI_NihilistzscheUI)
 local NI = NUI.Installer
 
-local installVersion = { 13.03, 5 }
+local installVersion = { 13.04, 1 }
 
 function NI.GetInstallInfo(idx)
     local tbl = installVersion

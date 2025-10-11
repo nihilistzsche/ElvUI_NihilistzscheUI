@@ -575,10 +575,8 @@ function NI.NihilistzscheDatatextPanelSetup()
     copy("NihilistzscheUILR")
     copy("NihilistzscheUIUR")
     db.DTB2_NihilistzscheUIUR.numPoints = 1
-    if NUI.Private then
-        copy("NihilistzscheUIUL")
-        db.DTB2_NihilistzscheUIUL.numPoints = 1
-    end
+    copy("NihilistzscheUIUL")
+    db.DTB2_NihilistzscheUIUL.numPoints = 1
 end
 
 local template = {
@@ -638,8 +636,6 @@ function NI:DatatextPanelSetup()
         },
     }
     local db = E.global.datatexts.customPanels
-
-    wipe(db)
 
     for i = 1, 8 do
         local key = "NUI_DataPanel_" .. i
