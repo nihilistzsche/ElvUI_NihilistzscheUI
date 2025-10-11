@@ -37,15 +37,15 @@ function NI:WowProSetup()
     local fonthash = hashtable[self.db.font]
     local profile = {
         stepfont = fonthash,
-        steptextsize = 10,
+        steptextsize = 12,
         notefont = fonthash,
-        notetextsize = 8,
+        notetextsize = 10,
         trackfont = fonthash,
-        tracktextsize = 8,
+        tracktextsize = 10,
         titlefont = fonthash,
-        titletextsize = 10,
+        titletextsize = 12,
         stickytitlefont = fonthash,
-        sticktitletextsize = 10,
+        sticktitletextsize = 12,
         position = { "TOP", "UIParent", "TOP", 418, -48 },
     }
     if NUI.NihilPrivate then profile.rank = self:GetWoWProRank() end
