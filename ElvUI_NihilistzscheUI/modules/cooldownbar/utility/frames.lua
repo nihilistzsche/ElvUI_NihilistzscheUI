@@ -209,7 +209,8 @@ end
 function CB:OnFrameUpdate(t)
     self.delta = (self.delta or 0) + t
 
-    if self.delta < 0.05 then return end
+    local epsilon = 1 / GetFramerate()
+    if self.delta < epsilon then return end
 
     self.delta = 0
 

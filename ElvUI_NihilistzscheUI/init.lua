@@ -124,7 +124,7 @@ end
 function NUI:GetRegisteredModules() return self.RegisteredModules end
 
 function NUI:DebugPrint(...)
-    if self.Debug then print(...) end
+    if self.NihilPrivate then print(...) end
 end
 
 do
@@ -157,7 +157,7 @@ end
 function NUI:Initialize()
     self.initialized = true
 
-    if NUI.Debug then _G.NUI = NUI end
+    if NUI.NihilPrivate then _G.NUI = NUI end
 
     --self:BuildGameMenu()
     self.FixPetJournal()

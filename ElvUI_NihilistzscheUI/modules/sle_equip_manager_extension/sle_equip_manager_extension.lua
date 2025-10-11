@@ -40,7 +40,7 @@ function SEME:Initialize()
     EM.TagsTable.fishing = SEME.IsFishing
     EM.TagsTable.engineering = SEME.HasEngineeringHelm
     EM:RegisterNewEvent("UNIT_AURA")
-    if NUI.Private then NUI.Private:SetSLEEquipConditions() end
+    if NUI.NihilPrivate then NUI.NihilPrivate:SetSLEEquipConditions() end
 
     EMInitialize(EM)
     self:RegisterEvent("PLAYER_REGEN_DISABLED")
