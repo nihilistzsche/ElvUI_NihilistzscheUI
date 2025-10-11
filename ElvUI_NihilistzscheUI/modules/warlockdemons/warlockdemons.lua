@@ -203,6 +203,23 @@ function WD:UpdateBars(isDemonicTyrant)
         local barsPerColumn = 12
         local numColumns = math.ceil(#bars / barsPerColumn)
         local numRows = math.min(#bars, barsPerColumn)
+        local width = self.db.width
+        local height = self.db.height
+        local spacing = self.db.spacing
+
+        if not width then
+            NUI:DebugPrint("Missing width")
+            return
+        end
+        if not height then
+            NUI:DebugPrint("Missing height")
+            return
+        end
+        if not spacing then
+            NUI:DebugPrint("Missing spacing")
+            return
+        end
+
         for i, b in ipairs(bars) do
             if i == 1 then
                 pcall(b.Point, b, point, self.header, relativePoint, 0, yOffset)
@@ -213,8 +230,9 @@ function WD:UpdateBars(isDemonicTyrant)
             end
             if not b.running then b:Start() end
         end
-        self.header:Size(self.db.width * math.max(1, numColumns), self.db.height)
-        local height = ((numRows + 1) * self.db.height) + (self.db.spacing * numRows)
+
+        self.header:Size(width * math.max(1, numColumns), height)
+        local height = ((numRows + 1) * height) + (spacing * numRows)
         self.header.Container:SetHeight(height)
     else
         for _, b in ipairs(bars) do
