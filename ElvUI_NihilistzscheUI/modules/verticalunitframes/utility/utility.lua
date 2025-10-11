@@ -321,11 +321,6 @@ function VUF:DisableAllFrames()
     end
 end
 
-function VUF.VerifyCasting(frame)
-    if frame.isCasting and not frame.Castbar:IsShown() then frame.isCasting = nil end
-    return frame.isCasting
-end
-
 function VUF:UpdateAllFrames()
     if not self.db then return end
     for unit, frame in pairs(self.units) do
