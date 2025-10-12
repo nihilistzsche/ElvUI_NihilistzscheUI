@@ -150,7 +150,9 @@ local function ExecuteHooks(tbl, ...)
 end
 
 function NUB.CreateButton(bar)
-    local button = LAB:CreateButton(#bar.buttons + 1, format(bar:GetName() .. "Button%d", #bar.buttons + 1), bar, nil)
+    local buttonName = format(bar:GetName() .. "Button%d", #bar.buttons + 1)
+    local button = LAB:CreateButton(#bar.buttons + 1, buttonName, bar, nil)
+    if _G[buttonName .. "Count"] then _G[buttonName .. "Count"]:Kill() end
     button:SetFrameLevel(bar:GetFrameLevel() + 2)
     button:SetTemplate("Transparent")
     button.cooldown = CreateFrame("Cooldown", nil, button, "CooldownFrameTemplate")
