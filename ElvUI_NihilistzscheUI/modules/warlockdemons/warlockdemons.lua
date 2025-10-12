@@ -127,6 +127,28 @@ function WD.RemoveBarByIndex(index) tremove(WD.activeBars, index) end
 
 function WD.AddBar(bar) tinsert(WD.activeBars, bar) end
 
+function WD:ResetDemonicTyrantCounts()
+    self.demonicTyrantCounts = self.demonicTyrantCounts or {}
+    wipe(self.demonicTyrantCounts)
+end
+
+function WD:IsValidDemonicTyrantExtension(name)
+    local demonInfo = self.demons[name]
+    if demonInfo and demonInfo.demonicTyrantValid then
+        if type(demonInfo.demonicTyrantValid) == "number" then
+            local maxCount = demonInfo.demonicTyrantValid
+            local currentCount = self.demonicTyrantCounts[name] or 0
+            if currentCount + 1 < maxCount then
+                self.demonicTyrantCounts[name] = currentCount + 1
+                return true
+            end
+        else
+            return true
+        end
+    end
+    return false
+end
+
 function WD:UpdateBars(isDemonicTyrant)
     if self.updating then return end
 
@@ -147,6 +169,7 @@ function WD:UpdateBars(isDemonicTyrant)
     process(add_queue, self.AddBar)
 
     if isDemonicTyrant then
+        self:ResetDemonicTyrantCounts()
         for _, b in ipairs(bars) do
             local cooldownInfo = C_Spell_GetSpellCooldown(265187)
             local start, duration = cooldownInfo.startTime, cooldownInfo.duration
@@ -157,7 +180,7 @@ function WD:UpdateBars(isDemonicTyrant)
                     mod = 15
                 end
             end
-            if GetPetName(b.petGUID) ~= "Demonic Tyrant" then
+            if self:IsValidDemonicTyrantExtension(GetPetName(b.petGUID)) then
                 local c = b.remaining
                 stopBar(b)
                 b:SetDuration(c + mod)
@@ -209,14 +232,17 @@ function WD:UpdateBars(isDemonicTyrant)
 
         if not width then
             NUI:DebugPrint("Missing width")
+            self.updating = nil
             return
         end
         if not height then
             NUI:DebugPrint("Missing height")
+            self.updating = nil
             return
         end
         if not spacing then
             NUI:DebugPrint("Missing spacing")
+            self.updating = nil
             return
         end
 
@@ -232,8 +258,8 @@ function WD:UpdateBars(isDemonicTyrant)
         end
 
         self.header:Size(width * math.max(1, numColumns), height)
-        local height = ((numRows + 1) * height) + (spacing * numRows)
-        self.header.Container:SetHeight(height)
+        local containerHeight = ((numRows + 1) * height) + (spacing * numRows)
+        self.header.Container:SetHeight(containerHeight)
     else
         for _, b in ipairs(bars) do
             if not b.running then b:Start() end
@@ -452,13 +478,23 @@ function WD.StyleFilterCustomCheck(frame, _, trigger)
 end
 
 WD.demons = {
-    ["Wild Imp"] = { icon = C_Spell_GetSpellTexture(205145), priority = 4, optionOrder = 2 },
+    ["Wild Imp"] = {
+        icon = C_Spell_GetSpellTexture(205145),
+        priority = 4,
+        optionOrder = 2,
+        demonicTyrantValid = 10,
+    },
     ["Demonic Tyrant"] = { icon = C_Spell_GetSpellTexture(265187), priority = 1, optionOrder = 1 },
-    Dreadstalker = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
-    ["Greater Dreadstalker"] = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3 },
-    Felguard = { icon = C_Spell_GetSpellTexture(111898), priority = 6, optionOrder = 11 },
+    Dreadstalker = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3, demonicTyrantValid = true },
+    ["Greater Dreadstalker"] = {
+        icon = C_Spell_GetSpellTexture(104316),
+        priority = 5,
+        optionOrder = 3,
+        demonicTyrantValid = true,
+    },
+    Felguard = { icon = C_Spell_GetSpellTexture(111898), priority = 6, optionOrder = 11, demonicTyrantValid = true },
     Bilescourge = { icon = C_Spell_GetSpellTexture(267992), priority = 9, optionOrder = 14 },
-    Vilefiend = { icon = C_Spell_GetSpellTexture(264119), priority = 10, optionOrder = 13 },
+    Vilefiend = { icon = C_Spell_GetSpellTexture(264119), priority = 10, optionOrder = 13, demonicTyrantValid = true },
     ["Prince Malchezaar"] = { icon = C_Spell_GetSpellTexture(267986), priority = 2, optionOrder = 4 },
     ["Illidari Satyr"] = { icon = C_Spell_GetSpellTexture(267987), priority = 7, optionOrder = 15 },
     ["Vicious Hellhound"] = { icon = C_Spell_GetSpellTexture(267988), priority = 8, optionOrder = 16 },
@@ -475,8 +511,8 @@ WD.demons = {
     ["Pit Lord"] = { icon = C_Spell_GetSpellTexture(138787), priority = 1, optionsOrder = 28 },
     ["Mother of Chaos"] = { icon = C_Spell_GetSpellTexture(432794), priority = 1, optionsOrder = 29 },
     Overlord = { icon = C_Spell_GetSpellTexture(428524), priority = 1, optionsOrder = 30 },
-    Gloomhound = { icon = C_Spell_GetSpellTexture(455465), priority = 10, optionsOrder = 31 },
-    Charhound = { icon = C_Spell_GetSpellTexture(455476), priority = 10, optionsOrder = 32 },
+    Gloomhound = { icon = C_Spell_GetSpellTexture(455465), priority = 10, optionsOrder = 31, demonicTyrantValid = true },
+    Charhound = { icon = C_Spell_GetSpellTexture(455476), priority = 10, optionsOrder = 32, demonicTyrantValid = true },
     Doomguard = { icon = C_Spell_GetSpellTexture(18540), priority = 11, optionsOrder = 33 },
     ["Infernal Dreadlord"] = { icon = C_Spell_GetSpellTexture(1237711), priority = 1, optionsOrder = 34 },
     ["Dreamweaver"] = { icon = C_Spell_GetSpellTexture(1242114), priority = 1, optionsOrder = 35 },
