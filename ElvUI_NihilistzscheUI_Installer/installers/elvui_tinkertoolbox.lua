@@ -71,7 +71,7 @@ function NI.TinkerToolboxSetup()
         vars = "",
         description = "",
         func = "function(unit, _, args)\n    local _V = _VARS\n    if _V.E.Retail then\n        return _V.GetTimerunningAtlas(unit)\n    else\n        return nil\n    end\nend",
-        events = "UNIT_FLAGS",
+        events = "PLAYER_ENTERING_WORLD",
     }
     if COMP.IsAddOnEnabled("TotalRP3") and COMP.IsAddOnEnabled("RP_Tags") then
         E.global.CustomTags["rp:title:name:colors"] = {

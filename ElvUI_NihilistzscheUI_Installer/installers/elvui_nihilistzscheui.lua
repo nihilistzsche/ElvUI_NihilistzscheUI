@@ -390,6 +390,17 @@ function NI:NihilistzscheUISetup(isSpec)
             self:EDB().nihilistzscheui.vuf.units[unit].health = {
                 value = { tag = "[healthcolor][health:current-percent][nui:absorbs]" },
             }
+            if unit ~= "pet" then
+                if unit == "player" then
+                    self:EDB().nihilistzscheui.vuf.units[unit].name = {
+                        tag = "[smartlevel] [shortclassification] [timerunning][namecolor][name:medium]",
+                    }
+                else
+                    self:EDB().nihilistzscheui.vuf.units[unit].name = {
+                        tag = "[timerunning]" .. P.nihilistzscheui.vuf.units[unit].name.tag,
+                    }
+                end
+            end
         end
     end
     if not isSpec and NUI.Private then
