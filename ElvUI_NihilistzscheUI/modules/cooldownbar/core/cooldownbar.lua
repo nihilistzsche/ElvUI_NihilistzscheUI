@@ -7,7 +7,6 @@ local tremove = _G.tremove
 local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
 local C_Item_GetItemIconByID = _G.C_Item.GetItemIconByID
 local hooksecurefunc = _G.hooksecurefunc
-local C_Timer_After = _G.C_Timer.After
 local C_Timer_NewTicker = _G.C_Timer.NewTicker
 
 CB.MAX_CB_VAL = math.pow(300, 0.3)
@@ -50,14 +49,14 @@ function CB:Update()
             end
         end
 
-        C_Timer_After(0.2, frame.Close)
+        E:Delay(0.2, frame.Close)
     end
 
     if #self.liveFrames == 0 then
         if not frameFading then
             self:Deactivate()
         else
-            C_Timer_After(0.2, DeactivateClosure)
+            E:Delay(0.2, DeactivateClosure)
         end
     end
 end

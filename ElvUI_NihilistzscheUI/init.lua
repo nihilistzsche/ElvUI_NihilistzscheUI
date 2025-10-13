@@ -175,7 +175,7 @@ function NUI:Initialize()
     self.Migration:CheckMigrations()
     if self.Installer then self.Installer:Initialize() end
 
-    C_Timer.After(3, function() NUI:DelayedInitialize() end)
+    E:Delay(3, self.DelayedInitialize, self)
 end
 
 E.Libs.EP:HookInitialize(NUI, NUI.Initialize)

@@ -19,7 +19,6 @@ local C_AddOns_LoadAddOn = _G.C_AddOns.LoadAddOn
 local tinsert = _G.tinsert
 local NUM_STANCE_SLOTS = _G.NUM_STANCE_SLOTS
 local hooksecurefunc = _G.hooksecurefunc
-local C_Timer_After = _G.C_Timer.After
 local GetNumGroupMembers = _G.GetNumGroupMembers
 local wipe = _G.wipe
 if not IsAddOnLoaded("Blizzard_TalentUI") then C_AddOns_LoadAddOn("Blizzard_TalentUI") end
@@ -254,7 +253,7 @@ function ES:UpdateShadows(hide, shadow)
     if not self:CheckShadowColor() then
         if shadow then tinsert(self.pendingShadows, shadow) end
         if not self.pendingUpdate then
-            C_Timer_After(2, function() self:UpdateShadows(hide) end)
+            E:Delay(2, self.UpdateShadows, self, hide)
             self.pendingUpdate = true
         end
         return
@@ -355,6 +354,12 @@ end
 function ES:GROUP_ROSTER_UPDATE() self:UpdateShadows(GetNumGroupMembers() > 20) end
 ES.PLAYER_ENTERING_WORLD = ES.GROUP_ROSTER_UPDATE
 
+local function UpdateDTPanels()
+    for panelName, panel in pairs(DT.RegisteredPanels) do
+        DT:UpdatePanelInfo(panelName, panel)
+    end
+end
+
 function ES:Initialize()
     if COMP.PA then _G.ProjectAzilroka.ES = ES end
     if COMP.AS then _G.AddOnSkins.ES = ES end
@@ -381,11 +386,7 @@ function ES:Initialize()
             ES:RegisterFrameShadows(dataPanel)
         end
     end)
-    C_Timer.After(5, function()
-        for panelName, panel in pairs(DT.RegisteredPanels) do
-            DT:UpdatePanelInfo(panelName, panel)
-        end
-    end)
+    E:Delay(5, UpdateDTPanels)
 
     local framesKeys = { "Arena", "Assist", "Boss", "Party", "Raid", "Tank" }
     local frameKeys = {

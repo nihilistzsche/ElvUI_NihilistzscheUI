@@ -16,11 +16,8 @@ local tremove = _G.tremove
 local GetSpecialization = _G.GetSpecialization
 local InCombatLockdown = _G.InCombatLockdown
 local C_Spell_GetSpellTexture = _G.C_Spell.GetSpellTexture
-local C_Spell_GetSpellCooldown = _G.C_Spell.GetSpellCooldown
 local hooksecurefunc = _G.hooksecurefunc
-local C_Timer_After = _G.C_Timer.After
 local C_Timer_NewTicker = _G.C_Timer.NewTicker
-local strmatch = _G.strmatch
 local UnitName = _G.UnitName
 local UnitIsFriend = _G.UnitIsFriend
 local FindInTableIf = _G.FindInTableIf
@@ -46,7 +43,7 @@ function WD:CreateHeader()
     local container = CreateFrame("Frame", "NihilistzscheUIWarlockDemonsContainer", header, "BackdropTemplate")
     container:SetFrameLevel(header:GetFrameLevel())
     local fp, sp =
-        self.db.grow == "DOWN" and "TOP" or "BOTTOMLEFT", self.db.grow == "DOWN" and "TOPRIGHT" or "BOTTOMRIGHT"
+        self.db.grow == "DOWN" and "TOPLEFT" or "BOTTOMLEFT", self.db.grow == "DOWN" and "TOPRIGHT" or "BOTTOMRIGHT"
     container:SetPoint(fp, header, fp)
     container:SetPoint(sp, header, sp)
     container:SetTemplate("Transparent")
@@ -171,23 +168,18 @@ function WD:UpdateBars(isDemonicTyrant)
     if isDemonicTyrant then
         self:ResetDemonicTyrantCounts()
         for _, b in ipairs(bars) do
-            local cooldownInfo = C_Spell_GetSpellCooldown(265187)
-            local start, duration = cooldownInfo.startTime, cooldownInfo.duration
-            local mod = 4
-            if start > 0 and duration > 0 then
-                local running = _G.GetTime() - start
-                if running < 5 then -- give 5 sec buffer for the bars to update but if this takes
-                    mod = 15
-                end
-            end
             if self:IsValidDemonicTyrantExtension(GetPetName(b.petGUID)) then
                 local c = b.remaining
                 stopBar(b)
-                b:SetDuration(c + mod)
+                b:SetDuration(c + 15)
                 b:Start()
             end
         end
     end
+
+    local width = self.db.width
+    local height = self.db.height
+    local spacing = self.db.spacing
 
     if not self:ShouldAttachToNamePlate() then
         local growingDown = self.db.grow == "DOWN"
@@ -226,34 +218,24 @@ function WD:UpdateBars(isDemonicTyrant)
         local barsPerColumn = 12
         local numColumns = math.ceil(#bars / barsPerColumn)
         local numRows = math.min(#bars, barsPerColumn)
-        local width = self.db.width
-        local height = self.db.height
-        local spacing = self.db.spacing
-
-        if not width then
-            NUI:DebugPrint("Missing width")
-            self.updating = nil
-            return
-        end
-        if not height then
-            NUI:DebugPrint("Missing height")
-            self.updating = nil
-            return
-        end
-        if not spacing then
-            NUI:DebugPrint("Missing spacing")
-            self.updating = nil
-            return
-        end
 
         for i, b in ipairs(bars) do
+            local anchor, useYOff = nil, true
             if i == 1 then
-                pcall(b.Point, b, point, self.header, relativePoint, 0, yOffset)
+                anchor = self.header
             elseif (i - 1) % barsPerColumn == 0 then
-                pcall(b.Point, b, point, bars[i - barsPerColumn], newColumnRelativePoint, 0, 0)
+                anchor = bars[i - barsPerColumn]
+                useYOff = false
             else
-                pcall(b.Point, b, point, bars[i - 1], relativePoint, 0, yOffset)
+                anchor = bars[i - 1]
             end
+
+            if b == anchor then
+                NUI:DebugPrint(string.format("Anchor point equals bar at position %d", i))
+                break
+            end
+            b:Point(point, anchor, relativePoint, 0, useYOff and yOffset or 0)
+
             if not b.running then b:Start() end
         end
 
@@ -265,7 +247,7 @@ function WD:UpdateBars(isDemonicTyrant)
             if not b.running then b:Start() end
             self:AttachBarToNamePlate(b, b.petGUID)
         end
-        self.header:Size(self.db.width, self.db.height)
+        self.header:Size(width, height)
         self.header.Container:SetHeight(0)
     end
 
@@ -389,18 +371,10 @@ function WD:RemoveNPForUpdate(guid)
     self.queuedUpdateGUIDs[guid] = nil
 end
 
-local closures = {}
-local function CreateWDRespawnClosure(petGUID)
-    if closures[petGUID] then return closures[petGUID] end
-    local closure = function() WD:OnSpawn(petGUID) end
-    closures[petGUID] = closure
-    return closure
-end
-
 function WD:OnSpawn(petGUID)
     local petName = GetPetName(petGUID)
     if petName == "Unknown" then
-        C_Timer_After(0.2, CreateWDRespawnClosure(petGUID))
+        E:Delay(0.2, self.OnSpawn, self, petGUID)
         return
     end
 

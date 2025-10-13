@@ -549,7 +549,7 @@ function NI:GlobalNameplateSetup()
         E.global.nameplates.filters.PlayerHasRPProfile = {
             actions = {
                 tags = {
-                    name = "[pvp:icon][rp:statuscolor][rp:status][rp:icon][rp:title:name:classcolors]",
+                    name = "[pvp:icon][rp:statuscolor][rp:status][rp:icon][timerunning][rp:title:name:classcolors]",
                 },
             },
             triggers = {

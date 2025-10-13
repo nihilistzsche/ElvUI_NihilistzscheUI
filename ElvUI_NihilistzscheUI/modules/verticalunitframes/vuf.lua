@@ -52,24 +52,17 @@ function VUF.CreateScreenFlash()
     f:SetAlpha(0)
 end
 
-local portraitFixClosures = {}
-local function GetPortraitFixClosure(frame)
-    if portraitFixClosures[frame] then return portraitFixClosures[frame] end
-    local portraitFix = function() frame.Portrait:SetAlpha(VUF.db.alphaOOC) end
-    portraitFixClosures[frame] = portraitFix
-    return portraitFix
-end
-
 function VUF:ActivateFrame(frame)
     E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha)
     if frame.Portrait then frame.Portrait:SetAlpha(math.min(self.db.alpha, 0.35)) end
+    E:Delay(0.2, frame.SetAlpha, frame, self.db.alpha)
 end
 
 function VUF:DeactivateFrame(frame)
     E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC)
     if frame.Portrait then
         frame.Portrait:SetAlpha(self.db.alphaOOC)
-        C_Timer.After(0.2, GetPortraitFixClosure(frame))
+        E:Delay(0.2, frame.Portrait.SetAlpha, frame.Portrait, self.db.alphaOOC)
     end
 end
 

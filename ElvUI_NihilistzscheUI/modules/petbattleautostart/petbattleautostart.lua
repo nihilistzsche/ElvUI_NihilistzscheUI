@@ -12,7 +12,6 @@ local strsplit = _G.strsplit
 local HasControl = _G.HasFullControl
 local InCombat = _G.InCombatLockdown
 local InPetBattle = _G.C_PetBattles.IsInBattle
-local C_Timer_After = _G.C_Timer.After
 
 PBAS.PetTamers = {
     [63194] = { valid = true }, -- Steven Lisbane, Northern Stranglethorn
@@ -271,6 +270,12 @@ function PBAS:IsTamerValid()
     return validTamer, tamerID
 end
 
+local function CloseGossip()
+    PBAS.TAS_OnClick()
+    -- Exit NPC interaction dialog (though this should happen automatically)
+    C_GossipInfo.CloseGossip()
+end
+
 function PBAS:AutoTrainerStart(event)
     if event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" then
         if IsShiftKeyDown() then return end
@@ -325,22 +330,13 @@ function PBAS:AutoTrainerStart(event)
                         if battleOption then
                             -- Check if the tamer has a popup window for us to use the Safari Hat secure button workaround
                             if self.PetTamers[tamerID].noPopup then -- We can't do the workaround
+                                E:Delay(1, C_GossipInfo.SelectOption, battleOption)
                                 -- Start the pet battle
-                                C_Timer_After(1, function()
-                                    -- Select proper gossip option
-                                    C_GossipInfo.SelectOption(battleOption)
-                                end)
                             else -- We can do our workaround
                                 -- Select proper gossip option
                                 C_GossipInfo.SelectOption(battleOption)
-
+                                E:Delay(1, CloseGossip)
                                 -- Start the pet battle
-                                C_Timer_After(1, function()
-                                    -- Click all StaticPopup dialog Button1s
-                                    self.TAS_OnClick()
-                                    -- Exit NPC interaction dialog (though this should happen automatically)
-                                    C_GossipInfo.CloseGossip()
-                                end)
                             end
                         end
                     end

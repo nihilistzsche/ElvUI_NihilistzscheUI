@@ -39,6 +39,7 @@ local strmatch = _G.strmatch
 
 function NUI:SetupProfileCallbacks()
     hooksecurefunc(E, "UpdateEnd", function() self:UpdateAll() end)
+    hooksecurefunc(E, "UpdateAll", function() self:UpdateAll() end)
 end
 
 function NUI:AddMoverCategories()
@@ -48,7 +49,11 @@ end
 
 NUI.SpecialChatIcons = {
     WyrmrestAccord = {
-        Dirishia = true,
+        Uvarha = true,
+        Erialina = true,
+        Akastra = true,
+        Bretlen = true,
+        Zepide = true,
         Xanikani = true,
         Rikanza = true,
         Onaguda = true,
@@ -83,6 +88,14 @@ NUI.SpecialChatIcons = {
         Shanisami = true,
         Tasibyl = true,
         Ardande = true,
+        Shaoshi = true,
+        Maraelsia = true,
+        Aveliya = true,
+        Ronarine = true,
+        Tarvinna = true,
+        Dosillora = true,
+        Tarotir = true,
+        Ariniela = true,
     },
 }
 

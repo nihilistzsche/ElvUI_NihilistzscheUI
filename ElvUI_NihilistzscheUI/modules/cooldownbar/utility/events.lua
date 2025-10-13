@@ -1,8 +1,6 @@
 ---@class NUI
-local NUI = _G.unpack((select(2, ...)))
+local NUI, E = _G.unpack((select(2, ...)))
 local CB = NUI.CooldownBar
-
-local C_Timer_After = _G.C_Timer.After
 
 local function CreateFrameClosure()
     local self = CB
@@ -17,7 +15,7 @@ function CB:UNIT_SPELLCAST_SUCCEEDED(_, ...)
     if unitID ~= "player" and unitID ~= "pet" then return end
 
     self._spellID = spellID
-    C_Timer_After(0.2, CreateFrameClosure)
+    E:Delay(0.2, CreateFrameClosure)
 end
 
 function CB:BAG_UPDATE_COOLDOWN() self:UpdateItems() end

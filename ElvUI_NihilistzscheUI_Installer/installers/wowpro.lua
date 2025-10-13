@@ -6,7 +6,7 @@ if NUI.NihilPrivate then
     NI.WoWProRankCustom = {
         ["Wyrmrest Accord"] = {
             Uvarha = 3,
-            Dirishia = 3,
+            Zepide = 3,
             Ralaniki = 2,
             Cerishia = 2,
             Sayalia = 2,

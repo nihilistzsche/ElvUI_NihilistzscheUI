@@ -13,7 +13,6 @@ local format = _G.format
 local GetLootSpecialization = _G.GetLootSpecialization
 local SetLootSpecialization = _G.SetLootSpecialization
 local SetSpecialization = _G.SetSpecialization
-local C_Timer_After = _G.C_Timer.After
 local CreateFrame = _G.CreateFrame
 
 function SSB:CreateBar()
@@ -101,11 +100,9 @@ function SSB.UpdateButtonHook(button)
     end
 end
 
-local function UpdateBarClosure() SSB:UpdateBar(SSB.bar) end
-
 function SSB:UpdateBar(bar)
     if GetNumSpecializations() == 0 then
-        C_Timer_After(1, UpdateBarClosure)
+        E:Delay(1, self.UpdateBar, self, bar)
         return
     end
     for i = 1, GetNumSpecializations() + 1 do

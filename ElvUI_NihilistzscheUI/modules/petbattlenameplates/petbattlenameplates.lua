@@ -10,14 +10,13 @@ local COMP = NUI.Compatibility
 
 local Enum_BattlePetOwner_Ally = _G.Enum.BattlePetOwner.Ally
 local Enum_BattlePetOwner_Enemy = _G.Enum.BattlePetOwner.Enemy
-local SetCVar = _G.SetCVar
-local GetCVar = _G.GetCVar
+local SetCVar = (_G.C_CVar or _G).SetCVar
+local GetCVar = (_G.C_CVar or _G).GetCVar
 local C_PetBattles_GetAuraInfo = _G.C_PetBattles.GetAuraInfo
 local C_PetBattles_GetAbilityInfoByID = _G.C_PetBattles.GetAbilityInfoByID
 local C_PetBattles_IsInBattle = _G.C_PetBattles.IsInBattle
 local C_PetBattles_GetActivePet = _G.C_PetBattles.GetActivePet
 local C_PetBattles_GetNumPets = _G.C_PetBattles.GetNumPets
-local C_Timer_After = _G.C_Timer.After
 local wipe = _G.wipe
 local tinsert = _G.tinsert
 local UnitGUID = _G.UnitGUID
@@ -37,7 +36,7 @@ function PBN:PET_BATTLE_OPENING_START()
     local function CacheCVarAndSet(cvar, newValue, firstValue)
         if not self.CVarCache[cvar] then self.CVarCache[cvar] = GetCVar(cvar) end
         SetCVar(cvar, firstValue or newValue)
-        if firstValue then C_Timer.After(3, function() SetCVar(cvar, newValue) end) end
+        if firstValue then E:Delay(3, SetCVar, cvar, newValue) end
     end
     local cvarValue = self.db.enabled and "1" or "0"
     CacheCVarAndSet("nameplateShowFriendlyNPCs", cvarValue, "0")

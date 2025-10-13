@@ -9,7 +9,6 @@ local _G = _G
 
 local pairs, format, ReloadUI, print = _G.pairs, _G.format, _G.C_UI.Reload, _G.print
 local tinsert = _G.tinsert
-local C_Timer_After = _G.C_Timer.After
 local wipe = _G.wipe
 
 NUIIDB = {}
@@ -168,7 +167,7 @@ PI.Queue = E.noop
 local tryInstall
 tryInstall = function()
     if not _G.PluginInstallFrame then
-        C_Timer_After(1, tryInstall)
+        E:Delay(1, tryInstall)
         return
     end
     if E.InstallFrame then E.InstallFrame:Hide() end
@@ -185,7 +184,7 @@ if not NUIIDB.baseElvUISet or not NUIIDB.baseElvUISet[E.myname .. "-" .. E.myrea
     local f = CreateFrame("Frame")
     f:RegisterEvent("PLAYER_LOGIN")
     f:SetScript("OnEvent", function()
-        C_Timer_After(5, NI.BaseElvUISetup)
+        E:Delay(5, NI.BaseElvUISetup)
         NUIIDB.baseElvUISet = NUIIDB.baseElvUISet or {}
         NUIIDB.baseElvUISet[E.myname .. "-" .. E.myrealm] = true
         f:UnregisterEvent("PLAYER_LOGIN")

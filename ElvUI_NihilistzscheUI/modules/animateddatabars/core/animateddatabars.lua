@@ -12,7 +12,6 @@ local tinsert = _G.tinsert
 local unpack = _G.unpack
 local hooksecurefunc = _G.hooksecurefunc
 local Mixin = _G.Mixin
-local C_Timer_After = _G.C_Timer.After
 
 ADB.TickBars = {}
 
@@ -90,7 +89,7 @@ function ADB:CreateAnimatedBar(tbl, key)
     if key == "Reputation" then bar.Reward:SetParent(bar.animatedStatusBar) end
     self:CreateTicks(holder)
     hooksecurefunc(DB, key .. "Bar_Update", function() tbl:Update(bar) end)
-    C_Timer_After(2, function() tbl:Update(bar) end)
+    E:Delay(2, tbl.Update, tbl, bar)
     return bar
 end
 

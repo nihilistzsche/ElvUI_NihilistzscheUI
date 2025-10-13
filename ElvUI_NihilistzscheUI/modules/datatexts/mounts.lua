@@ -17,7 +17,6 @@ local C_MountJournal_GetNumMounts = _G.C_MountJournal.GetNumMounts
 local C_MountJournal_SummonByID = _G.C_MountJournal.SummonByID
 local AuraUtil_FindAuraByName = _G.AuraUtil.FindAuraByName
 local C_Spell_GetSpellName = _G.C_Spell.GetSpellName
-local C_Timer_After = _G.C_Timer.After
 local GetSpecialization = _G.GetSpecialization
 local GetSpecializationInfo = _G.GetSpecializationInfo
 local IsAltKeyDown = _G.IsAltKeyDown
@@ -379,7 +378,7 @@ end
 local function MigrateMounts()
     if not db.favAlt then
         if GetNumSpecializations() == 0 then
-            C_Timer_After(1, MigrateMounts)
+            E:Delay(1, MigrateMounts)
             return
         end
         for i = 1, GetNumSpecializations() do

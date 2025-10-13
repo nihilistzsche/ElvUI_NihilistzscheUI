@@ -333,11 +333,6 @@ function NI:NihilistzscheUISetup(isSpec)
             notify = not COMP.LST,
         },
     }
-    self:EDB().nihilistzscheui.raidCDs = {
-        texture = self.db.texture,
-        font = self.db.font,
-        solo = true,
-    }
     local castbars = {
         size = {
             horizontal = {
