@@ -42,10 +42,6 @@ function WD:CreateHeader()
 
     local container = CreateFrame("Frame", "NihilistzscheUIWarlockDemonsContainer", header, "BackdropTemplate")
     container:SetFrameLevel(header:GetFrameLevel())
-    local fp, sp =
-        self.db.grow == "DOWN" and "TOPLEFT" or "BOTTOMLEFT", self.db.grow == "DOWN" and "TOPRIGHT" or "BOTTOMRIGHT"
-    container:SetPoint(fp, header, fp)
-    container:SetPoint(sp, header, sp)
     container:SetTemplate("Transparent")
     if ES then
         container:CreateShadow()
@@ -110,7 +106,7 @@ function WD:RemoveBar(bar)
     if not toRemove then return end
     local guid = self.activeBars[toRemove].petGUID
     self.activeNamePlateGUIDs[guid] = nil
-    tinsert(remove_queue, toRemove)
+    tinsert(remove_queue, guid)
 end
 
 -- from LibCandyBar-3.0,we dont want it returned to the bar cache
@@ -120,7 +116,11 @@ local function stopBar(bar)
     bar.paused = nil
 end
 
-function WD.RemoveBarByIndex(index) tremove(WD.activeBars, index) end
+function WD.RemoveBarByGUID(petGUID)
+    local toRemove = FindInTableIf(WD.activeBars, function(v) return v.petGUID == petGUID end)
+    if not toRemove then return end
+    tremove(WD.activeBars, toRemove)
+end
 
 function WD.AddBar(bar) tinsert(WD.activeBars, bar) end
 
@@ -146,12 +146,15 @@ function WD:IsValidDemonicTyrantExtension(name)
     return false
 end
 
+local demonicTyrantQueued
+local demonicTyrantProcessed
 function WD:UpdateBars(isDemonicTyrant)
-    if self.updating then return end
+    if self.updating then
+        if isDemonicTyrant then demonicTyrantQueued = true end
+        return
+    end
 
     self.updating = true
-
-    local bars = self.activeBars
 
     local function process(tbl, func)
         local v = tremove(tbl)
@@ -161,13 +164,12 @@ function WD:UpdateBars(isDemonicTyrant)
         end
     end
 
-    table.sort(remove_queue, function(a, b) return b < a end)
-    process(remove_queue, self.RemoveBarByIndex)
+    process(remove_queue, self.RemoveBarByGUID)
     process(add_queue, self.AddBar)
 
-    if isDemonicTyrant then
+    if isDemonicTyrant or demonicTyrantQueued then
         self:ResetDemonicTyrantCounts()
-        for _, b in ipairs(bars) do
+        for _, b in ipairs(self.activeBars) do
             if self:IsValidDemonicTyrantExtension(GetPetName(b.petGUID)) then
                 local c = b.remaining
                 stopBar(b)
@@ -175,75 +177,99 @@ function WD:UpdateBars(isDemonicTyrant)
                 b:Start()
             end
         end
+        if demonicTyrantQueued then demonicTyrantProcessed = true end
+    end
+
+    if demonicTyrantQueued and demonicTyrantProcessed then
+        demonicTyrantQueued = false
+        demonicTyrantProcessed = false
     end
 
     local width = self.db.width
     local height = self.db.height
     local spacing = self.db.spacing
 
-    if not self:ShouldAttachToNamePlate() then
-        local growingDown = self.db.grow == "DOWN"
-        local point, relativePoint, yOffset, newColumnRelativePoint
-        if growingDown then
-            point = "TOPLEFT"
-            relativePoint = "BOTTOMLEFT"
-            newColumnRelativePoint = "TOPRIGHT"
-            yOffset = -self.db.spacing
-        else
-            point = "BOTTOMLEFT"
-            relativePoint = "TOPLEFT"
-            newColumnRelativePoint = "BOTTOMRIGHT"
-            yOffset = self.db.spacing
+    do
+        local seen, unique = {}, {}
+
+        for _, bar in ipairs(self.activeBars) do
+            local key = bar.petGUID or bar -- use petGUID if available, else the bar object itself
+            if not seen[key] then
+                seen[key] = true
+                table.insert(unique, bar)
+            end
         end
 
-        pcall(table.sort, bars, function(a, b)
-            local aName = a and GetPetName(a.petGUID)
-            local bName = b and GetPetName(b.petGUID)
-            if not aName then
-                return bName ~= nil
-            elseif not bName then
-                return true
+        self.activeBars = unique
+    end
+
+    if not self:ShouldAttachToNamePlate() then
+        table.sort(self.activeBars, function(a, b)
+            if not a then return false end
+            if not b then return true end
+
+            local aName = a.petGUID and GetPetName(a.petGUID)
+            local bName = b.petGUID and GetPetName(b.petGUID)
+
+            -- Handle missing names
+            if not aName and not bName then return false end
+            if not aName then return false end
+            if not bName then return true end
+
+            -- If same pet name, sort by remaining time ascending
+            if aName == bName then return (a.remaining or 0) < (b.remaining or 0) end
+
+            local demons = self.demons
+            local aDemon = demons[aName]
+            local bDemon = demons[bName]
+
+            -- Handle demon vs non-demon sorting
+            if not aDemon and not bDemon then
+                return aName < bName -- fallback alphabetical for unknowns
             end
-            if aName == bName then return a.remaining < b.remaining end
-            if not self.demons[aName] then
-                return self.demons[bName] ~= nil
-            elseif not self.demons[bName] then
-                return true
-            else
-                return self.demons[aName].priority < self.demons[bName].priority
-            end
+            if not aDemon then return false end
+            if not bDemon then return true end
+
+            -- Compare by optionOrder
+            return (aDemon.optionOrder or 9999) < (bDemon.optionOrder or 9999)
         end)
 
-        NUI.ForEach(bars, function(b) b:ClearAllPoints() end)
         local barsPerColumn = 12
-        local numColumns = math.ceil(#bars / barsPerColumn)
-        local numRows = math.min(#bars, barsPerColumn)
+        local numBars = #self.activeBars
+        local numColumns = math.ceil(numBars / barsPerColumn)
+        local numRows = math.min(numBars, barsPerColumn)
 
-        for i, b in ipairs(bars) do
-            local anchor, useYOff = nil, true
-            if i == 1 then
-                anchor = self.header
-            elseif (i - 1) % barsPerColumn == 0 then
-                anchor = bars[i - barsPerColumn]
-                useYOff = false
+        NUI.ForEach(self.activeBars, function(b) b:ClearAllPoints() end)
+
+        local down, left, header, container =
+            self.db.grow == "DOWN", self.db.horizontalGrow == "LEFT", self.header, self.header.Container
+        local fp, sp = down and "TOPLEFT" or "BOTTOMLEFT", down and "TOPRIGHT" or "BOTTOMRIGHT"
+        container:SetPoint(fp, header, fp)
+        container:SetPoint(sp, header, sp)
+        for i, bar in ipairs(self.activeBars) do
+            local mod, first, newCol = (i - 1) % barsPerColumn, i == 1, (i - 1) % barsPerColumn == 0 and i > 1
+            local anchor = first and self.header or self.activeBars[i - (newCol and barsPerColumn or 1)]
+            local xOff = newCol and (left and -spacing or spacing) or 0
+            local yOff = first and 0 or ((not newCol) and (down and -spacing or spacing) or 0)
+            local p, rp
+            if newCol then
+                p, rp = left and "RIGHT" or "LEFT", left and "LEFT" or "RIGHT"
             else
-                anchor = bars[i - 1]
+                if down then
+                    p, rp = left and "TOPRIGHT" or "TOPLEFT", left and "BOTTOMRIGHT" or "BOTTOMLEFT"
+                else
+                    p, rp = left and "BOTTOMRIGHT" or "BOTTOMLEFT", left and "TOPRIGHT" or "TOPLEFT"
+                end
             end
-
-            if b == anchor then
-                NUI:DebugPrint(string.format("Anchor point equals bar at position %d", i))
-                break
-            end
-            b:Point(point, anchor, relativePoint, 0, useYOff and yOffset or 0)
-
-            if not b.running then b:Start() end
+            bar:Point(p, anchor, rp, xOff, yOff)
+            if not bar.running then bar:Start() end
         end
 
-        self.header:Size(width * math.max(1, numColumns), height)
+        header:Size((width + spacing) * math.max(1, numColumns), height)
         local containerHeight = ((numRows + 1) * height) + (spacing * numRows)
-        self.header.Container:SetHeight(containerHeight)
+        container:SetHeight(containerHeight)
     else
-        for _, b in ipairs(bars) do
+        for _, b in ipairs(self.activeBars) do
             if not b.running then b:Start() end
             self:AttachBarToNamePlate(b, b.petGUID)
         end
@@ -251,8 +277,8 @@ function WD:UpdateBars(isDemonicTyrant)
         self.header.Container:SetHeight(0)
     end
 
-    if #bars > 0 then
-        self.header.fs:SetFormattedText(L["Total Demons: %d"], #bars)
+    if #self.activeBars > 0 then
+        self.header.fs:SetFormattedText(L["Total Demons: %d"], #self.activeBars)
     else
         self.header.fs:SetText(L["Demon Tracking"])
     end
@@ -371,6 +397,24 @@ function WD:RemoveNPForUpdate(guid)
     self.queuedUpdateGUIDs[guid] = nil
 end
 
+function WD:IsValidReport(petName)
+    if petName:find("Bunny") then return false end
+    if petName == self.petName then return false end
+    return true
+end
+
+function WD:CheckPetName()
+    if UnitExists("pet") then
+        local petName = UnitName("pet")
+        if not self.petName or self.petName ~= petName then self.petName = petName end
+    end
+end
+
+function WD:DebugReport(petName)
+    self:CheckPetName()
+    if self:IsValidReport(petName) then NUI:DebugPrint("Unknown demon ", petName, self.petName) end
+end
+
 function WD:OnSpawn(petGUID)
     local petName = GetPetName(petGUID)
     if petName == "Unknown" then
@@ -378,8 +422,8 @@ function WD:OnSpawn(petGUID)
         return
     end
 
-    if not (self.demons[petName] and petName ~= UnitName("pet")) then
-        NUI:DebugPrint("Unknown demon ", petName)
+    if not self.demons[petName] then
+        E:Delay(2, self.DebugReport, self, petName)
         return
     end
     local demon_info = self.demons[petName]
@@ -400,7 +444,7 @@ function WD:OnSpawn(petGUID)
     if self.styleFilterHooked then self:QueueNPForUpdate(petGUID) end
     bar:SetLabel(label)
     table.insert(add_queue, bar)
-    self:UpdateBars(GetPetName(petGUID) == "Demonic Tyrant")
+    self:UpdateBars(petName == "Demonic Tyrant")
 end
 
 function WD:OnDespawn(petGUID)
@@ -408,7 +452,8 @@ function WD:OnDespawn(petGUID)
     for i, b in ipairs(self.activeBars) do
         if b.petGUID == petGUID then
             b:Stop()
-            self.RemoveBarByIndex(i)
+            self.RemoveBarByGUID(b.petGUID)
+            tinsert(remove_queue, b.petGUID)
             local np = NP.PlateGUID[petGUID]
             if np then NP:StyleFilterUpdate(np, "FAKE_WDForceUpdate") end
             break
@@ -454,45 +499,46 @@ end
 WD.demons = {
     ["Wild Imp"] = {
         icon = C_Spell_GetSpellTexture(205145),
-        priority = 4,
         optionOrder = 2,
         demonicTyrantValid = 10,
     },
-    ["Demonic Tyrant"] = { icon = C_Spell_GetSpellTexture(265187), priority = 1, optionOrder = 1 },
-    Dreadstalker = { icon = C_Spell_GetSpellTexture(104316), priority = 5, optionOrder = 3, demonicTyrantValid = true },
+    ["Demonic Tyrant"] = { icon = C_Spell_GetSpellTexture(265187), optionOrder = 1 },
+    Dreadstalker = { icon = C_Spell_GetSpellTexture(104316), optionOrder = 3, demonicTyrantValid = true },
     ["Greater Dreadstalker"] = {
         icon = C_Spell_GetSpellTexture(104316),
-        priority = 5,
-        optionOrder = 3,
+        optionOrder = 4,
         demonicTyrantValid = true,
     },
-    Felguard = { icon = C_Spell_GetSpellTexture(111898), priority = 6, optionOrder = 11, demonicTyrantValid = true },
-    Bilescourge = { icon = C_Spell_GetSpellTexture(267992), priority = 9, optionOrder = 14 },
-    Vilefiend = { icon = C_Spell_GetSpellTexture(264119), priority = 10, optionOrder = 13, demonicTyrantValid = true },
-    ["Prince Malchezaar"] = { icon = C_Spell_GetSpellTexture(267986), priority = 2, optionOrder = 4 },
-    ["Illidari Satyr"] = { icon = C_Spell_GetSpellTexture(267987), priority = 7, optionOrder = 15 },
-    ["Vicious Hellhound"] = { icon = C_Spell_GetSpellTexture(267988), priority = 8, optionOrder = 16 },
-    ["Eye of Gul'dan"] = { icon = C_Spell_GetSpellTexture(267989), priority = 11, optionOrder = 17 },
-    ["Void Terror"] = { icon = C_Spell_GetSpellTexture(267991), priority = 12, optionOrder = 18 },
-    Shivarra = { icon = C_Spell_GetSpellTexture(267994), priority = 14, optionOrder = 20 },
-    Wrathguard = { icon = C_Spell_GetSpellTexture(267995), priority = 15, optionOrder = 21 },
-    Darkhound = { icon = C_Spell_GetSpellTexture(267996), priority = 16, optionOrder = 22 },
-    ["Ur'zul"] = { icon = C_Spell_GetSpellTexture(268001), priority = 17, optionOrder = 23 },
-    ["Fel Lord"] = { icon = C_Spell_GetSpellTexture(212459), priority = 18, optionOrder = 24 },
-    Observer = { icon = C_Spell_GetSpellTexture(201996), priority = 19, optionOrder = 25 },
-    ["Imp Gang Boss"] = { icon = C_Spell_GetSpellTexture(387445), priority = 3, optionsOrder = 26 },
-    Soulkeeper = { icon = C_Spell_GetSpellTexture(386244), priority = 2, optionsOrder = 27 },
-    ["Pit Lord"] = { icon = C_Spell_GetSpellTexture(138787), priority = 1, optionsOrder = 28 },
-    ["Mother of Chaos"] = { icon = C_Spell_GetSpellTexture(432794), priority = 1, optionsOrder = 29 },
-    Overlord = { icon = C_Spell_GetSpellTexture(428524), priority = 1, optionsOrder = 30 },
-    Gloomhound = { icon = C_Spell_GetSpellTexture(455465), priority = 10, optionsOrder = 31, demonicTyrantValid = true },
-    Charhound = { icon = C_Spell_GetSpellTexture(455476), priority = 10, optionsOrder = 32, demonicTyrantValid = true },
-    Doomguard = { icon = C_Spell_GetSpellTexture(18540), priority = 11, optionsOrder = 33 },
-    ["Infernal Dreadlord"] = { icon = C_Spell_GetSpellTexture(1237711), priority = 1, optionsOrder = 34 },
-    ["Dreamweaver"] = { icon = C_Spell_GetSpellTexture(1242114), priority = 1, optionsOrder = 35 },
+    Felguard = { icon = C_Spell_GetSpellTexture(111898), optionOrder = 5, demonicTyrantValid = true },
+    Bilescourge = { icon = C_Spell_GetSpellTexture(267992), optionOrder = 14 },
+    Vilefiend = { icon = C_Spell_GetSpellTexture(264119), optionOrder = 13, demonicTyrantValid = true },
+    ["Prince Malchezaar"] = { icon = C_Spell_GetSpellTexture(267986), optionOrder = 6 },
+    ["Illidari Satyr"] = { icon = C_Spell_GetSpellTexture(267987), optionOrder = 15 },
+    ["Vicious Hellhound"] = { icon = C_Spell_GetSpellTexture(267988), optionOrder = 16 },
+    ["Eye of Gul'dan"] = { icon = C_Spell_GetSpellTexture(267989), optionOrder = 17 },
+    ["Void Terror"] = { icon = C_Spell_GetSpellTexture(267991), optionOrder = 18 },
+    Shivarra = { icon = C_Spell_GetSpellTexture(267994), optionOrder = 19 },
+    Wrathguard = { icon = C_Spell_GetSpellTexture(267995), optionOrder = 20 },
+    Darkhound = { icon = C_Spell_GetSpellTexture(267996), optionOrder = 21 },
+    ["Ur'zul"] = { icon = C_Spell_GetSpellTexture(268001), optionOrder = 22 },
+    ["Fel Lord"] = { icon = C_Spell_GetSpellTexture(212459), optionOrder = 23 },
+    Observer = { icon = C_Spell_GetSpellTexture(201996), optionOrder = 24 },
+    ["Imp Gang Boss"] = { icon = C_Spell_GetSpellTexture(387445), optionOrder = 25 },
+    Soulkeeper = { icon = C_Spell_GetSpellTexture(386244), optionOrder = 26 },
+    ["Pit Lord"] = { icon = C_Spell_GetSpellTexture(138787), optionOrder = 27 },
+    ["Mother of Chaos"] = { icon = C_Spell_GetSpellTexture(432794), optionOrder = 28 },
+    Overlord = { icon = C_Spell_GetSpellTexture(428524), optionOrder = 29 },
+    Gloomhound = { icon = C_Spell_GetSpellTexture(455465), optionOrder = 30, demonicTyrantValid = true },
+    Charhound = { icon = C_Spell_GetSpellTexture(455476), optionOrder = 31, demonicTyrantValid = true },
+    Doomguard = { icon = C_Spell_GetSpellTexture(18540), optionOrder = 32 },
+    ["Infernal Dreadlord"] = { icon = C_Spell_GetSpellTexture(1237711), optionOrder = 33 },
+    ["Dreamweaver"] = { icon = C_Spell_GetSpellTexture(1242114), optionOrder = 34 },
+    ["Infernal Flayer"] = { icon = C_Spell_GetSpellTexture(1242368), optionOrder = 35 },
+    ["Infernal Jailer"] = { icon = C_Spell_GetSpellTexture(1242391), optionOrder = 36 },
+    ["Infernal Inquisitor"] = { icon = C_Spell_GetSpellTexture(1242276), optionOrder = 37 },
 }
 
-for k, _ in next, WD.demons do
+for k in next, WD.demons do
     P.nihilistzscheui.warlockdemons.demons[k] = { enable = true }
 end
 

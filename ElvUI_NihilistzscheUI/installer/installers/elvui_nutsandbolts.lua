@@ -1,0 +1,15 @@
+---@class NUI
+local NUI, E = _G.unpack((select(2, ...)))
+local NI = NUI.Installer
+
+function NI:ElvUINutsAndBoltsSetup()
+    self:EDB().NutsAndBolts = {}
+    self:EDB().NutsAndBolts.ObjectiveTracker = {
+        enable = false,
+    }
+    self:EDB().NutsAndBolts.LocationLite = {
+        enable = false,
+    }
+end
+
+NI:RegisterAddOnInstaller("ElvUI_NutsAndBolts", NI.ElvUINutsAndBoltsSetup, true)

@@ -55,14 +55,15 @@ end
 function VUF:ActivateFrame(frame)
     E:UIFrameFadeIn(frame, 0.2, frame:GetAlpha(), self.db.alpha)
     if frame.Portrait then frame.Portrait:SetAlpha(math.min(self.db.alpha, 0.35)) end
-    E:Delay(0.2, frame.SetAlpha, frame, self.db.alpha)
+    E:Delay(0.5, frame.SetAlpha, frame, self.db.alpha)
 end
 
 function VUF:DeactivateFrame(frame)
     E:UIFrameFadeOut(frame, 0.2, frame:GetAlpha(), self.db.alphaOOC)
+    E:Delay(0.5, frame.SetAlpha, frame, self.db.alphaOOC)
     if frame.Portrait then
         frame.Portrait:SetAlpha(self.db.alphaOOC)
-        E:Delay(0.2, frame.Portrait.SetAlpha, frame.Portrait, self.db.alphaOOC)
+        E:Delay(0.5, frame.Portrait.SetAlpha, frame.Portrait, self.db.alphaOOC)
     end
 end
 

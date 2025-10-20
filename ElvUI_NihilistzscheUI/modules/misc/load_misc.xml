@@ -8,6 +8,5 @@
 	<Script file="brc.lua"/>
 	<Script file="chat_item_level_gems.lua"/>
 	<Script file="difficulty_tooltip_fix.lua"/>
-	<Script file="umc_health_circle_class_color.lua"/>
 	<Script file="add_mount_id_to_tooltip.lua"/>
 </Ui>

@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 ---@class NUI
 local NUI, E, L, V, P, G = _G.unpack((select(2, ...)))
 local NC = NUI.NihilistzscheChat
@@ -544,7 +545,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     lastMessage:SetFont(LSM:Fetch("font", self.db.windows.font), 12, "")
     lastMessage:SetShadowColor(0, 0, 0)
     lastMessage:SetShadowOffset(1.25, -1.25)
-    lastMessage:SetPoint("Left", E:Scale(6), E:Scale(1))
+    lastMessage:SetPoint("LEFT", E:Scale(6), E:Scale(1))
 
     chat.LastMessage = lastMessage
 
@@ -570,7 +571,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     chat.CloseButton = closeButton
 
     local closeButtonText = closeButton:CreateFontString(nil, "OVERLAY")
-    closeButtonText:SetFont(LSM:Fetch("font", "ElvUI Pixel"), 12, "MONOCHROMEOUTLINE")
+    closeButtonText:SetFont(LSM:Fetch("font", "ElvUI Pixel"), 12, "MONOCHROME")
     closeButtonText:SetPoint("CENTER", 0, 0)
     closeButtonText:SetText("X")
 
@@ -591,7 +592,7 @@ function NC:InitNewFrame(chatType, chatTarget)
     minimizeButton:SetScript("OnLeave", function(self) self.Text:SetTextColor(1, 1, 1) end)
 
     local minimizeButtonText = minimizeButton:CreateFontString(nil, "OVERLAY")
-    minimizeButtonText:SetFont(LSM:Fetch("font", "ElvUI Pixel"), 12, "MONOCHROMEOUTLINE")
+    minimizeButtonText:SetFont(LSM:Fetch("font", "ElvUI Pixel"), 12, "MONOCHROME")
     minimizeButtonText:SetPoint("CENTER", 0, 1)
     minimizeButtonText:SetText("_")
 

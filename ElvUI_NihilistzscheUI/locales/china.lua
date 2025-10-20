@@ -91,25 +91,6 @@ L["Collapse the objective tracker when in a dungeon"] = true
 L["Collapse in raid"] = true
 L["Collapse the objective tracker during a raid"] = true
 
--- PartyXP
-L["PartyXP"] = true
-L["NihilistzscheUI PartyXP by Nihilistzsche"] = true
-L["NihilistzscheUI PartyXP provides a configurable set of party experience bars for use with ElvUI.\n"] = true
-L["Enable the party experience bars."] = true
-L["Reset Settings"] = true
-L["Reset the settings of this addon to their defaults."] = true
-L["PartyXP Options"] = true
-L["Class Colors"] = true
-L["Use class colors for the experience bars"] = true
-L["Detailed Text"] = true
-L["Use detailed text in the experience bars"] = true
-L["Default Font"] = true
-L["The font that the text on the experience bars will use."] = true
-L["The texture that will be used for the experience bars."] = true
-L["Variables and Movers"] = true
-L["Vertical offset from parent frame"] = true
-L["Set the Width of the Text Font"] = true
-
 -- Portal Bar
 L["Portal Bar"] = true
 L["NihilistzscheUI PortalBar by Nihilistzsche, based on work by Azilroka"] = true
@@ -358,14 +339,6 @@ L["NihilistzscheUI ArtifactPowerButton provides a button for you to consume your
     true
 L["Enable the artifact power button"] = true
 L["Only show the artifact power button when you mouseover it"] = true
-
-L["Warlock Demons"] = true
-L["Demon Count"] = true
-L["Timer bars and counts for demonology demons"] = true
-L["Enable the demon count"] = true
-L["Width of the bars"] = true
-L["Height of the bars"] = true
-L["Spacing between bars"] = true
 
 L["CBO_POWER_DISABLED"] = "The %s power frame is disabled. Setting castbar overlay to health instead."
 L["I understand"] = true

@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui">
+	<Script file="core_options.lua"/>
+	<Include file="module_options\load_module_options.xml"/>
+</Ui>

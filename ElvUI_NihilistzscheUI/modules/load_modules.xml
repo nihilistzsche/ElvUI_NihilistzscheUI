@@ -21,7 +21,6 @@
 	<Include file="verticalunitframes\load_verticalunitframes.xml"/>
 	<Include file="warlockdemons\load_warlockdemons.xml"/>
 	<Include file="bagequipmentseticon\load_bagequipmentseticon.xml"/>
-	<Include file="partyxp\load_partyxp.xml"/>
 	<Include file="rematch_expanded_script_filter\load_rematch_expanded_script_filter.xml"/>
 	<Include file="rp_style_filter\load_rp_style_filter.xml"/>
 	<Include file="sle_equip_manager_extension\load_sle_equip_manager_extension.xml"/>

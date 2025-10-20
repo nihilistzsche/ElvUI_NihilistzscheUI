@@ -3,6 +3,7 @@ local _G = _G
 local E, L, V, P, G = _G.unpack(_G.ElvUI)
 local CH = E.Chat
 local DB = E.DataBars
+local EP = E.Libs.EP
 local CallbackHandler = _G.LibStub("CallbackHandler-1.0")
 
 engine.oUF = _G.ElvUF
@@ -32,8 +33,9 @@ _G[addon] = engine
 
 NUI.Version = GetAddOnMetadata("ElvUI_NihilistzscheUI", "Version")
 NUI.Title = "|cffff2020NihilistzscheUI|r"
-NUI.ShortTitle = "|cffff2020NihiUI|r"
-
+NUI.ShortTitle = "|cffff2020NUI|r"
+NUI.Options = NUI:NewModule("Options")
+NUI.Installer = NUI:NewModule("Installer")
 NUI.AnimatedDataBars = NUI:NewModule("AnimatedDataBars")
 NUI.AutoLog = NUI:NewModule("AutoLog", "AceEvent-3.0")
 NUI.BagEquipmentSetIcon = NUI:NewModule("BagEquipmentSetIcon")
@@ -60,7 +62,6 @@ NUI.Misc.UltimateMouseCursorHealthCircleClassColor = NUI:NewModule("UltimateMous
 NUI.NihilistzscheChat = NUI:NewModule("NihilistzscheChat", "AceEvent-3.0")
 NUI.NihilistzscheUIAddOnSkinExtension = NUI:NewModule("NihilistzscheUIAddOnSkinExtension")
 NUI.NihilistzscheUIMedia = NUI:NewModule("NihilistzscheUIMedia")
-NUI.PartyXP = NUI:NewModule("PartyXP", "AceTimer-3.0", "AceEvent-3.0")
 NUI.DataTexts = {}
 NUI.DataTexts.ImprovedSystemDataText = NUI:NewModule("ImprovedSystemDataText")
 NUI.DataTexts.ProfessionsDataText = NUI:NewModule("ProfessionsDataText")
@@ -103,6 +104,7 @@ if E.Retail then
 end
 local pairs = pairs
 
+---@diagnostic disable-next-line: inject-field
 _G.BINDING_HEADER_NIHILISTZSCHEUI = "|cffff2020NihilistzscheUI|r"
 
 -- GLOBALS: ElvDB, LibStub
@@ -128,11 +130,16 @@ function NUI:DebugPrint(...)
 end
 
 do
+    local doNotInitialize = { "Installer" }
     function NUI:InitializeModules()
         for _, moduleName in ipairs(self.RegisteredModules) do
             local module = self:GetModule(moduleName)
 
-            if module.Initialize and not tContains(self.DelayedRegisteredModules, moduleName) then
+            if
+                module.Initialize
+                and not tContains(self.DelayedRegisteredModules, moduleName)
+                and not tContains(doNotInitialize, moduleName)
+            then
                 module:Initialize()
             end
         end
@@ -157,8 +164,6 @@ end
 function NUI:Initialize()
     self.initialized = true
 
-    if NUI.NihilPrivate then _G.NUI = NUI end
-
     --self:BuildGameMenu()
     self.FixPetJournal()
 
@@ -173,7 +178,10 @@ function NUI:Initialize()
     self:SaveGUID()
 
     self.Migration:CheckMigrations()
-    if self.Installer then self.Installer:Initialize() end
+
+    EP:RegisterPlugin("ElvUI_NihilistzscheUI", self.Options.GenerateOptions)
+
+    self.Installer:Initialize()
 
     E:Delay(3, self.DelayedInitialize, self)
 end

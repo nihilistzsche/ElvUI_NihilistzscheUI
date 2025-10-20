@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui">
+	<Script file="installer.lua"/>
+	<Script file="installer_utility.lua"/>
+	<Script file="version.lua"/>
+	<Include file="installers\load_installers.xml"/>
+</Ui>

@@ -1,0 +1,203 @@
+---@class NUI
+local NUI, E, L = _G.unpack((select(2, ...)))
+
+local NI = NUI.Installer
+
+-- luacheck: globals NUIIDB ElvDB
+local _G = _G
+
+local pairs, format, ReloadUI, print = _G.pairs, _G.format, _G.C_UI.Reload, _G.print
+local tinsert = _G.tinsert
+local wipe = _G.wipe
+
+NUIIDB = {}
+
+NI.DiscordURL = "https://discord.gg/cUcr3Dt"
+function NI:CacheMovers(new)
+    self.db = self.db or {}
+    self.db.movers = self.db.movers or {}
+    if not new then
+        self.db.movers.old = E:CopyTable(E.db.movers)
+    else
+        self.db.movers.new = E:CopyTable(E.db.movers)
+    end
+end
+
+-- DB, key, value
+NI.ProfileKeysToSet = {}
+NI.AddOnDBs = {}
+
+function NI:AddAddOnDB(db) self.AddOnDBs[db] = true end
+
+function NI:AddProfileKey(db, key, val) tinsert(self.ProfileKeysToSet, { db, key, val }) end
+
+function NI:SetProfileKeys()
+    for _, kp in ipairs(self.ProfileKeysToSet) do
+        local db, key, val = _G.unpack(kp)
+        if db.keys then -- InFlight compat
+            db.keys[key] = val
+        else
+            db.profileKeys[key] = val
+        end
+    end
+end
+
+function NI:InstallForClass(class)
+    local role = type(self.ClassSpecProfiles[class]) == "table" and self.ClassSpecProfiles[class][1]
+        or self.ClassSpecProfiles[class]
+    self.currentRole = role
+    self:ElvUISetup(role)
+    self:NameplateSetup()
+    self:NihilistzscheUISetup()
+    self:RunAddOnInstallers()
+end
+
+function NI:SetupForCharacters()
+    if _G.ElvDB.namespaces and _G.ElvDB.namespaces["LibDualSpec-1.0"] then
+        wipe(_G.ElvDB.namespaces["LibDualSpec-1.0"])
+    end
+    for s, l in pairs(_G.ElvDB.class) do
+        for n, c in pairs(l) do
+            self.currentClass = c
+            self.classColor = NUI.ClassColor(false, c)
+            self:UpdateProfileKey()
+            self:InitBaseProfile(n, s)
+            self:InstallForClass(c)
+            self:CharacterSpecificSetup(s, n)
+            for db in pairs(self.AddOnDBs) do
+                self:AddProfileKey(db, self.baseProfile, self.profileKey)
+            end
+            self:RunCharacterSpecificAddOnInstallers()
+            self:SetupSpecProfiles()
+        end
+    end
+end
+
+function NI:Run()
+    self:AddAddOnDB(_G.ElvDB)
+    self:AddAddOnDB(_G.ElvPrivateDB)
+    self:SetupForCharacters()
+    self:SetProfileKeys()
+    self:RunGlobalAddOnInstallers()
+    self:SaveInstallerVersion()
+    self:SaveInstallerDetails()
+    NUIIDB.installInfo.installedAddons = self:GetInstalledAddOnSet()
+    if E.global.nihilistzscheui.specReloaded then wipe(E.global.nihilistzscheui.specReloaded) end
+end
+
+function NI:PrintMoverDiscrepancies()
+    for k, v in pairs(self.db.movers.old) do
+        if not self.db.movers.new[k] then
+            print("The following mover was not found that existed previously: ", k)
+            local p, par, rp, x, y = _G.unpack(v)
+            print("With the following anchor: ", p, par:GetName(), rp, x, y)
+        end
+    end
+end
+
+_G.SLASH_NUIMOVERDISC1 = "/nuimd"
+_G.SlashCmdList.NUIMOVERDISC = function() NI:PrintMoverDiscrepancies() end
+
+NI.installTable = {
+    Name = NUI.Title,
+    Title = NUI.Title .. " Installation",
+    tutorialImage = [[Interface\AddOns\ElvUI_NihilistzscheUI\media\textures\elvui_nihilistzscheui_logo.tga]],
+    Pages = {
+        [1] = function()
+            local PluginInstallFrame = _G.PluginInstallFrame
+            -- luacheck: no max line length
+            PluginInstallFrame.SubTitle:SetText(format(L["Welcome to %s version %s!"], NUI.Title, NUI.Version))
+            PluginInstallFrame.Desc1:SetText(
+                L["This will take you through a quick install process to setup NihilistzscheUI.\nIf you choose to not setup any options through this config, click Skip to finsh the installation."]
+            )
+            PluginInstallFrame.Desc2:SetText("")
+
+            PluginInstallFrame.Option1:Show()
+            PluginInstallFrame.Option1:SetScript("OnClick", function()
+                NI:SaveInstallerVersion(true)
+                ReloadUI()
+            end)
+            PluginInstallFrame.Option1:SetText("Skip")
+        end,
+        [2] = function()
+            local PluginInstallFrame = _G.PluginInstallFrame
+            -- luacheck: no max line length
+            PluginInstallFrame.SubTitle:SetText("Use Authors Defaults")
+            PluginInstallFrame.Desc1:SetText(
+                "Choose your class if you would like to setup NihilistzscheUI to match the authors defaults for your role.\nChoose finish if you would like to keep your current setup."
+            )
+            PluginInstallFrame.Desc2:SetText("")
+
+            E:CheckRole()
+            PluginInstallFrame.Option1:Show()
+            PluginInstallFrame.Option1:SetText(E.myLocalizedClass)
+            PluginInstallFrame.Option1:SetScript("OnClick", function()
+                NI:Run()
+                ReloadUI()
+            end)
+
+            PluginInstallFrame.Option2:Show()
+            PluginInstallFrame.Option2:SetText("Finish")
+            PluginInstallFrame.Option2:SetScript("OnClick", function()
+                NI:SaveInstallerVersion(true)
+                ReloadUI()
+            end)
+
+            PluginInstallFrame.Option3:Show()
+            PluginInstallFrame.Option3:SetText("Discord")
+            PluginInstallFrame.Option3:SetScript(
+                "OnClick",
+                function() E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, NI.DiscordURL) end
+            )
+        end,
+    },
+    StepTitles = {
+        [1] = _G.START,
+        [2] = "Use Authors Defaults",
+    },
+    StepTitlesColorSelected = NUI.ClassColor(),
+    StepTitleWidth = 200,
+    StepTitleButtonWidth = 200,
+    StepTitleTextJustification = "CENTER",
+}
+local PI = E.PluginInstaller
+PI.Queue = E.noop
+
+local tryInstall
+tryInstall = function()
+    if not _G.PluginInstallFrame then
+        E:Delay(1, tryInstall)
+        return
+    end
+    if E.InstallFrame then E.InstallFrame:Hide() end
+    E.private.install_complete = E.version
+
+    wipe(PI.Installs)
+    tinsert(PI.Installs, #PI.Installs + 1, NI.installTable)
+    PI:RunInstall()
+end
+
+function NI.Install() tryInstall() end
+
+if not NUIIDB.baseElvUISet or not NUIIDB.baseElvUISet[E.myname .. "-" .. E.myrealm] then
+    local f = CreateFrame("Frame")
+    f:RegisterEvent("PLAYER_LOGIN")
+    f:SetScript("OnEvent", function()
+        E:Delay(5, NI.BaseElvUISetup)
+        NUIIDB.baseElvUISet = NUIIDB.baseElvUISet or {}
+        NUIIDB.baseElvUISet[E.myname .. "-" .. E.myrealm] = true
+        f:UnregisterEvent("PLAYER_LOGIN")
+    end)
+end
+
+function NI:Initialize()
+    self.initialized = true
+    self.db = E.global.nihilistzscheui.installer
+
+    self:InitBaseProfile()
+    if self:ShouldInstall() then
+        self.Install()
+    else
+        self:RestoreSavedInstallers()
+    end
+end

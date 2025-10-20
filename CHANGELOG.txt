@@ -1,3 +1,9 @@
+14.00:
+- Moved the Options and Installer modules back into the main addon instead of being separated out, functionality has not been changed.
+- Warlock Demons has been improved and should function better, in addition a horizontalGrow option has been added, defaulting to RIGHT.
+- Removed PartyXP it seems unnecessary in modern WoW with scaling.
+- Removed the UMC Class Colored Circle unfortunately it is not something I currently wish to support.
+
 12.10:
 - The mounts datatext has been updated with a new favorite dragonriding mount option, that will be summoned
   if you are on the Dragon Isles, know the dragondriding spell, and have a favorite dragonriding mount selected.

@@ -124,22 +124,6 @@ NP.petBattleChallengeDataText = {
     [56492] = true,
     [58458] = true,
 }
-NP.pxp = {
-    enabled = true,
-    classColor = true,
-    tag = "[pxp:name] Lvl [pxp:level] XP: [pxp:current]/[pxp:max] ([pxp:percent]) [pxp:rested] Rested ([pxp:quest] Quest) [pxp:levelup?]",
-    font = "PT Sans Narrow",
-    texture = "ElvUI Norm",
-    fontsize = 10,
-    offset = -4,
-    width = 450,
-    height = 10,
-    color = {
-        r = 0,
-        g = 0.4,
-        b = 1,
-    },
-}
 NP.profdt = {
     prof = "prof1",
     hint = true,
@@ -1584,6 +1568,7 @@ NP.warlockdemons = {
     fontSize = 10,
     spacing = 0,
     grow = "DOWN",
+    horizontalGrow = "RIGHT",
     attachToNamePlate = false,
     color = {
         r = 0.58,

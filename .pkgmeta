@@ -4,5 +4,3 @@ manual-changelog:
     markup-type: bbcode
 move-folders:
     ElvUI_NihilistzscheUI/ElvUI_NihilistzscheUI: ElvUI_NihilistzscheUI
-    ElvUI_NihilistzscheUI/ElvUI_NihilistzscheUI_Installer: ElvUI_NihilistzscheUI_Installer
-    ElvUI_NihilistzscheUI/ElvUI_NihilistzscheUI_Options: ElvUI_NihilistzscheUI_Options

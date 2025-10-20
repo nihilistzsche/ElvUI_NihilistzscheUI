@@ -116,32 +116,6 @@ L["Collapse in raid"] = "Сворачивать в рейде"
 L["Collapse the objective tracker during a raid"] =
     "Сворачивать трекер заданий во время рейда"
 
--- PartyXP
-L["PartyXP"] = "Опыт группы"
-L["NihilistzscheUI PartyXP by Nihilistzsche"] = "NihilistzscheUI PartyXP от Nihilistzsche"
-L["NihilistzscheUI PartyXP provides a configurable set of party experience bars for use with ElvUI.\n"] =
-    "NihilistzscheUI PartyXP предоставляет настраиваемый набор панелей опыта группы для использования с ElvUI.\n"
-L["Enable the party experience bars."] = "Включить панели опыта группы."
-L["Reset Settings"] = "Сбросить настройки"
-L["Reset the settings of this addon to their defaults."] =
-    "Сбросить настройки этого аддона на значения по умолчанию."
-L["PartyXP Options"] = "Настройки опыта группы"
-L["Class Colors"] = "Цвета классов"
-L["Use class colors for the experience bars"] =
-    "Использовать цвета классов для панелей опыта"
-L["Detailed Text"] = "Подробный текст"
-L["Use detailed text in the experience bars"] =
-    "Использовать подробный текст в панелях опыта"
-L["Default Font"] = "Шрифт по умолчанию"
-L["The font that the text on the experience bars will use."] =
-    "Шрифт, который будет использоваться для текста на панелях опыта."
-L["The texture that will be used for the experience bars."] =
-    "Текстура, которая будет использоваться для панелей опыта."
-L["Variables and Movers"] = "Переменные и перемещение"
-L["Vertical offset from parent frame"] =
-    "Вертикальное смещение от родительской рамки"
-L["Set the Width of the Text Font"] = "Установить ширину шрифта текста"
-
 -- Portal Bar
 L["Portal Bar"] = "Панель порталов"
 L["NihilistzscheUI PortalBar by Nihilistzsche, based on work by Azilroka"] =
@@ -453,15 +427,6 @@ L["NihilistzscheUI ArtifactPowerButton provides a button for you to consume your
 L["Enable the artifact power button"] = "Включить кнопку силы артефакта"
 L["Only show the artifact power button when you mouseover it"] =
     "Показывать кнопку силы артефакта только при наведении курсора"
-
-L["Warlock Demons"] = "Демоны чернокнижника"
-L["Demon Count"] = "Счётчик демонов"
-L["Timer bars and counts for demonology demons"] =
-    "Таймеры и счётчики для демонов демонологии"
-L["Enable the demon count"] = "Включить счётчик демонов"
-L["Width of the bars"] = "Ширина полос"
-L["Height of the bars"] = "Высота полос"
-L["Spacing between bars"] = "Интервал между полосами"
 
 L["CBO_POWER_DISABLED"] =
     "Рамка силы %s отключена. Установка наложения полосы заклинаний на здоровье."
