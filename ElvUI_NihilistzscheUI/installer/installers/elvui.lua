@@ -431,7 +431,7 @@ function NI:NameplateSetup()
             },
         }
     end
-    
+
     if COMP.IsAddOnEnabled("TotalRP3") and COMP.IsAddOnEnabled("RP_Tags") then
         self:EDB().nameplates.filters.PlayerHasRPProfile = {
             triggers = {
