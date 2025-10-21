@@ -453,10 +453,13 @@ function WD:OnDespawn(petGUID)
     for i, b in ipairs(self.activeBars) do
         if b.petGUID == petGUID then
             b:Stop()
-            self.RemoveBarByGUID(b.petGUID)
-            tinsert(remove_queue, b.petGUID)
-            local np = NP.PlateGUID[petGUID]
-            if np then NP:StyleFilterUpdate(np, "FAKE_WDForceUpdate") end
+            if not self:ShouldAttachToNamePlate() then
+                tinsert(remove_queue, b.petGUID)
+            else
+                local np = NP.PlateGUID[petGUID]
+                if np then NP:StyleFilterUpdate(np, "FAKE_WDForceUpdate") end
+                self.RemoveBarByGUID(petGUID)
+            end
             break
         end
     end
