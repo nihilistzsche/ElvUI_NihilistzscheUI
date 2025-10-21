@@ -6,12 +6,19 @@ local GetTime = _G.GetTime
 local C_Spell_GetSpellCooldown = _G.C_Spell.GetSpellCooldown
 local C_Container_GetItemCooldown = _G.C_Container.GetItemCooldown
 
+local _gcd_spellID = 61304
 function CB:SpellIsOnCooldown(spellID)
     if not spellID or self.db.blacklist.spells[spellID] then return false end
 
     local cooldownInfo = C_Spell_GetSpellCooldown(spellID)
+    local gcdInfo = C_Spell_GetSpellCooldown(_gcd_spellID)
 
-    if cooldownInfo and cooldownInfo.isEnabled and cooldownInfo.startTime ~= 0 and cooldownInfo.duration > 2.0 then
+    if
+        cooldownInfo
+        and cooldownInfo.isEnabled
+        and cooldownInfo.startTime ~= 0
+        and cooldownInfo.duration > (gcdInfo.duration > 0 and gcdInfo.duration or 2.0)
+    then
         return true
     end
 
