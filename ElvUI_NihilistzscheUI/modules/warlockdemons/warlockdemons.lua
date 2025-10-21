@@ -244,6 +244,7 @@ function WD:UpdateBars(isDemonicTyrant)
         local down, left, header, container =
             self.db.grow == "DOWN", self.db.horizontalGrow == "LEFT", self.header, self.header.Container
         local fp, sp = down and "TOPLEFT" or "BOTTOMLEFT", down and "TOPRIGHT" or "BOTTOMRIGHT"
+        container:ClearAllPoints()
         container:SetPoint(fp, header, fp)
         container:SetPoint(sp, header, sp)
         for i, bar in ipairs(self.activeBars) do
