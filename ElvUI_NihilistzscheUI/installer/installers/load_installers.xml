@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui">
 	<Script file="elvui_mmediatag.lua"/>
 	<Script file="altoholic_counthider.lua"/>
+	<Script file="bigwigs.lua"/>
 	<Script file="bloodshieldtracker.lua"/>
 	<Script file="cursortrail.lua"/>
 	<Script file="details.lua"/>
