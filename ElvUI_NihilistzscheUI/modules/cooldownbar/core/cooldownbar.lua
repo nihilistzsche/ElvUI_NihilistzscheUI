@@ -20,7 +20,7 @@ end
 
 local function DeactivateClosure() CB:Deactivate() end
 
-function CB:Update()
+function CB:Update(elapsed)
     local framesToRemove = {}
 
     for _, frame in pairs(self.liveFrames) do
@@ -31,7 +31,7 @@ function CB:Update()
             frame:Hide()
             tinsert(framesToRemove, frame)
         else
-            self:UpdateFrame(frame)
+            self:UpdateFrame(frame, elapsed)
             self:Activate()
         end
     end
@@ -88,6 +88,7 @@ function CB:Enable(fromSettings)
     _G.RegisterAttributeDriver(self.bar, "state-visibility", "[petbattle] hide; show")
 
     if not fromSettings then
+        self:InitOverlapSystem()
         if not self.ticker then self.ticker = C_Timer_NewTicker(self.db.switchTime, RotateClosure) end
     else
         self:UpdateCache()

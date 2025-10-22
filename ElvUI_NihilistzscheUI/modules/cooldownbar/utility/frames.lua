@@ -25,15 +25,18 @@ local function abs(n)
     end
 end
 
-function CB:UpdateFrame(frame)
+function CB:UpdateFrame(frame, elapsed)
     local cd, s, d = self:GetCooldown(frame)
     local tex = self:GetTexture(frame)
 
     if not cd or not tex then return end
 
     local w = self.bar:GetWidth() - (self.bar:GetHeight() / 2)
-
     local pos = self:GetPosition(cd) * w
+
+    -- optional smoothing (lerp)
+    local oldPos = frame.pos or pos
+    pos = oldPos + (pos - oldPos) * min(1, elapsed * 60)
 
     if cd > 0 then
         frame.cooldown:SetCooldown(s, d)
@@ -203,16 +206,7 @@ function CB:CreateFrame(type, id)
     frame:SetAlpha(1)
 
     tinsert(self.liveFrames, frame)
-    self:UpdateFrame(frame)
+    self:UpdateFrame(frame, 0)
 end
 
-function CB:OnFrameUpdate(t)
-    self.delta = (self.delta or 0) + t
-
-    local epsilon = 1 / GetFramerate()
-    if self.delta < epsilon then return end
-
-    self.delta = 0
-
-    CB:Update()
-end
+function CB:OnFrameUpdate(t) CB:Update(t) end

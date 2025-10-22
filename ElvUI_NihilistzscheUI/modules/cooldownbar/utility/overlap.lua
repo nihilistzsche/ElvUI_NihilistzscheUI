@@ -6,38 +6,110 @@ local CB = NUI.CooldownBar
 local tinsert, tremove, tContains = table.insert, table.remove, tContains
 local abs, min = math.abs, math.min
 
---- Adds one or two frames to the overlap group (no duplicates)
-function CB:AddToOverlapGroup(frameA, frameB)
-    if frameA and not self:InOverlapGroup(frameA) then tinsert(self.overlapGroups, frameA) end
-    if frameB and not self:InOverlapGroup(frameB) then tinsert(self.overlapGroups, frameB) end
+-- Each group: { frames = {}, levelSerial = 0 }
+-- self.overlapGroups = { group1, group2, ... }
+-- self.frameToGroup = { [frame] = group }
+
+function CB:InitOverlapSystem()
+    self.overlapGroups = self.overlapGroups or {}
+    self.frameToGroup = self.frameToGroup or {}
 end
 
-function CB:FindFrameIndexInOverlapGroup(frame)
-    for i, f in ipairs(self.overlapGroups) do
-        if f == frame then return i end
+---Creates and registers a new overlap group
+function CB:NewOverlapGroup(frameA, frameB)
+    local group = { frames = {}, levelSerial = 0 }
+    if frameA then
+        tinsert(group.frames, frameA)
+        self.frameToGroup[frameA] = group
     end
-    return nil
+    if frameB and not tContains(group.frames, frameB) then
+        tinsert(group.frames, frameB)
+        self.frameToGroup[frameB] = group
+    end
+    tinsert(self.overlapGroups, group)
+    return group
 end
 
-function CB:RemoveFromOverlapGroup(frame)
-    local index = self:FindFrameIndexInOverlapGroup(frame)
-    if index then
-        tremove(self.overlapGroups, index)
-        if #self.overlapGroups == 0 then self.frameLevelSerial = 0 end
+---Removes a frame from its group
+function CB:RemoveFromOverlapGroups(frame)
+    local group = self.frameToGroup[frame]
+    if not group then return end
+
+    for i, f in ipairs(group.frames) do
+        if f == frame then
+            tremove(group.frames, i)
+            break
+        end
+    end
+
+    self.frameToGroup[frame] = nil
+
+    -- Remove empty group
+    if #group.frames == 0 then
+        for i, g in ipairs(self.overlapGroups) do
+            if g == group then
+                tremove(self.overlapGroups, i)
+                break
+            end
+        end
     end
 end
 
-function CB:InOverlapGroup(frame) return tContains(self.overlapGroups, frame) end
+---Merges two groups when their frames overlap
+function CB:MergeGroups(groupA, groupB)
+    if groupA == groupB then return groupA end
+    for _, f in ipairs(groupB.frames) do
+        if not tContains(groupA.frames, f) then
+            tinsert(groupA.frames, f)
+            self.frameToGroup[f] = groupA
+        end
+    end
+    for i, g in ipairs(self.overlapGroups) do
+        if g == groupB then
+            tremove(self.overlapGroups, i)
+            break
+        end
+    end
+    return groupA
+end
 
+---Adds two frames to the overlap tracking, merging if needed
+function CB:AddToOverlapGroups(frameA, frameB)
+    local groupA = self.frameToGroup[frameA]
+    local groupB = self.frameToGroup[frameB]
+
+    if groupA and groupB then
+        self:MergeGroups(groupA, groupB)
+    elseif groupA then
+        if frameB and not self.frameToGroup[frameB] then
+            tinsert(groupA.frames, frameB)
+            self.frameToGroup[frameB] = groupA
+        end
+    elseif groupB then
+        if frameA and not self.frameToGroup[frameA] then
+            tinsert(groupB.frames, frameA)
+            self.frameToGroup[frameA] = groupB
+        end
+    else
+        self:NewOverlapGroup(frameA, frameB)
+    end
+end
+
+---Rotates frame levels within each group only
 function CB:RotateOverlapGroups()
-    local frame = tremove(self.overlapGroups)
-    if not frame or not frame:IsShown() then return end
-
-    self.frameLevelSerial = self.frameLevelSerial + 5
-    frame:SetFrameLevel(self.frameLevelSerial)
-    tinsert(self.overlapGroups, 1, frame)
+    for _, group in ipairs(self.overlapGroups) do
+        if #group.frames > 1 then
+            local frame = tremove(group.frames)
+            if frame and frame:IsShown() then
+                group.levelSerial = group.levelSerial + 5
+                frame:SetFrameLevel(group.levelSerial)
+                tinsert(group.frames, 1, frame)
+            end
+        end
+    end
 end
 
+---Checks a frame’s overlap status and updates its group membership
 function CB:CheckOverlap(current)
     if not current or not current:IsShown() then return end
 
@@ -45,6 +117,7 @@ function CB:CheckOverlap(current)
     if not left or not right then return end
 
     local seenOverlap = false
+
     for _, icon in ipairs(self.liveFrames) do
         if icon ~= current and icon:IsShown() then
             local il, ir = icon:GetLeft(), icon:GetRight()
@@ -53,12 +126,12 @@ function CB:CheckOverlap(current)
                     local overlap = min(abs(ir - left), abs(il - right))
                     if overlap > 0 then
                         seenOverlap = true
-                        self:AddToOverlapGroup(current, icon)
+                        self:AddToOverlapGroups(current, icon)
                     end
                 end
             end
         end
     end
 
-    if not seenOverlap then self:RemoveFromOverlapGroup(current) end
+    if not seenOverlap then self:RemoveFromOverlapGroups(current) end
 end
