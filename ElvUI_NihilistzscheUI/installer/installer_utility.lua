@@ -222,13 +222,20 @@ end
 
 local profileKey = "- NihilistzscheUI"
 
+NI.ReportReasonFunc = nil
+function NI:RegisterReportReasonFunction(func) self.ReportReasonFunc = func end
+
+function NI:ReportReason(msg)
+    if self.ReportReasonFunc then self.ReportReasonFunc(msg) end
+end
+
 function NI:ShouldInstall()
     if _G.NUIIDB and _G.NUIIDB.skipped then return false end
 
     local tbl = _G.NUIIDB.installInfo
 
     if not tbl then
-        print("No install info table.")
+        self:ReportReason("No install info table.")
         return true
     end
 
@@ -236,7 +243,17 @@ function NI:ShouldInstall()
 
     local prevInstalledAddOnSet = tbl.installedAddons or {}
 
-    if tbl.version < NI.GetInstallVersion() or tbl.installerBuild < NI.GetInstallBuild() then return true end
+    if tbl.version < NI.GetInstallVersion() or tbl.installerBuild < NI.GetInstallBuild() then
+        self:ReportReason(
+            ("Existing version: %d/%d, current version: %d/%d"):format(
+                tbl.version,
+                tbl.installerBuild,
+                NI.GetInstallVersion(),
+                NI.GetInstallBuild
+            )
+        )
+        return true
+    end
 
     --if not self.AreInstalledAddOnsEqual(currentInstalledAddOnSet, prevInstalledAddOnSet) then return true end
 
@@ -244,9 +261,20 @@ function NI:ShouldInstall()
         return false
     end
 
-    if not tbl.installerDetails then return true end
+    if not tbl.installerDetails then
+        self:ReportReason("Missing installer details")
+        return true
+    end
 
-    if tbl.installerDetails.texture ~= self.db.texture or tbl.installerDetails.font ~= self.db.font then return true end
+    if tbl.installerDetails.texture ~= self.db.texture then
+        self:ReportReason(("Different texture: %s -> %s"):format(tbl.installerDetails.texture, self.db.texture))
+        return true
+    end
+
+    if tbl.installerDetails.font ~= self.db.font then
+        self:ReportReason(("Different font: %s -> %s"):format(tbl.installerDetails.font, self.db.font))
+        return true
+    end
 
     local isSpecProfileClass = type(self.ClassSpecProfiles[E.myclass]) == "table"
 
@@ -260,18 +288,30 @@ function NI:ShouldInstall()
     end
 
     if isSpecProfileClass then
-        if not specProfileTbl then return true end
-        if not specProfileTbl.enabled then return true end
+        if not specProfileTbl then
+            self:ReportReason("Missing spec table for current character")
+            return true
+        end
+        if not specProfileTbl.enabled then
+            self:ReportReason("Spec table not enabled for current character")
+            return true
+        end
         local profileBase = E.myLocalizedClass .. " - "
         for i = 1, #NI.ClassSpecProfiles[E.myclass] do
-            if specProfileTbl[i] ~= profileBase .. NI.ClassSpecProfiles[E.myclass][i] then return true end
+            if specProfileTbl[i] ~= profileBase .. NI.ClassSpecProfiles[E.myclass][i] then
+                self:ReportReason("Spec table not set to current profile for current character")
+                return true
+            end
         end
         return false
     end
 
     for s, l in pairs(_G.ElvDB.class) do
         for n in pairs(l) do
-            if _G.ElvDB.profileKeys[n .. " - " .. s]:sub(-(profileKey:len())) ~= profileKey then return true end
+            if _G.ElvDB.profileKeys[n .. " - " .. s]:sub(-(profileKey:len())) ~= profileKey then
+                self:ReportReason(("Profile for %s-%s not set to correct profile"):format(n, s))
+                return true
+            end
         end
     end
 
