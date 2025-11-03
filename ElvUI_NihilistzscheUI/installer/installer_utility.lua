@@ -310,7 +310,10 @@ function NI:ShouldInstall()
         for n in pairs(l) do
             local found = false
             for _, profileKey in ipairs(profileKeys) do
-                if _G.ElvDB.profileKeys[n .. " - " .. s]:sub(-(profileKey:len())) == profileKey then found = true end
+                if _G.ElvDB.profileKeys[n .. " - " .. s]:sub(-(profileKey:len())) == profileKey then
+                    found = true
+                    break
+                end
             end
             if not found then
                 self:ReportReason(("Profile for %s-%s not set to correct profile"):format(n, s))
