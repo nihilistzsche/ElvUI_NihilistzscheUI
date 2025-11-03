@@ -220,7 +220,7 @@ function NI.AreInstalledAddOnsEqual(installedAddOnSetA, installedAddOnSetB)
     return true
 end
 
-local profileKey = "- NihilistzscheUI"
+local profileKeys = { "NihilistzscheUI", "Tank", "MeleeDPS", "CasterDPS", "Healer" }
 
 NI.ReportReasonFunc = nil
 function NI:RegisterReportReasonFunction(func) self.ReportReasonFunc = func end
@@ -308,7 +308,11 @@ function NI:ShouldInstall()
 
     for s, l in pairs(_G.ElvDB.class) do
         for n in pairs(l) do
-            if _G.ElvDB.profileKeys[n .. " - " .. s]:sub(-(profileKey:len())) ~= profileKey then
+            local found = false
+            for _, profileKey in ipairs(profileKeys) do
+                if _G.ElvDB.profileKeys[n .. " - " .. s]:sub(-(profileKey:len())) == profileKey then found = true end
+            end
+            if not found then
                 self:ReportReason(("Profile for %s-%s not set to correct profile"):format(n, s))
                 return true
             end
