@@ -33,6 +33,9 @@ function NFM:SetFlightMode(status)
             _G.RightChatDataPanel:Hide()
         end
         if COMP.IsAddOnEnabled("Forward") and _G.MovePad then _G.MovePad:Hide() end
+        if COMP.IsAddOnEnabled("!KalielsTracker") and _G["!KalielsTrackerFrame"] then
+            _G["!KalielsTrackerFrame"]:Hide()
+        end
     elseif self.NUIInFlightMode then
         self.NUIInFlightMode = false
         if E.private.chat.enable then
@@ -56,6 +59,9 @@ function NFM:SetFlightMode(status)
             LO:ToggleChatPanels()
         end
         if COMP.IsAddOnEnabled("Forward") and _G.MovePad then _G.MovePad:Show() end
+        if COMP.IsAddOnEnabled("!KalielsTracker") and _G["!KalielsTrackerFrame"] then
+            _G["!KalielsTrackerFrame"]:Show()
+        end
     end
     VUF:UpdateMouseSetting()
 end
