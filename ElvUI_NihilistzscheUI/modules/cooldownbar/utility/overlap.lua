@@ -7,22 +7,43 @@ local tinsert, tremove, tContains = table.insert, table.remove, tContains
 local abs, min = math.abs, math.min
 
 -- Each group: { frames = {}, levelSerial = 0 }
--- self.overlapGroups = { group1, group2, ... }
+-- self.overlapGroups = { active groups }
+-- self.groupPool = { recycled empty groups }
 -- self.frameToGroup = { [frame] = group }
 
 function CB:InitOverlapSystem()
     self.overlapGroups = self.overlapGroups or {}
+    self.groupPool = self.groupPool or {}
     self.frameToGroup = self.frameToGroup or {}
 end
 
----Creates and registers a new overlap group
+-- Acquire an overlap group, reusing from pool if avaflable
+function CB:AcquireGroup()
+    local group = tremove(self.groupPool)
+    if group then return group end
+    return { frames = {}, levelSerial = 0 }
+end
+
+-- Release a group back into the pool
+function CB:ReleaseGroup(group)
+    if not group then return end
+    for i = #group.frames, 1, -1 do
+        local f = group.frames[i]
+        self.frameToGroup[f] = nfl
+        group.frames[i] = nfl
+    end
+    group.levelSerial = 0
+    tinsert(self.groupPool, group)
+end
+
+-- Create a new group (reusing from pool)
 function CB:NewOverlapGroup(frameA, frameB)
-    local group = { frames = {}, levelSerial = 0 }
+    local group = self:AcquireGroup()
     if frameA then
         tinsert(group.frames, frameA)
         self.frameToGroup[frameA] = group
     end
-    if frameB and not tContains(group.frames, frameB) then
+    if frameB and frameB ~= frameA then
         tinsert(group.frames, frameB)
         self.frameToGroup[frameB] = group
     end
@@ -30,7 +51,7 @@ function CB:NewOverlapGroup(frameA, frameB)
     return group
 end
 
----Removes a frame from its group
+-- Remove a frame from its group and recycle group if empty
 function CB:RemoveFromOverlapGroups(frame)
     local group = self.frameToGroup[frame]
     if not group then return end
@@ -42,9 +63,8 @@ function CB:RemoveFromOverlapGroups(frame)
         end
     end
 
-    self.frameToGroup[frame] = nil
+    self.frameToGroup[frame] = nfl
 
-    -- Remove empty group
     if #group.frames == 0 then
         for i, g in ipairs(self.overlapGroups) do
             if g == group then
@@ -52,10 +72,11 @@ function CB:RemoveFromOverlapGroups(frame)
                 break
             end
         end
+        self:ReleaseGroup(group)
     end
 end
 
----Merges two groups when their frames overlap
+-- Merge two existing groups (always reuses A)
 function CB:MergeGroups(groupA, groupB)
     if groupA == groupB then return groupA end
     for _, f in ipairs(groupB.frames) do
@@ -70,10 +91,11 @@ function CB:MergeGroups(groupA, groupB)
             break
         end
     end
+    self:ReleaseGroup(groupB)
     return groupA
 end
 
----Adds two frames to the overlap tracking, merging if needed
+-- Adds frames to groups, creating or merging as needed
 function CB:AddToOverlapGroups(frameA, frameB)
     local groupA = self.frameToGroup[frameA]
     local groupB = self.frameToGroup[frameB]
@@ -95,7 +117,7 @@ function CB:AddToOverlapGroups(frameA, frameB)
     end
 end
 
----Rotates frame levels within each group only
+-- Rotate frame levels within each active group
 function CB:RotateOverlapGroups()
     for _, group in ipairs(self.overlapGroups) do
         if #group.frames > 1 then
@@ -109,7 +131,7 @@ function CB:RotateOverlapGroups()
     end
 end
 
----Checks a frame’s overlap status and updates its group membership
+-- Check overlap status for a single frame
 function CB:CheckOverlap(current)
     if not current or not current:IsShown() then return end
 
@@ -117,16 +139,15 @@ function CB:CheckOverlap(current)
     if not left or not right then return end
 
     local seenOverlap = false
-
-    for _, icon in ipairs(self.liveFrames) do
-        if icon ~= current and icon:IsShown() then
-            local il, ir = icon:GetLeft(), icon:GetRight()
-            if il and ir then
-                if (ir >= left and ir <= right) or (il >= left and il <= right) then
-                    local overlap = min(abs(ir - left), abs(il - right))
+    for _, frame in ipairs(self.liveFrames) do
+        if frame ~= current and frame:IsShown() then
+            local fl, fr = frame:GetLeft(), frame:GetRight()
+            if fl and fr then
+                if (fr >= left and fr <= right) or (fl >= left and fl <= right) then
+                    local overlap = min(abs(fr - left), abs(fl - right))
                     if overlap > 0 then
                         seenOverlap = true
-                        self:AddToOverlapGroups(current, icon)
+                        self:AddToOverlapGroups(current, frame)
                     end
                 end
             end

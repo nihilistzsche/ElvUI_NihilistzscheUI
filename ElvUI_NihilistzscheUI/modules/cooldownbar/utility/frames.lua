@@ -36,7 +36,7 @@ function CB:UpdateFrame(frame, elapsed)
 
     -- optional smoothing (lerp)
     local oldPos = frame.pos or pos
-    pos = oldPos + (pos - oldPos) * min(1, elapsed * 60)
+    pos = oldPos + (pos - oldPos) * min(1, (elapsed or 0) * 60)
 
     if cd > 0 then
         frame.cooldown:SetCooldown(s, d)
@@ -206,7 +206,7 @@ function CB:CreateFrame(type, id)
     frame:SetAlpha(1)
 
     tinsert(self.liveFrames, frame)
-    self:UpdateFrame(frame, 0)
+    self:UpdateFrame(frame)
 end
 
 function CB:OnFrameUpdate(t) CB:Update(t) end
